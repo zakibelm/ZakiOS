@@ -17,7 +17,9 @@ Règles :
 """
 import hashlib
 import json
+import os
 import re
+import threading
 import time
 
 from . import deliver, outils
@@ -474,7 +476,21 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
     return result
 
 
+_CONFIRM_LOCKS = {}
+_CONFIRM_GUARD = threading.Lock()
+
+
 def confirmer_livraison(project, mission_id, plan_text, expected_delivery_sha256):
+    """Sérialise les confirmations d'une même mission DANS CE PROCESSUS (double clic concurrent) ; une seule instance de
+    serveur est supposée (pas de verrou inter-processus)."""
+    key = (os.path.realpath(project), mission_id)
+    with _CONFIRM_GUARD:
+        lock = _CONFIRM_LOCKS.setdefault(key, threading.Lock())
+    with lock:
+        return _confirmer_livraison(project, mission_id, plan_text, expected_delivery_sha256)
+
+
+def _confirmer_livraison(project, mission_id, plan_text, expected_delivery_sha256):
     """Enregistrement contrôlé d'un plan ACCEPTE dont la livraison a été différée (confirmation explicite).
 
     Refuse : trace absente ou non acceptée, livraison non différée, empreinte de livraison différente de celle présentée,

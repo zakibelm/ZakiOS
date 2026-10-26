@@ -45,3 +45,10 @@ Placer le pilote derrière un proxy HTTPS (et `ZAKIOS_PILOT_SECURE_COOKIE=1`).
 - Mission contradictoire : CLARIFICATION_REQUISE, aucun bouton de confirmation, aucun fichier livré.
 - **Limites de cet essai** : un seul passage par cas (pas de campagne statistique) ; pannes, plafond et refus d'écrasement
   ne sont prouvés qu'en simulation ; exécuté depuis le bac à sable de développement, pas depuis un hôte déployé.
+
+## Défaut trouvé par la CI et corrigé
+
+Le premier push a fait échouer la CI : le test de double confirmation concurrente de `confirmer_livraison` (écrit avant le
+pilote) était intermittent — course réelle dans `deliver.save_plan` entre la vérification d'existence et l'écriture. Corrigé
+par un verrou par mission dans le processus (une seule instance de serveur supposée). Sans le verrou, le test échoue
+environ 1 fois sur 3 : il détecte la régression de façon probabiliste, pas déterministe.
