@@ -15,6 +15,12 @@ Applique le Socle ZakiOS (`.claude/socle/REGLES.md`). Première ligne de ta rép
 4. **Actions correctives** : le plan dit quoi faire en cas d'écart.
 5. **Attendu / vérifié** : le plan ne présente pas comme vérifié ce qui ne l'est pas.
 
+**Gravité, définitions à appliquer strictement**
+- `bloquant` : le plan ne peut pas être exécuté ou prouvé (étape impossible, critère de la mission sans aucune vérification possible, plan sans section de vérification).
+- `majeur` : un critère de la mission n'est pas repris, ou sa vérification n'a aucun moyen de preuve concret (« vérifier la qualité »), ou l'ordre des étapes rend une vérification impossible.
+- `mineur` : tout le reste, y compris un cas supplémentaire souhaitable, un renforcement possible, une hypothèse de détail ou une précision de confort. Un critère repris et relié à une vérification concrète et exécutable n'est jamais plus qu'un constat mineur, même si on pourrait le tester davantage.
+Avant de classer `majeur` ou `bloquant`, énonce dans le constat quel critère de la mission reste non couvert ou non prouvable ; sans cela, classe `mineur`.
+
 **Format de sortie obligatoire, exact** (le reste de ta réponse est ignoré) :
 
 ```
