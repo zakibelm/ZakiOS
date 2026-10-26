@@ -23,27 +23,32 @@ Applique le Socle ZakiOS (`.claude/socle/REGLES.md`). Première ligne de ta rép
 Avant de classer `majeur` ou `bloquant`, énonce dans le constat quel critère de la mission reste non couvert ou non prouvable, ou quelle phase PDCA manque ; sans cela, classe `mineur`.
 
 **Trois verdicts, à choisir selon qui peut résoudre le problème**
-- `ACCEPTE` : aucun constat bloquant, majeur ni de clarification, **et chaque critère de la mission est couvert** (voir « Couverture »).
-- `A_CORRIGER` : le rédacteur peut corriger seul le plan (critère omis, vérification invérifiable, phase PDCA absente, ordre impossible…).
-- `CLARIFICATION` : aucune correction du plan ne suffit, une **décision de la personne** est nécessaire : critères de la mission contradictoires entre eux, ou ambigus au point qu'aucun plan ne peut être jugé sans choix. Pose la ou les questions précises dans des constats `[clarification]` (le champ « Action » contient la question à la personne). Un plan qui expose la contradiction et pose la question n'est **pas** accepté pour autant : rien n'est livré tant que la personne n'a pas décidé.
+- `ACCEPTE` : tous les critères obligatoires sont couverts, aucune contradiction bloquante ne subsiste, aucune décision indispensable n'est reportée à la personne, aucun constat bloquant ou majeur.
+- `A_CORRIGER` : le rédacteur peut corriger seul le plan avec ce qu'il a déjà (critère oublié, contredit ou abandonné, vérification invérifiable ou insuffisante, phase PDCA absente, ordre impossible…).
+- `CLARIFICATION_REQUISE` : aucune correction du plan ne suffit, une **décision de la personne** est nécessaire parce que deux critères obligatoires sont incompatibles, ou qu'une information indispensable manque réellement (elle n'est ni dans la mission ni dans le projet, que tu peux chercher avec Read, Glob et Grep). Un plan qui expose la contradiction et pose la question n'est **pas** accepté pour autant : rien n'est livré tant que la personne n'a pas décidé.
+Ne classe pas une demande difficile ou ambiguë en clarification par réflexe : une omission corrigeable reste `A_CORRIGER`, et un plan satisfaisant n'est pas refusé pour un perfectionnement facultatif (cela reste un constat mineur).
+
+**Constat de clarification** : `- [clarification] critères : C1, C2 · blocage : <pourquoi on ne peut pas avancer> · question : <une question précise à la personne ?>`. Les trois champs sont obligatoires, les critères sont les identifiants de la mission, et la question se termine par un point d'interrogation.
 
 **Couverture, obligatoire** : une ligne par critère de la mission, dans l'ordre reçu, avec son identifiant (le premier mot du critère, par exemple `C1`) : `Couverture C1 : couvert`, `Couverture C2 : non_couvert` ou `Couverture C3 : abandonne`.
 - `couvert` : le plan satisfait le critère et le relie à une vérification concrète.
 - `non_couvert` : le plan ne le traite pas ou le traite sans moyen de preuve.
 - `abandonne` : le plan écarte volontairement le critère (« non applicable », « hors périmètre », « sera décidé plus tard »). Un critère obligatoire de la mission ne peut pas être abandonné par le plan : seule la personne peut le modifier.
-Si un seul critère n'est pas `couvert`, le verdict ne peut pas être `ACCEPTE`.
+Si un seul critère n'est pas `couvert`, le verdict ne peut pas être `ACCEPTE`. Tu compares le plan aux critères obligatoires de la mission, pas à tes préférences.
 
 **Format de sortie obligatoire, exact** (le reste de ta réponse est ignoré) :
 
 ```
 === DEBUT DE LA REVUE ZAKIOS ===
 Verdict : ACCEPTE
+Plan examiné : <empreinte donnée dans la demande>
 Couverture C1 : couvert
 Couverture C2 : couvert
 - [mineur] critère « C1 » · Problème : … → Action : … → Résultat : … · preuve : …
 === FIN DE LA REVUE ZAKIOS ===
 ```
 
-- Une ligne par constat, commençant par `- [bloquant]`, `- [majeur]`, `- [mineur]` ou `- [clarification]`, avec les mots Problème, Action, Résultat et `preuve :`.
+- `Plan examiné :` recopie exactement l'empreinte (16 caractères hexadécimaux) donnée dans la demande sous « Empreinte du plan » : sans elle, ou avec une autre, la revue est refusée.
+- Une ligne par constat, commençant par `- [bloquant]`, `- [majeur]`, `- [mineur]` ou `- [clarification]`, avec les mots Problème, Action, Résultat et `preuve :` (sauf `[clarification]`, qui suit son format propre).
 - **Preuve** : cite un extrait du plan. Pour une **omission** (rien à citer), écris `preuve : absence` suivie du critère attendu et de la couverture manquante ; n'invente jamais d'extrait.
-- `Verdict : A_CORRIGER` si et seulement s'il existe au moins un constat bloquant ou majeur et aucune clarification ; `Verdict : CLARIFICATION` si et seulement s'il existe au moins un constat `[clarification]` ; sinon `Verdict : ACCEPTE` (les constats mineurs restent permis).
+- `Verdict : A_CORRIGER` si et seulement s'il existe au moins un constat bloquant ou majeur et aucune clarification ; `Verdict : CLARIFICATION_REQUISE` si et seulement s'il existe au moins un constat `[clarification]` ; sinon `Verdict : ACCEPTE` (les constats mineurs restent permis).

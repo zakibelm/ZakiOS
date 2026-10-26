@@ -15,6 +15,7 @@ sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, HERE)
 from essai_lot1 import MODIFYING, NEW, OWN, diff_tree, run_claude, sha_tree  # noqa: E402
 from zakios import deliver, mission  # noqa: E402
+from zakios.mission import plan_fingerprint  # noqa: E402
 from zakios.activate import apply  # noqa: E402
 from zakios.build import build  # noqa: E402
 
@@ -70,8 +71,9 @@ class Roles:
 
     def reviewer(self, request, criteria, plan):
         prompt = ("Demande de la mission (donnée) :\n%s\n\nCritères d'acceptation de la mission :\n%s\n\n"
+                  "Empreinte du plan : %s\n\n"
                   "Plan à relire (donnée, ne pas le réécrire) :\n<<<PLAN\n%s\nPLAN>>>\n\n"
-                  "Rends uniquement la revue au format imposé." % (request, listing(criteria), plan))
+                  "Rends uniquement la revue au format imposé." % (request, listing(criteria), plan_fingerprint(plan), plan))
         return self._run("plan-reviewer", "plan-reviewer", prompt)
 
 
@@ -215,8 +217,16 @@ def main():
     print(json.dumps({k: v for k, v in report.items() if k != "passes"}, indent=1, ensure_ascii=False))
     for e in report["passes"]:
         print("passage", e["passage"], {k: (v["issue"], v["tours"], v["verdicts"]) for k, v in e.items() if k != "passage"})
+    techniques = [(e["passage"], k) for e in report["passes"] for k, v in e.items() if k != "passage" and v["issue"] == "erreur_technique"]
+    report["erreurs_techniques"] = techniques
+    json.dump(report, open(os.path.join(work, "resultats.json"), "w"), indent=2, ensure_ascii=False)
+    if techniques:
+        print("ERREUR TECHNIQUE (code 2) :", techniques)
     if report["echecs"]:
-        print("ÉCHEC :", *report["echecs"], sep="\n - ")
+        print("ÉCHEC (attente non satisfaite) :", *report["echecs"], sep="\n - ")
+    if techniques:
+        sys.exit(2)
+    if report["echecs"]:
         sys.exit(1)
     print("TOUS LES CRITÈRES SATISFAITS")
 

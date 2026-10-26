@@ -10,10 +10,10 @@ import os
 import unittest
 
 from zakios import mission
-from zakios.mission import TechnicalError, parse_review, run_mission
+from zakios.mission import TechnicalError, run_mission
 
 from .helpers import Workdir
-from .test_mission import BLOCK, CRITERIA, REQUEST, Fake, plan_text, review_text
+from .test_mission import BLOCK, CRITERIA, REQUEST, Fake, parse_review, plan_text, review_text
 
 
 def sha(text):

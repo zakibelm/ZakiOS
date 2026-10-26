@@ -4,7 +4,8 @@ import os
 import unittest
 
 from zakios import deliver, mission
-from zakios.mission import MissionError, TechnicalError, parse_review, run_mission
+from zakios.mission import MissionError, TechnicalError, plan_fingerprint, run_mission
+from zakios.mission import parse_review as _parse_review
 
 from .helpers import Workdir
 
@@ -16,10 +17,24 @@ def plan_text(title="v1", path="docs/plans/2026-10-26-paiement.md", extra=""):
     return ("Chemin proposé : %s\n%s\n# Plan : %s\n## Planifier\nC1 C2 C3\n%s\n%s\n" % (path, deliver.BEGIN, title, extra, deliver.END))
 
 
-def review_text(verdict, *findings, couverture=None):
-    """Revue simulée. Par défaut, chaque critère de la mission est « couvert »."""
+PLACEHOLDER = "@PLAN@"
+
+
+def concrete(text, fingerprint="0" * 16):
+    """Remplace l'espace réservé d'empreinte (utilisé pour analyser une revue hors coordinateur)."""
+    return text.replace(PLACEHOLDER, fingerprint)
+
+
+def parse_review(text, criteria=None, plan_sha=None):
+    return _parse_review(concrete(text), criteria, plan_sha)
+
+
+def review_text(verdict, *findings, couverture=None, bind=PLACEHOLDER):
+    """Revue simulée. Par défaut, chaque critère de la mission est « couvert » et la revue recopie l'empreinte du plan
+    réellement transmis (le faux rôle `Fake` remplace l'espace réservé)."""
     cov = couverture if couverture is not None else {mission.criterion_id(c): "couvert" for c in CRITERIA}
-    lines = ["Couverture %s : %s" % (k, v) for k, v in cov.items()]
+    lines = ["Plan examiné : %s" % bind] if bind else []
+    lines += ["Couverture %s : %s" % (k, v) for k, v in cov.items()]
     body = "\n".join(lines + list(findings))
     return "%s\nVerdict : %s\n%s\n%s\n" % (mission.REVIEW_BEGIN, verdict, body, mission.REVIEW_END)
 
@@ -40,6 +55,8 @@ class Fake:
         answer = self.answers.pop(0)
         if isinstance(answer, Exception):
             raise answer
+        if isinstance(answer, str) and len(args) == 3:  # relecteur : recopie l'empreinte du plan reçu
+            answer = answer.replace(PLACEHOLDER, plan_fingerprint(args[2]))
         return answer
 
 
