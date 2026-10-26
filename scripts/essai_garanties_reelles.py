@@ -36,8 +36,21 @@ NON_RESOLUBLE_2 = {
     "criteria": ["V1 le plan ne contient que les sections « Planifier » et « Exécuter » ; toute section « Vérifier » ou « Agir » est interdite",
                  "V2 la correction de total() est décrite en une seule étape d'exécution"],
 }
+CONTRADICTOIRE_2 = {  # contradiction dont la résolution appartient à la personne (jamais utilisé avant)
+    "request": "Planifie la gestion d'une valeur absente (None) pour prices dans total(prices, discount) de src/pay.py.",
+    "criteria": ["K1 total() ne lève jamais d'exception, même si prices vaut None",
+                 "K2 total() lève TypeError si prices vaut None"],
+}
+TEMOIN_RESOLUBLE = {  # cas résoluble, jamais utilisé avant
+    "request": "Planifie l'ajout d'une docstring à total(prices, discount) dans src/pay.py et d'un test minimal pour cette fonction.",
+    "criteria": ["R1 la docstring décrit discount comme un pourcentage de 0 à 100",
+                 "R2 un test couvre au moins discount=0 et discount=100"],
+}
+# `attendu` pour contradictoire_2 : arrêt par clarification, sans livraison (verdict introduit après cette mesure « avant »).
 CASES = {"inedit": (INEDIT, "accepte"), "non_resoluble": (NON_RESOLUBLE, "plafond_atteint"),
-         "non_resoluble_2": (NON_RESOLUBLE_2, "plafond_atteint")}
+         "non_resoluble_2": (NON_RESOLUBLE_2, "plafond_atteint"),
+         "contradictoire_2": (CONTRADICTOIRE_2, "clarification_requise"),
+         "temoin_resoluble": (TEMOIN_RESOLUBLE, "accepte")}
 
 
 def sha(text):
