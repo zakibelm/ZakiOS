@@ -18,7 +18,7 @@ Démontrer une boucle PDCA réelle entre rôles distincts : une demande unique e
 | 6 | Enregistrement contrôlé | `save-plan` | fichier + trace de livraison |
 | 7 | Trace de mission | coordinateur | `.zakios/missions/<mission_id>.json` |
 
-**Le coordinateur est du code, pas un agent** : il appelle les rôles, lit leurs sorties, décide de la suite selon des règles écrites (verdict, plafond d'itérations) et n'écrit lui-même que via `save-plan`. Pas de délégation libre entre agents dans ce jalon.
+**Le coordinateur est du code, pas un agent** : il appelle les rôles, lit leurs sorties, décide de la suite selon des règles écrites (verdict, plafond d'itérations). Il n'écrit que par deux voies contrôlées : `save-plan` pour le plan, et l'écriture sans remplacement de la trace de mission sous `.zakios/missions/`. Pas de délégation libre entre agents dans ce jalon.
 
 ## Nouveau rôle : `plan-reviewer`
 
@@ -67,3 +67,15 @@ Un seul modèle ; pas de délégation libre entre agents ; le relecteur de plan 
 3. Coordinateur déterministe (appel des rôles, plafond, trace de mission) avec tests sans modèle : fausses sorties pour chaque branche (accepté, à corriger, hors format, plafond atteint, verdict incohérent).
 4. Essai avec le modèle : variantes A, B, témoin, 3 passages.
 5. Compte rendu et revue du nouveau rôle.
+
+## Précisions retenues après l'audit de la spécification
+
+| Point | Règle |
+|---|---|
+| Demande de référence | La demande et C1–C3 sont immuables et transmises intégralement à chaque appel ; seule la sortie du planificateur v1 est injectée avec un défaut. |
+| Lien revue–plan | Chaque revue est enregistrée avec l'empreinte du plan qu'elle a examiné. Une correction crée un nouveau plan : l'acceptation précédente ne vaut plus, une nouvelle revue est obligatoire. Seul un plan dont la dernière revue est `ACCEPTE` peut être livré. |
+| Plafond | v1 + **2 corrections au plus** : au plus 3 plans et 3 revues. Les relances **techniques** (sortie hors format, erreur d'exécution) sont bornées à part : 1 relance par appel ; au-delà, arrêt en `erreur_technique`, rien n'est enregistré. |
+| Mutations reproductibles | Plans v1 fournis par fichiers de test, chacun avec son défaut attendu : (M1) C3 supprimé, (M2) vérification sans moyen de preuve, (M3) revue contradictoire (`ACCEPTE` malgré un bloquant), rejetée par le coordinateur. |
+| Trace | Écrite une seule fois, sans remplacement, par un mécanisme contrôlé ; si elle existe, elle doit être identique, sinon erreur. |
+| Omissions | Pour un critère absent, la revue écrit `preuve : absence` + critère attendu + couverture manquante, sans inventer d'extrait. |
+| Limite du contrôle | Le script vérifie format et cohérence gravité/verdict ; il ne prouve pas que la revue est juste. Les scénarios A, B et le témoin mesurent cette justesse sur des cas connus. |

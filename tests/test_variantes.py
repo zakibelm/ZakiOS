@@ -14,7 +14,7 @@ class Variantes(unittest.TestCase):
     files = list(V.rglob("*.md"))
 
     def test_trois_variantes(self):
-        self.assertEqual(len(self.files), 4)
+        self.assertEqual(len(self.files), 5)
 
     def test_reviewer_lecture_seule(self):
         text = (V / "agents/code-reviewer.md").read_text()
@@ -27,6 +27,13 @@ class Variantes(unittest.TestCase):
         tools = re.search(r"^tools:(.*)$", text, re.M).group(1)
         for forbidden in ("Write", "Edit", "Bash"):
             self.assertNotIn(forbidden, tools)
+
+    def test_plan_reviewer_lecture_seule_et_format_strict(self):
+        text = (V / "agents/plan-reviewer.md").read_text()
+        tools = [t.strip() for t in re.search(r"^tools:(.*)$", text, re.M).group(1).split(",")]
+        self.assertEqual(sorted(tools), ["Glob", "Grep", "Read"])
+        for marker in ("=== DEBUT DE LA REVUE ZAKIOS ===", "=== FIN DE LA REVUE ZAKIOS ===", "Verdict : ACCEPTE", "Verdict : A_CORRIGER"):
+            self.assertIn(marker, text)
 
     def test_aucune_dependance_orpheline(self):
         for f in self.files:
