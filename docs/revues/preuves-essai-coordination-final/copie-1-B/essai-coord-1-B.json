@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:46:17Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+  "content_sha256": "dc1641884b47ca155c674bfa9ecbdee5a3ff03c3c4a4c014eb78f1ef27b3459b",
+  "delivery_sha256": "8cfaf33e45222e1ccc632610b4cc7f17f17c4e7920b0830892168174abd4b816",
+  "trace": ".zakios/deliverables/8cfaf33e45222e1ccc632610b4cc7f17f17c4e7920b0830892168174abd4b816.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 est « Vérifier que le code est de bonne qualité », sans commande, test ni sortie attendue. Le critère « aucune régression sur les appels existants » n'a donc aucun moyen de preuve concret dans la section Vérifier. → Action : remplacer par `python -m unittest tests.test_appels_existants` avec une sortie attendue (OK, mêmes totaux qu'avant correction), puis lancer `python -m unittest discover tests` en entier. → Résultat : C3 devient prouvable. Le test existe à l'étape 3 et sert de référence à l'étape 4, mais la section Vérifier ne l'appelle pas. · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la formule `sum(prices) * (1 - discount / 100)` peut donner des écarts d'arrondi avec des flottants. Le plan ne précise pas non plus si `total([10, 20], 100) == 0` est exact. → Action : préciser le type attendu ou utiliser `assertAlmostEqual`. → Résultat : le test aux bornes devient robuste. · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : l'étape 3 limite les appels existants à une remise nulle. Le plan ne dit pas si des appels existants utilisent une remise non nulle, dont l'ancienne sémantique pourrait changer. → Action : en étape 1, relever aussi les valeurs de remise des appels existants et signaler tout appel avec remise non nulle. → Résultat : le risque de régression est visible avant la correction. · preuve : « avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "27fb44e7727af70f6ee1a042e8c62ebddcfcd6b7c08ccb0872365b4ef5346e57",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la comparaison « mêmes totaux qu'avant correction » s'appuie sur la sortie de l'étape 4. Or `python -m unittest discover tests -v` n'affiche que les noms et les statuts des tests, pas les totaux calculés. → Action : fixer les valeurs attendues en dur dans `test_appels_existants` (somme calculée à la main, ce que l'étape 3 prévoit déjà) et retirer la comparaison de sorties. → Résultat : la preuve de C3 repose sur des assertions exécutables et non sur une lecture de traces. · preuve : « avec les mêmes totaux qu'avant correction pour les appels à remise nulle (comparer à la sortie de l'étape 4) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le plan ne dit pas ce que renvoyait `read_user()` avant correction (curseur ou liste). Le remplacement par `return db.execute(...)` pourrait changer le type de retour, et les tests comptent avec `fetchall()`. → Action : relever le type de retour d'origine à l'étape 1 et le conserver, ou le consigner comme hypothèse (H4) à confirmer. → Résultat : le risque de régression sur le type de retour est écarté ou explicité. · preuve : « Code : `return db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le dépôt ne contient aucun appelant, donc C3 n'est prouvé que sur des appels synthétiques à remise nulle. Le plan le dit clairement et prévoit de demander la liste des appelants à la personne, ce qui est correct. → Action : obtenir la liste des appelants externes avant de déclarer C3 satisfait. → Résultat : C3 reste annoncé « non vérifié » pour les appelants hors dépôt tant que cette liste manque. · preuve : « Si des appelants hors dépôt existent et n'ont pas été fournis, C3 reste **non vérifié** pour eux. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'import de `src.pay` depuis `tests/` n'est pas précisé (absence de `__init__.py`, répertoire de lancement). Les commandes `unittest` pourraient échouer pour une raison d'import et non à cause du défaut ciblé. → Action : indiquer le répertoire de lancement (racine du dépôt) et la forme d'import, par exemple `from src.pay import total, read_user`. → Résultat : l'échec attendu à l'étape 4 vient bien du défaut et non d'une erreur d'import. · preuve : absence — critère C1/C2 : aucune mention de la forme d'import ni du répertoire d'exécution des tests."
+    }
+   ],
+   "plan_sha256": "dc1641884b47ca155c674bfa9ecbdee5a3ff03c3c4a4c014eb78f1ef27b3459b",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "dc1641884b47ca155c674bfa9ecbdee5a3ff03c3c4a4c014eb78f1ef27b3459b",
+    "relances_relecteur": 0,
+    "revue_sha256": "f1eedd6442b6b2f42d6b33b0d73938f2f421e80e78af80cdd642291532096daa",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

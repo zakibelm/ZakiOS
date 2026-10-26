@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:53:10Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "4e7e9ac68315cad6ac1f2af8300b7d2fb28b9ab96d373137d565b225a4ea0ba9",
+  "delivery_sha256": "f87a17ffc45f3139dc1d18f9ceeb022a343fcd0dd85c59f029b4bb1848548942",
+  "trace": ".zakios/deliverables/f87a17ffc45f3139dc1d18f9ceeb022a343fcd0dd85c59f029b4bb1848548942.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « Structure PDCA (phase Vérifier) » · Problème : le plan n'a pas de section « Vérifier ». Les sections présentes sont Planifier, Exécuter et Agir. L'étape 4 d'« Exécuter » lance les tests avant correction, mais aucune étape ne les relance après les étapes 5 et 6. Les critères C1, C2 et C3 n'ont donc aucune vérification après correction, ni comparaison aux critères, ni sortie attendue à consigner. → Action : ajouter une section « Vérifier » distincte, qui relance `python -m unittest discover tests` après correction et relie C1, C2 et C3 à leurs tests. → Résultat : sans cette section, aucun critère ne peut être prouvé satisfait, et le plan l'admet lui-même dans « Agir » : « Aucun critère n'est déclaré satisfait sans la sortie exécutée de sa vérification ». · preuve : absence de section « Vérifier » ; attendu : une section Vérifier reliant C1, C2 et C3 à une commande exécutée après les étapes 5 et 6."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : `test_injection` est décrit seulement par sa base en mémoire (« table `users` de deux lignes `Alice` et `Bob` »). L'entrée malveillante et le résultat attendu ne sont pas précisés. → Action : préciser l'entrée, par exemple `' OR '1'='1`, et le résultat attendu, qui est aucune ligne retournée. → Résultat : le test prouve que la requête est paramétrée, et pas seulement que `read_user` fonctionne. · preuve : « `tests/test_injection.py` (base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob`) »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la formule `sum(prices) * (1 - discount / 100)` est donnée sans valeurs attendues explicites aux bornes 0 et 100. Le plan ne dit pas non plus ce qui se passe pour une remise hors de 0-100. → Action : indiquer les valeurs attendues (remise 0 donne le total, remise 100 donne 0) et décider si une remise hors bornes est rejetée ou ignorée. → Résultat : le test des bornes est mesurable, et le comportement hors bornes est défini. · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)` »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : `test_appels_existants` n'utilise qu'une remise nulle. Si des appels existants passent une autre remise, par exemple sur l'ancienne échelle 0-1, une régression ne serait pas détectée. → Action : inclure dans les appels relevés ceux qui ont une remise non nulle, avec leur valeur attendue calculée à la main. → Résultat : la non-régression couvre aussi les remises non nulles. · preuve : « les appels relevés à l'étape 1, avec remise nulle »."
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 0,
+    "revue_sha256": "46f3953cb33281aaf97481b46a7de6c45ccfc9202d900934c0204bcf250c65f8",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : H2 est présentée comme « confirmée par les appels relevés à l'étape 1 », alors que l'étape 1 n'est pas encore exécutée et que le plan dit lui-même qu'aucun appelant n'est connu. Cela donne pour vérifié ce qui n'est qu'attendu. → Action : reformuler H2 en « à confirmer à l'étape 1 ». → Résultat : la distinction hypothèse/preuve est respectée et H2 devient vérifiable à l'étape 1. · preuve : « H2 : les prix sont des nombres Python (int ou float). Elle est confirmée par les appels relevés à l'étape 1. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : D1 ajoute un `ValueError` pour les remises hors de 0-100. Un appelant existant qui passerait aujourd'hui une valeur hors bornes lèverait désormais une exception, ce qui est un risque de régression pour C3. Le plan ne le mentionne pas dans sa « Limite connue ». → Action : demander à l'étape 1 de relever aussi les remises hors bornes et de les signaler à la personne. → Résultat : le changement de comportement est visible avant la correction. · preuve : « Lever `ValueError` si `not 0 <= discount <= 100` » (étape 6) ; « Limite connue sur C3 » ne parle que du changement d'échelle."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : les tests importent `src/pay.py` depuis `tests/` avec `python -m unittest discover tests`. Le plan ne précise ni le chemin d'import ni le type de retour de `read_user` (curseur ou lignes), et ces deux points peuvent faire échouer la commande. → Action : préciser le mode d'import (par exemple `PYTHONPATH=.`, ou `discover -s tests -t .` avec des `__init__.py`) et la forme du retour attendue. → Résultat : la commande de vérification est reproductible. · preuve : « Lancer `python -m unittest discover tests` sur le code d'origine » ; « `read_user(db, \"Alice\")` retourne exactement 1 ligne »."
+    }
+   ],
+   "plan_sha256": "4e7e9ac68315cad6ac1f2af8300b7d2fb28b9ab96d373137d565b225a4ea0ba9",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "4e7e9ac68315cad6ac1f2af8300b7d2fb28b9ab96d373137d565b225a4ea0ba9",
+    "relances_relecteur": 0,
+    "revue_sha256": "b9e013e3f4778023aae8a1d1902cfa539311aea90a1b790f734e92ce7164dba1",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

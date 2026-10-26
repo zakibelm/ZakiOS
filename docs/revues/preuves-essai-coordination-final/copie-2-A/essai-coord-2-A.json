@@ -1,0 +1,94 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:48:35Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+  "content_sha256": "cdec733584e3040a7c815a19f32b4afb973c3173eeabc424e23185259bf41c5a",
+  "delivery_sha256": "8d31817511c7b7333c0b7b1fc6425c2a65431ff2800d9326d71934f0876eb132",
+  "trace": ".zakios/deliverables/8d31817511c7b7333c0b7b1fc6425c2a65431ff2800d9326d71934f0876eb132.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : le critère C3 (aucune régression sur les appels existants) n'est pas repris dans la section Planifier, qui ne liste que C1 et C2, et aucune vérification de la section Vérifier ne le couvre. L'étape 1 relève les appels de `total()` et `read_user()`, et l'étape 3 lance la suite sur le code d'origine. Mais aucune étape ne relance la suite complète ni les appels existants après correction, et la suite de non-régression n'est pas définie. → Action : ajouter C3 aux critères du plan, et ajouter une vérification avec un moyen de preuve concret. Par exemple, lancer `python -m unittest discover tests` après correction et comparer au résultat de référence de l'étape 3, ou rejouer les appels relevés à l'étape 1 avec leurs sorties attendues. → Résultat : C3 devient repris, mesurable et prouvable. · preuve : « Critères d'acceptation donnés par la mission : - C1 — remise correcte aux bornes 0 et 100. - C2 — requête SQL paramétrée. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la formule `sum(prices) * (1 - discount / 100)` renvoie un float. L'attendu `total([10, 20], 100) == 0` reste vrai (0.0 == 0), mais le type de retour peut changer pour les appels existants. Ce point relève de C3 et n'est pas examiné. → Action : comparer le type de retour dans la vérification C3. → Résultat : le risque de changement de type est détecté. · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : la vérification C2 s'appuie sur des tests créés par le plan lui-même. Le caractère « échoué avant correction » est prévu à l'étape 3 mais n'est présenté que comme attendu, ce qui est acceptable. Il serait utile de consigner la sortie réelle de cette exécution comme trace. → Action : conserver la sortie de l'étape 3 dans les traces. → Résultat : la preuve que les tests détectent les défauts devient vérifiée et non seulement attendue. · preuve : « `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts). »"
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "c9a86ee39e65ecb8fa714ab2a3c2cb571c574d14525f5a0720b1fcc47582a953",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la comparaison `diff reference_avant.txt apres.txt` risque de montrer du bruit (durées d'exécution, ordre des tests), et le plan ne dit pas comment l'écarter. → Action : comparer les lignes `... ok/FAIL` triées, ou ne retenir que les statuts par test. → Résultat : l'état de chaque test avant et après se lit sans ambiguïté · preuve : « `diff <scratchpad>/reference_avant.txt <scratchpad>/apres.txt` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : `1 - discount / 100` travaille en virgule flottante, et seules les valeurs 0, 50 et 100 sont testées. Une valeur comme 20 ou 33 pourrait donner un écart d'arrondi. → Action : ajouter si besoin un test avec `assertAlmostEqual`. → Résultat : la tolérance d'arrondi serait explicite · preuve : « `test_remise` : bornes 0 et 100, plus une valeur intermédiaire (ex. `total([10, 20], 50) == 15`) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le plan suppose que `from src.pay import total` fonctionne, alors que `src/` et `tests/` n'ont peut-être pas de `__init__.py` et que le répertoire de lancement n'est pas précisé. Cette hypothèse n'est pas listée. → Action : préciser que les commandes se lancent depuis la racine du dépôt, et vérifier l'import à l'étape 1. → Résultat : les commandes de preuve sont exécutables telles qu'écrites · preuve : « `python -c \"from src.pay import total; print(type(total([10,20],0)))\"` »"
+    }
+   ],
+   "plan_sha256": "cdec733584e3040a7c815a19f32b4afb973c3173eeabc424e23185259bf41c5a",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "cdec733584e3040a7c815a19f32b4afb973c3173eeabc424e23185259bf41c5a",
+    "relances_relecteur": 0,
+    "revue_sha256": "eea1ac0d05d3025b68c2467940f913d99bf185281320234e4ef09693ed9122bf",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

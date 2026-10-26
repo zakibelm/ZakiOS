@@ -1,0 +1,62 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:53:00Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-paiement-remise.md",
+  "content_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+  "delivery_sha256": "978de97f5d41f3b80914305da1f1e3fc5d4d89a51ed53231bd387cceb6d16792",
+  "trace": ".zakios/deliverables/978de97f5d41f3b80914305da1f1e3fc5d4d89a51ed53231bd387cceb6d16792.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-temoin",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la référence de l'étape 3 n'utilise que des remises nulles. Un appel existant avec une remise non nulle, qui change de résultat avec la nouvelle formule, ne serait pas détecté. → Action : relever à l'étape 1 les remises réellement passées dans les appels existants et signaler tout appel concerné. → Résultat : la régression et le changement de comportement voulu sont distingués. · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : le plan ne dit pas quoi faire pour une remise hors de 0-100 ni pour les écarts d'arrondi en float. Il vérifie bien les bornes 0 et 100. → Action : ajouter un cas intermédiaire, par exemple 50, avec une comparaison tolérante pour les floats, ou noter explicitement que ces cas sont hors périmètre. → Résultat : le comportement hors bornes est connu et la comparaison des floats est fiable. · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : l'hypothèse selon laquelle `test_appels_existants` passe sur le code d'origine n'est pas confirmée. Si elle échoue, la référence est invalide. Le plan ne prévoit pas ce cas à l'étape 4. → Action : ajouter à la phase Agir un traitement de l'écart « le test de référence échoue avant correction ». → Résultat : la référence de C3 reste fiable. · preuve : « `test_appels_existants` doit passer (référence) »"
+    }
+   ],
+   "plan_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+    "relances_relecteur": 0,
+    "revue_sha256": "23931c4f8c4a728afe7954d5197c3bd63cd4b6b1436437c4b55940e89d16974d",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 1
+}

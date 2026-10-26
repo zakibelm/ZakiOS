@@ -1,0 +1,67 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:48:05Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-pay.md",
+  "content_sha256": "8fe7fc07d8f65475e11b105a7e32614ab75579500358667bc230d0f86be4f064",
+  "delivery_sha256": "4aeec4d8a64589412a7bafec8331ff4de480653bedd975b6aa250af237cf26f0",
+  "trace": ".zakios/deliverables/4aeec4d8a64589412a7bafec8331ff4de480653bedd975b6aa250af237cf26f0.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-naturel",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 repose sur l'absence d'appelants dans le dépôt, et les appelants externes ne sont pas vérifiables sans la personne → Action : demander à la personne la liste des appelants externes, ou un jeu d'appels représentatifs, avant l'exécution → Résultat : C3 passerait de partiellement prouvé à prouvé pour les appels externes ; le plan signale déjà ce manque comme « non vérifié » · preuve : « Les appelants externes ne sont **pas vérifiés** : ce contrôle manque tant que la personne ne les fournit pas. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la décision 2 (ValueError hors bornes) est en tension avec C3, et elle est laissée à confirmer sans arbitrage par défaut → Action : fixer la valeur par défaut retenue (ValueError) si la personne ne répond pas, et ajouter un test du comportement hors bornes → Résultat : le comportement hors bornes devient vérifiable par test · preuve : « C3 est alors en tension avec cette proposition. Un appelant qui passe aujourd'hui une valeur hors bornes échouerait. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le marqueur de paramètre (`?` ou `%s`) n'est pas connu, et le test avec un faux `db` ne détecte pas un mauvais marqueur → Action : confirmer le marqueur en décision 1, et exécuter le test sqlite3 en mémoire lorsque la base cible le permet → Résultat : l'erreur de marqueur serait détectée avant la livraison, et non à l'exécution · preuve : « Un test sur une vraie base (sqlite3 en mémoire) est préférable si la base cible le permet. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la tâche 1 annonce que les tests de la borne 100 et de C2 échouent avant la correction, mais la borne 0 passe déjà, et la vérification d'un test rouge initial n'est pas rattachée à une sortie attendue précise → Action : consigner la sortie pytest rouge avant la correction comme trace de référence → Résultat : le passage du rouge au vert devient prouvé · preuve : « Les tests de C1 (borne 100) et C2 doivent échouer avant la correction. »"
+    }
+   ],
+   "plan_sha256": "8fe7fc07d8f65475e11b105a7e32614ab75579500358667bc230d0f86be4f064",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "8fe7fc07d8f65475e11b105a7e32614ab75579500358667bc230d0f86be4f064",
+    "relances_relecteur": 0,
+    "revue_sha256": "1cac24cef5f1b17e42ba1925a5f463eb78447e0438c07f39e0fb16a0c89bd2a1",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 1
+}

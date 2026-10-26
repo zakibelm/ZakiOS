@@ -1,0 +1,94 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:52:14Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "7dc5599398c7305ff9d0d695a5b726bfc063b10d1afdef69a0de1f02df6503ca",
+  "delivery_sha256": "5cb341a09d7e3ba512ff0b5b3f31a0ae03810de0c40c1ad3d2999b438592433b",
+  "trace": ".zakios/deliverables/5cb341a09d7e3ba512ff0b5b3f31a0ae03810de0c40c1ad3d2999b438592433b.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 est « Vérifier que le code est de bonne qualité », sans commande, test ni sortie attendue. Le critère « aucune régression sur les appels existants » n'a donc aucun moyen de preuve concret dans la section Vérifier. → Action : relier C3 à une commande précise, par exemple `python -m unittest tests.test_appels_existants` avec la sortie attendue (tous les tests passent, mêmes valeurs qu'avant correction). → Résultat : C3 devient prouvable. Attendu seulement, non vérifié. · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 5 donne `sum(prices) * (1 - discount / 100)`. Le plan ne dit pas ce que fait le code si la remise est hors de 0-100 (valeur négative ou supérieure à 100), ni comment le résultat flottant est comparé. → Action : préciser le comportement attendu hors bornes, ou le noter comme hors périmètre, et comparer avec `assertAlmostEqual` si des flottants sont utilisés. → Résultat : le comportement aux limites est défini. Attendu seulement, non vérifié. · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'étape 4 dit que `test_remise` doit échouer sur le code d'origine. Ce n'est pas établi, puisque le plan ne connaît le code qu'après l'étape 1 et que la valeur 0 peut déjà passer. → Action : indiquer que l'échec attendu de `test_remise` est une hypothèse, à confirmer lors de l'exécution de l'étape 4. → Résultat : l'attendu n'est pas présenté comme un fait. · preuve : « `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts) »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "44f410bf900c0499cb03c1a23dbad281bd0cf8b5d467ea5e2cf6989dbb4c5163",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : aucun appelant n'existe dans le dépôt, donc la vérification C3 ne porte que sur des tests écrits par le plan lui-même. Elle ne prouve rien pour les appelants externes. → Action : obtenir de la personne la confirmation qu'il n'y a pas d'appelant externe avant la livraison, comme le plan le prévoit déjà. → Résultat : la limite de la preuve C3 est explicite et la vérification reste concrète et exécutable. · preuve : « Limite : ce test ne couvre que les comportements fixés à l'étape 3. Il ne prouve rien sur des appelants externes absents du dépôt »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la décision D1 (ValueError hors bornes) dépasse ce que demande la mission et attend encore la confirmation de la personne. Le plan prévoit un retrait si elle refuse, mais la section Vérifier de C1 garde le test hors bornes. → Action : préciser dans Vérifier que le critère « ValueError hors bornes » disparaît si D1 est refusée. → Résultat : la preuve C1 reste alignée sur la décision finale. · preuve : « D1 (comportement hors bornes, à confirmer par la personne) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : H2 (prix numériques) n'est pas vérifiée et aucun test n'en couvre la violation. → Action : laisser H2 comme hypothèse signalée, ou ajouter un cas simple si la personne le souhaite. → Résultat : l'hypothèse reste visible et ne bloque pas les critères. · preuve : « H2 : les prix sont des nombres Python (int ou float). Rien dans le dépôt ne le prouve. »"
+    }
+   ],
+   "plan_sha256": "7dc5599398c7305ff9d0d695a5b726bfc063b10d1afdef69a0de1f02df6503ca",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "7dc5599398c7305ff9d0d695a5b726bfc063b10d1afdef69a0de1f02df6503ca",
+    "relances_relecteur": 0,
+    "revue_sha256": "0a06dd93bc369d065a4e13bb9eb748ff5632698270b06819b59b0310fffb4c40",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

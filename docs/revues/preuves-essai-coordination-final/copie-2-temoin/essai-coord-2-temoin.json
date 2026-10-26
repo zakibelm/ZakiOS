@@ -1,0 +1,62 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:50:16Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-paiement-remise.md",
+  "content_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+  "delivery_sha256": "7f20132379d46413bf8f39807557ae00581edcdd551499f2bd32976e41d88c0e",
+  "trace": ".zakios/deliverables/7f20132379d46413bf8f39807557ae00581edcdd551499f2bd32976e41d88c0e.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-temoin",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : les appels existants ne sont testés qu'avec une remise nulle. Un appel existant qui passerait une remise non nulle, sous l'ancienne convention, ne serait pas couvert, et son changement de valeur serait voulu mais non documenté. → Action : si l'étape 1 relève des appels avec remise non nulle, les lister et dire explicitement que leur valeur change. → Résultat : la portée de « aucune régression » est précisée. · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : seules les bornes 0 et 100 sont testées, avec un seul jeu de prix. Une valeur intermédiaire, par exemple 50, confirmerait que la remise est bien un pourcentage. → Action : ajouter un cas intermédiaire dans `tests/test_remise.py`. → Résultat : la formule est confirmée hors des bornes. · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : H2 (prix int ou float) est dite confirmée à l'étape 1, mais aucune vérification de cette confirmation n'est écrite. Un retour en `float` pourrait aussi différer du retour d'origine. → Action : comparer le type et la valeur de retour avant et après correction. → Résultat : l'hypothèse est prouvée au lieu d'être supposée. · preuve : « Hypothèse H2 : les prix sont des nombres Python (int ou float) ; confirmée à l'étape 1 par les appels relevés. »"
+    }
+   ],
+   "plan_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+    "relances_relecteur": 0,
+    "revue_sha256": "3c5cc052617c6d56f2cc854317cd72754de7e1157ba4a5ec33d08bae95ed0313",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 1
+}

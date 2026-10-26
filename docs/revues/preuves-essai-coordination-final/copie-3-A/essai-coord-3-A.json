@@ -1,0 +1,89 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:51:28Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+  "content_sha256": "95a5adec2128a5bedb2a47bc9f78abeb051fbfdad2eeaa217760275f09c3e9ed",
+  "delivery_sha256": "db809104c43eda129fb113d4eaa34a7f471c1ff58c537e32664bffddae421008",
+  "trace": ".zakios/deliverables/db809104c43eda129fb113d4eaa34a7f471c1ff58c537e32664bffddae421008.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : le critère C3 « aucune régression sur les appels existants » n'est pas repris dans « Planifier », qui ne liste que C1 et C2. Aucune vérification de C3 n'existe dans « Vérifier ». Le relevé des appels (étape 1) et le `discover` de l'étape 3 ne servent qu'à repérer les appels. Ils ne vérifient pas que les appels existants se comportent comme avant, et l'étape 3 ne les lance que sur le code d'origine. → Action : ajouter C3 aux critères, puis une vérification concrète dans « Vérifier ». Par exemple, relancer `python -m unittest discover tests` après correction et comparer à la sortie d'avant correction sur les appels relevés. → Résultat : attendu, C3 devient mesurable et prouvable. Actuellement, un critère de la mission n'a aucune vérification. · preuve : « Critères d'acceptation donnés par la mission : - C1 — remise correcte aux bornes 0 et 100. - C2 — requête SQL paramétrée. » ; absence de C3 et de toute vérification de non-régression dans « Vérifier »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la formule `sum(prices) * (1 - discount / 100)` peut renvoyer un float. L'attendu `total([10, 20], 100) == 0` reste vrai, mais le changement de type possible n'est pas évalué pour les appelants. → Action : noter ce point dans la vérification de C3. → Résultat : le risque de régression de type est couvert. · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "gravites": [
+     "majeur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "c768481646fa8276c416fa6d71a4f8267ac9ba83196000755d4fde9b2bec258f",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la valeur de remise hors de 0-100 (par exemple -10 ou 150) n'est ni testée ni traitée, alors que la mission ne parle que des bornes 0 et 100 · Action : ajouter, si la personne le souhaite, un cas de validation ou une décision explicite sur ces valeurs · Résultat : comportement hors bornes connu et documenté, sans effet sur l'acceptation de C1 · preuve : « bornes 0 et 100, plus 50 : `total([10, 20], 50) == 15` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la non-régression est prouvée seulement sur des cas écrits par le plan lui-même, et le plan l'assume (appelants hors dépôt non couverts) ; l'hypothèse H3 reste non prouvée · Action : demander à la personne la liste des appelants externes ou des exemples d'appels réels avant ou après l'exécution · Résultat : couverture de C3 élargie, sans changer le fait que C3 est relié à une vérification exécutable · preuve : « Limite assumée : C3 est prouvé sur les cas de `test_regression` seulement, car aucun appel n'existe dans le dépôt. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le test d'injection ne couvre qu'une seule charge utile ; un cas avec un nom contenant une apostrophe légitime (par exemple « O'Brien ») renforcerait la preuve · Action : ajouter ce cas à `tests/test_injection.py` · Résultat : la requête paramétrée est vérifiée sur une entrée légitime contenant un guillemet · preuve : « Il vérifie que `read_user(db, \"' OR '1'='1\")` renvoie 0 ligne. »"
+    }
+   ],
+   "plan_sha256": "95a5adec2128a5bedb2a47bc9f78abeb051fbfdad2eeaa217760275f09c3e9ed",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "95a5adec2128a5bedb2a47bc9f78abeb051fbfdad2eeaa217760275f09c3e9ed",
+    "relances_relecteur": 0,
+    "revue_sha256": "528d8a0c56f040e92b19ed77cb29a37f8c43b0066017dee2146b27f2499d2d42",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

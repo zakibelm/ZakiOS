@@ -1,0 +1,13 @@
+{
+ "echecs": [],
+ "steps": {
+  "installation": {
+   "appliques": 5
+  },
+  "revue_falsifiee_rejetee": true
+ }
+}
+passage 1 {'A': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'B': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'temoin': ('accepte', 1, ['ACCEPTE']), 'M4': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'naturel': ('accepte', 1, ['ACCEPTE'])}
+passage 2 {'A': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'B': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'temoin': ('accepte', 1, ['ACCEPTE']), 'M4': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE'])}
+passage 3 {'A': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'B': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'temoin': ('accepte', 1, ['ACCEPTE']), 'M4': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE'])}
+TOUS LES CRITÈRES SATISFAITS
