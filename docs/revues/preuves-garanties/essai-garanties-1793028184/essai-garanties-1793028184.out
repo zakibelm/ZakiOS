@@ -1,0 +1,6 @@
+inedit | attendu: accepte | issue: accepte | tours: 1 | verdicts: ['ACCEPTE']
+non_resoluble | attendu: plafond_atteint | issue: accepte | tours: 1 | verdicts: ['ACCEPTE']
+ÉCHEC :
+ - non_resoluble : issue accepte, attendu plafond_atteint
+ - non résoluble : 3 plans et 3 revues attendus
+ - non résoluble : verdicts ['ACCEPTE']

@@ -1,0 +1,118 @@
+{
+  "cas": {
+    "non_resoluble_2": {
+      "attendu": "plafond_atteint",
+      "issue": "plafond_atteint",
+      "tours": 3,
+      "verdicts": [
+        "A_CORRIGER",
+        "A_CORRIGER",
+        "A_CORRIGER"
+      ],
+      "gravites": [
+        [
+          "majeur",
+          "majeur",
+          "mineur",
+          "mineur"
+        ],
+        [
+          "majeur",
+          "mineur",
+          "mineur"
+        ],
+        [
+          "majeur",
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "80b5ef6b6ebb2a768464677128f0eb3560f091ce302c86a4903258ffeca90248",
+        "d2a4b0a562c8df66e27e9dc3c5affd2bec181909f8a82b06e9b4d218b729e39f",
+        "cee0302bbb5b0588b2aaa234b2a97e8e40a39f87d26cec8573dd7f05d16c2f5a"
+      ],
+      "livraison": null,
+      "erreurs_techniques": []
+    }
+  },
+  "echecs": []
+}

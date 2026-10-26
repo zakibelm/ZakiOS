@@ -1,0 +1,133 @@
+{
+  "cas": {
+    "inedit": {
+      "attendu": "accepte",
+      "issue": "accepte",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Glob",
+            "Read"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-export-csv.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "14c5e94c0e1b6dfee7d6448ac679954fc715e04427621070618ec1165c15af00"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-export-csv.md",
+        "delivery_sha256": "acd15a99ae27c5451ad3c83f62b47854c5fb1f81cb5b7e1b60e9e3e8f1bf211e",
+        "content_sha256": "14c5e94c0e1b6dfee7d6448ac679954fc715e04427621070618ec1165c15af00",
+        "trace": ".zakios/deliverables/acd15a99ae27c5451ad3c83f62b47854c5fb1f81cb5b7e1b60e9e3e8f1bf211e.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "14c5e94c0e1b6dfee7d6448ac679954fc715e04427621070618ec1165c15af00"
+    },
+    "non_resoluble": {
+      "attendu": "plafond_atteint",
+      "issue": "accepte",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-total-rabais-50.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "e2f0889dcd4c7e84433fff9d8546406efbfcf082fd804e10d5ac956d3283c8ed"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-total-rabais-50.md",
+        "delivery_sha256": "4061a715e82aa9a23d821f5bf7e348039d16057fda8ea50628aa4660f7376dd5",
+        "content_sha256": "e2f0889dcd4c7e84433fff9d8546406efbfcf082fd804e10d5ac956d3283c8ed",
+        "trace": ".zakios/deliverables/4061a715e82aa9a23d821f5bf7e348039d16057fda8ea50628aa4660f7376dd5.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "e2f0889dcd4c7e84433fff9d8546406efbfcf082fd804e10d5ac956d3283c8ed"
+    }
+  },
+  "echecs": [
+    "non_resoluble : issue accepte, attendu plafond_atteint",
+    "non résoluble : 3 plans et 3 revues attendus",
+    "non résoluble : verdicts ['ACCEPTE']"
+  ]
+}

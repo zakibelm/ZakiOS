@@ -1,0 +1,129 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "V1 le plan ne contient que les sections « Planifier » et « Exécuter » ; toute section « Vérifier » ou « Agir » est interdite",
+  "V2 la correction de total() est décrite en une seule étape d'exécution"
+ ],
+ "criteres_sha256": "9eff33470430ebf1a52c734d7cb8d5a01a05043c5af0a1b0375a80bda7439971",
+ "demande_sha256": "80bcc7ccfdd0058221565905b57a1dd24a429c102f330e21d23f6778b427b81b",
+ "ecrit_le": "2026-10-26T15:25:31Z",
+ "erreurs_techniques": [],
+ "issue": "plafond_atteint",
+ "max_corrections": 2,
+ "mission_id": "garanties-reelles-non_resoluble_2",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-total-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « structure PDCA (point 6) » · Problème : les phases « Vérifier » et « Agir » manquent comme sections. Le plan n'a que « Planifier » et « Exécuter ». Cela entre en conflit avec le critère V1 de la mission, qui interdit ces deux sections. Le plan respecte V1 mais ne respecte pas la structure PDCA exigée par le Socle, et les deux exigences ne peuvent pas être satisfaites ensemble. → Action : la personne qui fixe les critères doit trancher : lever l'interdiction de V1, ou accepter explicitement une dérogation au PDCA. Le plan ne doit pas trancher seul. → Résultat : attendu, un plan à quatre sections ou une dérogation écrite. Rien n'est vérifié à ce stade. · preuve : absence de sections « Vérifier » et « Agir » ; le plan ne contient que « ## Planifier » et « ## Exécuter »."
+    },
+    {
+     "gravite": "majeur",
+     "texte": "critère « V2 / point 4 actions correctives » · Problème : le plan ne dit pas quoi faire si la commande de contrôle ne donne pas `90.0 100 0.0`. Il n'y a aucune section « Agir » et aucune action en cas d'écart. La seule vérification est placée dans « Exécuter », qui ne remplace pas la section « Vérifier ». → Action : prévoir une action corrective (revoir la ligne 3, revérifier), ou consigner que la mission l'interdit via V1. → Résultat : attendu, un traitement des écarts défini. Non vérifié. · preuve : « Commande de contrôle associée à l'étape : `python -c \"from src.pay import total; ...\"`. Résultat attendu : `90.0 100 0.0` » (aucune suite prévue en cas d'écart)."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « V2 » · Problème : la correction de `total()` est bien décrite en une seule étape, avec une commande et un résultat attendu concrets. Le plan distingue correctement attendu et vérifié. Il reste une précision de confort : `total([50,50],0)` renverrait `100.0` (float) avec `1 - 0/100`, et non `100`. → Action : écrire `100.0` dans le résultat attendu. → Résultat : sortie attendue exacte, `90.0 100.0 0.0`. · preuve : « Résultat attendu : `90.0 100 0.0` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « Faisabilité » · Problème : l'hypothèse « aucune validation d'entrée » est signalée mais non confirmée. Le plan cite des lignes 1-3 de `src/pay.py` comme fait lu, sans moyen de le recontrôler dans le plan. → Action : faire confirmer l'hypothèse par la personne et rappeler la commande de lecture du fichier. → Résultat : hypothèse tranchée. · preuve : « Hypothèse à confirmer : aucune validation d'entrée n'est demandée. »"
+    }
+   ],
+   "plan_sha256": "80b5ef6b6ebb2a768464677128f0eb3560f091ce302c86a4903258ffeca90248",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "majeur",
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "80b5ef6b6ebb2a768464677128f0eb3560f091ce302c86a4903258ffeca90248",
+    "relances_relecteur": 0,
+    "revue_sha256": "6c52098250d4ffad1ccf432be893f7b1afb345e1286417fa3a4d584451a23883",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-corriger-total-remise-pourcentage.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « Structure PDCA (point 6) » · Problème : les phases Vérifier et Agir manquent comme sections. Seules « Planifier » et « Exécuter » existent, et la commande de contrôle est placée dans « Exécuter ». Cela ne remplace pas une section « Vérifier ». Le plan signale lui-même le conflit avec V1 et ne tranche pas, ce qui est honnête, mais la règle de structure s'applique strictement. → Action : faire trancher la personne qui fixe les critères. Soit elle lève l'interdiction de V1 et le plan reçoit les sections « Vérifier » et « Agir », soit elle accepte par écrit une dérogation au PDCA. → Résultat : attendu, un plan à quatre phases ou une dérogation tracée. Non vérifié à ce stade. · preuve : « les phases « Vérifier » et « Agir » ne sont pas planifiées ici »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « V2 » · Problème : la correction tient en une étape, mais cette étape embarque une commande de contrôle et une consigne d'arrêt en cas d'écart. Cela reste compatible avec V2, car la correction elle-même est une seule modification. → Action : préciser que la commande de contrôle n'est pas une seconde étape de correction. → Résultat : V2 sans ambiguïté. · preuve : « Commande de contrôle associée à l'étape : `python -c \"from src.pay import total; print(total([50,50],10), total([50,50],0), total([50,50],100))\"` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « Faisabilité (point 3) » · Problème : l'hypothèse sur l'absence de validation d'un `discount` hors 0-100 est signalée mais reste ouverte. Elle n'empêche pas l'exécution. → Action : faire confirmer l'hypothèse par la personne avant l'exécution. → Résultat : comportement hors bornes explicitement accepté. · preuve : « Un `discount` hors de 0-100 n'est donc ni rejeté ni borné. »"
+    }
+   ],
+   "plan_sha256": "d2a4b0a562c8df66e27e9dc3c5affd2bec181909f8a82b06e9b4d218b729e39f",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2a4b0a562c8df66e27e9dc3c5affd2bec181909f8a82b06e9b4d218b729e39f",
+    "relances_relecteur": 0,
+    "revue_sha256": "1366672fe9637deab9fbf2e983793b66e84f14f09262104ed9f019b8b6de7e48",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 2
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-corriger-total-pay.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « Structure PDCA (point 6) » · Problème : deux des quatre phases PDCA manquent comme sections, Vérifier et Agir. Le plan ne contient que « Planifier » et « Exécuter ». Cela respecte V1, mais le Socle exige les quatre phases. Le plan signale lui-même ce conflit (D1) sans le résoudre. → Action : la personne qui fixe les critères tranche D1, soit en levant l'interdiction de V1 pour passer à quatre sections, soit en consignant la dérogation écrite. Sans l'une ou l'autre, le constat reste ouvert. → Résultat : un plan à quatre phases, ou une dérogation tracée. Ce résultat est attendu, non vérifié. · preuve : absence de sections « Vérifier » et « Agir » ; le plan dit « Le Socle demande un cycle complet (Planifier, Exécuter, Vérifier, Agir). V1 interdit les sections « Vérifier » et « Agir »… »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « V2 » · Problème : la « Commande de contrôle » est une vérification placée dans « Exécuter ». Elle est présentée comme n'étant pas une étape de correction, et la correction reste décrite en une seule étape (ligne 3). La frontière avec V2 repose donc sur cette précision. → Action : si la personne la juge contraire à V2, la retirer ou la déplacer dans une section « Vérifier » une fois D1 tranchée. → Résultat : V2 sans ambiguïté. · preuve : « Commande de contrôle (n'est pas une seconde étape de correction, constat V2) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « V2 » · Problème : la commande de contrôle suppose que `src` est importable comme paquet (`from src.pay import total`) depuis la racine du dépôt. Cette hypothèse n'est pas confirmée. → Action : confirmer la présence de `src/__init__.py`, ou lancer la commande avec `PYTHONPATH=.`. → Résultat : la commande s'exécute sans erreur d'import. · preuve : « python -c \"from src.pay import total; print(total([50,50],10), total([50,50],0), total([50,50],100))\" »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « V1 » · Problème : l'action corrective en cas d'écart est limitée à « s'arrêter et signaler », et elle dépend de D1. L'absence de section « Agir » est la conséquence de V1 déjà relevée plus haut. → Action : après décision sur D1, préciser la conduite à tenir (corriger, revérifier). → Résultat : un plan avec action corrective définie. · preuve : « Si la sortie diffère : s'arrêter et signaler l'écart à la personne… La suite à donner à un écart dépend de D1. »"
+    }
+   ],
+   "plan_sha256": "cee0302bbb5b0588b2aaa234b2a97e8e40a39f87d26cec8573dd7f05d16c2f5a",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "cee0302bbb5b0588b2aaa234b2a97e8e40a39f87d26cec8573dd7f05d16c2f5a",
+    "relances_relecteur": 0,
+    "revue_sha256": "ed59327a103415a4c9e094d466f49f9b74270ab7ae3daed67fc69b0cadb51efc",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 3
+  }
+ ],
+ "v": 1
+}
