@@ -156,7 +156,7 @@ def main():
                     continue
                 check(sorted(c["outils"]) == READONLY, "%s : outils effectifs de %s = %s" % (tag, c["role"], c["outils"]))
                 check(not set(c["utilises"]) & MODIFYING, "%s : outil modifiant utilisé par %s" % (tag, c["role"]))
-            allowed = [plan_path] if out["issue"] == "accepte" else []
+            allowed = [out["livraison"]["chemin"]] if out["issue"] == "accepte" else []
             check(delta["crees"] == allowed and not delta["modifies"] and not delta["supprimes"],
                   "%s : changements inattendus %s" % (tag, delta))
             # 6 trace
@@ -186,14 +186,14 @@ def main():
                 check(out["issue"] == "accepte" and 2 <= out["tours"] <= 3,
                       tag + " : correction non aboutie (issue %s, tours %s)" % (out["issue"], out["tours"]))
                 if out["issue"] == "accepte":
-                    final = open(os.path.join(d, plan_path), encoding="utf-8").read()
+                    final = open(os.path.join(d, out["livraison"]["chemin"]), encoding="utf-8").read()
                     check(tours[-1]["revue"]["verdict"] == "ACCEPTE", tag + " : dernière revue non acceptée")
                     if name == "A":
                         check("C3" in final, tag + " : plan corrigé sans C3")
             if out["issue"] == "accepte":
                 lv = out["livraison"]
                 check(lv["statut"] == "enregistre" and lv["second"] == "deja_enregistre", tag + " : statuts de livraison")
-                check(sha_tree(d).get(plan_path) is not None, tag + " : plan non enregistré")
+                check(sha_tree(d).get(lv["chemin"]) is not None, tag + " : plan non enregistré")
             else:
                 check(not os.path.exists(os.path.join(d, "docs/plans")), tag + " : rien ne devait être enregistré")
                 if name != "naturel":
