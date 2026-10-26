@@ -1,0 +1,103 @@
+{
+ "appels": {
+  "plan-reviewer": 1,
+  "plan-writer": 1
+ },
+ "appels_detail": [
+  {
+   "n": 1,
+   "outils": {
+    "demandes": {
+     "Glob": 1,
+     "Read": 2
+    },
+    "interdits": []
+   },
+   "resultat": "valide",
+   "role": "plan-writer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 2,
+   "outils": {
+    "demandes": {
+     "Glob": 1,
+     "Read": 1
+    },
+    "interdits": []
+   },
+   "resultat": "valide",
+   "role": "plan-reviewer",
+   "tentative": 1,
+   "tour": 1
+  }
+ ],
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "82701fb7cc943ebc",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3 le plan ne modifie pas le corps de total()"
+ ],
+ "criteres_ids": {
+  "R1": "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2": "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3": "R3 le plan ne modifie pas le corps de total()"
+ },
+ "criteres_sha256": "2fb10ac04821a5658e3ed1aa3b8370c07deb5fa0893559b8ef096c8d709d15f1",
+ "demande_sha256": "205468cd5dde0eb9e4e6e99195cd9932bcb1dff90861e452656ebf3962e47410",
+ "ecarts_comportementaux": [],
+ "ecrit_le": "2026-10-26T18:24:49Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-docstring-total.md",
+  "content_sha256": "6ca81835f129ca94e45e6f0b71fec71b0844a2236cf4a33d6be8c762bfd06f0c",
+  "delivery_sha256": "b9f25f5acd38613453b4de7fa1fe02738a5bc1564dd2cef3a2e9eebd8b671d8e",
+  "trace": ".zakios/deliverables/b9f25f5acd38613453b4de7fa1fe02738a5bc1564dd2cef3a2e9eebd8b671d8e.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "garanties-temoin_resoluble_2-p3",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-docstring-total.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « R2 » · Problème : l'emplacement de `tests/test_pay.py` et la méthode d'import `src.pay` ne sont pas confirmés, et pytest n'est pas vérifié → Action : lancer `python -m pytest tests/test_pay.py` depuis la racine ; le plan prévoit déjà d'ajuster l'import en cas d'échec → Résultat : l'exécution du test reste à prouver, le plan la présente comme « Attendu, non exécuté » · preuve : « Si l'import `src.pay` échoue (pas de `src/__init__.py` ou pytest absent), ajuster l'import ou la configuration. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R3 » · Problème : le commentaire erroné de la ligne 2 (« pourcentage 0-100 ») reste dans le corps de `total()` et contredit la docstring. Le plan le signale et pose la question, mais la décision ne bloque pas la livraison, car R1 et R3 sont satisfaits → Action : la personne peut décider plus tard d'une mission séparée pour le corriger → Résultat : aucun critère n'est abandonné, et le plan est exécutable tel quel · preuve : « Le plan ci-dessous le laisse en place, ce qui respecte R3. »"
+    }
+   ],
+   "plan_sha256": "6ca81835f129ca94e45e6f0b71fec71b0844a2236cf4a33d6be8c762bfd06f0c",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "R1": "couvert",
+     "R2": "couvert",
+     "R3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "6ca81835f129ca94e45e6f0b71fec71b0844a2236cf4a33d6be8c762bfd06f0c",
+    "relances_relecteur": 0,
+    "revue_sha256": "e47e7ff631d939da77e8ba420bb9ec536b2edc54da9b2164500115e5bbebe5a2",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

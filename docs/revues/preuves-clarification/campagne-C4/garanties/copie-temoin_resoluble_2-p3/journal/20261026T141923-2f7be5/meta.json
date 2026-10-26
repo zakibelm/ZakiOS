@@ -1,0 +1,43 @@
+{
+ "created_dirs": [
+  ".claude",
+  ".claude/agents",
+  ".claude/skills",
+  ".claude/skills/writing-plans",
+  ".claude/socle"
+ ],
+ "lock_before": {
+  "components": {},
+  "history": [],
+  "version": 1
+ },
+ "ops": [
+  {
+   "after_sha256": "d4ce111aed990f5a30ee5f3ff2a3e71535064b686d9132909c4da0d040221cea",
+   "kind": "created",
+   "path": ".claude/CLAUDE.md"
+  },
+  {
+   "after_sha256": "67149be0c72cb593e3c4f52a91bb3afab36aded36a6dae7c138a7b868c7b0f1f",
+   "kind": "created",
+   "path": ".claude/agents/plan-reviewer.md"
+  },
+  {
+   "after_sha256": "fe175704978ed9db35e22fd9823889605504dc5374288ecc875b5afd43edbcec",
+   "kind": "created",
+   "path": ".claude/agents/plan-writer.md"
+  },
+  {
+   "after_sha256": "6c3790c934b9f634803fa1088627d9b55b701a8c7faa06652cbf73639485eb8e",
+   "kind": "created",
+   "path": ".claude/skills/writing-plans/SKILL.md"
+  },
+  {
+   "after_sha256": "8b4e62cd2847ca9d0b39c324065c85d7ccee526711a7f0844e90e55b9c5de7a1",
+   "kind": "created",
+   "path": ".claude/socle/REGLES.md"
+  }
+ ],
+ "plan_sha256": "79d8c000a1d15b72a07c74ad3996bce4d35843735923469038267b73f8590608",
+ "status": "committed"
+}

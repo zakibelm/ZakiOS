@@ -1,0 +1,12 @@
+{
+ "dossier": "/home/claude/essai-c4-gar-1793038742",
+ "statistiques": {
+  "missions": 9,
+  "appels_reels": 18,
+  "liens_revue_plan": 9,
+  "livraisons_verifiees": 3,
+  "arrets_verifies": 6
+ },
+ "divergences": [],
+ "ecarts_comportementaux": []
+}

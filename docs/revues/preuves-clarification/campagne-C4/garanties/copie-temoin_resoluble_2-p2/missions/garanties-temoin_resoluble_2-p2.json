@@ -1,0 +1,105 @@
+{
+ "appels": {
+  "plan-reviewer": 1,
+  "plan-writer": 1
+ },
+ "appels_detail": [
+  {
+   "n": 1,
+   "outils": {
+    "demandes": {
+     "Glob": 1,
+     "Read": 2
+    },
+    "interdits": []
+   },
+   "resultat": "valide",
+   "role": "plan-writer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 2,
+   "outils": {
+    "demandes": {},
+    "interdits": []
+   },
+   "resultat": "valide",
+   "role": "plan-reviewer",
+   "tentative": 1,
+   "tour": 1
+  }
+ ],
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "82701fb7cc943ebc",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3 le plan ne modifie pas le corps de total()"
+ ],
+ "criteres_ids": {
+  "R1": "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2": "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3": "R3 le plan ne modifie pas le corps de total()"
+ },
+ "criteres_sha256": "2fb10ac04821a5658e3ed1aa3b8370c07deb5fa0893559b8ef096c8d709d15f1",
+ "demande_sha256": "205468cd5dde0eb9e4e6e99195cd9932bcb1dff90861e452656ebf3962e47410",
+ "ecarts_comportementaux": [],
+ "ecrit_le": "2026-10-26T18:24:09Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-docstring-total-pay.md",
+  "content_sha256": "768d3380fd93b011de1ba973e2443a44d369131b3f7868dff810bdf00cfd6eee",
+  "delivery_sha256": "5e748837309c7b81f320b8478d1eb99ddc67cbf37765b9219b860ba0a55bc51d",
+  "trace": ".zakios/deliverables/5e748837309c7b81f320b8478d1eb99ddc67cbf37765b9219b860ba0a55bc51d.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "garanties-temoin_resoluble_2-p2",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-docstring-total-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « R2 » · Problème : l'import `from src.pay import total` suppose que la racine du projet est dans le chemin Python, et le plan ne dit pas si `src/` est un paquet ou si un `conftest.py` est nécessaire → Action : le plan prévoit déjà d'adapter l'import ou la configuration en cas d'échec, et il peut préciser la solution de repli (`python -m pytest` depuis la racine, ou `conftest.py`) → Résultat : le critère reste prouvable par la commande `python -m pytest tests/test_pay.py` · preuve : « Hypothèse à confirmer : l'import `from src.pay import total` suppose que la racine du projet est dans le chemin Python. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R3 » · Problème : le plan laisse en place le commentaire « pourcentage 0-100 », qui contredit la docstring, et il demande à la personne de confirmer sa lecture de R3. Cette question est un confort, pas un blocage : la docstring à insérer est exigée par la mission, et le plan ne modifie pas la logique de `total()` → Action : garder la question comme information, sans bloquer l'exécution, et prévoir une tâche séparée pour le commentaire → Résultat : R3 reste vérifiable par `git diff src/pay.py`, qui ne doit montrer que des lignes ajoutées · preuve : « Ce plan **le laisse donc en place**. La docstring et ce commentaire diront alors des choses opposées. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R2 » · Problème : l'exécution des tests est correctement présentée comme attendue et non vérifiée, mais elle dépend de la présence de pytest, non confirmée → Action : indiquer la commande `unittest` de repli (`python -m unittest`), ce qui suppose d'adapter les tests écrits en fonctions pytest → Résultat : la vérification de R2 reste exécutable quel que soit le lanceur · preuve : « Si pytest n'est pas installé, utiliser `unittest` à la place. »"
+    }
+   ],
+   "plan_sha256": "768d3380fd93b011de1ba973e2443a44d369131b3f7868dff810bdf00cfd6eee",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "R1": "couvert",
+     "R2": "couvert",
+     "R3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "768d3380fd93b011de1ba973e2443a44d369131b3f7868dff810bdf00cfd6eee",
+    "relances_relecteur": 0,
+    "revue_sha256": "6387d2d6f5b4773fa38eb032b256bbc95fd47f83effa83ecf1752fc320133adf",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}
