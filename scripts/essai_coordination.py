@@ -43,10 +43,15 @@ def listing(items):
 class Roles:
     """Rôles réels (modèle) avec enregistrement des outils effectifs et utilisés ; v1 injecté si fourni."""
 
-    def __init__(self, cwd, model, inject=None):
+    def __init__(self, cwd, model, inject=None, prefix=""):
         self.cwd, self.model, self.inject = cwd, model, inject
         self.calls = []
         self.log = []
+        self.prefix = prefix  # préfixe des fichiers de journal : « <prefix><i>.jsonl » pour le i-ème appel réel
+
+    def last_journal(self):
+        """Lien vers le journal du dernier appel réel (None si aucun, ex. plan v1 injecté)."""
+        return "%s%d.jsonl" % (self.prefix, len(self.log) - 1) if self.log else None
 
     def _run(self, role, agent, prompt):
         r = run_claude(self.cwd, prompt, agent=agent, model=self.model)
@@ -133,16 +138,17 @@ def main():
             shutil.copytree(base, d)
             before = sha_tree(d)
             mid = "essai-coord-%d-%s" % (n + 1, name)
-            roles = Roles(d, a.model, inject=fixture(fx) if fx else None)
+            roles = Roles(d, a.model, inject=fixture(fx) if fx else None, prefix="log-%d-%s-" % (n + 1, name))
             out = mission.run_mission(d, REQUEST, CRITERIA, roles.writer, roles.reviewer,
-                                      components=components, mission_id=mid)
+                                      components=components, mission_id=mid, journal=roles.last_journal)
             for i, lg in enumerate(roles.log):
                 open(os.path.join(work, "log-%d-%s-%d.jsonl" % (n + 1, name, i)), "w").write(lg)
             delta = diff_tree(before, sha_tree(d))
             trace = json.load(open(os.path.join(d, out["trace"])))
             tours = trace["tours"]
             plan_path = "docs/plans/2026-10-26-paiement-remise.md"
-            res = {"issue": out["issue"], "tours": out["tours"], "verdicts": [t.get("revue", {}).get("verdict") for t in tours],
+            res = {"issue": out["issue"], "tours": out["tours"], "tentatives_techniques": len(trace["erreurs_techniques"]),
+                   "erreurs_techniques": trace["erreurs_techniques"], "verdicts": [t.get("revue", {}).get("verdict") for t in tours],
                    "gravites": [t.get("revue", {}).get("gravites") for t in tours], "changements": delta,
                    "appels": roles.calls, "livraison": out["livraison"]}
             entry[name] = res
@@ -161,7 +167,16 @@ def main():
             allowed = [out["livraison"]["chemin"]] if out["issue"] == "accepte" else []
             check(delta["crees"] == allowed and not delta["modifies"] and not delta["supprimes"],
                   "%s : changements inattendus %s" % (tag, delta))
-            # 6 trace
+            # 6 trace : tours métier et tentatives techniques distingués, cohérence déterministe de la trace
+            for dv in mission.check_trace(trace):
+                check(False, "%s : trace incohérente : %s" % (tag, dv))
+            for role, key in (("plan-writer", "plan-writer"), ("plan-reviewer", "plan-reviewer")):
+                refus = len([e for e in trace["erreurs_techniques"] if e["role"] == role])
+                valides = len([x for x in trace["appels_detail"] if x["role"] == role and x["resultat"] == "valide"])
+                check(out["appels"][key] == valides + refus, "%s : appels %s = %d, attendu valides %d + refus %d" % (tag, role, out["appels"][key], valides, refus))
+            check(len([c for c in roles.calls if not c.get("injecte")]) == len(roles.log), tag + " : journaux != appels réels")
+            for e in trace["erreurs_techniques"]:
+                check(e["journal"] is None or os.path.exists(os.path.join(work, e["journal"])), "%s : journal introuvable %s" % (tag, e["journal"]))
             for t in tours:
                 check("revue" in t and t["revue"]["plan_examine_sha256"] == t["plan_sha256"], tag + " : revue non liée au plan examiné")
             check(trace["composants"] == components, tag + " : empreintes de composants")

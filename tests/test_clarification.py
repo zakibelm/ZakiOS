@@ -251,7 +251,7 @@ class PlafondEtLivraison(unittest.TestCase):
             self.assertEqual(out["issue"], "erreur_technique")
             self.assertIsNone(out["livraison"])
             self.assertEqual(tree(p), before)
-            self.assertIn("autre empreinte", " ".join(trace_of(p, out)["erreurs_techniques"]))
+            self.assertIn("autre empreinte", " ".join(e["cause"] for e in trace_of(p, out)["erreurs_techniques"]))
 
     def test_assert_review_binding_refuse_une_trace_incoherente(self):
         mission.assert_review_binding({"tour": 1, "plan_sha256": "a", "revue": {"plan_examine_sha256": "a"}})

@@ -195,19 +195,90 @@ def parse_review(text, criteria=None, plan_sha=None):
     return verdict, findings
 
 
-def _attempt(call, parse, retries, log, label):
-    """Appelle `call` puis `parse` ; relance au plus `retries` fois sur erreur technique."""
+def _attempt(call, parse, retries, trace, role, turn, journal=None):
+    """Appelle `call` puis `parse` ; relance au plus `retries` fois sur erreur technique.
+
+    Chaque appel est inscrit dans le registre ordonné `trace["appels_detail"]` et chaque tentative refusée dans
+    `trace["erreurs_techniques"]` (rôle, tour, numéro de tentative, catégorie, cause, empreinte de la sortie, lien
+    vers le journal), **même si une relance réussit ensuite** (`recuperee`)."""
     errors = []
     for n in range(retries + 1):
+        raw = None
         try:
-            raw = call()
-            return raw, parse(raw), errors
-        except (TechnicalError, deliver.DeliveryError) as exc:
-            errors.append("%s tentative %d : %s" % (label, n + 1, exc))
-        except Exception as exc:  # erreur d'exécution du rôle
-            errors.append("%s tentative %d : exécution en erreur (%s)" % (label, n + 1, exc))
-    log.extend(errors)
-    raise TechnicalError("; ".join(errors))
+            try:
+                raw = call()
+            except (TechnicalError, deliver.DeliveryError) as exc:
+                category, cause = "execution", str(exc)
+                raise TechnicalError(cause)
+            except Exception as exc:  # erreur d'exécution du rôle
+                category, cause = "execution", "exécution en erreur (%s)" % exc
+                raise TechnicalError(cause)
+            try:
+                parsed = parse(raw)
+            except (TechnicalError, deliver.DeliveryError) as exc:
+                category, cause = "format", str(exc)
+                raise TechnicalError(cause)
+            trace["appels_detail"].append({"n": len(trace["appels_detail"]) + 1, "role": role, "tour": turn,
+                                           "tentative": n + 1, "resultat": "valide"})
+            for e in errors:
+                e["recuperee"] = True
+            return raw, parsed, errors
+        except TechnicalError:
+            ref = journal() if journal else None
+            entry = {"role": role, "tour": turn, "tentative": n + 1, "categorie": category, "cause": cause,
+                     "sortie_sha256": _sha(raw) if isinstance(raw, str) else None, "journal": ref, "recuperee": False}
+            errors.append(entry)
+            trace["erreurs_techniques"].append(entry)
+            trace["appels_detail"].append({"n": len(trace["appels_detail"]) + 1, "role": role, "tour": turn,
+                                           "tentative": n + 1, "resultat": "refuse_" + category})
+    raise TechnicalError("; ".join("%s tour %d tentative %d : %s" % (e["role"], e["tour"], e["tentative"], e["cause"])
+                                   for e in errors))
+
+
+def check_trace(trace):
+    """Cohérence interne d'une trace v2 (déterministe) : renvoie la liste des divergences (vide si cohérente).
+
+    Contrôle : registre des appels ordonné et numéroté ; par rôle, appels = valides + refusés = trace["appels"] ;
+    chaque refus a son entrée dans `erreurs_techniques` (et réciproquement), avec tentative <= relances + 1 ;
+    relances par tour cohérentes ; après une clarification, aucun appel : le dernier appel est la revue valide du
+    tour de la clarification ; aucune livraison après clarification, plafond ou erreur."""
+    out = []
+    ledger = trace.get("appels_detail", [])
+    errors = trace.get("erreurs_techniques", [])
+    maxr = trace.get("relances_techniques_max", 1)
+    if [e.get("n") for e in ledger] != list(range(1, len(ledger) + 1)):
+        out.append("registre des appels non ordonné")
+    for role in ("plan-writer", "plan-reviewer"):
+        mine = [e for e in ledger if e["role"] == role]
+        refused = [e for e in mine if e["resultat"].startswith("refuse_")]
+        if len(mine) != trace.get("appels", {}).get(role):
+            out.append("%s : %d appels au registre, %s annoncés" % (role, len(mine), trace.get("appels", {}).get(role)))
+        if len(refused) != len([e for e in errors if e["role"] == role]):
+            out.append("%s : %d refus au registre, %d erreurs tracées" % (role, len(refused), len([e for e in errors if e["role"] == role])))
+    for e in errors:
+        if not (1 <= e["tentative"] <= maxr + 1):
+            out.append("tentative %s hors des relances bornées (%d)" % (e["tentative"], maxr))
+        if e["categorie"] not in ("format", "execution"):
+            out.append("catégorie d'erreur inconnue : %s" % e["categorie"])
+        if e["categorie"] == "format" and not e.get("sortie_sha256"):
+            out.append("refus de format sans empreinte de sortie (tour %s)" % e["tour"])
+    for t in trace.get("tours", []):
+        for role, key in (("plan-writer", "relances_planificateur"), ("plan-reviewer", "relances_relecteur")):
+            holder = t if key == "relances_planificateur" else t.get("revue")
+            if holder is None:
+                continue
+            n = len([e for e in errors if e["role"] == role and e["tour"] == t["tour"] and e["recuperee"]])
+            if holder.get(key) != n:
+                out.append("tour %s : %s=%s, erreurs récupérées tracées=%d" % (t["tour"], key, holder.get(key), n))
+    if trace.get("issue") == "clarification_requise":
+        last = ledger[-1] if ledger else None
+        if not last or last["role"] != "plan-reviewer" or last["resultat"] != "valide" or last["tour"] != trace["clarification"]["tour"]:
+            out.append("un appel suit ou précède mal la clarification (dernier appel : %s)" % last)
+    if trace.get("issue") != "accepte" and "livraison" in trace:
+        out.append("livraison présente après %s" % trace.get("issue"))
+    if trace.get("issue") == "erreur_technique" and not errors:
+        out.append("erreur technique sans erreur tracée")
+    return out
 
 
 def derive_mission_id(request, criteria):
@@ -244,12 +315,13 @@ def assert_review_binding(entry):
 
 
 def run_mission(project, request, criteria, writer, reviewer, components=None, mission_id=None,
-                max_corrections=2, max_technical_retries=1, now=None):
+                max_corrections=2, max_technical_retries=1, now=None, journal=None):
     """Exécute la mission. `writer(request, criteria, previous_plan, findings) -> texte` et
     `reviewer(request, criteria, plan) -> texte` sont fournis par l'appelant. Renvoie un compte rendu (dict).
 
     Issues métier attendues : `accepte`, `clarification_requise`, `plafond_atteint` (catégorie « metier »).
-    `erreur_technique` (catégorie « technique ») est un dysfonctionnement, pas un résultat de mission."""
+    `erreur_technique` (catégorie « technique ») est un dysfonctionnement, pas un résultat de mission.
+    `journal()` (facultatif) renvoie la référence du journal du dernier appel réel, pour la trace des erreurs."""
     criteria = list(criteria)
     ids = validate_criteria(criteria)
     mission_id = mission_id or derive_mission_id(request, criteria)
@@ -257,7 +329,7 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
     trace = {"v": 2, "mission_id": mission_id, "ecrit_le": stamp,
              "demande_sha256": _sha(request), "criteres": criteria, "criteres_ids": ids,
              "criteres_sha256": _sha(json.dumps(criteria, ensure_ascii=False)),
-             "composants": dict(components or {}), "tours": [], "erreurs_techniques": [],
+             "composants": dict(components or {}), "tours": [], "erreurs_techniques": [], "appels_detail": [],
              "max_corrections": max_corrections, "relances_techniques_max": max_technical_retries}
     calls = {"plan-writer": 0, "plan-reviewer": 0}
 
@@ -278,7 +350,7 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
         try:
             _, (plan, path), errs = _attempt(
                 lambda: counted_writer(request, criteria, plan, findings), deliver.extract_plan,
-                max_technical_retries, trace["erreurs_techniques"], "planificateur tour %d" % (turn + 1))
+                max_technical_retries, trace, "plan-writer", turn + 1, journal)
         except TechnicalError:
             outcome, cause = "erreur_technique", "sortie du planificateur invalide ou exécution en erreur (relances épuisées)"
             break
@@ -289,7 +361,7 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
             _, (verdict, found, coverage), errs = _attempt(
                 lambda: counted_reviewer(request, criteria, plan),
                 lambda raw: parse_review_full(raw, criteria, plan_sha),
-                max_technical_retries, trace["erreurs_techniques"], "relecteur tour %d" % (turn + 1))
+                max_technical_retries, trace, "plan-reviewer", turn + 1, journal)
         except TechnicalError:
             outcome, cause = "erreur_technique", "revue invalide, incohérente ou liée à une autre empreinte (relances épuisées)"
             break
@@ -334,6 +406,7 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
                           "plans_sha256": [t["plan_sha256"] for t in trace["tours"]], "appels": dict(calls)}
     trace["issue"] = outcome
     trace["categorie"] = category
+    trace["appels"] = dict(calls)
     result["trace"] = write_trace(project, mission_id, trace)
     result["tours_detail"] = trace["tours"]
     return result

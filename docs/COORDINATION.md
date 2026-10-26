@@ -82,3 +82,6 @@ Un seul modèle ; pas de délégation libre entre agents ; le relecteur de plan 
 
 ## Trois verdicts (ajout)
 Le relecteur rend ACCEPTE, A_CORRIGER ou CLARIFICATION_REQUISE ; le coordinateur refuse toute sortie incohérente (ACCEPTE avec constat bloquant ou clarification, clarification sans critères/blocage/question, verdict inconnu, revue liée à une autre empreinte, couverture incohérente). La clarification arrête la boucle sans livraison ni correction. Les contrôles déterministes portent sur le format et la cohérence ; la couverture sémantique reste un jugement du relecteur. Résultats mesurés : `docs/revues/essai-clarification.md`.
+
+## Relances techniques tracées (ajout C3)
+Chaque tentative refusée (format ou exécution) est inscrite dans `erreurs_techniques` — rôle, tour, numéro de tentative, catégorie, cause, empreinte de la sortie, lien vers le journal, `recuperee` — **même si une relance réussit ensuite**. La trace porte aussi un registre ordonné `appels_detail` (appel n°, rôle, tour, tentative, résultat). `mission.check_trace` vérifie : registre ordonné, appels = valides + refus par rôle, refus = erreurs tracées, tentatives bornées par `relances_techniques_max`, aucun appel après une clarification (le dernier appel est la revue valide de ce tour), aucune livraison après clarification, plafond ou erreur.

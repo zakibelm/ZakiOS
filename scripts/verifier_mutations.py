@@ -8,7 +8,7 @@ Code de sortie : 0 base verte et toutes les mutations détectées ; 1 sinon."""
 import argparse, json, os, shutil, subprocess, sys, tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TESTS = ["tests.test_mission", "tests.test_garanties_coordination", "tests.test_clarification"]
+TESTS = ["tests.test_mission", "tests.test_garanties_coordination", "tests.test_clarification", "tests.test_relances", "tests.test_audit_c3"]
 MUTATIONS = [
     ("acceptation_malgre_bloquant", "    if verdict == \"ACCEPTE\":\n        if blocking:", "    if verdict == \"ACCEPTE\":\n        if False:"),
     ("acceptation_malgre_clarification", "        if clarif:\n            raise TechnicalError(\"revue incohérente : ACCEPTE malgré une clarification requise\")", "        if False:\n            raise TechnicalError(\"x\")"),
@@ -20,6 +20,11 @@ MUTATIONS = [
     ("couverture_des_criteres", "    if criteria is not None:\n        if sorted(coverage)", "    if False:\n        if sorted(coverage)"),
     ("clarification_sans_question", "    if \"?\" not in fields[\"question\"]:", "    if False:"),
     ("a_corriger_sans_constat_majeur", "        if not blocking:\n            raise TechnicalError(\"revue incohérente : A_CORRIGER", "        if False:\n            raise TechnicalError(\"revue incohérente : A_CORRIGER"),
+    # campagne C3 : relances techniques tracées et bornées
+    ("relance_recuperee_non_tracee", "            errors.append(entry)\n            trace[\"erreurs_techniques\"].append(entry)", "            errors.append(entry)"),
+    ("relances_non_bornees", "    for n in range(retries + 1):\n        raw = None", "    for n in range(retries + 3):\n        raw = None"),
+    ("erreur_recuperee_non_marquee", "                e[\"recuperee\"] = True", "                pass"),
+    ("verificateur_appel_apres_clarification", "    if trace.get(\"issue\") == \"clarification_requise\":\n        last = ledger[-1]", "    if False:\n        last = ledger[-1]"),
 ]
 
 

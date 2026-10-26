@@ -14,7 +14,7 @@ Usage : python3 scripts/essai_garanties_reelles.py --work /dossier/neuf --source
 Codes de sortie : 0 toutes les attentes satisfaites ; 1 au moins une attente ou un invariant non satisfait ;
                   2 au moins une erreur technique (issue `erreur_technique`) — distincte d'une issue métier.
 Écrit --work/resultats.json. Ne modifie jamais decisions/*.json ; aucune installation réelle."""
-import argparse, hashlib, json, os, shutil, subprocess, sys
+import argparse, hashlib, json, os, re, shutil, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(HERE)
@@ -103,19 +103,47 @@ def sha(text):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def classify_omission(first_plan_text, first_verdict):
+    """Distingue, pour un cas « omission corrigeable », trois situations qui ne se valent pas :
+      - défaut_absent_detection_non_exercee : le premier plan ne présente pas de défaut constatable par le contrôle
+        déterministe (O1 : au plus 4 étapes numérotées) ; la détection par le relecteur n'a pas été mise à l'épreuve ;
+      - defaut_present_detecte : défaut constaté et verdict A_CORRIGER ;
+      - defaut_present_manque : défaut constaté mais verdict autre qu'A_CORRIGER (échec du relecteur).
+    Limite : seul O1 est vérifié déterministiquement ; les défauts de O2–O4 (sémantiques) ne sont pas évalués ici."""
+    steps = 0
+    in_exec = False
+    for line in (first_plan_text or "").splitlines():
+        if line.startswith("## "):
+            in_exec = line.lower().startswith("## exécuter") or line.lower().startswith("## executer")
+        elif in_exec and re.match(r"^\s*\d+[.)]\s", line):
+            steps += 1
+    if steps <= 4:
+        return "defaut_absent_detection_non_exercee"
+    return "defaut_present_detecte" if first_verdict == "A_CORRIGER" else "defaut_present_manque"
+
+
 class Spy(Roles):
     """Rôles réels + empreinte de ce qui est réellement produit/transmis à chaque appel."""
 
     def __init__(self, *a, **k):
         super().__init__(*a, **k)
         self.written, self.reviewed = [], []
+        self.n_writer = self.n_reviewer = 0  # appels, y compris ceux qui échouent
+        self.first_plan_text = None
 
     def writer(self, request, criteria, previous_plan, findings):
+        self.n_writer += 1
         out = super().writer(request, criteria, previous_plan, findings)
         self.written.append(sha(out))
+        if self.first_plan_text is None:
+            try:
+                self.first_plan_text = mission.deliver.extract_plan(out)[0]
+            except Exception:  # sortie hors format : traitée par le coordinateur
+                pass
         return out
 
     def reviewer(self, request, criteria, plan):
+        self.n_reviewer += 1
         self.reviewed.append(sha(plan))
         return super().reviewer(request, criteria, plan)
 
@@ -172,9 +200,9 @@ def main():
             shutil.copytree(base, d)
             before = sha_tree(d)
             mid = "garanties-%s-p%d" % (name, n)
-            roles = Spy(d, a.model)
+            roles = Spy(d, a.model, prefix="log-%s-p%d-" % (name, n))
             out = mission.run_mission(d, case["request"], case["criteria"], roles.writer, roles.reviewer,
-                                      components=components, mission_id=mid)
+                                      components=components, mission_id=mid, journal=roles.last_journal)
             for i, lg in enumerate(roles.log):
                 open(os.path.join(work, "log-%s-p%d-%d.jsonl" % (name, n, i)), "w").write(lg)
             delta = diff_tree(before, sha_tree(d))
@@ -184,7 +212,8 @@ def main():
                    "tours": out["tours"], "verdicts": [t.get("revue", {}).get("verdict") for t in tours],
                    "gravites": [t.get("revue", {}).get("gravites") for t in tours], "appels": roles.calls,
                    "appels_comptes": out["appels"], "changements": delta, "plans_sha256": [t["plan_sha256"] for t in tours],
-                   "livraison": out["livraison"], "erreurs_techniques": trace["erreurs_techniques"]}
+                   "livraison": out["livraison"], "erreurs_techniques": trace["erreurs_techniques"],
+                   "tours_metier": len(tours), "tentatives_techniques": len(trace["erreurs_techniques"])}
             report["cas"][key] = res
             if out["issue"] == "erreur_technique":
                 report["erreurs_techniques"].append(key)
@@ -195,9 +224,20 @@ def main():
                 check(sorted(c["outils"]) == READONLY, "%s : outils effectifs de %s = %s" % (tag, c["role"], c["outils"]))
                 check(not set(c["utilises"]) & MODIFYING, "%s : outil modifiant utilisé par %s" % (tag, c["role"]))
             check(out["tours"] <= 3, tag + " : plafond dépassé")
-            check(out["appels"]["plan-writer"] == len(roles.written) and out["appels"]["plan-reviewer"] == len(roles.reviewed),
+            check(out["appels"]["plan-writer"] == roles.n_writer and out["appels"]["plan-reviewer"] == roles.n_reviewer,
                   tag + " : décompte d'appels incohérent")
-            for t, rs in zip(tours, roles.reviewed):
+            for dv in mission.check_trace(trace):
+                check(False, "%s : trace incohérente : %s" % (tag, dv))
+            for role in ("plan-writer", "plan-reviewer"):  # tours métier et tentatives techniques, distingués
+                refus = len([e for e in trace["erreurs_techniques"] if e["role"] == role])
+                valides = len([x for x in trace["appels_detail"] if x["role"] == role and x["resultat"] == "valide"])
+                check(out["appels"][role] == valides + refus, "%s : appels %s = %d, attendu %d valides + %d refus" % (tag, role, out["appels"][role], valides, refus))
+            for e in trace["erreurs_techniques"]:
+                check(e["journal"] is None or os.path.exists(os.path.join(work, e["journal"])), "%s : journal introuvable %s" % (tag, e["journal"]))
+                if e["recuperee"]:
+                    report.setdefault("relances_recuperees", []).append({"cas": key, "tour": e["tour"], "role": e["role"], "cause": e["cause"], "journal": e["journal"]})
+            distinct = [x for i, x in enumerate(roles.reviewed) if i == 0 or x != roles.reviewed[i - 1]]  # un plan relu après relance technique n'est pas un tour
+            for t, rs in zip(tours, distinct):
                 check("revue" in t and t["revue"]["plan_examine_sha256"] == t["plan_sha256"] == rs,
                       tag + " : revue non liée à l'empreinte du plan transmis")
             check(trace["composants"] == components, tag + " : empreintes des composants")
@@ -215,8 +255,9 @@ def main():
                 res["plan_enregistre_sha256"] = sha(f.decode("utf-8"))
                 if needs_correction:
                     res["exerce"] = out["tours"] >= 2
+                    res["omission"] = classify_omission(roles.first_plan_text, res["verdicts"][0] if res["verdicts"] else None)
                     if not res["exerce"]:
-                        report["non_exerces"].append(key)  # le modèle a satisfait les critères du premier coup : rapporté, pas masqué
+                        report["non_exerces"].append("%s (%s)" % (key, res["omission"]))  # rapporté avec sa catégorie, pas masqué
             else:
                 check(out["livraison"] is None, tag + " : livraison malgré l'arrêt")
                 check(not os.path.exists(os.path.join(d, "docs")), tag + " : un plan a été écrit")
@@ -227,12 +268,15 @@ def main():
                 clar = trace["clarification"]
                 check(res["verdicts"][-1] == "CLARIFICATION_REQUISE" and out["questions"], tag + " : clarification sans question")
                 check(clar["plan_sha256"] == tours[-1]["plan_sha256"], tag + " : clarification non liée au plan examiné")
-                check(out["appels"]["plan-writer"] == out["appels"]["plan-reviewer"] == len(tours), tag + " : appels après la clarification")
+                last = trace["appels_detail"][-1]  # aucun appel après la clarification valide : la dernière entrée est cette revue
+                check(last["role"] == "plan-reviewer" and last["resultat"] == "valide" and last["tour"] == clar["tour"] == len(tours),
+                      tag + " : appel après la clarification (dernier appel %s)" % last)
+                check(len(roles.log) == len(trace["appels_detail"]), tag + " : journaux != appels du registre")
                 if clar_expected:
                     check(clar_expected in clar["criteres"], "%s : clarification attendue sur %s, reçue sur %s" % (tag, clar_expected, clar["criteres"]))
                 res["clarification"] = clar
             if out["issue"] == "plafond_atteint":
-                check(out["tours"] == 3 and len(roles.reviewed) == 3 and all(v == "A_CORRIGER" for v in res["verdicts"]),
+                check(out["tours"] == 3 and len(distinct) == 3 and all(v == "A_CORRIGER" for v in res["verdicts"]),
                       tag + " : plafond attendu avec 3 revues A_CORRIGER, reçu %s" % res["verdicts"])
     json.dump(report, open(os.path.join(work, "resultats.json"), "w"), indent=2, ensure_ascii=False)
     for k, r in report["cas"].items():

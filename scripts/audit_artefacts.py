@@ -85,20 +85,67 @@ def audit_one(key, d, logs, name, injected, base_tree, div, stats, parse_reviews
             bad("outil modifiant appelé %s dans %s" % (sorted(set(e["used"]) & MODIFYING), os.path.basename(p)))
     stats["appels_reels"] += len(entries)
     # plans recalculés depuis les sorties réelles des rédacteurs (+ plan injecté)
-    plans = []
+    plans, reviews = [], []
+    ledger = tr.get("appels_detail")
     if injected:
         text = open(os.path.join(ROOT, "tests/fixtures/plans", FIXTURES[name]), encoding="utf-8").read()
         plans.append(deliver.extract_plan(text))
-    reviews = []
-    for e in entries:
-        text = e["result"]
-        if mission.REVIEW_BEGIN in text:
-            reviews.append(text)
-        else:
-            try:
-                plans.append(deliver.extract_plan(text))
-            except deliver.DeliveryError:
-                pass
+    if ledger is not None:                              # trace v2 avec registre ordonné des appels (C3)
+        for dv in mission.check_trace(tr):
+            bad("trace incohérente : " + dv)
+        real = ledger[1:] if injected else ledger       # le plan v1 injecté n'a pas de journal
+        if len(real) != len(entries):
+            bad("%d appels au registre (hors injecté), %d journaux : appel sans journal ou journal en trop" % (len(real), len(entries)))
+        errs = list(tr["erreurs_techniques"])
+        refused = [x for x in ledger if x["resultat"].startswith("refuse_")]
+        if len(refused) != len(errs):
+            bad("%d refus au registre, %d erreurs tracées" % (len(refused), len(errs)))
+        plan_sha_by_tour = {t["tour"]: t["plan_sha256"] for t in tours}
+        cur_plan_sha = plan_sha_by_tour.get(1) if injected else None
+        k = 0
+        for x, e, lp in zip(real, entries, logs):
+            out_text = e["result"]
+            if x["role"] == "plan-writer":
+                if x["resultat"] == "valide":
+                    plans.append(deliver.extract_plan(out_text))
+                else:
+                    try:
+                        deliver.extract_plan(out_text)
+                        bad("sortie refusée du rédacteur (tour %s) pourtant valide" % x["tour"])
+                    except deliver.DeliveryError:
+                        pass
+            else:
+                tour_sha = plan_sha_by_tour.get(x["tour"])
+                if x["resultat"] == "valide":
+                    reviews.append(out_text)
+                elif tour_sha and parse_reviews:
+                    try:
+                        mission.parse_review_full(out_text, criteria, tour_sha)
+                        bad("sortie refusée du relecteur (tour %s) pourtant valide" % x["tour"])
+                    except mission.TechnicalError:
+                        pass
+            if x["resultat"].startswith("refuse_"):
+                er = errs[k] if k < len(errs) else None
+                k += 1
+                if er is None:
+                    continue
+                if (er["role"], er["tour"], er["tentative"]) != (x["role"], x["tour"], x["tentative"]):
+                    bad("erreur tracée %s != appel refusé %s" % ((er["role"], er["tour"], er["tentative"]), (x["role"], x["tour"], x["tentative"])))
+                if er["sortie_sha256"] is not None and er["sortie_sha256"] != sha(out_text):
+                    bad("empreinte de la sortie refusée (tour %s) != journal" % x["tour"])
+                if er["journal"] is None or os.path.basename(er["journal"]) != os.path.basename(lp):
+                    bad("lien de journal de l'erreur (%s) != journal de l'appel (%s)" % (er["journal"], os.path.basename(lp)))
+                stats["erreurs_relancees_verifiees"] = stats.get("erreurs_relancees_verifiees", 0) + 1
+    else:                                               # ancien format de trace (C1/C2) : lecture historique
+        for e in entries:
+            text = e["result"]
+            if mission.REVIEW_BEGIN in text:
+                reviews.append(text)
+            else:
+                try:
+                    plans.append(deliver.extract_plan(text))
+                except deliver.DeliveryError:
+                    pass
     if len(plans) < len(tours):
         bad("%d plans recalculables pour %d tours" % (len(plans), len(tours)))
     for i, t in enumerate(tours):
@@ -162,8 +209,10 @@ def audit_one(key, d, logs, name, injected, base_tree, div, stats, parse_reviews
             cl = tr["clarification"]
             if cl["plan_sha256"] != tours[-1]["plan_sha256"] or not cl["questions"] or not cl["criteres"]:
                 bad("clarification incomplète ou non liée au dernier plan")
-            if tr["arret"]["appels"]["plan-writer"] != len(tours):
+            if tr["arret"]["appels"]["plan-writer"] != len(tours) + len([e for e in tr["erreurs_techniques"] if e["role"] == "plan-writer"]):
                 bad("appel de rédacteur après la clarification")
+            if ledger is not None and (ledger[-1]["role"] != "plan-reviewer" or ledger[-1]["resultat"] != "valide" or len(entries) != len(real)):
+                bad("appel après la clarification (dernier appel du registre : %s)" % ledger[-1])
         if issue == "plafond_atteint" and len(tours) != tr["max_corrections"] + 1:
             bad("plafond : %d tours" % len(tours))
         stats["arrets_verifies"] += 1
