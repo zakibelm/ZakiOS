@@ -38,10 +38,13 @@ Le catalogue doit être valide et exact (pas un build expérimental). Le contenu
 
 - **Aperçu exact :** `plan` liste les fichiers à créer, mettre à jour ou retirer, les refus avec leurs raisons, et une empreinte du plan. `apply --plan-sha` refuse si le plan a changé entre-temps.
 - **Tout ou rien :** un seul refus empêche toute écriture.
-- **Fichiers du projet protégés :** un fichier existant qui ne vient pas de ZakiOS n'est jamais écrasé ; un fichier installé puis modifié par l'utilisateur n'est ni écrasé, ni retiré, ni supprimé par un retour arrière. Un lien symbolique qui sortirait du projet est refusé.
+- **Fichiers du projet protégés :** un fichier existant qui ne vient pas de ZakiOS n'est jamais écrasé ; un fichier installé puis modifié par l'utilisateur n'est ni écrasé, ni retiré. Un fichier créé par ZakiOS l'est sans écrasement (création atomique qui échoue si l'emplacement est pris, même apparu après l'aperçu).
+- **Rien ne sort du projet :** toutes les lectures, écritures et suppressions (fichiers installés, sauvegardes, journal, verrou, état) descendent depuis le dossier du projet avec des descripteurs de dossier ouverts sans suivre les liens symboliques (Linux, `O_NOFOLLOW`). Un lien symbolique substitué à un dossier, même après l'aperçu, fait échouer l'opération. `.zakios` lui-même ne peut pas être un lien vers l'extérieur.
 - **Réexécution sans duplication :** une deuxième installation identique ne touche aucun fichier et ne crée pas de transaction.
 - **Retour arrière :** chaque installation écrit son journal avant d'agir. En cas d'échec, tout est annulé (fichiers créés, versions précédentes restaurées, état `.zakios/lock.json` rétabli). Une installation interrompue brutalement est annulée au lancement suivant.
+- **Retour arrière et reprise sans perte :** avant d'annuler (retour arrière explicite, échec ou reprise après interruption), l'état du disque est comparé à ce que ZakiOS avait écrit. Un fichier modifié depuis, ou un fichier retiré puis recréé par l'utilisateur, bloque la restauration : le journal passe en `conflict`, les sauvegardes restent dans `.zakios/journal/<transaction>/`, et l'aperçu suivant l'indique dans ses notes.
 - **Un seul installateur à la fois** par projet (verrou).
+- **Écritures avant refus :** `plan` n'écrit rien. `apply` commence par la même validation sans écriture : un refus évident ne crée ni `.zakios` ni verrou. Seul un refus apparu sous verrou (cas de concurrence) peut laisser le dossier d'état.
 
 ## État du projet
 
@@ -49,6 +52,9 @@ Le catalogue doit être valide et exact (pas un build expérimental). Le contenu
 
 ## Limites
 
+- Le projet lui-même est ouvert tel que l'utilisateur le désigne (un lien symbolique vers le projet est suivi une fois, au départ).
+- La comparaison avant restauration d'un fichier **modifié** (mise à jour annulée) et son remplacement ne sont pas un seul geste atomique : une modification faite pendant les millisecondes de l'annulation, sous verrou, peut passer. Les créations et restaurations de fichiers retirés, elles, n'écrasent jamais.
+- Linux seulement.
 - Non testé sur de vrais composants : aucune décision ni licence réelle n'est encore validée.
 - L'activation d'un hook (settings.json) reste manuelle, après audit de son comportement.
 - Pas encore de gestion de versions multiples d'un même composant ni de mise à jour sélective.

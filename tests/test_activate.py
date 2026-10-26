@@ -161,7 +161,7 @@ class PilotTests(unittest.TestCase):
             self.assertIn("non validée", result["refused"][0]["reasons"][0])
             with self.assertRaises(ActivationError):
                 pilot.apply([UNVALIDATED])
-            self.assertEqual(tree(pilot.project).keys() - {".zakios/project.lock"}, set())
+            self.assertEqual(tree(pilot.project), {})
 
     def test_unverified_license_is_refused(self):
         with Workdir() as wd:
@@ -243,7 +243,7 @@ class PilotTests(unittest.TestCase):
             os.makedirs(os.path.join(pilot.project, ".claude"))
             os.symlink(outside, os.path.join(pilot.project, ".claude/agents"))
             reasons = pilot.plan([SIMPLE])["refused"][0]["reasons"]
-            self.assertTrue(any("sortirait du projet" in r or "existe déjà" in r for r in reasons))
+            self.assertTrue(any("non sûr" in r or "existe déjà" in r for r in reasons))
             self.assertEqual(os.listdir(outside), [])
 
     def test_user_edit_of_an_installed_file_blocks_update_and_removal(self):
@@ -352,20 +352,7 @@ class PilotTests(unittest.TestCase):
             pilot = Pilot(wd)
             pilot.apply([SIMPLE])
             before = {p: c for p, c in tree(pilot.project).items() if p.startswith(".claude")}
-            # processus « tué » : le journal reste à l'état started, fichiers déjà écrits
-            real = activate._write_atomic
-            calls = {"n": 0}
-
-            def killed(path, data, executable=False):
-                real(path, data, executable)
-                if str(path).endswith("scripts/helper.py"):
-                    calls["n"] += 1
-                    raise KeyboardInterrupt  # simule une interruption brutale
-
-            with mock.patch.object(activate, "_write_atomic", killed), mock.patch.object(activate, "_undo", lambda *a, **k: None):
-                with self.assertRaises(ActivationError):
-                    pilot.apply([SIMPLE, SKILL])
-            self.assertGreater(calls["n"], 0)
+            self._interrupt_install(pilot, [SIMPLE, SKILL])
             self.assertNotEqual({p: c for p, c in tree(pilot.project).items() if p.startswith(".claude")}, before)
             pilot.apply([SIMPLE])  # le prochain lancement reprend et annule
             self.assertEqual({p: c for p, c in tree(pilot.project).items() if p.startswith(".claude")}, before)
@@ -443,6 +430,144 @@ class PilotTests(unittest.TestCase):
             pilot = Pilot(wd, validated=[])
             for component in (SIMPLE, SKILL, HOOK):
                 self.assertTrue(pilot.plan([component])["refused"])
+
+    # ---- audit d9ca9c0 : trois scénarios reproduits, puis récupération après interruption
+
+    def test_rollback_never_overwrites_a_file_recreated_by_the_user(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            pilot.apply([SIMPLE])
+            pilot.apply([])  # ZakiOS retire le fichier
+            path = os.path.join(pilot.project, ".claude/agents/simple-agent.md")
+            self.assertFalse(os.path.exists(path))
+            write(path, "recréé par l'utilisateur\n")
+            with self.assertRaises(ActivationError) as ctx:
+                rollback(pilot.project)
+            self.assertIn("recréé", ctx.exception.reasons[0])
+            self.assertEqual(read(path, "r"), "recréé par l'utilisateur\n")
+            journals = os.listdir(os.path.join(pilot.project, ".zakios/journal"))
+            statuses = [json.loads(read(os.path.join(pilot.project, ".zakios/journal", j, "meta.json")))["status"] for j in journals]
+            self.assertIn("conflict", statuses)  # sauvegardes conservées pour revue
+
+    def test_parent_replaced_by_symlink_never_deletes_outside_files(self):
+        import shutil
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            pilot.apply([SIMPLE, SKILL])
+            claude = os.path.join(pilot.project, ".claude")
+            outside = os.path.join(wd, "ailleurs")
+            # copies exactes des fichiers installés : même contenu, donc indiscernables par leur seul hash
+            shutil.copytree(os.path.join(claude, "agents"), os.path.join(outside, "agents"))
+            shutil.copytree(os.path.join(claude, "skills"), os.path.join(outside, "skills"))
+            for name in ("agents", "skills"):
+                shutil.rmtree(os.path.join(claude, name))
+                os.symlink(os.path.join(outside, name), os.path.join(claude, name))
+            before = tree(outside)
+            with self.assertRaises(ActivationError):
+                pilot.apply([])
+            self.assertEqual(tree(outside), before)
+            with self.assertRaises(ActivationError):
+                rollback(pilot.project)
+            self.assertEqual(tree(outside), before)
+
+    def test_state_directory_outside_the_project_is_refused_and_nothing_is_written_there(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            outside = os.path.join(wd, "ailleurs")
+            os.makedirs(outside)
+            os.symlink(outside, os.path.join(pilot.project, ".zakios"))
+            with self.assertRaises(ActivationError):
+                pilot.apply([UNVALIDATED])  # refusé
+            with self.assertRaises(ActivationError):
+                pilot.apply([SIMPLE])  # acceptable en soi, mais l'état est hors du projet
+            with self.assertRaises(ActivationError):
+                pilot.plan([SIMPLE])
+            with self.assertRaises(ActivationError):
+                rollback(pilot.project)
+            self.assertEqual(os.listdir(outside), [])
+            self.assertFalse(os.path.exists(os.path.join(pilot.project, ".claude")))
+
+    def test_refused_apply_creates_no_state_directory_or_lock(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            with self.assertRaises(ActivationError):
+                pilot.apply([UNVALIDATED])
+            self.assertEqual(os.listdir(pilot.project), [])
+
+    def test_destination_parent_symlink_blocks_creation(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            outside = os.path.join(wd, "ailleurs")
+            os.makedirs(outside)
+            os.makedirs(os.path.join(pilot.project, ".claude"))
+            os.symlink(outside, os.path.join(pilot.project, ".claude/skills"))
+            with self.assertRaises(ActivationError):
+                pilot.apply([SKILL])
+            self.assertEqual(os.listdir(outside), [])
+
+    def _interrupt_install(self, pilot, selection):
+        real = activate.Root.write_atomic
+
+        def killed(self, rel, data, executable=False, **kw):
+            real(self, rel, data, executable, **kw)
+            if rel.endswith("scripts/helper.py"):
+                raise KeyboardInterrupt  # interruption brutale après des écritures
+
+        with mock.patch.object(activate.Root, "write_atomic", killed), \
+                mock.patch.object(activate, "_undo", lambda *a, **k: None):
+            with self.assertRaises(ActivationError):
+                pilot.apply(selection)
+
+    def test_recovery_after_interruption_keeps_user_edits_made_in_between(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            pilot.apply([SIMPLE])
+            self._interrupt_install(pilot, [SIMPLE, SKILL])
+            edited = os.path.join(pilot.project, ".claude/skills/demo/SKILL.md")
+            self.assertTrue(os.path.exists(edited))
+            with open(edited, "a") as handle:
+                handle.write("modification de l'utilisateur après l'interruption\n")
+            with self.assertRaises(ActivationError) as ctx:
+                pilot.apply([SIMPLE])
+            self.assertIn("modifié", ctx.exception.reasons[0])
+            self.assertIn("après l'interruption", read(edited, "r"))
+            base = os.path.join(pilot.project, ".zakios/journal")
+            statuses = [json.loads(read(os.path.join(base, j, "meta.json")))["status"] for j in os.listdir(base)]
+            self.assertIn("conflict", statuses)
+            notes = pilot.plan([SIMPLE])["notes"]
+            self.assertTrue(any("conflit" in n for n in notes))
+
+    def test_file_created_by_the_user_after_the_preview_is_never_overwritten(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            mine = os.path.join(pilot.project, ".claude/agents/simple-agent.md")
+            real_plan = activate._plan
+            state = {"n": 0}
+
+            def racing_plan(*args, **kwargs):
+                result = real_plan(*args, **kwargs)
+                state["n"] += 1
+                if state["n"] == 2:  # le plan sous verrou vient d'être calculé : l'utilisateur écrit maintenant
+                    write(mine, "écrit en même temps par l'utilisateur\n")
+                return result
+
+            with mock.patch.object(activate, "_plan", racing_plan):
+                with self.assertRaises(ActivationError) as ctx:
+                    pilot.apply([SIMPLE, SKILL])
+            self.assertIn("apparu depuis l'aperçu", str(ctx.exception))
+            self.assertEqual(read(mine, "r"), "écrit en même temps par l'utilisateur\n")
+            self.assertFalse(os.path.exists(os.path.join(pilot.project, ".claude/skills")))
+
+    def test_unsafe_names_in_a_destination_are_never_followed(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            root = activate.Root(pilot.project)
+            try:
+                for bad in ("../x", "a/../../x", "/abs", "a//b", "./x", ""):
+                    with self.assertRaises(ActivationError):
+                        root.read(bad)
+            finally:
+                root.close()
 
 
 if __name__ == "__main__":

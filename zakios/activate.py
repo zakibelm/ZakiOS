@@ -4,20 +4,29 @@ Périmètre du pilote (Linux, Claude Code CLI) :
 - on n'installe que des composants explicitement sélectionnés dont la décision humaine est valide,
   la licence vérifiée et l'empreinte complète ;
 - rien n'est écrit pendant l'aperçu ;
-- les fichiers du projet qui ne viennent pas de ZakiOS ne sont jamais écrasés ;
+- les fichiers du projet qui ne viennent pas de ZakiOS ne sont jamais écrasés, ni par l'installation,
+  ni par un retour arrière ou une reprise après interruption ;
+- aucune lecture, écriture ou suppression ne sort du projet : toutes les opérations passent par des
+  descripteurs de dossier ouverts sans suivre les liens symboliques (Linux) ;
 - les hooks sont copiés mais jamais activés (aucune modification de settings.json) ;
 - une installation qui échoue en cours de route est annulée complètement.
 """
+import errno
 import hashlib
 import json
 import os
-import shutil
+import stat
 import subprocess
 import time
 import uuid
 
+try:
+    import fcntl
+except ImportError:  # pragma: no cover
+    fcntl = None
+
 from . import policy
-from .build import BuildError, _Lock, load_catalog
+from .build import load_catalog
 from .scan import resolve_dir
 
 STATE_DIR = ".zakios"
@@ -89,61 +98,250 @@ def _destinations(rec, files):
     return None, ["type « %s » non installable dans le pilote" % kind]
 
 
-# ---------------------------------------------------------------- état du projet
+# ---------------------------------------------------------------- accès sûr au projet
 
-def _state_path(project, *parts):
-    return os.path.join(project, STATE_DIR, *parts)
+class UnsafePath(ActivationError):
+    pass
+
+
+def _parts(rel):
+    parts = rel.split("/")
+    if not rel or any(p in ("", ".", "..") for p in parts) or rel.startswith("/") or "\0" in rel:
+        raise UnsafePath("chemin invalide ou sortant du projet : %r" % rel)
+    return parts
+
+
+class Root:
+    """Le projet, ouvert une fois comme descripteur de dossier.
+
+    Toutes les opérations descendent composant par composant avec O_NOFOLLOW : un lien symbolique
+    rencontré, même substitué après une vérification préalable, fait échouer l'opération au lieu de
+    sortir du projet. Le chemin du projet lui-même est celui que l'utilisateur a choisi.
+    """
+
+    def __init__(self, path):
+        self.path = os.path.realpath(path)
+        try:
+            self.fd = os.open(self.path, os.O_RDONLY | os.O_DIRECTORY)
+        except OSError as exc:
+            raise ActivationError("projet illisible (%s) : %s" % (path, exc))
+
+    def close(self):
+        if self.fd is not None:
+            os.close(self.fd)
+            self.fd = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
+
+    def _open_dir(self, dir_parts, create=False):
+        """Descripteur du dossier désigné, ou FileNotFoundError s'il n'existe pas (et create est faux)."""
+        fd = os.dup(self.fd)
+        try:
+            for part in dir_parts:
+                try:
+                    nfd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+                except FileNotFoundError:
+                    if not create:
+                        raise
+                    os.mkdir(part, 0o755, dir_fd=fd)
+                    nfd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+                except OSError as exc:
+                    if exc.errno in (errno.ELOOP, errno.ENOTDIR):
+                        raise UnsafePath("%s n'est pas un vrai dossier du projet (lien symbolique ou fichier)"
+                                         % "/".join(dir_parts[:dir_parts.index(part) + 1]))
+                    raise
+                os.close(fd)
+                fd = nfd
+            return fd
+        except BaseException:
+            os.close(fd)
+            raise
+
+    def missing_dirs(self, rel):
+        """Dossiers parents de `rel` qui n'existent pas encore (du plus haut au plus bas)."""
+        parts = _parts(rel)[:-1]
+        fd = os.dup(self.fd)
+        missing = []
+        try:
+            for index, part in enumerate(parts):
+                try:
+                    nfd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+                except FileNotFoundError:
+                    return ["/".join(parts[:i + 1]) for i in range(index, len(parts))]
+                except OSError as exc:
+                    if exc.errno in (errno.ELOOP, errno.ENOTDIR):
+                        raise UnsafePath("%s n'est pas un vrai dossier du projet" % "/".join(parts[:index + 1]))
+                    raise
+                os.close(fd)
+                fd = nfd
+        finally:
+            os.close(fd)
+        return missing
+
+    def read(self, rel):
+        """Contenu du fichier, ou None s'il n'existe pas. UnsafePath si un lien symbolique est rencontré."""
+        parts = _parts(rel)
+        try:
+            parent = self._open_dir(parts[:-1])
+        except FileNotFoundError:
+            return None
+        try:
+            try:
+                fd = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW, dir_fd=parent)
+            except FileNotFoundError:
+                return None
+            except OSError as exc:
+                if exc.errno in (errno.ELOOP, errno.ENXIO):
+                    raise UnsafePath("%s est un lien symbolique : refusé" % rel)
+                raise
+            with os.fdopen(fd, "rb") as handle:
+                if not stat.S_ISREG(os.fstat(handle.fileno()).st_mode):
+                    raise UnsafePath("%s n'est pas un fichier ordinaire" % rel)
+                return handle.read()
+        finally:
+            os.close(parent)
+
+    def is_executable(self, rel):
+        parts = _parts(rel)
+        try:
+            parent = self._open_dir(parts[:-1])
+        except FileNotFoundError:
+            return False
+        try:
+            try:
+                return bool(os.stat(parts[-1], dir_fd=parent, follow_symlinks=False).st_mode & 0o100)
+            except FileNotFoundError:
+                return False
+        finally:
+            os.close(parent)
+
+    def lexists(self, rel):
+        """Vrai si quoi que ce soit (fichier, dossier, lien) occupe l'emplacement."""
+        parts = _parts(rel)
+        try:
+            parent = self._open_dir(parts[:-1])
+        except FileNotFoundError:
+            return False
+        try:
+            os.stat(parts[-1], dir_fd=parent, follow_symlinks=False)
+            return True
+        except FileNotFoundError:
+            return False
+        finally:
+            os.close(parent)
+
+    def write_atomic(self, rel, data, executable=False, replace=True):
+        """Écrit via un fichier temporaire. Avec replace=False, n'écrase jamais un fichier déjà présent."""
+        parts = _parts(rel)
+        parent = self._open_dir(parts[:-1], create=True)
+        tmp = ".zakios-tmp-%s" % uuid.uuid4().hex[:10]
+        try:
+            fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=parent)
+            try:
+                with os.fdopen(fd, "wb") as handle:
+                    handle.write(data)
+                    handle.flush()
+                    os.fchmod(handle.fileno(), 0o755 if executable else 0o644)
+                    os.fsync(handle.fileno())
+            except BaseException:
+                os.unlink(tmp, dir_fd=parent)
+                raise
+            if replace:
+                os.rename(tmp, parts[-1], src_dir_fd=parent, dst_dir_fd=parent)
+            else:
+                try:  # link échoue si la cible existe : création atomique sans écrasement
+                    os.link(tmp, parts[-1], src_dir_fd=parent, dst_dir_fd=parent, follow_symlinks=False)
+                finally:
+                    os.unlink(tmp, dir_fd=parent)
+        finally:
+            os.close(parent)
+
+    def remove(self, rel):
+        parts = _parts(rel)
+        try:
+            parent = self._open_dir(parts[:-1])
+        except FileNotFoundError:
+            return
+        try:
+            try:
+                os.unlink(parts[-1], dir_fd=parent)
+            except FileNotFoundError:
+                pass
+        finally:
+            os.close(parent)
+
+    def rmdir_if_empty(self, rel):
+        parts = _parts(rel)
+        try:
+            parent = self._open_dir(parts[:-1])
+        except FileNotFoundError:
+            return
+        try:
+            try:
+                os.rmdir(parts[-1], dir_fd=parent)
+            except (FileNotFoundError, OSError) as exc:
+                if not isinstance(exc, FileNotFoundError) and exc.errno not in (errno.ENOTEMPTY, errno.EEXIST, errno.ENOTDIR):
+                    raise
+        finally:
+            os.close(parent)
+
+    def listdir(self, rel):
+        try:
+            fd = self._open_dir(_parts(rel))
+        except FileNotFoundError:
+            return []
+        try:
+            return sorted(os.listdir(fd))
+        finally:
+            os.close(fd)
+
+    def lock(self):
+        """Verrou exclusif du projet (le dossier d'état est créé ici, jamais avant)."""
+        if fcntl is None:
+            raise ActivationError("plateforme non prise en charge : le verrou du projet exige Linux ou macOS (fcntl)")
+        state = self._open_dir([STATE_DIR], create=True)
+        try:
+            fd = os.open("project.lock", os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o644, dir_fd=state)
+        finally:
+            os.close(state)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError:
+            os.close(fd)
+            raise ActivationError("une autre installation est déjà en cours dans ce projet")
+        return fd
+
+
+def _state(*parts):
+    return "/".join((STATE_DIR,) + parts)
 
 
 def _empty_lock():
     return {"version": 1, "components": {}, "history": []}
 
 
-def _read_lock(project):
-    path = _state_path(project, LOCK_FILE)
-    if not os.path.exists(path):
-        return _empty_lock()
-    with open(path, encoding="utf-8") as handle:
-        return json.load(handle)
-
-
-def _write_atomic(path, data, executable=False):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    tmp = "%s.zakios-tmp-%s" % (path, uuid.uuid4().hex[:8])
-    with open(tmp, "wb") as handle:
-        handle.write(data)
-    os.chmod(tmp, 0o755 if executable else 0o644)
-    os.replace(tmp, path)
-
-
-def _inside(project, rel):
-    """Vrai si `rel` reste dans le projet, sans passer par un lien symbolique qui en sortirait."""
-    root = os.path.realpath(project)
-    target = os.path.join(project, rel)
-    probe = os.path.dirname(target)
-    while probe and not os.path.exists(probe):
-        probe = os.path.dirname(probe)
-    real = os.path.realpath(probe)
-    if os.path.islink(target):
-        return False
-    return real == root or real.startswith(root + os.sep)
-
-
-def _read_disk(project, rel):
-    path = os.path.join(project, rel)
-    if not os.path.isfile(path):
-        return None
-    with open(path, "rb") as handle:
-        return handle.read()
+def _read_lock(root):
+    data = root.read(_state(LOCK_FILE))
+    return _empty_lock() if data is None else json.loads(data.decode("utf-8"))
 
 
 def load_profile(project, profile_path=None):
-    path = profile_path or _state_path(project, PROFILE_FILE)
     try:
-        with open(path, encoding="utf-8") as handle:
-            data = json.load(handle)
+        if profile_path:
+            with open(profile_path, "rb") as handle:
+                raw = handle.read()
+        else:
+            with Root(project) as root:
+                raw = root.read(_state(PROFILE_FILE))
+            if raw is None:
+                raise ActivationError("profil absent : %s" % os.path.join(project, _state(PROFILE_FILE)))
+        data = json.loads(raw.decode("utf-8"))
     except (OSError, ValueError) as exc:
-        raise ActivationError("profil illisible (%s) : %s" % (path, exc))
+        raise ActivationError("profil illisible : %s" % exc)
     selection = data.get("components") if isinstance(data, dict) else None
     if not isinstance(selection, list) or not all(isinstance(x, str) for x in selection):
         raise ActivationError("le profil doit contenir une liste « components » d'identifiants")
@@ -153,12 +351,24 @@ def load_profile(project, profile_path=None):
 # ---------------------------------------------------------------- aperçu
 
 def plan(project, catalog, sources_root, selection):
-    """Calcule exactement ce que ferait l'installation, sans rien écrire.
+    """Calcule exactement ce que ferait l'installation, sans rien écrire (ni dossier d'état, ni verrou)."""
+    with Root(project) as root:
+        return _plan(root, catalog, sources_root, selection)
 
-    Renvoie un dictionnaire : actions (create, update, unchanged, remove), refused (composants refusés
-    avec leurs raisons), notes et plan_sha256 (empreinte du plan, pour lier l'aperçu à l'installation).
-    """
-    project = os.path.abspath(project)
+
+def _journal_notes(root):
+    """Journaux restés en conflit : sauvegardes conservées pour revue humaine."""
+    notes = []
+    for tx in root.listdir(_state(JOURNAL_DIR)):
+        raw = root.read(_state(JOURNAL_DIR, tx, "meta.json"))
+        if raw and json.loads(raw.decode("utf-8")).get("status") == "conflict":
+            notes.append("Journal %s en conflit : sauvegardes conservées dans %s, à revoir à la main."
+                         % (tx, _state(JOURNAL_DIR, tx)))
+    return notes
+
+
+def _plan(root, catalog, sources_root, selection):
+    project = root.path
     try:
         registry, registry_sha = load_catalog(catalog)
     except Exception as exc:  # catalogue illisible ou invalide
@@ -166,7 +376,12 @@ def plan(project, catalog, sources_root, selection):
     if registry.get("build_mode") != "exact":
         raise ActivationError("catalogue expérimental (sources modifiées localement) : activation refusée")
     by_id = {c["component_id"]: c for c in registry["components"]}
-    lock = _read_lock(project)
+    try:
+        lock = _read_lock(root)
+    except UnsafePath as exc:
+        raise ActivationError("dossier d'état hors du projet ou illisible, activation refusée : %s" % exc)
+    except ValueError as exc:
+        raise ActivationError("verrou d'installation illisible : %s" % exc)
     selection = sorted(set(selection))
 
     refused, desired, owners = [], {}, {}
@@ -245,44 +460,61 @@ def plan(project, catalog, sources_root, selection):
             locked[rel] = (cid, sha)
     actions = []
     blocked = {}
+
+    def read_disk(rel, cid):
+        try:
+            return root.read(rel), True
+        except UnsafePath as exc:
+            blocked.setdefault(cid, []).append("%s : chemin non sûr (%s)" % (rel, exc))
+            return None, False
+
+    def occupied(rel):
+        try:
+            return root.lexists(rel)
+        except UnsafePath:
+            return True
+
     for rel in sorted(desired):
         data, executable = desired[rel]
         cid = owners[rel]
         new_sha = _sha(data)
-        disk = _read_disk(project, rel)
-        if not _inside(project, rel):
-            blocked.setdefault(cid, []).append("%s sortirait du projet (lien symbolique)" % rel)
+        disk, safe = read_disk(rel, cid)
+        if not safe:
             continue
+        entry = {"path": rel, "component_id": cid, "sha256": new_sha, "executable": executable}
         if rel in locked:
             if disk is None:
-                actions.append({"action": "create", "path": rel, "component_id": cid, "sha256": new_sha, "executable": executable})
+                actions.append(dict(entry, action="create"))
             elif _sha(disk) != locked[rel][1]:
                 blocked.setdefault(cid, []).append("%s modifié localement depuis l'installation" % rel)
             elif _sha(disk) == new_sha:
-                actions.append({"action": "unchanged", "path": rel, "component_id": cid, "sha256": new_sha, "executable": executable})
+                actions.append(dict(entry, action="unchanged"))
             else:
-                actions.append({"action": "update", "path": rel, "component_id": cid, "sha256": new_sha, "executable": executable})
-        elif disk is not None or os.path.lexists(os.path.join(project, rel)):
+                actions.append(dict(entry, action="update"))
+        elif disk is not None or occupied(rel):
             blocked.setdefault(cid, []).append("%s existe déjà dans le projet (fichier non géré par ZakiOS)" % rel)
         else:
-            actions.append({"action": "create", "path": rel, "component_id": cid, "sha256": new_sha, "executable": executable})
+            actions.append(dict(entry, action="create"))
     for rel in sorted(locked):
         if rel in desired:
             continue
         cid, sha = locked[rel]
-        disk = _read_disk(project, rel)
+        disk, safe = read_disk(rel, cid)
+        if not safe:
+            continue
+        entry = {"path": rel, "component_id": cid, "sha256": sha, "executable": False}
         if disk is None:
-            actions.append({"action": "forget", "path": rel, "component_id": cid, "sha256": sha, "executable": False})
+            actions.append(dict(entry, action="forget"))
         elif _sha(disk) != sha:
             blocked.setdefault(cid, []).append("%s modifié localement : retrait refusé" % rel)
         else:
-            actions.append({"action": "remove", "path": rel, "component_id": cid, "sha256": sha, "executable": False})
+            actions.append(dict(entry, action="remove"))
     for cid, reasons in sorted(blocked.items()):
         refused.append({"component_id": cid, "reasons": reasons})
         actions = [a for a in actions if a["component_id"] != cid]
 
     refused.sort(key=lambda r: r["component_id"])
-    notes = []
+    notes = _journal_notes(root)
     if any(by_id[c]["type"] == "hook" for c in selected_ok if c in by_id):
         notes.append("Les hooks sont copiés sous .claude/hooks/zakios/ mais pas activés : settings.json n'est pas modifié.")
     body = {"registry_sha256": registry_sha, "actions": actions, "refused": refused, "selection": selection}
@@ -301,59 +533,81 @@ def plan(project, catalog, sources_root, selection):
 
 # ---------------------------------------------------------------- installation et retour arrière
 
-def _journal_path(project, tx, *parts):
-    return _state_path(project, JOURNAL_DIR, tx, *parts)
+def _save_meta(root, tx, meta):
+    root.write_atomic(_state(JOURNAL_DIR, tx, "meta.json"), _dump(meta).encode("utf-8"))
 
 
-def _save_meta(project, tx, meta):
-    _write_atomic(_journal_path(project, tx, "meta.json"), _dump(meta).encode("utf-8"))
+def _undo_conflicts(root, ops):
+    """Raisons pour lesquelles annuler ces opérations ferait perdre un fichier de l'utilisateur.
 
-
-def _undo(project, tx, check_user_edits):
-    """Annule une transaction à partir de son journal. Renvoie les raisons de blocage éventuelles."""
-    with open(_journal_path(project, tx, "meta.json"), encoding="utf-8") as handle:
-        meta = json.load(handle)
-    ops = meta["ops"]
-    if check_user_edits:
-        blocked = []
-        for op in ops:
-            if op["kind"] in ("created", "updated"):
-                disk = _read_disk(project, op["path"])
-                if disk is not None and _sha(disk) != op["after_sha256"]:
-                    blocked.append("%s modifié depuis l'installation : retour arrière refusé" % op["path"])
-        if blocked:
-            raise ActivationError("retour arrière impossible sans perdre des modifications", blocked)
-    for op in reversed(ops):
-        target = os.path.join(project, op["path"])
-        if op["kind"] == "created":
-            if os.path.isfile(target):
-                os.remove(target)
-        elif op["kind"] in ("updated", "removed"):
-            with open(_journal_path(project, tx, "backup", op["path"]), "rb") as handle:
-                _write_atomic(target, handle.read(), op.get("executable_before", False))
-    for rel in reversed(meta.get("created_dirs", [])):
-        path = os.path.join(project, rel)
-        if os.path.isdir(path) and not os.listdir(path):
-            os.rmdir(path)
-    _write_atomic(_state_path(project, LOCK_FILE), _dump(meta["lock_before"]).encode("utf-8"))
-    meta["status"] = "rolled_back"
-    _save_meta(project, tx, meta)
-
-
-def _recover_interrupted(project):
-    """Une installation interrompue (processus tué) laisse un journal « started » : on l'annule."""
-    base = _state_path(project, JOURNAL_DIR)
-    if not os.path.isdir(base):
-        return []
-    recovered = []
-    for tx in sorted(os.listdir(base)):
-        meta_path = _journal_path(project, tx, "meta.json")
-        if not os.path.exists(meta_path):
+    Valable pour un retour arrière explicite comme pour la reprise après interruption : l'état du
+    disque est comparé à ce que ZakiOS a écrit (après) ou à ce qui existait avant l'opération.
+    """
+    reasons = []
+    for op in ops:
+        rel = op["path"]
+        try:
+            disk = root.read(rel)
+            occupied = disk is not None or root.lexists(rel)
+        except UnsafePath as exc:
+            reasons.append("%s : chemin non sûr (%s) : restauration refusée" % (rel, exc))
             continue
-        with open(meta_path, encoding="utf-8") as handle:
-            status = json.load(handle).get("status")
-        if status == "started":
-            _undo(project, tx, check_user_edits=False)
+        sha = _sha(disk) if disk is not None else None
+        if op["kind"] == "created":
+            if occupied and sha != op["after_sha256"]:
+                reasons.append("%s modifié depuis l'installation : retour arrière refusé" % rel)
+        elif op["kind"] == "updated":
+            if occupied and sha not in (op["after_sha256"], op["before_sha256"]):
+                reasons.append("%s modifié depuis l'installation : retour arrière refusé" % rel)
+        elif op["kind"] == "removed":
+            if occupied and sha != op["before_sha256"]:
+                reasons.append("%s recréé depuis le retrait : restauration refusée" % rel)
+    return reasons
+
+
+def _undo(root, tx):
+    """Annule une transaction à partir de son journal, ou signale un conflit en gardant les sauvegardes."""
+    raw = root.read(_state(JOURNAL_DIR, tx, "meta.json"))
+    if raw is None:
+        raise ActivationError("journal %s introuvable" % tx)
+    meta = json.loads(raw.decode("utf-8"))
+    reasons = _undo_conflicts(root, meta["ops"])
+    if reasons:
+        meta["status"] = "conflict"
+        meta["conflicts"] = reasons
+        _save_meta(root, tx, meta)
+        raise ActivationError("retour arrière impossible sans perdre des modifications ; sauvegardes conservées dans %s"
+                              % _state(JOURNAL_DIR, tx), reasons)
+    for op in reversed(meta["ops"]):
+        rel = op["path"]
+        if op["kind"] == "created":
+            root.remove(rel)
+        else:
+            backup = root.read(_state(JOURNAL_DIR, tx, "backup", rel))
+            if backup is None:
+                raise ActivationError("sauvegarde manquante pour %s" % rel)
+            try:
+                root.write_atomic(rel, backup, op.get("executable_before", False), replace=(op["kind"] == "updated"))
+            except FileExistsError:
+                meta["status"] = "conflict"
+                meta["conflicts"] = ["%s recréé pendant la restauration : restauration refusée" % rel]
+                _save_meta(root, tx, meta)
+                raise ActivationError("retour arrière interrompu, sauvegardes conservées dans %s" % _state(JOURNAL_DIR, tx),
+                                      meta["conflicts"])
+    for rel in reversed(meta.get("created_dirs", [])):
+        root.rmdir_if_empty(rel)
+    root.write_atomic(_state(LOCK_FILE), _dump(meta["lock_before"]).encode("utf-8"))
+    meta["status"] = "rolled_back"
+    _save_meta(root, tx, meta)
+
+
+def _recover_interrupted(root):
+    """Une installation interrompue (processus tué) laisse un journal « started » : on l'annule si c'est sans risque."""
+    recovered = []
+    for tx in root.listdir(_state(JOURNAL_DIR)):
+        raw = root.read(_state(JOURNAL_DIR, tx, "meta.json"))
+        if raw and json.loads(raw.decode("utf-8")).get("status") == "started":
+            _undo(root, tx)
             recovered.append(tx)
     return recovered
 
@@ -363,90 +617,106 @@ def apply(project, catalog, sources_root, selection, expected_plan=None, fault=N
 
     `expected_plan` : empreinte lue dans l'aperçu ; si le plan a changé depuis, on refuse.
     `fault` : fonction appelée après chaque action (tests d'échec simulé).
-    Renvoie {"transaction", "applied", "unchanged"} ; transaction vaut None quand rien n'a changé.
+    Une première validation sans écriture précède le dossier d'état et le verrou : un refus évident
+    ne laisse rien dans le projet. Renvoie {"transaction", "applied", "unchanged"} ;
+    transaction vaut None quand rien n'a changé.
     """
-    project = os.path.abspath(project)
-    os.makedirs(_state_path(project), exist_ok=True)
-    try:
-        lock_ctx = _Lock(_state_path(project, "project"))
-        lock_ctx.__enter__()
-    except BuildError as exc:
-        raise ActivationError("une autre installation est déjà en cours dans ce projet : %s" % exc)
-    try:
-        recovered = _recover_interrupted(project)
-        pl = plan(project, catalog, sources_root, selection)
-        if pl["refused"]:
-            raise ActivationError("installation refusée, rien n'a été écrit", [
-                "%s : %s" % (r["component_id"], "; ".join(r["reasons"])) for r in pl["refused"]])
-        if expected_plan and expected_plan != pl["plan_sha256"]:
-            raise ActivationError("le plan a changé depuis l'aperçu, rien n'a été écrit")
-        todo = [a for a in pl["actions"] if a["action"] != "unchanged"]
-        unchanged = len(pl["actions"]) - len(todo)
-        if not todo:
-            return {"transaction": None, "applied": 0, "unchanged": unchanged, "recovered": recovered}
-
-        lock_before = _read_lock(project)
-        tx = "%s-%s" % (time.strftime("%Y%m%dT%H%M%S"), uuid.uuid4().hex[:6])
-        meta = {"status": "started", "lock_before": lock_before, "ops": [], "created_dirs": [], "plan_sha256": pl["plan_sha256"]}
-        _save_meta(project, tx, meta)
+    with Root(project) as root:
+        first = _plan(root, catalog, sources_root, selection)
+        _check(first, expected_plan)
+        lock_fd = root.lock()
         try:
-            for index, act in enumerate(todo):
-                rel, target = act["path"], os.path.join(project, act["path"])
-                if act["action"] in ("create", "update"):
-                    data, executable = pl["_contents"][rel]
-                    op = {"kind": "created" if act["action"] == "create" else "updated", "path": rel,
-                          "after_sha256": _sha(data)}
-                    if act["action"] == "update":
-                        old = _read_disk(project, rel)
-                        _write_atomic(_journal_path(project, tx, "backup", rel), old)
-                        op["executable_before"] = os.access(target, os.X_OK)
-                    parent = os.path.dirname(rel)
-                    missing = []
-                    while parent and not os.path.isdir(os.path.join(project, parent)):
-                        missing.append(parent)
-                        parent = os.path.dirname(parent)
-                    meta["created_dirs"].extend(reversed(missing))
-                    meta["ops"].append(op)
-                    _save_meta(project, tx, meta)  # le journal précède l'écriture
-                    _write_atomic(target, data, executable)
-                elif act["action"] == "remove":
-                    old = _read_disk(project, rel)
-                    _write_atomic(_journal_path(project, tx, "backup", rel), old)
-                    meta["ops"].append({"kind": "removed", "path": rel, "executable_before": os.access(target, os.X_OK)})
-                    _save_meta(project, tx, meta)
-                    os.remove(target)
-                # "forget" : le fichier a déjà disparu, seul le verrou change
-                if fault:
-                    fault(index)
-            lock_after = {"version": 1, "components": pl["installed"],
-                          "history": lock_before.get("history", []) + [tx]}
-            _write_atomic(_state_path(project, LOCK_FILE), _dump(lock_after).encode("utf-8"))
-            meta["status"] = "committed"
-            _save_meta(project, tx, meta)
-        except BaseException as exc:
-            _undo(project, tx, check_user_edits=False)
-            raise ActivationError("échec pendant l'installation, retour arrière effectué : %s" % exc) from exc
-        return {"transaction": tx, "applied": len(todo), "unchanged": unchanged, "recovered": recovered}
-    finally:
-        lock_ctx.__exit__()
+            return _apply_locked(root, catalog, sources_root, selection, expected_plan, fault)
+        finally:
+            os.close(lock_fd)
+
+
+def _check(pl, expected_plan):
+    if pl["refused"]:
+        raise ActivationError("installation refusée, rien n'a été écrit", [
+            "%s : %s" % (r["component_id"], "; ".join(r["reasons"])) for r in pl["refused"]])
+    if expected_plan and expected_plan != pl["plan_sha256"]:
+        raise ActivationError("le plan a changé depuis l'aperçu, rien n'a été écrit")
+
+
+def _apply_locked(root, catalog, sources_root, selection, expected_plan, fault):
+    recovered = _recover_interrupted(root)
+    pl = _plan(root, catalog, sources_root, selection)  # sous verrou : le plan qui fait foi
+    _check(pl, expected_plan)
+    todo = [a for a in pl["actions"] if a["action"] != "unchanged"]
+    unchanged = len(pl["actions"]) - len(todo)
+    if not todo:
+        return {"transaction": None, "applied": 0, "unchanged": unchanged, "recovered": recovered}
+
+    lock_before = _read_lock(root)
+    tx = "%s-%s" % (time.strftime("%Y%m%dT%H%M%S"), uuid.uuid4().hex[:6])
+    meta = {"status": "started", "lock_before": lock_before, "ops": [], "created_dirs": [], "plan_sha256": pl["plan_sha256"]}
+    _save_meta(root, tx, meta)
+    try:
+        for index, act in enumerate(todo):
+            rel = act["path"]
+            if act["action"] in ("create", "update"):
+                data, executable = pl["_contents"][rel]
+                op = {"kind": "created" if act["action"] == "create" else "updated", "path": rel,
+                      "after_sha256": _sha(data)}
+                if act["action"] == "update":
+                    old = root.read(rel)
+                    root.write_atomic(_state(JOURNAL_DIR, tx, "backup", rel), old)
+                    op["before_sha256"] = _sha(old)
+                    op["executable_before"] = root.is_executable(rel)
+                new_dirs = root.missing_dirs(rel)
+                meta["created_dirs"].extend(new_dirs)
+                meta["ops"].append(op)
+                _save_meta(root, tx, meta)  # le journal précède l'écriture
+                try:
+                    root.write_atomic(rel, data, executable, replace=(act["action"] == "update"))
+                except FileExistsError:
+                    # un fichier est apparu depuis le plan : il n'est pas à nous, on ne l'écrase pas
+                    meta["ops"].pop()
+                    del meta["created_dirs"][len(meta["created_dirs"]) - len(new_dirs):]
+                    _save_meta(root, tx, meta)
+                    raise ActivationError("%s est apparu depuis l'aperçu : installation annulée" % rel)
+            elif act["action"] == "remove":
+                old = root.read(rel)
+                root.write_atomic(_state(JOURNAL_DIR, tx, "backup", rel), old)
+                meta["ops"].append({"kind": "removed", "path": rel, "before_sha256": _sha(old),
+                                    "executable_before": root.is_executable(rel)})
+                _save_meta(root, tx, meta)
+                root.remove(rel)
+            # "forget" : le fichier a déjà disparu, seul le verrou change
+            if fault:
+                fault(index)
+        lock_after = {"version": 1, "components": pl["installed"], "history": lock_before.get("history", []) + [tx]}
+        root.write_atomic(_state(LOCK_FILE), _dump(lock_after).encode("utf-8"))
+        meta["status"] = "committed"
+        _save_meta(root, tx, meta)
+    except BaseException as exc:
+        try:
+            _undo(root, tx)
+        except ActivationError as conflict:
+            raise ActivationError("échec pendant l'installation (%s) et retour arrière bloqué : %s"
+                                  % (exc, conflict), conflict.reasons) from exc
+        raise ActivationError("échec pendant l'installation, retour arrière effectué : %s" % exc) from exc
+    return {"transaction": tx, "applied": len(todo), "unchanged": unchanged, "recovered": recovered}
 
 
 def rollback(project):
     """Annule la dernière installation, sauf si cela ferait perdre des modifications de l'utilisateur."""
-    project = os.path.abspath(project)
-    os.makedirs(_state_path(project), exist_ok=True)
-    try:
-        lock_ctx = _Lock(_state_path(project, "project"))
-        lock_ctx.__enter__()
-    except BuildError as exc:
-        raise ActivationError("une autre installation est déjà en cours dans ce projet : %s" % exc)
-    try:
-        _recover_interrupted(project)
-        lock = _read_lock(project)
-        if not lock["history"]:
+    with Root(project) as root:
+        try:
+            has_lock = root.read(_state(LOCK_FILE)) is not None
+        except UnsafePath as exc:
+            raise ActivationError("dossier d'état hors du projet, retour arrière refusé : %s" % exc)
+        if not has_lock:
             raise ActivationError("aucune installation à annuler")
-        tx = lock["history"][-1]
-        _undo(project, tx, check_user_edits=True)
-        return {"transaction": tx}
-    finally:
-        lock_ctx.__exit__()
+        lock_fd = root.lock()
+        try:
+            _recover_interrupted(root)
+            lock = _read_lock(root)
+            if not lock["history"]:
+                raise ActivationError("aucune installation à annuler")
+            tx = lock["history"][-1]
+            _undo(root, tx)
+            return {"transaction": tx}
+        finally:
+            os.close(lock_fd)
