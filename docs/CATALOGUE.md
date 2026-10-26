@@ -41,6 +41,8 @@ Dans `decisions/validated.json`, une entrée par composant :
   "justification": "mission distincte", "fingerprint_sha256": "<empreinte lue dans registry.json>"}}
 ```
 
+Licences (`decisions/licenses.json`) : `{"dépôt ou dépôt:chemin": {"spdx": "MIT", "verified_by": "Zaki", "commit": "<commit lu>", "attribution": "…"}}`. Une vérification liée à un autre commit est périmée (`stale_licenses`). Annotations (`decisions/annotations.json`) : `depends_on`, `conflicts_with`, `variant_of`, `replaced_by`, `platform`, `min_version` par composant.
+
 Valeurs autorisées : `conserver`, `fusionner`, `variante`, `remplacer_par_socle`, `archiver`. Sans empreinte, ou si le contenu a changé depuis, la validation n'est pas appliquée et apparaît dans `stale_decisions` du rapport.
 
 Les statuts sont des propositions. Les décisions (Conserver, Fusionner, Variante, Remplacer par le Socle, Archiver) sont prises par un humain et inscrites dans `decisions/validated.json`, fusionnées au prochain build sans jamais être écrasées. Une décision dont le composant a disparu est listée comme orpheline.

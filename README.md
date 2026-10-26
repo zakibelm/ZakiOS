@@ -7,7 +7,7 @@ ZakiOS lit les catalogues publics (aitmpl / davila7/claude-code-templates), les 
 > **Statut : catalogue exploratoire en lecture seule, avec validation humaine.**
 > Ce n'est pas un système d'activation automatique. Un score de similarité est un indice de lecture, jamais une preuve d'équivalence ni de nouveauté. Voir `docs/AUDIT-a29d2df.md`.
 
-## État (moteur 0.4.1, schéma 3)
+## État (moteur 0.5.0, schéma 4)
 
 | Élément | Chiffre |
 |---|---|
@@ -28,7 +28,7 @@ pip install -r requirements.txt            # PyYAML
 # cloner les sources aux commits de sources.json sous ./sources/<owner>/<repo>
 python3 -m zakios build                    # génère catalog/ (registry.json, crosswalk.csv, build_report.json)
 python3 -m zakios verify                   # revalide un catalogue existant
-python3 -m unittest discover -s tests -t . # 64 tests
+python3 -m unittest discover -s tests -t . # 94 tests
 ```
 
 Le moteur refuse de construire si une source obligatoire manque, si son commit diffère du manifeste (40 caractères exigés) ou si le dépôt a des modifications locales. `--allow-dirty` donne un build **expérimental** (`build_mode: experimental_dirty`), à ne pas présenter comme une reconstruction exacte. Un verrou empêche deux générations simultanées. La génération se fait dans un dossier temporaire unique, est validée, puis remplace `catalog/` par un échange atomique : un lecteur voit toujours soit l'ancien, soit le nouveau catalogue. `verify` lit les trois fichiers d'une même génération, puis recalcule le CSV, les comptes et les références à partir du registre. La génération précédente est gardée dans `catalog.prev`.
@@ -40,13 +40,17 @@ Le moteur refuse de construire si une source obligatoire manque, si son commit d
 ```
 ZakiOS/
 ├── sources.json            manifeste : dépôts, rôles, commits complets
-├── decisions/validated.json   décisions validées par un humain (jamais écrasées)
+├── decisions/              validated.json (décisions), licenses.json (licences vérifiées), annotations.json (dépendances, conflits, compatibilité)
 ├── catalog/                registre généré (ne pas éditer à la main)
 ├── zakios/                 moteur : parse, classify, policy, scan, similarity, build
-├── tests/                  64 tests, sur de petits dépôts git créés à la volée
-├── docs/                   méthodologie, catalogue, architecture, feuille de route, audit
+├── tests/                  94 tests, sur de petits dépôts git créés à la volée
+├── docs/                   méthodologie, catalogue, architecture, activation, feuille de route, audits
 └── archive/pre-audit-a29d2df/   ancien catalogue et scripts, gardés pour l'historique seulement
 ```
+
+## Activation dans un projet (pilote)
+
+`plan` (aperçu sans écriture), `apply` (installation tout ou rien, réexécutable) et `rollback` installent des composants validés dans `.claude/` d'un projet Linux. Rien n'est installable tant qu'un humain n'a pas validé la décision et la licence : aujourd'hui, aucun composant réel. Détails et garanties : `docs/ACTIVATION.md`.
 
 ## Règles
 

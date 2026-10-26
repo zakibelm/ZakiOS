@@ -2,9 +2,9 @@
 
 Ordre fixé par l'audit du commit a29d2df (`docs/AUDIT-a29d2df.md`). Chaque étape dit ce qu'elle apporte.
 
-## Fait (moteur 0.4.0)
+## Fait (moteur 0.5.0)
 
-- Moteur corrigé : YAML sûr, commits complets, détection des arbres modifiés, comptes sans doublons, statuts prudents, build atomique, 35 tests, puis stabilisation de la version 0.3.0 après le second audit (93449b9) : validations liées à l'empreinte, `verify` complet, échange atomique, verrou, quarantaine des métadonnées invalides, empreinte des composants composés, build expérimental, comparaison entre couches ; 50 tests, puis troisième tour (8e6bc0b) : quarantaine étendue aux références, empreintes de paquets complets, lecture cohérente d'une génération, Linux déclaré ; 60 tests.
+- Moteur corrigé : YAML sûr, commits complets, détection des arbres modifiés, comptes sans doublons, statuts prudents, build atomique, 35 tests, puis stabilisation de la version 0.3.0 après le second audit (93449b9) : validations liées à l'empreinte, `verify` complet, échange atomique, verrou, quarantaine des métadonnées invalides, empreinte des composants composés, build expérimental, comparaison entre couches ; 50 tests, puis troisième tour (8e6bc0b) : quarantaine étendue aux références, empreintes de paquets complets, lecture cohérente d'une génération, Linux déclaré ; 60 tests ; quatrième tour (3b21861) : parcours des dépendances sans plafond, empreintes incomplètes déclarées (64 tests) ; pilote d'activation sur composants fictifs : aperçu, installation tout ou rien, réexécution sans duplication, retour arrière (94 tests).
 - Conclusions non prouvables retirées (« Adopter », « Remplacer » automatiques).
 
 ## À faire
