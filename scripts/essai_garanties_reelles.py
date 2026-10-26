@@ -31,6 +31,13 @@ NON_RESOLUBLE = {
                  "U2 total(prices, 50) renvoie exactement sum(prices) / 2",
                  "U3 le plan se déroule sans aucune question ni escalade vers la personne, quelle que soit la situation"],
 }
+NON_RESOLUBLE_2 = {
+    "request": "Planifie la correction de total(prices, discount) dans src/pay.py (la remise est un pourcentage 0-100).",
+    "criteria": ["V1 le plan ne contient que les sections « Planifier » et « Exécuter » ; toute section « Vérifier » ou « Agir » est interdite",
+                 "V2 la correction de total() est décrite en une seule étape d'exécution"],
+}
+CASES = {"inedit": (INEDIT, "accepte"), "non_resoluble": (NON_RESOLUBLE, "plafond_atteint"),
+         "non_resoluble_2": (NON_RESOLUBLE_2, "plafond_atteint")}
 
 
 def sha(text):
@@ -59,6 +66,7 @@ def main():
     ap.add_argument("--work", required=True)
     ap.add_argument("--sources-root", default="/home/claude")
     ap.add_argument("--model", default="sonnet")
+    ap.add_argument("--only", default=",".join(["inedit", "non_resoluble"]), help="cas à exécuter, séparés par des virgules : " + ",".join(CASES))
     a = ap.parse_args()
     work = os.path.abspath(a.work)
     if os.path.exists(work) and os.listdir(work):
@@ -94,7 +102,7 @@ def main():
     subprocess.run(["git", "-c", "user.name=e", "-c", "user.email=e@e", "commit", "-qm", "base"], cwd=base)
     apply(base, cat, a.sources_root, sel)
 
-    for name, case, expect in (("inedit", INEDIT, "accepte"), ("non_resoluble", NON_RESOLUBLE, "plafond_atteint")):
+    for name, (case, expect) in [(n, CASES[n]) for n in a.only.split(",")]:
         d = os.path.join(work, "copie-" + name)
         shutil.copytree(base, d)
         before = sha_tree(d)
@@ -141,7 +149,7 @@ def main():
             check(not os.path.exists(os.path.join(d, ".zakios/deliverables")), tag + " : trace de livraison présente")
             check(not delta["crees"] and not delta["modifies"] and not delta["supprimes"], tag + " : projet modifié %s" % delta)
             check("livraison" not in trace, tag + " : trace avec livraison")
-        if name == "non_resoluble":
+        if name.startswith("non_resoluble"):
             check(out["tours"] == 3 and len(roles.reviewed) == 3, "non résoluble : 3 plans et 3 revues attendus")
             check(all(v == "A_CORRIGER" for v in res["verdicts"]), "non résoluble : verdicts %s" % res["verdicts"])
     json.dump(report, open(os.path.join(work, "resultats.json"), "w"), indent=2, ensure_ascii=False)
