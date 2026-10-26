@@ -84,3 +84,22 @@ Le script `scripts/essai_lot1.py` échoue (code 1) si un critère manque : exéc
 Preuves : `docs/revues/preuves-essai-3/`. Ce résultat supplante l'essai 2 pour le planificateur (le dossier `preuves-essai-2` reste comme historique).
 
 Reste ouvert : mécanisme d'enregistrement contrôlé ; autres modèles et plus de passages ; mode interactif ; `run-tests` avec isolation ; la dépendance `plan-writer` → `writing-plans` est déclarée dans l'essai, mais pas dans `decisions/annotations.json` (décision réelle à toi).
+
+## Essai 4 : enregistrement contrôlé et essai de bout en bout (moteur 0.6.0)
+
+**Mécanisme** : `zakios/deliver.py`, commande `python3 -m zakios save-plan --project P --path docs/plans/x.md --content-file plan.md --preview` puis `--sha <empreinte de l'aperçu>`. Le plan est un texte, jamais exécuté. Chemin accepté : `docs/plans/[sous-dossiers/]nom.md` uniquement (sans chemin absolu, `..`, barre inverse, nom invalide). Aucun écrasement : contenu identique ⇒ `deja_enregistre` sans écriture ; contenu différent ⇒ refus. Création atomique sans remplacement (`os.link`), liens symboliques refusés (couche `Root`), plan lié à l'empreinte présentée, trace sous `.zakios/deliverables/<empreinte>.json` (idempotente).
+
+**Tests (13)** : création normale et aperçu sans écriture, contenu identique, contenu différent, fichier de la personne préservé, plan différent de l'aperçu, 15 chemins hors périmètre, plan vide ou binaire, dossier `docs/plans` ou `docs` lié symboliquement, fichier final lié symboliquement, 6 créations concurrentes de 2 contenus (exactement une gagne, aucun fichier temporaire), interruption avant écriture (rien) et après écriture (fichier complet, trace complétée au rejeu), CLI. Une mutation (autoriser le remplacement) est détectée par le test de concurrence.
+
+**Essai de bout en bout** (`scripts/essai_lot1.py`, 3 passages) : demande ⇒ `plan-writer` (outils `Read, Glob, Grep`) ⇒ extraction du plan et du chemin proposé ⇒ aperçu (aucune écriture) ⇒ `save-plan` (`enregistre`) ⇒ second enregistrement (`deja_enregistre`, aucune écriture) ⇒ seul changement du projet : le fichier du plan. **Tous les critères satisfaits.** Preuves : `docs/revues/preuves-essai-4/`.
+
+**Grilles de contenu ajoutées** (présence seulement, elles ne jugent pas la qualité) : plan = sections Planifier/Exécuter/Vérifier/Agir en titres, critères d'acceptation, preuve, action corrective ; relecture = constat localisé fichier:ligne, critères jugés, preuve, contrôles non exécutés, recommandation. Les marqueurs « 100 » / « inject » restent un contrôle sommaire de détection des défauts connus.
+
+**Ce que l'essai a révélé** (PDCA) :
+
+| Constat | Action | Bénéfice |
+|---|---|---|
+| Exécutions intermédiaires en échec : le script attendait la trace sous `.zakios` dans son inventaire (ignoré par conception) ; la grille cherchait le mot « preuve » alors que le plan disait « prouve / sortie conservée » ; le plan n'avait pas toujours de titre de niveau 1 | Inventaire et grille corrigés ; l'extracteur accepte un titre `#` ou `##` | critères justes, pas assouplis au hasard : chaque correction a un test |
+| Le format de livraison du `plan-writer` n'impose pas de titre ni de balise de début | À durcir dans l'agent (titre obligatoire, ligne de début) avant toute installation réelle | extraction non ambiguë |
+| Le script accumule les échecs puis sort en code 1 (diagnostic complet) au lieu de s'arrêter au premier | Comportement voulu, à connaître | diagnostic complet |
+| Un seul modèle, 3 passages ; mode interactif non testé ; `run-tests` attend l'isolation | Inchangé | limites déclarées |

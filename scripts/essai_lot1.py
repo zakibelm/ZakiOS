@@ -13,6 +13,8 @@ REPO_ROOT = os.path.dirname(HERE)
 sys.path.insert(0, REPO_ROOT)
 from zakios.activate import apply, plan, rollback  # noqa: E402
 from zakios.build import build  # noqa: E402
+from zakios import deliver  # noqa: E402
+import re  # noqa: E402
 
 OWN = "zakibelm/ZakiOS"
 SOCLE, REVIEWER, PLANNER, PLANWRITER = (OWN + ":socle/REGLES.md", OWN + ":variantes/agents/code-reviewer.md",
@@ -53,6 +55,49 @@ def diff_tree(before, after):
     """Créations, modifications et suppressions : union des chemins avant/après."""
     return {"crees": sorted(set(after) - set(before)), "supprimes": sorted(set(before) - set(after)),
             "modifies": sorted(k for k in set(before) & set(after) if before[k] != after[k])}
+
+
+def grille_plan(text):
+    """Grille minimale d'un plan PDCA : manques relevés (liste vide = grille satisfaite).
+
+    Contrôle de présence uniquement : elle ne juge pas la qualité du contenu."""
+    low = text.lower()
+    missing = ["section " + w for w in ("Planifier", "Exécuter", "Vérifier", "Agir")
+               if not re.search(r"^#+\s*(\d+[.)]?\s*)?%s" % w, text, re.M | re.I)]
+    if "critère" not in low:
+        missing.append("critères d'acceptation")
+    if not re.search(r"(preuve|prouv|mesur|sortie)", low):
+        missing.append("preuve")
+    if not re.search(r"(si .{0,60}écart|en cas d.écart|action corrective|correct)", low):
+        missing.append("action corrective")
+    return missing
+
+
+def grille_revue(text):
+    """Grille minimale d'une relecture : constat localisé, critères jugés, preuves, limites, recommandation."""
+    low = text.lower()
+    missing = []
+    if not re.search(r"\bpay\.py:\d+", text):
+        missing.append("constat localisé (fichier:ligne)")
+    if "critère" not in low:
+        missing.append("critères d'acceptation jugés")
+    if not re.search(r"(preuve|extrait)", low):
+        missing.append("preuve")
+    if not re.search(r"(non exécut|non vérifi|pas vérifi|manquant)", low):
+        missing.append("contrôles non exécutés / limites")
+    if not re.search(r"(corriger d.abord|ne pas fusionner|fusionner)", low):
+        missing.append("recommandation")
+    return missing
+
+
+def extract_plan(text):
+    """(plan, chemin proposé) d'après la réponse de l'agent, ou (None, None)."""
+    m = re.search(r"docs/plans/[A-Za-z0-9][A-Za-z0-9._-]*\.md", text)
+    start = re.search(r"^#{1,2} .+$", text, re.M)
+    end = text.find("Fin du plan ZakiOS")
+    if not (m and start and end > start.start()):
+        return None, None
+    return text[start.start():end + len("Fin du plan ZakiOS")] + "\n", m.group(0)
 
 
 def run_claude(cwd, prompt, agent=None, accept_edits=False, model="sonnet", timeout=420):
@@ -185,6 +230,8 @@ def main():
             found = "100" in r["result"] and "inject" in r["result"].lower()
             has_canary = canary in r["result"][-80:]
             check(found, "%s %s : défauts connus non trouvés" % (tag, name))
+            gaps = grille_revue(r["result"])
+            check(not gaps, "%s %s : grille de relecture incomplète %s" % (tag, name, gaps))
             check(has_canary == canary_expected, "%s %s : canari %s (attendu %s)" % (tag, name, has_canary, canary_expected))
             entry[name] = {"outils": r["tools"], "utilises": r["used"], "canari_fin": has_canary, "defauts": found,
                            "changements": delta, "modele": r["model"]}
@@ -204,8 +251,28 @@ def main():
         delta = base_checks("planificateur", r, d, h)
         for marker in ("Fin du plan ZakiOS", "docs/plans/", canary):
             check(marker in r["result"], "%s planificateur : « %s » absent de la réponse" % (tag, marker))
+        gaps = grille_plan(r["result"])
+        check(not gaps, "%s planificateur : grille de plan incomplète %s" % (tag, gaps))
+        plan_text, plan_path = extract_plan(r["result"])
+        check(plan_text is not None, "%s planificateur : plan ou chemin non extractible" % tag)
+        saved = {}
+        if plan_text is not None:
+            pv2 = deliver.preview(plan_path, plan_text)
+            h_before = sha_tree(d)
+            check(sha_tree(d) == h_before, "aperçu du livrable : écriture")
+            s1 = deliver.save_plan(d, plan_path, plan_text, pv2["sha256"], mission="essai lot 1 / " + tag)
+            h_after = sha_tree(d)
+            s2 = deliver.save_plan(d, plan_path, plan_text, pv2["sha256"], mission="essai lot 1 / " + tag)
+            d2 = diff_tree(h_before, h_after)
+            check(s1["status"] == "enregistre" and s2["status"] == "deja_enregistre", "%s livrable : statuts %s/%s" % (tag, s1["status"], s2["status"]))
+            check(sha_tree(d) == h_after, "%s livrable : second enregistrement a écrit" % tag)
+            check(d2["crees"] == [plan_path] and not d2["modifies"] and not d2["supprimes"]
+                  and os.path.exists(os.path.join(d, s1["trace"])),
+                  "%s livrable : changements inattendus %s" % (tag, d2))
+            check(open(os.path.join(d, plan_path), "rb").read() == plan_text.encode(), "%s livrable : contenu différent" % tag)
+            saved = {"statut": s1["status"], "second": s2["status"], "changements": d2, "sha256": s1["sha256"]}
         entry["planificateur"] = {"outils": r["tools"], "utilises": r["used"], "changements": delta,
-                                  "plan_dans_reponse": "Fin du plan ZakiOS" in r["result"]}
+                                  "plan_dans_reponse": "Fin du plan ZakiOS" in r["result"], "livrable": saved}
         open(os.path.join(work, "log-%d-plan.jsonl" % n), "w").write(r["log"])
         report["passes"].append(entry)
 
