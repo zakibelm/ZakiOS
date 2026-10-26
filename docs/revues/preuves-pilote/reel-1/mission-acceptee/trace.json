@@ -1,0 +1,110 @@
+{
+ "apercu": {
+  "chemin": "docs/plans/2026-10-26-correction-pay.md",
+  "content_sha256": "81ede19dbcf785a06d660afd6392e2d69706a46f33d3e5f8ccd0c792db60a448",
+  "delivery_sha256": "13f0db84f2e4e74449ee8813b1892ea0a372876bcd82785758d2b93b2b505fe9"
+ },
+ "appels": {
+  "plan-reviewer": 1,
+  "plan-writer": 1
+ },
+ "appels_detail": [
+  {
+   "n": 1,
+   "outils": {
+    "demandes": {
+     "Glob": 1,
+     "Read": 2
+    },
+    "interdits": []
+   },
+   "resultat": "valide",
+   "role": "plan-writer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 2,
+   "outils": {
+    "demandes": {},
+    "interdits": []
+   },
+   "resultat": "valide",
+   "role": "plan-reviewer",
+   "tentative": 1,
+   "tour": 1
+  }
+ ],
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "82701fb7cc943ebc",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 la remise est traitée comme un pourcentage de 0 à 100 (bornes comprises)",
+  "C2 la requête de lecture d'utilisateur est paramétrée",
+  "C3 le plan nomme au moins un test de régression à exécuter par la personne"
+ ],
+ "criteres_ids": {
+  "C1": "C1 la remise est traitée comme un pourcentage de 0 à 100 (bornes comprises)",
+  "C2": "C2 la requête de lecture d'utilisateur est paramétrée",
+  "C3": "C3 le plan nomme au moins un test de régression à exécuter par la personne"
+ },
+ "criteres_sha256": "5aed4cb879518c5bf83fa97c2edf0ecc32c7c06f877345c19d96a5f5ab949548",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecarts_comportementaux": [],
+ "ecrit_le": "2026-10-26T18:54:48Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison_differee": true,
+ "max_corrections": 2,
+ "mission_id": "p-eb9c4dad07",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le style de paramètre (`?`) est une hypothèse (H2) non confirmée, le pilote de base de données étant inconnu · Action : confirmer le pilote avant d'exécuter la tâche 2, ou adapter le marqueur comme prévu dans la section Agir · Résultat : le risque est déjà traité par le plan et le test sqlite3 en mémoire reste exécutable · preuve : « Ce plan suppose `?` et `db.execute(sql, params)` ; à confirmer. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : H1 (exception `ValueError` ou bornage silencieux) est présentée comme à confirmer, alors que C1 n'impose pas ce choix et que le plan a déjà une recommandation et un correctif prévu · Action : conserver la recommandation, et ajuster `test_total_remise_invalide` si la personne choisit le bornage · Résultat : aucune décision indispensable n'est reportée, le plan reste exécutable · preuve : « Si H1 est infirmée (borner au lieu de lever) : adapter `test_total_remise_invalide`. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : pytest pourrait ne pas être installé, ce que le plan n'a pas vérifié · Action : le plan prévoit déjà le repli `python -m unittest` ; préciser si besoin la forme des tests dans ce cas · Résultat : la commande de preuve reste concrète et exécutable par la personne · preuve : « Je ne sais pas si pytest est installé. Sinon, écrire les tests avec `unittest` et lancer `python -m unittest`. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la recherche des autres appelants de `total` qui passeraient une remise en fraction (0-1) est reportée à avant la fusion, hors des tâches d'exécution · Action : déplacer ce Grep dans la section Exécuter, avant la tâche 1 · Résultat : le changement de sémantique de la remise ne casse pas d'appelants en silence · preuve : « Une recherche Grep des appels à `total` est à faire avant la fusion. »"
+    }
+   ],
+   "plan_sha256": "81ede19dbcf785a06d660afd6392e2d69706a46f33d3e5f8ccd0c792db60a448",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "81ede19dbcf785a06d660afd6392e2d69706a46f33d3e5f8ccd0c792db60a448",
+    "relances_relecteur": 0,
+    "revue_sha256": "00f6f6b772a15b10e54572ade7fd3e0582d003b2927b54cbe77f3fe4cf32f63b",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

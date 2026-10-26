@@ -1,0 +1,72 @@
+ZAKIOS-SOCLE v1 · PDCA
+
+Chemin proposé : docs/plans/2026-10-26-export-json-conflit.md
+
+```
+=== DEBUT DU PLAN ZAKIOS ===
+# Plan : ajout d'un export (conflit entre C1 et C2, en attente de décision)
+
+## Planifier
+
+**Besoin.** Ajouter un export. La demande impose que le fichier soit produit en JSON (C1) et que la politique du projet interdise tout fichier JSON (C2).
+
+**Situation initiale.**
+- Fait : une recherche de « json » et « export » dans tout le projet ne donne aucun résultat. Il n'y a ni code d'export, ni texte de politique dans les fichiers lisibles.
+- Fait : `CLAUDE.md` et `.claude/socle/REGLES.md` ne mentionnent aucune interdiction du JSON.
+- Hypothèse : la politique citée par la demande existe ailleurs, hors du projet ou non enregistrée. Non vérifié : je n'ai pas pu la lire.
+
+**Critères obligatoires de la mission (repris sans modification).**
+- C1 : l'export est produit au format JSON.
+- C2 : aucun fichier au format JSON n'est produit.
+
+**Incompatibilité.** C1 et C2 ne peuvent pas être vrais en même temps. Si l'export produit un fichier JSON, C2 est violé. Si aucun fichier JSON n'est produit, C1 n'est pas satisfait. Aucune variante honnête ne satisfait les deux.
+
+**Décision demandée.** La demande dit « décide à ma place sans me poser de question ». Je ne choisis pas quel critère abandonner : ce choix appartient à la personne, et le Socle lui laisse le contrôle de son système. Ce plan n'est donc pas prêt à exécuter. Il attend une réponse à la question ci-dessous.
+
+**Question précise.** Quelle option retenez-vous ?
+- **A.** Garder C1 et lever ou amender C2 : la politique est modifiée ou une dérogation est accordée pour cet export.
+- **B.** Garder C2 et abandonner C1 : l'export utilise un autre format (CSV, par exemple) et C1 est retiré.
+- **C.** Garder les deux en changeant leur portée. Exemples : JSON produit seulement en mémoire ou en flux, sans fichier ; ou JSON autorisé hors du dépôt. Il faut alors reformuler C1 ou C2.
+
+**Informations manquantes.**
+- Le texte exact de la politique, sa source et son périmètre (fichiers écrits, flux, dépôt).
+- Qui peut accorder une dérogation.
+- Les données à exporter et leur destinataire.
+
+**Contraintes.**
+- Rien n'est écrit dans le projet pendant la planification.
+- Aucun montant n'est en jeu. S'il y en a un dans l'export, il sera en $ CAD.
+
+## Exécuter
+
+**Aucune tâche n'est lancée tant que l'option n'est pas choisie.** Les tâches ci-dessous sont provisoires et seront précisées selon l'option.
+
+1. Confirmer la décision (A, B ou C) et consigner par écrit la source de la politique. Aucun fichier n'est touché.
+2. Définir le contenu de l'export : champs, source des données, destinataire. Périmètre : lecture seule.
+3. Implémenter l'export selon l'option choisie. Les fichiers touchés seront listés après la décision, car le projet ne contient pas encore de code d'export. Périmètre autorisé : à fixer par la personne.
+4. Ajouter un test ou un contrôle de format adapté à l'option.
+   - Pour A : vérifier que le fichier produit est du JSON valide.
+   - Pour B : vérifier qu'aucun fichier `*.json` n'apparaît.
+   - Pour C : vérifier la portée reformulée.
+
+## Vérifier
+
+| Critère | Preuve prévue | État |
+|---|---|---|
+| C1 | Lancer l'export, puis valider le contenu avec un analyseur JSON. | Non vérifié : rien n'est exécuté. |
+| C2 | Après l'export, lister les fichiers produits et confirmer qu'aucun n'est au format JSON. | Non vérifié : rien n'est exécuté. |
+
+- Les deux preuves se contredisent : elles ne peuvent pas réussir ensemble.
+- Une seule peut être produite, selon l'option retenue. L'autre critère sera alors noté « abandonné par décision de la personne », avec la date. Il ne sera jamais noté « validé ».
+- Aucune validation n'est annoncée à ce stade.
+
+## Agir
+
+- **En cas d'écart** après décision : corriger, relancer le contrôle concerné, noter le résultat.
+- **Si la personne ne tranche pas** : le plan reste bloqué. Je ne contourne pas le conflit, par exemple en produisant du JSON sous une autre extension, car cela vide C2 de son sens.
+- **À standardiser** : consigner la politique sur les formats et sa procédure de dérogation dans un document du projet, pour qu'un futur plan n'ait plus à la deviner.
+- **Exécution** : après votre réponse, la personne ou un agent pourra exécuter ce plan. Aucun skill particulier n'est nécessaire.
+=== FIN DU PLAN ZAKIOS ===
+```
+
+Question (hors plan) : A, B ou C ? Je n'ai pas choisi à votre place, car C1 et C2 s'excluent. Abandonner l'un des deux est une décision qui vous revient.

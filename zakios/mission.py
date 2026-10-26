@@ -356,7 +356,7 @@ def assert_review_binding(entry):
 
 
 def run_mission(project, request, criteria, writer, reviewer, components=None, mission_id=None,
-                max_corrections=2, max_technical_retries=1, now=None, journal=None, tool_audit=None):
+                max_corrections=2, max_technical_retries=1, now=None, journal=None, tool_audit=None, livraison="immediate"):
     """Exécute la mission. `writer(request, criteria, previous_plan, findings) -> texte` et
     `reviewer(request, criteria, plan) -> texte` sont fournis par l'appelant. Renvoie un compte rendu (dict).
 
@@ -365,7 +365,11 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
     `journal()` (facultatif) renvoie la référence du journal du dernier appel réel, pour la trace des erreurs.
     `tool_audit()` (facultatif) renvoie l'analyse des outils demandés par le dernier appel (voir `outils.analyse`) :
     une demande refusée par la plateforme est signalée (écart comportemental) sans bloquer ; une exécution confirmée
-    ou indéterminée d'un outil interdit arrête immédiatement la mission (erreur technique « confinement »), sans livraison."""
+    ou indéterminée d'un outil interdit arrête immédiatement la mission (erreur technique « confinement »), sans livraison.
+    `livraison="immediate"` (défaut, comportement des campagnes C1–C4) enregistre le plan accepté ; `"differee"` ne fait
+    que calculer l'aperçu exact : l'enregistrement exige ensuite `confirmer_livraison` (confirmation explicite)."""
+    if livraison not in ("immediate", "differee"):
+        raise MissionError("mode de livraison inconnu : %r" % livraison)
     criteria = list(criteria)
     ids = validate_criteria(criteria)
     mission_id = mission_id or derive_mission_id(request, criteria)
@@ -444,12 +448,18 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
         assert accepted_sha == _sha(plan)  # la revue acceptée porte sur le dernier plan
         assert all(v == COVERAGE_OK for v in trace["tours"][-1]["revue"]["couverture"].values())  # aucun critère abandonné
         info = deliver.preview(path, plan, mission_id)
-        saved = deliver.save_plan(project, path, plan, info["delivery_sha256"], mission=mission_id)
-        saved2 = deliver.save_plan(project, path, plan, info["delivery_sha256"], mission=mission_id)
-        stable = {"chemin": path, "delivery_sha256": saved["delivery_sha256"],
-                  "content_sha256": saved["content_sha256"], "trace": saved["trace"]}
-        trace["livraison"] = stable  # sans statut : celui-ci dépend du passage, pas de la mission
-        result["livraison"] = dict(stable, statut=saved["status"], second=saved2["status"])
+        if livraison == "differee":
+            # aperçu exact seulement : rien n'est écrit dans le projet avant `confirmer_livraison`
+            trace["livraison_differee"] = True
+            trace["apercu"] = {"chemin": path, "delivery_sha256": info["delivery_sha256"], "content_sha256": info["content_sha256"]}
+            result["apercu"] = dict(trace["apercu"], plan=plan)
+        else:
+            saved = deliver.save_plan(project, path, plan, info["delivery_sha256"], mission=mission_id)
+            saved2 = deliver.save_plan(project, path, plan, info["delivery_sha256"], mission=mission_id)
+            stable = {"chemin": path, "delivery_sha256": saved["delivery_sha256"],
+                      "content_sha256": saved["content_sha256"], "trace": saved["trace"]}
+            trace["livraison"] = stable  # sans statut : celui-ci dépend du passage, pas de la mission
+            result["livraison"] = dict(stable, statut=saved["status"], second=saved2["status"])
     else:
         # trace de l'arrêt : cause, critères concernés, empreintes des plans, appels déjà effectués (aucune livraison)
         trace["arret"] = {"issue": outcome, "categorie": category, "cause": cause, "criteres_concernes": concerned,
@@ -462,3 +472,37 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
     result["trace"] = write_trace(project, mission_id, trace)
     result["tours_detail"] = trace["tours"]
     return result
+
+
+def confirmer_livraison(project, mission_id, plan_text, expected_delivery_sha256):
+    """Enregistrement contrôlé d'un plan ACCEPTE dont la livraison a été différée (confirmation explicite).
+
+    Refuse : trace absente ou non acceptée, livraison non différée, empreinte de livraison différente de celle présentée,
+    plan différent de celui examiné et accepté, revue non ACCEPTE ou critère non couvert. Idempotent (double
+    confirmation -> « deja_enregistre ») ; jamais d'écrasement (délégué à `deliver.save_plan`)."""
+    rel = ".zakios/missions/%s.json" % mission_id
+    try:
+        with Root(project) as root:
+            raw = root.read(rel)
+    except UnsafePath as exc:
+        raise MissionError("chemin de trace non sûr : %s" % exc)
+    if raw is None:
+        raise MissionError("trace de mission introuvable : %s" % mission_id)
+    trace = json.loads(raw.decode("utf-8"))
+    if trace.get("issue") != "accepte" or not trace.get("livraison_differee") or "apercu" not in trace:
+        raise MissionError("aucune livraison à confirmer pour cette mission (issue : %s)" % trace.get("issue"))
+    last = trace["tours"][-1]
+    revue = last.get("revue") or {}
+    if revue.get("verdict") != "ACCEPTE" or any(v != COVERAGE_OK for v in revue.get("couverture", {}).values()):
+        raise MissionError("la dernière revue n'est pas un ACCEPTE complet")
+    if _sha(plan_text) != last["plan_sha256"] or revue.get("plan_examine_sha256") != last["plan_sha256"]:
+        raise MissionError("le plan présenté n'est pas celui qui a été examiné et accepté")
+    ap = trace["apercu"]
+    if expected_delivery_sha256 != ap["delivery_sha256"]:
+        raise MissionError("l'empreinte de livraison confirmée n'est pas celle de l'aperçu présenté")
+    info = deliver.preview(ap["chemin"], plan_text, mission_id)
+    if info["delivery_sha256"] != ap["delivery_sha256"]:
+        raise MissionError("aperçu recalculé différent de l'aperçu tracé")
+    saved = deliver.save_plan(project, ap["chemin"], plan_text, ap["delivery_sha256"], mission=mission_id)
+    return {"statut": saved["status"], "chemin": ap["chemin"], "delivery_sha256": saved["delivery_sha256"],
+            "content_sha256": saved["content_sha256"], "trace": saved["trace"]}

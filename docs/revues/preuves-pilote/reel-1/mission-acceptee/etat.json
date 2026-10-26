@@ -1,0 +1,48 @@
+{
+ "id": "p-eb9c4dad07",
+ "statut": "termine",
+ "mode": "reel",
+ "cree_le": "2026-10-26T18:54:48Z",
+ "demande": "Planifie la correction du module de paiement src/pay.py : la remise est un pourcentage 0-100 et la lecture d'un utilisateur doit utiliser une requête paramétrée.",
+ "criteres": [
+  "C1 la remise est traitée comme un pourcentage de 0 à 100 (bornes comprises)",
+  "C2 la requête de lecture d'utilisateur est paramétrée",
+  "C3 le plan nomme au moins un test de régression à exécuter par la personne"
+ ],
+ "evenements": [
+  {
+   "t": "2026-10-26T18:54:48Z",
+   "texte": "mission créée dans un espace jetable"
+  },
+  {
+   "t": "2026-10-26T18:54:48Z",
+   "texte": "appel 1 : plan-writer démarré"
+  },
+  {
+   "t": "2026-10-26T18:55:12Z",
+   "texte": "appel 1 : plan-writer terminé"
+  },
+  {
+   "t": "2026-10-26T18:55:12Z",
+   "texte": "appel 2 : plan-reviewer démarré"
+  },
+  {
+   "t": "2026-10-26T18:55:22Z",
+   "texte": "appel 2 : plan-reviewer terminé"
+  },
+  {
+   "t": "2026-10-26T18:55:22Z",
+   "texte": "mission terminée : accepte"
+  },
+  {
+   "t": "2026-10-26T18:55:25Z",
+   "texte": "livraison confirmée et enregistrée : docs/plans/2026-10-26-correction-pay.md (enregistre)"
+  }
+ ],
+ "livraison": {
+  "statut": "enregistre",
+  "chemin": "docs/plans/2026-10-26-correction-pay.md",
+  "delivery_sha256": "13f0db84f2e4e74449ee8813b1892ea0a372876bcd82785758d2b93b2b505fe9",
+  "content_sha256": "81ede19dbcf785a06d660afd6392e2d69706a46f33d3e5f8ccd0c792db60a448"
+ }
+}

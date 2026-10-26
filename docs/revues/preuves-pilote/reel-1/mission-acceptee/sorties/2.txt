@@ -1,0 +1,13 @@
+ZAKIOS-SOCLE v1 · PDCA
+
+=== DEBUT DE LA REVUE ZAKIOS ===
+Verdict : ACCEPTE
+Plan examiné : 81ede19dbcf785a0
+Couverture C1 : couvert
+Couverture C2 : couvert
+Couverture C3 : couvert
+- [mineur] critère « C2 » · Problème : le style de paramètre (`?`) est une hypothèse (H2) non confirmée, le pilote de base de données étant inconnu · Action : confirmer le pilote avant d'exécuter la tâche 2, ou adapter le marqueur comme prévu dans la section Agir · Résultat : le risque est déjà traité par le plan et le test sqlite3 en mémoire reste exécutable · preuve : « Ce plan suppose `?` et `db.execute(sql, params)` ; à confirmer. »
+- [mineur] critère « C1 » · Problème : H1 (exception `ValueError` ou bornage silencieux) est présentée comme à confirmer, alors que C1 n'impose pas ce choix et que le plan a déjà une recommandation et un correctif prévu · Action : conserver la recommandation, et ajuster `test_total_remise_invalide` si la personne choisit le bornage · Résultat : aucune décision indispensable n'est reportée, le plan reste exécutable · preuve : « Si H1 est infirmée (borner au lieu de lever) : adapter `test_total_remise_invalide`. »
+- [mineur] critère « C3 » · Problème : pytest pourrait ne pas être installé, ce que le plan n'a pas vérifié · Action : le plan prévoit déjà le repli `python -m unittest` ; préciser si besoin la forme des tests dans ce cas · Résultat : la commande de preuve reste concrète et exécutable par la personne · preuve : « Je ne sais pas si pytest est installé. Sinon, écrire les tests avec `unittest` et lancer `python -m unittest`. »
+- [mineur] critère « C1 » · Problème : la recherche des autres appelants de `total` qui passeraient une remise en fraction (0-1) est reportée à avant la fusion, hors des tâches d'exécution · Action : déplacer ce Grep dans la section Exécuter, avant la tâche 1 · Résultat : le changement de sémantique de la remise ne casse pas d'appelants en silence · preuve : « Une recherche Grep des appels à `total` est à faire avant la fusion. »
+=== FIN DE LA REVUE ZAKIOS ===

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pilote ZakiOS</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <h1>Pilote ZakiOS</h1>
+  <p id="mode" class="mode" role="status"></p>
+</header>
+<main>
+  <section id="vue-connexion" hidden>
+    <h2>Accès au pilote</h2>
+    <form id="form-connexion">
+      <label for="jeton">Jeton d'accès</label>
+      <input id="jeton" type="password" autocomplete="current-password" required>
+      <button type="submit">Entrer</button>
+      <p id="erreur-connexion" class="erreur" role="alert"></p>
+    </form>
+  </section>
+
+  <section id="vue-app" hidden>
+    <section id="vue-saisie">
+      <h2>Nouvelle mission</h2>
+      <form id="form-mission">
+        <label for="demande">Demande</label>
+        <textarea id="demande" rows="4" maxlength="2000" required></textarea>
+        <label for="criteres">Critères obligatoires (un par ligne, chacun commence par un identifiant : C1, C2…)</label>
+        <textarea id="criteres" rows="5" required></textarea>
+        <button id="lancer" type="submit">Lancer la mission</button>
+        <p id="erreur-mission" class="erreur" role="alert"></p>
+      </form>
+      <details>
+        <summary>Projet d'exemple (espace jetable, lecture seule pour les agents)</summary>
+        <pre id="exemple"></pre>
+      </details>
+      <p class="note">Chaque mission s'exécute dans une copie jetable de ce projet. Rien n'est écrit dans un projet réel.</p>
+      <p id="limites" class="note"></p>
+    </section>
+
+    <section id="vue-mission" hidden>
+      <h2>Mission <code id="m-id"></code></h2>
+      <p id="m-statut" class="statut" role="status"></p>
+      <div id="m-bandeau" class="bandeau" hidden></div>
+      <h3>Déroulement</h3>
+      <ol id="m-evenements" class="evenements"></ol>
+      <div id="m-resultat" hidden>
+        <div id="m-clarification" hidden></div>
+        <div id="m-apercu" hidden></div>
+        <h3>Plans et revues</h3>
+        <div id="m-tours"></div>
+        <div id="m-erreurs" hidden></div>
+        <div id="m-ecarts" hidden></div>
+        <div id="m-preuves">
+          <h3>Preuves</h3>
+          <button type="button" id="btn-trace">Voir la trace de mission</button>
+          <button type="button" id="btn-audit">Voir le recoupement trace/journaux</button>
+          <pre id="m-preuve-texte" hidden></pre>
+        </div>
+      </div>
+      <p><button type="button" id="btn-nouvelle">Nouvelle mission</button></p>
+    </section>
+  </section>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>

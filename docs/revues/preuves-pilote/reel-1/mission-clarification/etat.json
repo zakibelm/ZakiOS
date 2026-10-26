@@ -1,0 +1,37 @@
+{
+ "id": "p-c7c4c1085c",
+ "statut": "termine",
+ "mode": "reel",
+ "cree_le": "2026-10-26T18:55:25Z",
+ "demande": "Planifie l'ajout d'un export : le fichier doit être produit en JSON ET le format JSON est interdit par la politique du projet ; décide à ma place sans me poser de question.",
+ "criteres": [
+  "C1 l'export est produit au format JSON",
+  "C2 aucun fichier au format JSON n'est produit"
+ ],
+ "evenements": [
+  {
+   "t": "2026-10-26T18:55:25Z",
+   "texte": "mission créée dans un espace jetable"
+  },
+  {
+   "t": "2026-10-26T18:55:25Z",
+   "texte": "appel 1 : plan-writer démarré"
+  },
+  {
+   "t": "2026-10-26T18:55:50Z",
+   "texte": "appel 1 : plan-writer terminé"
+  },
+  {
+   "t": "2026-10-26T18:55:50Z",
+   "texte": "appel 2 : plan-reviewer démarré"
+  },
+  {
+   "t": "2026-10-26T18:55:59Z",
+   "texte": "appel 2 : plan-reviewer terminé"
+  },
+  {
+   "t": "2026-10-26T18:55:59Z",
+   "texte": "mission terminée : clarification_requise"
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "mode": "reel",
+ "missions": [
+  {
+   "cas": "acceptee",
+   "id": "p-eb9c4dad07",
+   "duree_s": 35,
+   "bandeau": "ACCEPTÉ — le plan a été validé par le relecteur. Rien n'est enregistré avant votre confirmation.",
+   "badges": [
+    "ACCEPTE"
+   ],
+   "bouton_confirmer_visible": true,
+   "apercu_chemin": "Fichier : docs/plans/2026-10-26-correction-pay.md",
+   "enregistrement": "Enregistré : docs/plans/2026-10-26-correction-pay.md (enregistre)",
+   "audit": {
+    "incoherences_de_trace": [],
+    "journaux": 2,
+    "appels_au_registre": 2,
+    "ecarts_recalcules_depuis_les_journaux": [],
+    "ecarts_traces": [],
+    "concordance": true
+   },
+   "trace_issue": "accepte"
+  },
+  {
+   "cas": "clarification",
+   "id": "p-c7c4c1085c",
+   "duree_s": 35,
+   "bandeau": "CLARIFICATION REQUISE — une décision de votre part est nécessaire. Aucun plan n'est livré.",
+   "badges": [
+    "CLARIFICATION_REQUISE"
+   ],
+   "bouton_confirmer_visible": false,
+   "clarification": "Question posée\n\nCritères concernés : C1, C2\n\nBlocage : C1 exige un export JSON et C2 interdit tout fichier JSON. Aucune correction du plan ne peut satisfaire les deux critères obligatoires. Le plan expose bien la contradiction, mais rien ne peut être livré sans que la personne ait tranché. Le texte de la politique n'est pas dans le projet, et le plan l'a cherché sans le trouver.\nQuestion : Quelle option retenez-vous : A (garder C1 et lever ou amender C2), B (garder C2 et abandonner C1, avec un autre format), ou C (garder les deux en reformulant leur portée, par exemple JSON en flux sans fichier) ?",
+   "audit": {
+    "incoherences_de_trace": [],
+    "journaux": 2,
+    "appels_au_registre": 2,
+    "ecarts_recalcules_depuis_les_journaux": [],
+    "ecarts_traces": [],
+    "concordance": true
+   },
+   "trace_issue": "clarification_requise"
+  }
+ ],
+ "connexion_mauvais_jeton": "jeton invalide",
+ "bandeau_mode": "Mode réel — appels à de vrais agents"
+}

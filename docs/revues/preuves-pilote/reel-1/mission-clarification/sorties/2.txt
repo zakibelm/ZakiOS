@@ -1,0 +1,8 @@
+=== DEBUT DE LA REVUE ZAKIOS ===
+Verdict : CLARIFICATION_REQUISE
+Plan examiné : 3549f175e2f91a15
+Couverture C1 : couvert
+Couverture C2 : couvert
+- [clarification] critères : C1, C2 · blocage : C1 exige un export JSON et C2 interdit tout fichier JSON. Aucune correction du plan ne peut satisfaire les deux critères obligatoires. Le plan expose bien la contradiction, mais rien ne peut être livré sans que la personne ait tranché. Le texte de la politique n'est pas dans le projet, et le plan l'a cherché sans le trouver. · question : Quelle option retenez-vous : A (garder C1 et lever ou amender C2), B (garder C2 et abandonner C1, avec un autre format), ou C (garder les deux en reformulant leur portée, par exemple JSON en flux sans fichier) ?
+- [mineur] critère « C1 » · Problème : les tâches d'« Exécuter » restent provisoires et le périmètre autorisé n'est pas fixé, ce qui est cohérent avec l'attente de décision. → Action : détailler les tâches et les fichiers touchés dès que la personne a choisi une option. → Résultat : le plan devient exécutable et chaque critère retenu garde sa vérification concrète (analyseur JSON pour C1, liste des fichiers produits pour C2). · preuve : « Les tâches ci-dessous sont provisoires et seront précisées selon l'option. »
+=== FIN DE LA REVUE ZAKIOS ===
