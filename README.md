@@ -7,7 +7,7 @@ ZakiOS lit les catalogues publics (aitmpl / davila7/claude-code-templates), les 
 > **Statut : catalogue exploratoire en lecture seule, avec validation humaine.**
 > Ce n'est pas un système d'activation automatique. Un score de similarité est un indice de lecture, jamais une preuve d'équivalence ni de nouveauté. Voir `docs/AUDIT-a29d2df.md`.
 
-## État (moteur 0.3.0, schéma 3)
+## État (moteur 0.4.0, schéma 3)
 
 | Élément | Chiffre |
 |---|---|
@@ -28,10 +28,12 @@ pip install -r requirements.txt            # PyYAML
 # cloner les sources aux commits de sources.json sous ./sources/<owner>/<repo>
 python3 -m zakios build                    # génère catalog/ (registry.json, crosswalk.csv, build_report.json)
 python3 -m zakios verify                   # revalide un catalogue existant
-python3 -m unittest discover -s tests -t . # 50 tests
+python3 -m unittest discover -s tests -t . # 60 tests
 ```
 
-Le moteur refuse de construire si une source obligatoire manque, si son commit diffère du manifeste (40 caractères exigés) ou si le dépôt a des modifications locales. `--allow-dirty` donne un build **expérimental** (`build_mode: experimental_dirty`), à ne pas présenter comme une reconstruction exacte. Un verrou empêche deux générations simultanées. La génération se fait dans un dossier temporaire unique, est validée, puis remplace `catalog/` par un échange atomique : un lecteur voit toujours soit l'ancien, soit le nouveau catalogue. `verify` recalcule le CSV, les comptes et les références à partir du registre.
+Le moteur refuse de construire si une source obligatoire manque, si son commit diffère du manifeste (40 caractères exigés) ou si le dépôt a des modifications locales. `--allow-dirty` donne un build **expérimental** (`build_mode: experimental_dirty`), à ne pas présenter comme une reconstruction exacte. Un verrou empêche deux générations simultanées. La génération se fait dans un dossier temporaire unique, est validée, puis remplace `catalog/` par un échange atomique : un lecteur voit toujours soit l'ancien, soit le nouveau catalogue. `verify` lit les trois fichiers d'une même génération, puis recalcule le CSV, les comptes et les références à partir du registre. La génération précédente est gardée dans `catalog.prev`.
+
+**Plateforme prise en charge : Linux** (échange atomique et verrou `fcntl`). Ailleurs, le build refuse de démarrer faute de verrou.
 
 ## Structure
 
@@ -41,7 +43,7 @@ ZakiOS/
 ├── decisions/validated.json   décisions validées par un humain (jamais écrasées)
 ├── catalog/                registre généré (ne pas éditer à la main)
 ├── zakios/                 moteur : parse, classify, policy, scan, similarity, build
-├── tests/                  50 tests, sur de petits dépôts git créés à la volée
+├── tests/                  60 tests, sur de petits dépôts git créés à la volée
 ├── docs/                   méthodologie, catalogue, architecture, feuille de route, audit
 └── archive/pre-audit-a29d2df/   ancien catalogue et scripts, gardés pour l'historique seulement
 ```
@@ -52,7 +54,8 @@ ZakiOS/
 - Aucun composant tiers n'est copié ici sans licence vérifiée et attribution.
 - Chaque fiche garde source, commit complet et empreinte SHA-256 du contenu.
 - Un hook, un plugin ou un mod n'est jamais décidé par un score : audit par comportement obligatoire.
-- Une décision humaine est liée à l'empreinte du composant : si son contenu change, la validation est marquée périmée et doit être refaite.
+- Un composant aux métadonnées invalides n'est jamais utilisé comme référence, voisin ou homonyme.
+- Une décision humaine est liée à l'empreinte du paquet complet du composant (scripts, ressources et imports locaux compris) : si son contenu change, la validation est marquée périmée et doit être refaite.
 - Une règle transversale vit dans le Socle commun, et on vérifie qu'elle arrive bien à chaque agent à l'exécution (test pas encore écrit).
 
 ## Licence

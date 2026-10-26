@@ -10,7 +10,7 @@ REA : lire ce que fait réellement chaque composant, le situer dans une couche, 
 2. **Vérification** : dépôt présent, HEAD égal au commit de 40 caractères, arbre propre. Sinon le build s'arrête (une source facultative absente est notée, pas fatale).
 3. **Inventaire** : `git ls-files`, donc déterministe. Les tests, `node_modules`, docs et fichiers annexes sont exclus. Un mod = son README seul ; un hook `.json` et son script compagnon = un composant.
 4. **Lecture** : frontmatter lu avec `yaml.safe_load` ; un YAML invalide est signalé dans le rapport, jamais ignoré en silence. Les descriptions multi-lignes (`>-`, `|`) sont lues correctement.
-5. **Présélection** : TF-IDF et cosinus, en Python pur. Le meilleur candidat est cherché dans la même famille (agents, skills, commandes) parmi le Socle et l'existant ; les voisins proches dans le catalogue (≥ 0,45) et les homonymes sont notés.
+5. **Présélection** (les composants aux métadonnées invalides en sont exclus, comme référence, voisin ou homonyme) : TF-IDF et cosinus, en Python pur. Le meilleur candidat est cherché dans la même famille (agents, skills, commandes) parmi le Socle et l'existant ; les voisins proches dans le catalogue (≥ 0,45) et les homonymes sont notés.
 6. **Statut proposé** selon `zakios/policy.py`. Hooks, plugins et mods : toujours « audit par comportement ». Un fichier à métadonnées invalides est mis en quarantaine. Un composant sans équivalent dans sa famille est aussi cherché dans les deux autres (agent, skill, commande) : s'il y en a un, il devient « chevauchement inter-couches ».
 7. **Sortie déterministe** (JSON trié) : deux builds sur les mêmes sources donnent des fichiers identiques octet pour octet.
 8. **Validation** (schéma, types, empreintes, références, comptes, CSV recalculé) puis **échange atomique** du dossier `catalog/`. Sans échange atomique disponible, repli sur deux renommages avec restauration immédiate en cas d'erreur.
@@ -22,4 +22,4 @@ Un score lexical mesure un vocabulaire commun. Un score élevé peut cacher des 
 
 ## Récupération après incident
 
-Un verrou (`catalog.lock`) interdit deux générations simultanées. Les dossiers temporaires ont un nom unique (`catalog.tmp-…`) ; ceux d'une génération interrompue sont supprimés au prochain lancement. Si le repli par renommages a laissé `catalog.bak` sans `catalog/`, le prochain lancement le restaure.
+La génération précédente reste dans `catalog.prev` : un lecteur qui avait ouvert l'ancienne génération la lit jusqu'au bout. `verify` ouvre le dossier une seule fois et vérifie que le rapport correspond au registre lu (`registry_sha256`). Un verrou (`catalog.lock`, Linux) interdit deux générations simultanées. Les dossiers temporaires ont un nom unique (`catalog.tmp-…`) ; ceux d'une génération interrompue sont supprimés au prochain lancement. Si le repli par renommages a laissé `catalog.bak` sans `catalog/`, le prochain lancement le restaure.

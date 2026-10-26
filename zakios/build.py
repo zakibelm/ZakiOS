@@ -84,18 +84,27 @@ def _exchange(a, b):
     return renameat2(-100, os.fsencode(a), -100, os.fsencode(b), 2) == 0  # AT_FDCWD, RENAME_EXCHANGE
 
 
+def _keep_previous(old_dir, out_dir):
+    """Garde la génération précédente dans <out>.prev : un lecteur qui l'avait déjà ouverte peut finir sa lecture."""
+    prev = out_dir + ".prev"
+    if os.path.exists(prev):
+        shutil.rmtree(prev, ignore_errors=True)
+    os.rename(old_dir, prev)
+
+
 def _swap(tmp_dir, out_dir):
     """Remplace out_dir par tmp_dir sans que out_dir disparaisse pour un lecteur.
 
-    Chemin normal : échange atomique, l'ancien catalogue se retrouve dans tmp_dir puis est supprimé.
+    Chemin normal : échange atomique, l'ancien catalogue se retrouve dans tmp_dir et devient `.prev`.
     Repli (système sans échange atomique) : deux renommages ; si le second échoue, l'ancien catalogue
-    est restauré immédiatement avant de relever l'erreur.
+    est restauré immédiatement avant de relever l'erreur. Dans ce cas seulement, un court intervalle
+    sans catalogue existe : la plateforme prise en charge est Linux.
     """
     if not os.path.exists(out_dir):
         os.rename(tmp_dir, out_dir)
         return
     if _exchange(tmp_dir, out_dir):
-        shutil.rmtree(tmp_dir, ignore_errors=True)
+        _keep_previous(tmp_dir, out_dir)
         return
     bak = out_dir + ".bak"
     if os.path.exists(bak):
@@ -106,7 +115,7 @@ def _swap(tmp_dir, out_dir):
     except OSError:
         os.rename(bak, out_dir)
         raise
-    shutil.rmtree(bak, ignore_errors=True)
+    _keep_previous(bak, out_dir)
 
 
 class _Lock:
@@ -117,18 +126,18 @@ class _Lock:
         self._handle = None
 
     def __enter__(self):
+        if fcntl is None:
+            raise BuildError("plateforme non prise en charge : le verrou de génération exige Linux ou macOS (fcntl)")
         self._handle = open(self._path, "a+")
-        if fcntl is not None:
-            try:
-                fcntl.flock(self._handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            except OSError:
-                self._handle.close()
-                raise BuildError("une autre génération est déjà en cours pour %s" % os.path.basename(self._path[:-5]))
+        try:
+            fcntl.flock(self._handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError:
+            self._handle.close()
+            raise BuildError("une autre génération est déjà en cours pour %s" % os.path.basename(self._path[:-5]))
         return self
 
     def __exit__(self, *exc):
-        if fcntl is not None:
-            fcntl.flock(self._handle, fcntl.LOCK_UN)
+        fcntl.flock(self._handle, fcntl.LOCK_UN)
         self._handle.close()
 
 
@@ -140,6 +149,8 @@ def _evaluate(records, provisional):
     for i, rec in enumerate(records):
         fam = policy.family_of(rec["type"])
         role = rec["provenance"]["role"]
+        if rec["metadata_issue"]:  # quarantaine : ni référence, ni voisin, ni homonyme
+            continue
         if role in REFERENCE_ROLES:
             by_family[fam]["ref"].append(i)
         elif role == "catalogue":
@@ -334,9 +345,11 @@ def _build_locked(manifest, manifest_sha, sources_root, out_dir, allow_dirty, de
     registry = {"schema_version": policy.SCHEMA_VERSION, "manifest_sha256": manifest_sha,
                 "build_mode": build_mode, "components": registry_components}
 
+    registry_text = _dump(registry)
+    report["registry_sha256"] = hashlib.sha256(registry_text.encode("utf-8")).hexdigest()
     tmp_dir = tempfile.mkdtemp(prefix=os.path.basename(out_dir) + ".tmp-", dir=os.path.dirname(out_dir))
     try:
-        for name, content in (("registry.json", _dump(registry)), ("crosswalk.csv", _crosswalk_csv(registry_components)),
+        for name, content in (("registry.json", registry_text), ("crosswalk.csv", _crosswalk_csv(registry_components)),
                               ("build_report.json", _dump(report))):
             with open(os.path.join(tmp_dir, name), "w", encoding="utf-8", newline="") as handle:
                 handle.write(content)
@@ -353,20 +366,50 @@ def _is_hex(pattern, value):
     return isinstance(value, str) and bool(pattern.match(value))
 
 
+GENERATION_FILES = ("registry.json", "build_report.json", "crosswalk.csv")
+
+
+def read_generation(directory):
+    """Lit les trois fichiers d'une même génération, via un descripteur de dossier ouvert une seule fois.
+
+    L'échange atomique ne change pas le dossier que ce descripteur désigne : même si une nouvelle
+    génération est publiée pendant la lecture, on ne mélange pas ancien registre et nouveau rapport.
+    Renvoie {nom: octets}.
+    """
+    last = None
+    for _ in range(5):
+        try:
+            dir_fd = os.open(directory, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
+        except OSError as exc:
+            raise ValidationError("catalogue illisible : %s" % exc)
+        try:
+            data = {}
+            for name in GENERATION_FILES:
+                fd = os.open(name, os.O_RDONLY, dir_fd=dir_fd)
+                with os.fdopen(fd, "rb") as handle:
+                    data[name] = handle.read()
+            return data
+        except OSError as exc:  # génération supprimée pendant la lecture : on recommence
+            last = exc
+        finally:
+            os.close(dir_fd)
+    raise ValidationError("catalogue illisible : %s" % last)
+
+
 def validate_catalog(directory):
     """Vérifie un catalogue généré. Lève ValidationError avec la liste des problèmes."""
     problems = []
+    raw = read_generation(directory)
     try:
-        with open(os.path.join(directory, "registry.json"), encoding="utf-8") as handle:
-            registry = json.load(handle)
-        with open(os.path.join(directory, "build_report.json"), encoding="utf-8") as handle:
-            report = json.load(handle)
-        with open(os.path.join(directory, "crosswalk.csv"), encoding="utf-8", newline="") as handle:
-            csv_text = handle.read()
-    except (OSError, ValueError) as exc:
+        registry = json.loads(raw["registry.json"].decode("utf-8"))
+        report = json.loads(raw["build_report.json"].decode("utf-8"))
+        csv_text = raw["crosswalk.csv"].decode("utf-8")
+    except ValueError as exc:
         raise ValidationError("catalogue illisible : %s" % exc)
     if not isinstance(registry, dict) or not isinstance(report, dict):
         raise ValidationError("registre ou rapport mal formé")
+    if report.get("registry_sha256") != hashlib.sha256(raw["registry.json"]).hexdigest():
+        problems.append("le rapport ne correspond pas à ce registre (générations mélangées ou registre modifié)")
 
     comps = registry.get("components")
     if not isinstance(comps, list) or not comps:
@@ -461,16 +504,15 @@ def validate_catalog(directory):
         if best is not None:
             target = by_id.get(best)
             if target is None or target["provenance"].get("role") not in reference_roles \
-                    or policy.family_of(target["type"]) != policy.family_of(c["type"]):
+                    or policy.family_of(target["type"]) != policy.family_of(c["type"]) or target.get("metadata_issue"):
                 problems.append("%s : meilleur équivalent invalide (%s)" % (cid, best))
-        for key in ("homonym_of",):
-            for target in ev.get(key, []):
-                if target not in id_set:
-                    problems.append("%s : %s référence un composant inexistant" % (cid, key))
-        for key in ("similar_in_catalog", "cross_layer"):
-            for item in ev.get(key, []):
-                if item.get("component_id") not in id_set:
-                    problems.append("%s : %s référence un composant inexistant" % (cid, key))
+        refs = [("homonym_of", t) for t in ev.get("homonym_of", [])]
+        refs += [(k, item.get("component_id")) for k in ("similar_in_catalog", "cross_layer") for item in ev.get(k, [])]
+        for key, target in refs:
+            if target not in id_set:
+                problems.append("%s : %s référence un composant inexistant" % (cid, key))
+            elif by_id[target].get("metadata_issue"):
+                problems.append("%s : %s référence un composant aux métadonnées invalides" % (cid, key))
         if "adopter" in dec.get("proposal", "").lower():
             problems.append("%s : proposition affirmative non prouvable" % cid)
         if dec.get("proposal") != policy.PROPOSALS[status]:

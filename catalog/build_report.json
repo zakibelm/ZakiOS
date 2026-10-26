@@ -169,6 +169,7 @@
  "orphan_decisions": [],
  "provisional": true,
  "provisional_reason": "comparaison ZAKI OS manquante",
+ "registry_sha256": "bf4d8a98d53cba246afb9c53e6714452cc96e6250a45b170b882809c3973b5fc",
  "schema_version": "3",
  "sources": [
   {
@@ -257,5 +258,5 @@
   }
  ],
  "stale_decisions": [],
- "zakios_version": "0.3.0"
+ "zakios_version": "0.4.0"
 }

@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 import unittest
@@ -336,7 +337,7 @@ class BuildTests(unittest.TestCase):
             with self.assertRaises(ValidationError):
                 validate_catalog(out)
 
-    def _tampered(self, edit_registry=None, edit_csv=None, edit_report=None):
+    def _tampered(self, edit_registry=None, edit_csv=None, edit_report=None, resync=True):
         with Workdir() as wd:
             root, manifest, _ = make_world(wd)
             out = os.path.join(wd, "catalog")
@@ -351,6 +352,12 @@ class BuildTests(unittest.TestCase):
                     edit(data)
                     with open(path, "w") as handle:
                         json.dump(data, handle)
+                    if name == "registry.json" and resync:
+                        rep_path = os.path.join(out, "build_report.json")
+                        rep = json.loads(read(rep_path))
+                        rep["registry_sha256"] = hashlib.sha256(read(path)).hexdigest()
+                        with open(rep_path, "w") as handle:
+                            json.dump(rep, handle)
                 else:
                     text = read(path).decode("utf-8")
                     with open(path, "w", encoding="utf-8", newline="") as handle:
@@ -390,6 +397,130 @@ class BuildTests(unittest.TestCase):
                     comp["decision"]["validated"] = "conserver"
                     comp["decision"]["validated_fingerprint_sha256"] = "0" * 64
                     return
+        with self.assertRaises(ValidationError):
+            self._tampered(edit_registry=edit)
+
+    def test_report_from_another_generation_is_detected(self):
+        def edit(data):
+            data["components"][0]["name"] = "autre"
+        with self.assertRaises(ValidationError) as ctx:
+            self._tampered(edit_registry=edit, resync=False)
+        self.assertIn("ne correspond pas", str(ctx.exception))
+
+    def test_reader_keeps_a_consistent_generation_during_an_update(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            build(manifest, root, out)
+            old_sha = json.loads(read(os.path.join(out, "build_report.json")))["registry_sha256"]
+            dir_fd = os.open(out, os.O_RDONLY | os.O_DIRECTORY)  # lecteur qui a ouvert la génération courante
+            try:
+                change_source(root, manifest, "acme/catalogue",
+                              {"components/agents/ops/devops-engineer.md": agent_text("devops-engineer", "autre mission")})
+                build(manifest, root, out)  # publie une nouvelle génération pendant la lecture
+                with os.fdopen(os.open("registry.json", os.O_RDONLY, dir_fd=dir_fd), "rb") as handle:
+                    registry = handle.read()
+                with os.fdopen(os.open("build_report.json", os.O_RDONLY, dir_fd=dir_fd), "rb") as handle:
+                    report = json.loads(handle.read())
+            finally:
+                os.close(dir_fd)
+            self.assertEqual(hashlib.sha256(registry).hexdigest(), report["registry_sha256"])
+            self.assertEqual(report["registry_sha256"], old_sha)
+            self.assertNotEqual(json.loads(read(os.path.join(out, "build_report.json")))["registry_sha256"], old_sha)
+
+    def test_previous_generation_is_kept_once(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            build(manifest, root, out)
+            build(manifest, root, out)
+            self.assertTrue(os.path.isdir(out + ".prev"))
+            self.assertEqual(leftovers(out), [])
+
+    def test_missing_fcntl_refuses_to_build(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            with mock.patch.object(build_mod, "fcntl", None):
+                with self.assertRaises(BuildError) as ctx:
+                    build(manifest, root, os.path.join(wd, "catalog"))
+            self.assertIn("plateforme non prise en charge", str(ctx.exception))
+
+    def _fingerprints(self, wd, root, manifest):
+        out = os.path.join(wd, "catalog")
+        build(manifest, root, out)
+        return {cid: c["provenance"]["fingerprint_sha256"] for cid, c in load_registry(out).items()}
+
+    def test_fingerprint_follows_local_imports_of_hook_scripts(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            change_source(root, manifest, "acme/catalogue", {
+                "components/hooks/git/guard.py": "from helpers.rules import check\nimport shared\nprint(check)\n",
+                "components/hooks/git/helpers/rules.py": "def check():\n    return 1\n",
+                "components/hooks/git/shared.py": "VALUE = 1\n"})
+            hook = "acme/catalogue:components/hooks/git/guard.json"
+            before = self._fingerprints(wd, root, manifest)
+            files = load_registry(os.path.join(wd, "catalog"))[hook]["provenance"]["fingerprint_files"]
+            self.assertIn("components/hooks/git/helpers/rules.py", files)
+            self.assertIn("components/hooks/git/shared.py", files)
+            change_source(root, manifest, "acme/catalogue", {"components/hooks/git/helpers/rules.py": "def check():\n    return 2\n"})
+            after = self._fingerprints(wd, root, manifest)
+            self.assertNotEqual(before[hook], after[hook])
+
+    def test_fingerprint_follows_js_requires_and_transitive_imports(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            change_source(root, manifest, "acme/catalogue", {
+                "components/hooks/git/guard.py": "import subprocess\n",
+                "components/hooks/git/lint.js": "const a = require('./lib/a')\n",
+                "components/hooks/git/lib/a.js": "const b = require('./b.js')\n",
+                "components/hooks/git/lib/b.js": "module.exports = 1\n"})
+            hook = "acme/catalogue:components/hooks/git/lint.js"
+            before = self._fingerprints(wd, root, manifest)
+            change_source(root, manifest, "acme/catalogue", {"components/hooks/git/lib/b.js": "module.exports = 2\n"})
+            after = self._fingerprints(wd, root, manifest)
+            self.assertNotEqual(before[hook], after[hook])
+
+    def test_hook_config_referencing_a_script_in_another_folder(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            change_source(root, manifest, "acme/catalogue", {
+                "components/hooks/git/guard.json": json.dumps({"hooks": {"PreToolUse": [{"command": "python3 scripts/check_push.py"}]}}),
+                "components/hooks/git/scripts/check_push.py": "print(1)\n"})
+            hook = "acme/catalogue:components/hooks/git/guard.json"
+            before = self._fingerprints(wd, root, manifest)
+            change_source(root, manifest, "acme/catalogue", {"components/hooks/git/scripts/check_push.py": "print(2)\n"})
+            self.assertNotEqual(before[hook], self._fingerprints(wd, root, manifest)[hook])
+
+    def test_skill_fingerprint_covers_its_scripts_and_resources(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            change_source(root, manifest, "acme/catalogue", {
+                "components/skills/dev/scripts/run.py": "import util\n",
+                "components/skills/dev/scripts/util.py": "X = 1\n"})
+            skill = "acme/catalogue:components/skills/dev/SKILL.md"
+            before = self._fingerprints(wd, root, manifest)
+            change_source(root, manifest, "acme/catalogue", {"components/skills/dev/scripts/util.py": "X = 2\n"})
+            self.assertNotEqual(before[skill], self._fingerprints(wd, root, manifest)[skill])
+
+    def test_invalid_socle_component_is_never_a_reference(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            devops_text = "automates kubernetes deployments terraform pipelines container registries and monitoring dashboards"
+            change_source(root, manifest, "acme/socle", {
+                "agents/devops-broken.md": "---\nname: devops-engineer\ndescription: Use when: casse\n---\n" + devops_text + "\n"})
+            report = build(manifest, root, out)
+            comps = load_registry(out)
+            ev = comps["acme/catalogue:components/agents/ops/devops-engineer.md"]["evaluation"]
+            self.assertNotEqual(ev["best_match_id"], "acme/socle:agents/devops-broken.md")
+            self.assertEqual(ev["homonym_of"], [])
+            self.assertNotEqual(ev["status"], policy.STATUS_EQUIVALENCE)
+            self.assertTrue(any(i["path"] == "agents/devops-broken.md" for i in report["metadata_issues"]))
+
+    def test_invalid_reference_is_rejected_by_verify(self):
+        def edit(data):
+            by_id = {c["component_id"]: c for c in data["components"]}
+            by_id["acme/socle:agents/frontend-developer.md"]["metadata_issue"] = "yaml_invalide: simulé"
         with self.assertRaises(ValidationError):
             self._tampered(edit_registry=edit)
 

@@ -152,6 +152,14 @@ def make_record(src, repo_rel, rel, ctype, raw, issues, license_file, fingerprin
     }
 
 
+MAX_PACKAGE_FILES = 300
+_PY_IMPORT = re.compile(r"^\s*(?:from\s+(\.*[\w.]*)\s+import\s+([\w, ]+)|import\s+([\w., ]+))", re.M)
+_JS_IMPORT = re.compile(r"""(?:from\s+|require\(\s*|import\(\s*|import\s+)['"](\.{1,2}/[^'"]*|\.{1,2})['"]""")
+_SH_SOURCE = re.compile(r"""^\s*(?:source|\.)\s+["']?([^\s"';|&]+)""", re.M)
+_SCRIPT_EXT = (".py", ".js", ".mjs", ".cjs", ".ts", ".sh", ".bash", ".json", ".yaml", ".yml", ".toml")
+_PATH_IN_TEXT = re.compile(r"""[\w@./${}\-]+\.(?:py|js|mjs|cjs|ts|sh|bash)\b""")
+
+
 def _fingerprint(path, repo_files):
     """Empreinte d'un ensemble de fichiers : chemins et contenus, dans un ordre fixe."""
     digest = hashlib.sha256()
@@ -161,20 +169,128 @@ def _fingerprint(path, repo_files):
     return digest.hexdigest(), sorted(repo_files)
 
 
-def _behavior_files(repo_rel, ctype, all_files):
-    """Fichiers qui déterminent le comportement d'un composant composé.
+def _resolve_relative(base_dir, target, known):
+    """Fichier suivi désigné par `target` (relatif à base_dir), avec les extensions usuelles."""
+    joined = os.path.normpath(os.path.join(base_dir, target))
+    candidates = [joined] + [joined + ext for ext in _SCRIPT_EXT]
+    candidates += [os.path.join(joined, "index" + ext) for ext in (".js", ".ts", ".mjs")]
+    candidates.append(os.path.join(joined, "__init__.py"))
+    return next((c for c in candidates if c in known), None)
 
-    mod : tout son dossier ; hook : sa configuration et les scripts qui portent le même nom.
-    Les autres types sont leur propre fichier.
+
+def _local_dependencies(path, repo_rel, known):
+    """Fichiers locaux que `repo_rel` importe ou exécute (python, js/ts, shell), un niveau."""
+    try:
+        with open(os.path.join(path, repo_rel), "rb") as handle:
+            text = handle.read().decode("utf-8", errors="replace")
+    except OSError:
+        return []
+    base = os.path.dirname(repo_rel)
+    ext = os.path.splitext(repo_rel)[1]
+    found = []
+    if ext == ".py":
+        modules = []
+        for m in _PY_IMPORT.finditer(text):
+            if m.group(1) is not None:  # from X import a, b : X, mais aussi X.a et X.b (sous-modules)
+                source = m.group(1)
+                modules.append(source)
+                for name in m.group(2).split(","):
+                    name = name.strip()
+                    if name:
+                        modules.append(source + name if source.endswith(".") else source + "." + name)
+            else:
+                modules.extend(n.strip().split(" as ")[0] for n in m.group(3).split(","))
+        for mod in modules:
+            if not mod:
+                continue
+            dots = len(mod) - len(mod.lstrip("."))
+            rel = mod.lstrip(".").replace(".", "/")
+            roots = [os.path.normpath(os.path.join(base, *([".."] * (dots - 1))))] if dots else []
+            if not dots:  # import absolu : on cherche depuis le dossier du script puis ses parents
+                cur = base
+                while True:
+                    roots.append(cur)
+                    if not cur:
+                        break
+                    cur = os.path.dirname(cur)
+            for root in roots:
+                hit = _resolve_relative(root, rel, known) if rel else None
+                if hit and hit.endswith(".py"):
+                    found.append(hit)
+                    break
+    elif ext in (".js", ".mjs", ".cjs", ".ts"):
+        for m in _JS_IMPORT.finditer(text):
+            hit = _resolve_relative(base, m.group(1), known)
+            if hit:
+                found.append(hit)
+    elif ext in (".sh", ".bash"):
+        for m in _SH_SOURCE.finditer(text):
+            hit = _resolve_relative(base, m.group(1), known)
+            if hit:
+                found.append(hit)
+    return found
+
+
+def _closure(path, seeds, known):
+    """Seeds et toutes leurs dépendances locales, transitivement (borné)."""
+    seen, queue = set(), sorted(seeds)
+    while queue and len(seen) < MAX_PACKAGE_FILES:
+        current = queue.pop()
+        if current in seen:
+            continue
+        seen.add(current)
+        queue.extend(d for d in _local_dependencies(path, current, known) if d not in seen)
+    return seen
+
+
+def _referenced_scripts(path, config_rel, known, by_suffix):
+    """Scripts cités dans une configuration de hook (commandes), résolus dans le dépôt."""
+    try:
+        with open(os.path.join(path, config_rel), "rb") as handle:
+            text = handle.read().decode("utf-8", errors="replace")
+    except OSError:
+        return []
+    found = []
+    for token in _PATH_IN_TEXT.findall(text):
+        token = token.replace("${CLAUDE_PLUGIN_ROOT}/", "").replace("$CLAUDE_PROJECT_DIR/", "").lstrip("./")
+        hit = _resolve_relative(os.path.dirname(config_rel), token, known) or (token if token in known else None)
+        if hit is None:
+            matches = by_suffix.get(os.path.basename(token), [])
+            hit = matches[0] if len(matches) == 1 else None
+        if hit:
+            found.append(hit)
+    return found
+
+
+def _behavior_files(path, repo_rel, ctype, all_files, known, by_suffix):
+    """Paquet complet qui détermine le comportement d'un composant.
+
+    mod : tout son dossier ; skill : tout son dossier ; hook : configuration, scripts du même nom,
+    scripts cités par la configuration ; plugin : manifeste, hooks, scripts et .mcp.json de sa racine.
+    Pour chacun, on ajoute les dépendances locales importées par les scripts, transitivement.
+    Agents et commandes sont leur propre fichier.
     """
+    folder = os.path.dirname(repo_rel)
     if ctype == "mod":
-        prefix = os.path.dirname(repo_rel) + "/"
-        return [f for f in all_files if f.startswith(prefix)]
-    if ctype == "hook":
-        folder, stem = os.path.dirname(repo_rel), os.path.splitext(os.path.basename(repo_rel))[0]
-        return [f for f in all_files if os.path.dirname(f) == folder
-                and os.path.splitext(os.path.basename(f))[0] == stem]
-    return [repo_rel]
+        seeds = [f for f in all_files if f.startswith(folder + "/")]
+    elif ctype == "skill":
+        seeds = [f for f in all_files if f.startswith(folder + "/")] if folder else [repo_rel]
+    elif ctype == "hook":
+        stem = os.path.splitext(os.path.basename(repo_rel))[0]
+        seeds = [f for f in all_files if os.path.dirname(f) == folder
+                 and os.path.splitext(os.path.basename(f))[0] == stem]
+        if repo_rel.endswith(".json"):
+            seeds += _referenced_scripts(path, repo_rel, known, by_suffix)
+    elif ctype == "plugin":
+        root = os.path.dirname(folder)  # le manifeste vit dans <racine>/.claude-plugin/
+        seeds = [repo_rel] + [f for f in all_files if f.startswith(root + "/" if root else "")
+                              and (os.path.relpath(f, root).startswith(("hooks/", "scripts/"))
+                                   or os.path.basename(f) in (".mcp.json", "hooks.json"))]
+    elif ctype == "framework_module":
+        seeds = [repo_rel]
+    else:
+        return [repo_rel]
+    return sorted(_closure(path, set(seeds) | {repo_rel}, known) | set(seeds) | {repo_rel})
 
 
 def build_records(src, path, issues):
@@ -196,6 +312,10 @@ def build_records(src, path, issues):
     # Un hook décrit par un .json et son script compagnon forment un seul composant.
     json_hooks = {(os.path.dirname(rel), os.path.splitext(os.path.basename(rel))[0])
                   for _, rel, t in entries if t == "hook" and rel.endswith(".json")}
+    known = set(tracked_files(path))
+    by_suffix = {}
+    for f in sorted(known):
+        by_suffix.setdefault(os.path.basename(f), []).append(f)
     records = []
     for repo_rel, rel, ctype in entries:
         key = (os.path.dirname(rel), os.path.splitext(os.path.basename(rel))[0])
@@ -203,6 +323,6 @@ def build_records(src, path, issues):
             continue
         with open(os.path.join(path, repo_rel), "rb") as handle:
             raw = handle.read()
-        fingerprint = _fingerprint(path, _behavior_files(repo_rel, ctype, files))
+        fingerprint = _fingerprint(path, _behavior_files(path, repo_rel, ctype, files, known, by_suffix))
         records.append(make_record(src, repo_rel, rel, ctype, raw, issues, license_file, fingerprint))
     return records

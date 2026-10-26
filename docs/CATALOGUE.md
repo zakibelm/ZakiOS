@@ -12,7 +12,7 @@
 |---|---|
 | `component_id` | `dépôt:chemin`, unique |
 | `type` | skill, agent, embedded_agent, command, hook, plugin, mod, framework_module |
-| `provenance` | dépôt, rôle, chemin, **commit complet**, SHA-256 du fichier, `fingerprint_sha256` et `fingerprint_files` (tous les fichiers qui déterminent le comportement : dossier entier d'un mod ; configuration et scripts du même nom pour un hook) |
+| `provenance` | dépôt, rôle, chemin, **commit complet**, SHA-256 du fichier, `fingerprint_sha256` et `fingerprint_files` (paquet complet : dossier entier d'un mod ou d'un skill ; pour un hook, sa configuration, ses scripts du même nom ou cités ; pour un plugin, son manifeste, hooks, scripts et .mcp.json ; et, pour tous, les imports locaux des scripts, transitivement) |
 | `function.summary` | description lue dans le fichier (240 caractères maximum) |
 | `compatibility`, `relations` | outils requis, dépendances, conflits : vides pour l'instant |
 | `license` | `verified: false` tant que personne n'a lu la licence |

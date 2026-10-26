@@ -7,3 +7,4 @@ catalog.tmp/
 catalog.bak/
 *.lock
 *.tmp-*/
+*.prev/
