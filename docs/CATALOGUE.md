@@ -50,3 +50,7 @@ Les statuts sont des propositions. Les décisions (Conserver, Fusionner, Variant
 ## Archive
 
 `archive/pre-audit-a29d2df/` contient l'ancien catalogue (1 856 lignes, libellés « Adopter / Remplacer »). Il est conservé pour l'historique : ses chiffres (289 hooks du Socle, plugin.json comptés comme hooks, mods comptés plusieurs fois) étaient faux.
+
+## Rôle « propre » (depuis 0.6.0)
+
+Les composants écrits par ZakiOS lui-même (dépôt `zakibelm/ZakiOS`, `socle/` et `variantes/`) entrent dans le catalogue avec le rôle `propre`, à un commit figé. Ils sont évalués et soumis aux mêmes décisions humaines, licences et empreintes que le catalogue externe. Le rôle `propre` ne rend pas la comparaison ZAKI OS « complète » : seul le rôle `existant` le fait. Le Socle est un type `socle` (audit de comportement requis, car il change la conduite de tous les agents). Schéma 5.

@@ -7,7 +7,7 @@ nouveauté, ni l'équivalence. Les statuts le disent explicitement, et aucun
 hook, plugin ou mod n'est jamais présenté comme « à adopter » automatiquement.
 """
 
-SCHEMA_VERSION = "4"
+SCHEMA_VERSION = "5"
 
 # Un composant n'est comparé qu'aux composants de sa famille.
 FAMILIES = {
@@ -16,9 +16,10 @@ FAMILIES = {
     "command": "command",
     "hook": "behavior", "plugin": "behavior", "mod": "behavior",
     "framework_module": "framework",
+    "socle": "socle",
 }
 # Ces types modifient le comportement du moteur : audit obligatoire.
-BEHAVIOR_TYPES = {"hook", "plugin", "mod"}
+BEHAVIOR_TYPES = {"hook", "plugin", "mod", "socle"}
 
 THRESHOLDS = {
     "equivalence_candidate": 0.60,  # score >= : équivalence candidate

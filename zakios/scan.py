@@ -113,6 +113,10 @@ def make_record(src, repo_rel, rel, ctype, raw, issues, license_file, fingerprin
         name = norm(manifest.get("name")) or os.path.basename(os.path.dirname(os.path.dirname(rel)))
         summary = summarize(manifest.get("description", ""))
         sim_text = norm(manifest.get("description")) + " " + norm(manifest.get("keywords"))
+    elif ctype == "socle":
+        name = "socle-zakios"
+        summary = summarize(first_prose_line(text))
+        sim_text = text[:2500]
     elif ctype == "mod":
         name = os.path.basename(os.path.dirname(rel))
         summary = summarize(first_prose_line(text))

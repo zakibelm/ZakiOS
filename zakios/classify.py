@@ -1,6 +1,6 @@
 """Classification des fichiers d'un dépôt source.
 
-Types : skill, agent, embedded_agent, command, hook, plugin, mod, framework_module.
+Types : skill, agent, embedded_agent, command, hook, plugin, mod, framework_module, socle.
 Tout le reste (tests, documentation, ressources, configurations) est un fichier
 annexe et n'est pas compté comme composant.
 
@@ -9,7 +9,7 @@ conteneur qui peut regrouper des skills, des agents et des hooks.
 """
 import fnmatch
 
-COMPONENT_TYPES = ("skill", "agent", "embedded_agent", "command", "hook", "plugin", "mod", "framework_module")
+COMPONENT_TYPES = ("skill", "agent", "embedded_agent", "command", "hook", "plugin", "mod", "framework_module", "socle")
 
 DOC_NAMES = {
     "readme.md", "changelog.md", "contributing.md", "license.md",
@@ -35,6 +35,9 @@ def classify(rel, framework_globs=()):
     for pattern in framework_globs:
         if fnmatch.fnmatch(rel, pattern):
             return "framework_module"
+
+    if low == ["socle", "regles.md"]:
+        return "socle"  # règles communes ZakiOS : un seul fichier, porté une seule fois
 
     if "mods" in dirs:
         # Un mod est un seul composant : son README le représente. Son plugin.json, ses hooks,

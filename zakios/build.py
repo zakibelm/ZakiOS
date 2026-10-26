@@ -20,8 +20,10 @@ from .parse import is_yaml_marker
 from .scan import SourceError, build_records, is_dirty, resolve_dir, verify_source
 from .similarity import Index, vectorize
 
-ROLES = ("catalogue", "socle", "existant")
+ROLES = ("catalogue", "socle", "existant", "propre")
 REFERENCE_ROLES = ("socle", "existant")
+# Rôles évalués et décidés par un humain : le catalogue externe et les composants propres de ZakiOS.
+EVALUATED_ROLES = ("catalogue", "propre")
 PROBLEM_LIMIT = 20
 _HEX64 = re.compile(r"^[0-9a-f]{64}$")
 _HEX40 = re.compile(r"^[0-9a-f]{40}$")
@@ -153,7 +155,7 @@ def _evaluate(records, provisional):
             continue
         if role in REFERENCE_ROLES:
             by_family[fam]["ref"].append(i)
-        elif role == "catalogue":
+        elif role in EVALUATED_ROLES:
             by_family[fam]["cat"].append(i)
     indexes = {fam: (Index(vectors, ids, g["ref"]), Index(vectors, ids, g["cat"])) for fam, g in by_family.items()}
     ref_names = defaultdict(lambda: defaultdict(list))
@@ -162,7 +164,7 @@ def _evaluate(records, provisional):
             ref_names[fam][_slug(records[i]["name"])].append(ids[i])
 
     for i, rec in enumerate(records):
-        if rec["provenance"]["role"] != "catalogue":
+        if rec["provenance"]["role"] not in EVALUATED_ROLES:
             rec["evaluation"] = None
             rec["decision"] = None
             continue
@@ -570,7 +572,7 @@ def _validate_generation(raw):
                         problems.append("%s : relation %s vers un composant inexistant" % (cid, key))
 
         ev, dec = c.get("evaluation"), c.get("decision")
-        if prov.get("role") != "catalogue":
+        if prov.get("role") not in EVALUATED_ROLES:
             if ev is not None or dec is not None:
                 problems.append("%s : évaluation sur un composant de référence" % cid)
             continue

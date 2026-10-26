@@ -33,7 +33,11 @@ STATE_DIR = ".zakios"
 LOCK_FILE = "lock.json"
 PROFILE_FILE = "profile.json"
 JOURNAL_DIR = "journal"
-INSTALLABLE_TYPES = ("agent", "command", "skill", "hook")
+INSTALLABLE_TYPES = ("agent", "command", "skill", "hook", "socle")
+
+# Le Socle est chargé par le projet : `.claude/CLAUDE.md` importe ses règles. Fichier propre à ZakiOS,
+# distinct du CLAUDE.md de la racine : celui de l'utilisateur n'est jamais lu ni modifié.
+SOCLE_IMPORT = b"@socle/REGLES.md\n"
 PLATFORMS_OK = (None, "linux", "any")
 
 
@@ -84,6 +88,8 @@ def _destinations(rec, files):
     folder = os.path.dirname(path)
     if kind == "agent":
         return {".claude/agents/" + os.path.basename(path): files[path]}, []
+    if kind == "socle":
+        return {".claude/socle/REGLES.md": files[path], ".claude/CLAUDE.md": (SOCLE_IMPORT, False)}, []
     if kind == "command":
         return {".claude/commands/" + os.path.basename(path): files[path]}, []
     if kind in ("skill", "hook"):

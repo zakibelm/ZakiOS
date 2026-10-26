@@ -1,19 +1,78 @@
 {
   "description": "Manifeste des sources figées de ZakiOS. Une source obligatoire absente ou différente de son commit arrête la génération.",
   "sources": [
-    {"repo": "davila7/claude-code-templates", "role": "catalogue", "commit": "aff83062f3d0e6a882f23e52611d5811539e6047", "subdir": "cli-tool/components"},
-    {"repo": "wshobson/agents", "role": "socle", "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06"},
-    {"repo": "VoltAgent/awesome-claude-code-subagents", "role": "socle", "commit": "408d3c9eee2d0c75c12a3abb5de29e53c2ca6b9e"},
-    {"repo": "rohitg00/awesome-claude-code-toolkit", "role": "socle", "commit": "ebdf1d596d2cde5c5cceb32177e8d1cf4829e7d9"},
-    {"repo": "anthropics/skills", "role": "socle", "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44"},
-    {"repo": "netresearch/claude-code-marketplace", "role": "socle", "commit": "0ed8b47648cee8dbf30bd4aecd79d6db662c7dcb"},
-    {"repo": "disler/claude-code-hooks-mastery", "role": "socle", "commit": "052ad1cbd5aeb1ec4a1def22012d1293c6225625"},
-    {"repo": "karanb192/claude-code-hooks", "role": "socle", "commit": "57a28c7687305e4a9b9dd50490e9b3c552c71ca4"},
-    {"repo": "affaan-m/claude-swarm", "role": "socle", "commit": "9b1c5561157abd2d0d043758b7bfcb0319267d9f",
-     "framework_globs": ["src/claude_swarm/orchestrator.py", "src/claude_swarm/decomposer.py", "src/claude_swarm/quality_gate.py", "src/claude_swarm/session.py"]},
-    {"repo": "am-will/swarms", "role": "socle", "commit": "110268148a1fdf149a19e4dab848a1c0fca9835d"},
-    {"repo": "eugeniughelbur/obsidian-second-brain", "role": "socle", "commit": "0e339f7f600af5943042864df63eb142c0c84abf"},
-    {"repo": "zakibelm/ZAKI-OS-a-designer", "role": "existant", "required": false,
-     "note": "Agents et skills ZAKI OS : dépôt(s) à désigner. Tant que cette source est absente, toutes les évaluations sont provisoires."}
+    {
+      "repo": "davila7/claude-code-templates",
+      "role": "catalogue",
+      "commit": "aff83062f3d0e6a882f23e52611d5811539e6047",
+      "subdir": "cli-tool/components"
+    },
+    {
+      "repo": "wshobson/agents",
+      "role": "socle",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06"
+    },
+    {
+      "repo": "VoltAgent/awesome-claude-code-subagents",
+      "role": "socle",
+      "commit": "408d3c9eee2d0c75c12a3abb5de29e53c2ca6b9e"
+    },
+    {
+      "repo": "rohitg00/awesome-claude-code-toolkit",
+      "role": "socle",
+      "commit": "ebdf1d596d2cde5c5cceb32177e8d1cf4829e7d9"
+    },
+    {
+      "repo": "anthropics/skills",
+      "role": "socle",
+      "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44"
+    },
+    {
+      "repo": "netresearch/claude-code-marketplace",
+      "role": "socle",
+      "commit": "0ed8b47648cee8dbf30bd4aecd79d6db662c7dcb"
+    },
+    {
+      "repo": "disler/claude-code-hooks-mastery",
+      "role": "socle",
+      "commit": "052ad1cbd5aeb1ec4a1def22012d1293c6225625"
+    },
+    {
+      "repo": "karanb192/claude-code-hooks",
+      "role": "socle",
+      "commit": "57a28c7687305e4a9b9dd50490e9b3c552c71ca4"
+    },
+    {
+      "repo": "affaan-m/claude-swarm",
+      "role": "socle",
+      "commit": "9b1c5561157abd2d0d043758b7bfcb0319267d9f",
+      "framework_globs": [
+        "src/claude_swarm/orchestrator.py",
+        "src/claude_swarm/decomposer.py",
+        "src/claude_swarm/quality_gate.py",
+        "src/claude_swarm/session.py"
+      ]
+    },
+    {
+      "repo": "am-will/swarms",
+      "role": "socle",
+      "commit": "110268148a1fdf149a19e4dab848a1c0fca9835d"
+    },
+    {
+      "repo": "eugeniughelbur/obsidian-second-brain",
+      "role": "socle",
+      "commit": "0e339f7f600af5943042864df63eb142c0c84abf"
+    },
+    {
+      "repo": "zakibelm/ZAKI-OS-a-designer",
+      "role": "existant",
+      "required": false,
+      "note": "Agents et skills ZAKI OS : dépôt(s) à désigner. Tant que cette source est absente, toutes les évaluations sont provisoires."
+    },
+    {
+      "repo": "zakibelm/ZakiOS",
+      "role": "propre",
+      "commit": "5b831d9f3d4cf7b1eadf749e950defeeae063a23"
+    }
   ]
 }

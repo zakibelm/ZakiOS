@@ -21,7 +21,7 @@ python3 -m zakios rollback --project <projet>                           # annule
 | compatible Linux | `decisions/annotations.json` (`platform`) |
 | dépendances sélectionnées, aucun conflit sélectionné | `decisions/annotations.json` (`depends_on`, `conflicts_with`) |
 | paquet autonome (aucun fichier hors de son dossier) | calculé au build |
-| type installable : agent, commande, skill, hook | |
+| type installable : agent, commande, skill, hook, socle | |
 
 Le catalogue doit être valide et exact (pas un build expérimental). Le contenu installé est lu **au commit du catalogue** et son empreinte est revérifiée : une modification locale des sources n'entre jamais dans un projet.
 
@@ -33,6 +33,7 @@ Le catalogue doit être valide et exact (pas un build expérimental). Le contenu
 | commande | `.claude/commands/<nom>.md` |
 | skill | `.claude/skills/<nom>/…` (paquet complet, bit exécutable conservé) |
 | hook | `.claude/hooks/zakios/<nom>/…` : **copié, jamais activé** (settings.json n'est pas touché) |
+| socle | `.claude/socle/REGLES.md` + `.claude/CLAUDE.md` (contient `@socle/REGLES.md`). Le `CLAUDE.md` de la racine n'est jamais lu ni modifié ; si `.claude/CLAUDE.md` existe déjà, le Socle est refusé (fichier non géré) et rien n'est écrasé. Retour arrière : les deux fichiers sont retirés, sauf modification locale |
 
 ## Garanties
 

@@ -51,17 +51,24 @@
    "hook": 4,
    "plugin": 92,
    "skill": 185
+  },
+  "zakibelm/ZakiOS": {
+   "agent": 1,
+   "command": 1,
+   "skill": 1,
+   "socle": 1
   }
  },
  "counts_by_type": {
-  "agent": 943,
-  "command": 783,
+  "agent": 944,
+  "command": 784,
   "embedded_agent": 12,
   "framework_module": 4,
   "hook": 117,
   "mod": 45,
   "plugin": 246,
-  "skill": 1177
+  "skill": 1178,
+  "socle": 1
  },
  "dirty_sources": [],
  "empty_summaries": 19,
@@ -69,12 +76,12 @@
   "agent": {
    "cross_layer_overlap": 4,
    "equivalence_candidate": 88,
-   "novelty_to_review": 295,
+   "novelty_to_review": 296,
    "partial_overlap": 34
   },
   "command": {
    "cross_layer_overlap": 4,
-   "novelty_to_review": 331,
+   "novelty_to_review": 332,
    "partial_overlap": 13
   },
   "embedded_agent": {
@@ -89,12 +96,15 @@
   "skill": {
    "cross_layer_overlap": 45,
    "equivalence_candidate": 43,
-   "novelty_to_review": 806,
+   "novelty_to_review": 807,
    "partial_overlap": 22
+  },
+  "socle": {
+   "behavior_audit_required": 1
   }
  },
  "incomplete_fingerprints": [],
- "manifest_sha256": "d3fde598176ba65c35ce03d2a6f884110305b924fbffe5d717b8212078d54699",
+ "manifest_sha256": "e7d303cd2c987cefcd9df0a75573b7188cfce9fdca798f1f8e79142c966b663e",
  "metadata_issues": [
   {
    "issue": "yaml_invalide: mapping values are not allowed here",
@@ -172,8 +182,8 @@
  "orphan_licenses": [],
  "provisional": true,
  "provisional_reason": "comparaison ZAKI OS manquante",
- "registry_sha256": "38f889e328bee4b9951a999599652cb6a0e06f7d923edf8cac3b99dbc83dece4",
- "schema_version": "4",
+ "registry_sha256": "60345fac421f04669d915366ea0f71cfc11b596f19e2b615e401404781d07b02",
+ "schema_version": "5",
  "sources": [
   {
    "commit": "408d3c9eee2d0c75c12a3abb5de29e53c2ca6b9e",
@@ -258,9 +268,16 @@
    "repo": "zakibelm/ZAKI-OS-a-designer",
    "role": "existant",
    "status": "absente_facultative"
+  },
+  {
+   "commit": "5b831d9f3d4cf7b1eadf749e950defeeae063a23",
+   "components": 4,
+   "repo": "zakibelm/ZakiOS",
+   "role": "propre",
+   "status": "verifiee"
   }
  ],
  "stale_decisions": [],
  "stale_licenses": [],
- "zakios_version": "0.5.2"
+ "zakios_version": "0.6.0"
 }

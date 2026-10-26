@@ -50,10 +50,11 @@ Exemple relevé : le pack de gardes de `karanb192/claude-code-hooks` regroupe se
 
 Chaque fiche garde sa source, son commit complet, l'empreinte SHA-256 de son contenu et son état de licence (`verified`). Un composant sans licence vérifiée n'est pas copié dans la bibliothèque.
 
-## Implémentation actuelle (moteur 0.5.2)
+## Implémentation actuelle (moteur 0.6.0)
 
 - **Index central** : registre généré par `python3 -m zakios build`, vérifié par `verify`.
 - **Décisions humaines** : `decisions/validated.json`, `licenses.json`, `annotations.json`, liées à l'empreinte du composant.
 - **Activation par projet (pilote)** : `plan`, `apply`, `rollback` (`docs/ACTIVATION.md`) : aperçu, installation tout ou rien, journal, retour arrière. Éprouvée sur composants fictifs ; premier lot réel en revue (`docs/revues/lot-1.md`).
+- **Composants propres et Socle** : rôle `propre`, type `socle` installé par le moteur (`.claude/socle/REGLES.md` + `.claude/CLAUDE.md`).
 - **Intégration continue** : tests et `verify` à chaque push (`.github/workflows/ci.yml`).
 - **Reste à construire** : tout ce qui figure dans `docs/CIBLE.md` (objectifs, non acquis).
