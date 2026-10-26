@@ -8,15 +8,17 @@ Critères d'acceptation donnés par la mission :
 - C2 — requête SQL paramétrée.
 - C3 — aucune régression sur les appels existants.
 
-Hypothèse à confirmer : la remise est un pourcentage entier de 0 à 100.
+Hypothèse H1 : la remise est un nombre de 0 à 100 (le commentaire de `src/pay.py` le dit) ; elle est confirmée à l'étape 1 par lecture du code, et le plan s'arrête avec une question à la personne si le code contredit cela.
+Hypothèse H2 : les prix sont des nombres Python (int ou float) ; confirmée à l'étape 1 par les appels relevés.
 
 ## Exécuter
-1. Corriger `total()` : `sum(prices) * (1 - discount / 100)`.
-2. Réécrire `read_user()` avec une requête paramétrée.
-3. Créer `tests/test_remise.py` (bornes 0 et 100, injection) ; si C3 est visé, créer aussi `tests/test_appels_existants.py`.
-4. Relever les appels existants de `total()` avec Grep et conserver leur résultat de référence.
-
+1. Lire `src/pay.py` (Read) et relever avec Grep tous les appels de `total()` et `read_user()` dans `src/` et `tests/`.
+2. Créer `tests/test_remise.py` (bornes 0 et 100) et `tests/test_injection.py` (base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob`).
+3. Créer `tests/test_appels_existants.py` : les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main.
+4. Lancer `python -m unittest discover tests` sur le code d'origine, avant toute correction : `test_appels_existants` doit passer (référence) ; `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts).
+5. Corriger `total()` : `sum(prices) * (1 - discount / 100)`.
+6. Corriger `read_user()` : `db.execute("SELECT * FROM users WHERE name = ?", (name,))`.
 
 ## Agir
-Si un écart est constaté : action corrective = corriger puis relancer la vérification concernée ; ne rien déclarer terminé tant que chaque critère n'a pas de preuve exécutée.
+Si un écart est constaté : action corrective = corriger le code concerné puis relancer la vérification du critère touché. Si une hypothèse H1 ou H2 est contredite, ou si une vérification échoue après deux corrections, arrêter et rendre compte à la personne. Aucun critère n'est déclaré satisfait sans la sortie exécutée de sa vérification.
 === FIN DU PLAN ZAKIOS ===
