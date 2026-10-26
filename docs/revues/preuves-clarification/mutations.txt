@@ -1,0 +1,13 @@
+(base, aucune)                             OK             code=0  OK
+acceptation_malgre_bloquant                OK             code=1  FAILED (failures=6)
+acceptation_malgre_clarification           OK             code=1  FAILED (failures=1)
+acceptation_malgre_critere_abandonne       OK             code=1  FAILED (failures=2)
+livraison_apres_clarification              OK             code=1  FAILED (failures=3)
+boucle_continue_apres_clarification        OK             code=1  FAILED (failures=3)
+plafond_de_corrections                     OK             code=1  FAILED (failures=6)
+liaison_a_l_empreinte                      OK             code=1  FAILED (failures=2)
+couverture_des_criteres                    OK             code=1  FAILED (failures=1)
+clarification_sans_question                OK             code=1  FAILED (failures=1)
+a_corriger_sans_constat_majeur             OK             code=1  FAILED (failures=2)
+(restauration, aucune)                     OK             code=0  OK
+TOUTES LES PROTECTIONS SONT DÉTECTÉES

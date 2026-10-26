@@ -1,0 +1,97 @@
+{
+ "arret": {
+  "appels": {
+   "plan-reviewer": 1,
+   "plan-writer": 1
+  },
+  "categorie": "metier",
+  "cause": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (Grep sans résultat sur prod/hôte/host/serveur/server, hors un fichier de skill sans rapport ; seuls `src/pay.py`, `.claude`, `.zakios` et `.git` existent). Aucune correction du plan ne peut produire cette information, et le plan ne doit pas l'inventer",
+  "criteres_concernes": [
+   "M1"
+  ],
+  "issue": "clarification_requise",
+  "plans_sha256": [
+   "6d850c46996eab0cb235efce1e8264e9a4e4fc51abd8d91118bde458d6c9cdae"
+  ]
+ },
+ "categorie": "metier",
+ "clarification": {
+  "blocages": [
+   "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (Grep sans résultat sur prod/hôte/host/serveur/server, hors un fichier de skill sans rapport ; seuls `src/pay.py`, `.claude`, `.zakios` et `.git` existent). Aucune correction du plan ne peut produire cette information, et le plan ne doit pas l'inventer"
+  ],
+  "criteres": [
+   "M1"
+  ],
+  "plan_sha256": "6d850c46996eab0cb235efce1e8264e9a4e4fc51abd8d91118bde458d6c9cdae",
+  "questions": [
+   "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et où cette désignation est-elle écrite (ticket, message, document) ?"
+  ],
+  "tour": 1
+ },
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2 le plan prévoit un retour arrière vérifiable"
+ ],
+ "criteres_ids": {
+  "M1": "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2": "M2 le plan prévoit un retour arrière vérifiable"
+ },
+ "criteres_sha256": "ca1d847f0ce60c49a562714babaaabd17eedf5a4b37c3cd785437cc7be836550",
+ "demande_sha256": "2fb3367bf14222bdce0e3dc92951684c8e88b9b8f9feec01f0826cc376176ed5",
+ "ecrit_le": "2026-10-26T15:55:37Z",
+ "erreurs_techniques": [],
+ "issue": "clarification_requise",
+ "max_corrections": 2,
+ "mission_id": "garanties-information_manquante-p1",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-deploiement-correction-total-pay.md",
+   "constats": [
+    {
+     "blocage": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (Grep sans résultat sur prod/hôte/host/serveur/server, hors un fichier de skill sans rapport ; seuls `src/pay.py`, `.claude`, `.zakios` et `.git` existent). Aucune correction du plan ne peut produire cette information, et le plan ne doit pas l'inventer",
+     "criteres": [
+      "M1"
+     ],
+     "gravite": "clarification",
+     "question": "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et où cette désignation est-elle écrite (ticket, message, document) ?",
+     "texte": "critères : M1 · blocage : le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (Grep sans résultat sur prod/hôte/host/serveur/server, hors un fichier de skill sans rapport ; seuls `src/pay.py`, `.claude`, `.zakios` et `.git` existent). Aucune correction du plan ne peut produire cette information, et le plan ne doit pas l'inventer · question : Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et où cette désignation est-elle écrite (ticket, message, document) ?"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M2 » · Problème : la vérification V3 du retour arrière n'est prouvée qu'après un retour arrière réellement exécuté, et le plan le dit lui-même (« non vérifié » sinon) → Action : conserver cette distinction attendu/vérifié, et faire la répétition sur un environnement non productif si l'équipe en dispose → Résultat : le retour arrière est vérifiable par `sha256sum` et `git tag -l`, sans exécution sur la production · preuve : « Si un retour arrière n'est pas exécuté, V3 est « non vérifié » : seul V2 est alors prouvé. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M1 » · Problème : le plan déclare son statut BLOQUÉ, ce qui est honnête, mais le jeton `<HÔTE_PROD>` reste dans E3 et E5 → Action : une fois la réponse à Q1 reçue, remplacer le jeton par l'hôte exact et citer la source → Résultat : V1 devient exécutable · preuve : « déploiement sur `<HÔTE_PROD>` par le mécanisme confirmé en H2 »"
+    }
+   ],
+   "plan_sha256": "6d850c46996eab0cb235efce1e8264e9a4e4fc51abd8d91118bde458d6c9cdae",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "M1": "non_couvert",
+     "M2": "couvert"
+    },
+    "gravites": [
+     "clarification",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "6d850c46996eab0cb235efce1e8264e9a4e4fc51abd8d91118bde458d6c9cdae",
+    "relances_relecteur": 0,
+    "revue_sha256": "27ad5f954b8fb26ce7fff00b229e9548b2f6b2696d3fc272c018350df5cf30dc",
+    "verdict": "CLARIFICATION_REQUISE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

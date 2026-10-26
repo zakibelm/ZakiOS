@@ -1,0 +1,110 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:53:40Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "9202f360a80dd987e95862e18eda448e22b161858ed02fde3e644c2dcf5427ed",
+  "delivery_sha256": "01b28d0a07647cf6e8f610f8f1e24c35bfcc55a0d64506269e93300fcb5511f3",
+  "trace": ".zakios/deliverables/01b28d0a07647cf6e8f610f8f1e24c35bfcc55a0d64506269e93300fcb5511f3.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 est « Vérifier que le code est de bonne qualité », sans commande, test ni sortie attendue, alors que le critère C3 (aucune régression sur les appels existants) reste sans moyen de preuve concret dans la section Vérifier → Action : remplacer par l'exécution de `python -m unittest tests.test_appels_existants` (créé à l'étape 3) après correction, avec sortie attendue « OK » et valeurs égales à celles de la référence d'avant correction, ainsi qu'un `python -m unittest discover tests` complet → Résultat : C3 devient mesurable et prouvable par une sortie exécutée · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 5 corrige `total()` avec `sum(prices) * (1 - discount / 100)` sans préciser le comportement hors bornes (remise négative ou supérieure à 100) ni le type du résultat → Action : ajouter si souhaité un cas de test hors bornes ou une validation, sans que cela soit exigé par C1 → Résultat : robustesse accrue, critère C1 déjà couvert par `tests.test_remise` · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : l'étape 3 écrit les valeurs attendues « à la main » à partir d'appels relevés à l'étape 1, mais ces appels ne sont pas connus à la rédaction du plan (hypothèse H2 non encore confirmée) → Action : préciser que les cas de `test_appels_existants` sont figés après la lecture de l'étape 1 → Résultat : ordre des dépendances explicite · preuve : « Créer `tests/test_appels_existants.py` : les appels relevés à l'étape 1, avec remise nulle »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "d8ba1962aee6e6a081ebf04b955fbb62a518061b9a91a3186fea8ccf2787c8eb",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la vérification par `git diff` sur `tests/test_appels_existants.py` ne montre rien si le fichier est nouveau et non suivi par git. → Action : indiquer `git add` ou un commit après l'étape 1, ou comparer des empreintes du fichier (par exemple `sha256sum`) avant et après correction. → Résultat : la preuve que les cas figés n'ont pas changé devient exécutable. · preuve : « `git diff` sur ce fichier le montre »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : le plan ne dit pas comment les tests importent `src/pay.py` (présence de `__init__.py`, ou `PYTHONPATH`, ou `from src.pay import …`). Sans cela, `python -m unittest discover tests` pourrait échouer sur l'import. → Action : préciser la forme d'import et la commande, ou ajouter `-t .`. → Résultat : l'étape 4 donne sa référence sans erreur parasite. · preuve : « `python -m unittest discover tests` » (aucune mention de l'import du module testé)"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : H3 (appelants externes) et la question à la personne laissent C3 prouvé seulement sur des cas représentatifs. Le plan l'annonce clairement comme limite, donc ce n'est pas un défaut de couverture. → Action : conserver la déclaration de limite dans le compte rendu final. → Résultat : l'attendu et le vérifié restent distincts. · preuve : « C3 est prouvé sur les cas représentatifs figés, car le dépôt ne contient aucun appelant réel »"
+    }
+   ],
+   "plan_sha256": "9202f360a80dd987e95862e18eda448e22b161858ed02fde3e644c2dcf5427ed",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "9202f360a80dd987e95862e18eda448e22b161858ed02fde3e644c2dcf5427ed",
+    "relances_relecteur": 0,
+    "revue_sha256": "0e05425c399ab0db5a5f381231a8827842c69a890f0bbaa0822c39dc5086c759",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 2
+}

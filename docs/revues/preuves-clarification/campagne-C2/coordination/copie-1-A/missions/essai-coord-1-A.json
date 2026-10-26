@@ -1,0 +1,105 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:48:25Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "3271e846bbf6f2543a3f757234b9af1aa9bee3835e6f366fdce2fc87ac4fe4f6",
+  "delivery_sha256": "74b56a1d61b694a4d806f91925d20bcab15d7be19434952fec113737d5fe612d",
+  "trace": ".zakios/deliverables/74b56a1d61b694a4d806f91925d20bcab15d7be19434952fec113737d5fe612d.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la section Planifier ne liste que C1 et C2. C3 (aucune régression sur les appels existants) n'est ni repris ni relié à une vérification. L'étape 1 relève les appels de `total()` et `read_user()`, mais aucune vérification ne les rejoue après correction. → Action : ajouter C3 aux critères du plan, avec une vérification concrète en section Vérifier. Par exemple, lancer `python -m unittest discover tests` après correction, avec des tests qui reprennent les appels existants relevés à l'étape 1 et leurs résultats attendus (valeurs intermédiaires de remise, par exemple 10 %, et lecture d'un nom existant). La sortie des tests déjà présents doit être comparée à celle d'avant correction. → Résultat : C3 devient mesurable et prouvable. Sans cela, le critère reste non couvert et le plan ne peut pas être accepté. · preuve : absence du critère C3 « aucune régression sur les appels existants » et de toute vérification de non-régression dans « Vérifier » (seuls C1 et C2 y figurent)."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la vérification de C1 ne teste que les bornes 0 et 100 avec une seule liste de prix. → Action : ajouter un cas intermédiaire, par exemple `total([10, 20], 50) == 15`, pour détecter une formule fausse entre les bornes. → Résultat : renforcement facultatif. · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »."
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "f933a6fae0cad48f07bc3b4b699569ec443f90d1596c242ba145bd954a1f0fea",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le plan limite « appels existants » au contrat documenté, car aucun appelant n'est visible dans le dépôt, et il laisse à la personne la question des appelants hors dépôt → Action : poser cette question à la personne en même temps que la livraison, sans bloquer l'exécution → Résultat : C3 reste prouvé sur le contrat documenté, avec cette limite déclarée · preuve : « C3 est alors prouvé uniquement sur le contrat documenté. Il ne couvre pas d'éventuels appelants hors dépôt. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : l'étape 2 cite `pytest.approx` alors que les vérifications utilisent `python -m unittest`, et le test `read_user` de `test_regression.py` suppose une base sqlite de test que l'étape 2 ne décrit pas → Action : n'utiliser que `assertAlmostEqual` et décrire la base de test dans l'étape 2, comme à l'étape 3 → Résultat : plan sans ambiguïté sur l'outil de test et sur la préparation de la base · preuve : « à comparer avec `pytest.approx` ou `assertAlmostEqual` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'hypothèse H3 (marqueur `?` de sqlite3) n'est pas démontrée, mais le plan la signale et prévoit un arrêt avec question à la personne si elle est fausse → Action : aucune action requise, constat de confort → Résultat : hypothèse tracée et traitée dans « Agir » · preuve : « Ce n'est pas démontré par le dépôt. Si `db` est d'un autre type (par exemple `%s`), le marqueur change, et le plan s'arrête avec une question à la personne. »"
+    }
+   ],
+   "plan_sha256": "3271e846bbf6f2543a3f757234b9af1aa9bee3835e6f366fdce2fc87ac4fe4f6",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "3271e846bbf6f2543a3f757234b9af1aa9bee3835e6f366fdce2fc87ac4fe4f6",
+    "relances_relecteur": 0,
+    "revue_sha256": "ffa60ba3751c494aa6ff1f8cf32d11a5ea7bf2f2547710b2b5d978e7bac872db",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 2
+}

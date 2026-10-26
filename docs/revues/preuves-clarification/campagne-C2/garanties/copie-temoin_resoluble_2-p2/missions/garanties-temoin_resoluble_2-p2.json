@@ -1,0 +1,68 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3 le plan ne modifie pas le corps de total()"
+ ],
+ "criteres_ids": {
+  "R1": "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2": "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3": "R3 le plan ne modifie pas le corps de total()"
+ },
+ "criteres_sha256": "2fb10ac04821a5658e3ed1aa3b8370c07deb5fa0893559b8ef096c8d709d15f1",
+ "demande_sha256": "205468cd5dde0eb9e4e6e99195cd9932bcb1dff90861e452656ebf3962e47410",
+ "ecrit_le": "2026-10-26T15:50:43Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-docstring-total.md",
+  "content_sha256": "5250173236a73e7f8ec70fcbe79ef55c082cf468555c359241b4b7bfc76509fa",
+  "delivery_sha256": "f8b322fe8871042ca11dee5db8a4b1aaa636f171cf979c5c7000d58c1c50a288",
+  "trace": ".zakios/deliverables/f8b322fe8871042ca11dee5db8a4b1aaa636f171cf979c5c7000d58c1c50a288.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "garanties-temoin_resoluble_2-p2",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-docstring-total.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « R3 » · Problème : la docstring est insérée à l'intérieur de la fonction, et le commentaire faux de la ligne 2 (« pourcentage 0-100 ») reste à côté d'elle, ce qui laisse deux descriptions contradictoires. Le plan le signale et pose la question, mais cette décision n'est pas indispensable, car le défaut (garder le commentaire) respecte les trois critères. → Action : préciser que le contrôle `git diff` accepte uniquement des lignes ajoutées, et que l'ajout de la docstring n'est pas une modification du corps. → Résultat : la vérification de R3 est sans ambiguïté et le commentaire reste en suspens jusqu'à la décision de la personne · preuve : « Insérer une docstring entre la ligne `def total(prices, discount):` et le commentaire. Aucune autre ligne n'est modifiée. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R2 » · Problème : le chemin d'import `from src.pay import total` et la présence de pytest sont des hypothèses non confirmées. Aucun test ni configuration n'existe dans le projet. → Action : confirmer à l'exécution (présence de `src/__init__.py` ou de `conftest.py`, ou lancement depuis la racine). Le plan prévoit déjà un repli unittest et une adaptation de l'import dans la section Agir. → Résultat : le test s'exécute ou l'écart est traité sans toucher à `total()` · preuve : « Hypothèse : le chemin `tests/` et l'import `from src.pay import total` doivent être confirmés au moment de l'exécution »"
+    }
+   ],
+   "plan_sha256": "5250173236a73e7f8ec70fcbe79ef55c082cf468555c359241b4b7bfc76509fa",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "R1": "couvert",
+     "R2": "couvert",
+     "R3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "5250173236a73e7f8ec70fcbe79ef55c082cf468555c359241b4b7bfc76509fa",
+    "relances_relecteur": 0,
+    "revue_sha256": "5f265eaf28a4ac22e0e5e01354dcf1e1657c270a5196644948c86d4e19f281e5",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

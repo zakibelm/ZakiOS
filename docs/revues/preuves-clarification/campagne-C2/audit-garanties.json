@@ -1,0 +1,13 @@
+{
+ "dossier": "/home/claude/essai-c2-gar-1793029681",
+ "statistiques": {
+  "missions": 15,
+  "appels_reels": 31,
+  "liens_revue_plan": 15,
+  "livraisons_verifiees": 6,
+  "arrets_verifies": 9
+ },
+ "divergences": [
+  "information_manquante/p3 : tour 1 : revue réelle invalide sans erreur technique tracée (couverture incohérente : critères attendus ['M1', 'M2'], reçus ['C1', 'C2'])"
+ ]
+}

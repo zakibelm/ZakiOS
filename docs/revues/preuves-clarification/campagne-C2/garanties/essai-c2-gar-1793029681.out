@@ -1,0 +1,18 @@
+non_resoluble/p1 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+non_resoluble/p2 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+non_resoluble/p3 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+temoin_resoluble_2/p1 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+temoin_resoluble_2/p2 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+temoin_resoluble_2/p3 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+omission_corrigeable/p1 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+omission_corrigeable/p2 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+omission_corrigeable/p3 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+contradiction_inedite/p1 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+contradiction_inedite/p2 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+contradiction_inedite/p3 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+information_manquante/p1 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+information_manquante/p2 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+information_manquante/p3 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+NON EXERCÉ (omission non commise au premier jet) : ['omission_corrigeable/p1', 'omission_corrigeable/p2', 'omission_corrigeable/p3']
+ÉCHEC (attente non satisfaite) :
+ - information_manquante/p3 : appels après la clarification

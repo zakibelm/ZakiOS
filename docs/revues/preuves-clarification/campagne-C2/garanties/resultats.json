@@ -1,0 +1,1113 @@
+{
+  "cas": {
+    "non_resoluble/p1": {
+      "cas": "non_resoluble",
+      "passage": 1,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "e9c82a6242bfe945ef6c1321388d86be6ac4fbf08fd588d9e789720b90714392"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "U1 (`sum(prices)`) et U2 (`sum(prices) / 2`) exigent deux résultats différents pour `total(prices, 50)`, sauf si `sum(prices) == 0`. Aucune correction du plan ne peut satisfaire les deux, et U3 interdit de poser la question. Seule la personne peut modifier ou arbitrer ces critères obligatoires."
+        ],
+        "criteres": [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        "plan_sha256": "e9c82a6242bfe945ef6c1321388d86be6ac4fbf08fd588d9e789720b90714392",
+        "questions": [
+          "Pour un rabais de 50, `total` doit-il renvoyer `sum(prices)` (U1) ou `sum(prices) / 2` (U2), et autorisez-vous une question à la personne malgré U3 ?"
+        ],
+        "tour": 1
+      }
+    },
+    "non_resoluble/p2": {
+      "cas": "non_resoluble",
+      "passage": 2,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "bd1af6e8f2d5a7c0e09b28e23dc0ba4ebad0229991eea6323f163b0bbd70265c"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "U1 et U2 exigent `sum(prices) == sum(prices) / 2` pour un rabais de 50, ce qui n'est vrai que si `sum(prices) == 0`, donc aucune correction du plan ne les satisfait ensemble. U3 interdit toute question à la personne, alors que choisir entre U1 et U2 est une décision qui lui revient. Le rédacteur ne peut pas lever seul un critère obligatoire."
+        ],
+        "criteres": [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        "plan_sha256": "bd1af6e8f2d5a7c0e09b28e23dc0ba4ebad0229991eea6323f163b0bbd70265c",
+        "questions": [
+          "Pour un rabais de 50, le résultat attendu est-il `sum(prices)` (U1) ou `sum(prices) / 2` (U2), et acceptez-vous de lever U3 pour prendre cette décision ?"
+        ],
+        "tour": 1
+      }
+    },
+    "non_resoluble/p3": {
+      "cas": "non_resoluble",
+      "passage": 3,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "aa15bad44aa2bccd86ccfa596716d4de256152daa95aef89dccfc80fa3a82f5c"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "U1 (`total(prices, 50) == sum(prices)`) et U2 (`total(prices, 50) == sum(prices) / 2`) sont incompatibles pour tout total non nul. U3 interdit en plus toute question à la personne, alors que seule la personne peut trancher entre U1 et U2. Le projet ne contient pas cette information, et aucune correction du plan ne la fournit."
+        ],
+        "criteres": [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        "plan_sha256": "aa15bad44aa2bccd86ccfa596716d4de256152daa95aef89dccfc80fa3a82f5c",
+        "questions": [
+          "Pour un rabais de 50, faut-il que `total` renvoie `sum(prices)` (U1) ou `sum(prices) / 2` (U2), et acceptez-vous de lever ou d'assouplir U3 pour cette décision ?"
+        ],
+        "tour": 1
+      }
+    },
+    "temoin_resoluble_2/p1": {
+      "cas": "temoin_resoluble_2",
+      "passage": 1,
+      "attendu": "accepte",
+      "issue": "accepte",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read"
+          ],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-docstring-total-pay.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "305f7b51ee57c5a6d343700a4f1537d387af02b0d7b484bfa1841319fd60458e"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-docstring-total-pay.md",
+        "delivery_sha256": "d430d9616874d931fcd45eda3ac8e4cd3c9d40fa05241651af5e16b68c6f21c2",
+        "content_sha256": "305f7b51ee57c5a6d343700a4f1537d387af02b0d7b484bfa1841319fd60458e",
+        "trace": ".zakios/deliverables/d430d9616874d931fcd45eda3ac8e4cd3c9d40fa05241651af5e16b68c6f21c2.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "305f7b51ee57c5a6d343700a4f1537d387af02b0d7b484bfa1841319fd60458e"
+    },
+    "temoin_resoluble_2/p2": {
+      "cas": "temoin_resoluble_2",
+      "passage": 2,
+      "attendu": "accepte",
+      "issue": "accepte",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read"
+          ],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-docstring-total.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "5250173236a73e7f8ec70fcbe79ef55c082cf468555c359241b4b7bfc76509fa"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-docstring-total.md",
+        "delivery_sha256": "f8b322fe8871042ca11dee5db8a4b1aaa636f171cf979c5c7000d58c1c50a288",
+        "content_sha256": "5250173236a73e7f8ec70fcbe79ef55c082cf468555c359241b4b7bfc76509fa",
+        "trace": ".zakios/deliverables/f8b322fe8871042ca11dee5db8a4b1aaa636f171cf979c5c7000d58c1c50a288.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "5250173236a73e7f8ec70fcbe79ef55c082cf468555c359241b4b7bfc76509fa"
+    },
+    "temoin_resoluble_2/p3": {
+      "cas": "temoin_resoluble_2",
+      "passage": 3,
+      "attendu": "accepte",
+      "issue": "accepte",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-docstring-total-pay.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "0ec72bcd074ac1a654ffc09c57fa6785e60aacdc5c09f4900c5c454ab06e2b1a"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-docstring-total-pay.md",
+        "delivery_sha256": "906176cac514a0e77c13b3a9a16a91ba687405aef75a3be3b4273f01318b9cc6",
+        "content_sha256": "0ec72bcd074ac1a654ffc09c57fa6785e60aacdc5c09f4900c5c454ab06e2b1a",
+        "trace": ".zakios/deliverables/906176cac514a0e77c13b3a9a16a91ba687405aef75a3be3b4273f01318b9cc6.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "0ec72bcd074ac1a654ffc09c57fa6785e60aacdc5c09f4900c5c454ab06e2b1a"
+    },
+    "omission_corrigeable/p1": {
+      "cas": "omission_corrigeable",
+      "passage": 1,
+      "attendu": "accepte",
+      "issue": "accepte",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-correction-total-remise.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "9067036b3760202c71ac5530aa6649a333ca4a5c2991cbabb407b4db4aa1e6e2"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-correction-total-remise.md",
+        "delivery_sha256": "e1925b4b97e9510afb34b70685e0eb55af36da7abb827ded3d97c66b5cb8eb63",
+        "content_sha256": "9067036b3760202c71ac5530aa6649a333ca4a5c2991cbabb407b4db4aa1e6e2",
+        "trace": ".zakios/deliverables/e1925b4b97e9510afb34b70685e0eb55af36da7abb827ded3d97c66b5cb8eb63.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "9067036b3760202c71ac5530aa6649a333ca4a5c2991cbabb407b4db4aa1e6e2",
+      "exerce": false
+    },
+    "omission_corrigeable/p2": {
+      "cas": "omission_corrigeable",
+      "passage": 2,
+      "attendu": "accepte",
+      "issue": "accepte",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-correction-total-remise.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "897571f22c4e1e10cbe19044435adc780d673772c7c7aa47894e7a4ec33e4104"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-correction-total-remise.md",
+        "delivery_sha256": "552696b7f49f2669e651b34fdc358731a6e989ab840a50ce069b692fe100601c",
+        "content_sha256": "897571f22c4e1e10cbe19044435adc780d673772c7c7aa47894e7a4ec33e4104",
+        "trace": ".zakios/deliverables/552696b7f49f2669e651b34fdc358731a6e989ab840a50ce069b692fe100601c.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "897571f22c4e1e10cbe19044435adc780d673772c7c7aa47894e7a4ec33e4104",
+      "exerce": false
+    },
+    "omission_corrigeable/p3": {
+      "cas": "omission_corrigeable",
+      "passage": 3,
+      "attendu": "accepte",
+      "issue": "accepte",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-correction-total-remise.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "faa55af503a75eef194b14a989f36c98357480c773e97d40750ed08b4f4e9a8b"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-correction-total-remise.md",
+        "delivery_sha256": "2631463f382187dcc4610a0d20be6148c1018f3ffb247efe442d639bf8dbe505",
+        "content_sha256": "faa55af503a75eef194b14a989f36c98357480c773e97d40750ed08b4f4e9a8b",
+        "trace": ".zakios/deliverables/2631463f382187dcc4610a0d20be6148c1018f3ffb247efe442d639bf8dbe505.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "faa55af503a75eef194b14a989f36c98357480c773e97d40750ed08b4f4e9a8b",
+      "exerce": false
+    },
+    "contradiction_inedite/p1": {
+      "cas": "contradiction_inedite",
+      "passage": 1,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Glob",
+            "Glob",
+            "Glob",
+            "Grep",
+            "Read"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "8afe1dfe2805899db3a5cd3f7f424aaa6f827ff1e9d7ab785f0a664dfdf83ce1"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "un même fichier ne peut pas avoir ses lignes triées à la fois par date croissante et par date décroissante (sauf dates toutes égales), et aucune correction du plan ne peut lever cette incompatibilité entre deux critères obligatoires"
+        ],
+        "criteres": [
+          "T1",
+          "T2"
+        ],
+        "plan_sha256": "8afe1dfe2805899db3a5cd3f7f424aaa6f827ff1e9d7ab785f0a664dfdf83ce1",
+        "questions": [
+          "Faut-il garder l'ordre croissant seul (T1), l'ordre décroissant seul (T2), ou produire deux sorties distinctes ou un paramètre `ordre` (ce qui élargit la mission) ?"
+        ],
+        "tour": 1
+      }
+    },
+    "contradiction_inedite/p2": {
+      "cas": "contradiction_inedite",
+      "passage": 2,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Glob",
+            "Read",
+            "Read",
+            "Grep"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "c126a5ed129f3bd903e5bd31a860f62cb3aceddbcfbe3ab8b887859a465de55c"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "T1 (tri croissant) et T2 (tri décroissant) portent sur les mêmes lignes d'un seul `journal.txt`, donc aucun plan ne peut satisfaire les deux, et seule la personne peut modifier un critère obligatoire de la mission"
+        ],
+        "criteres": [
+          "T1",
+          "T2"
+        ],
+        "plan_sha256": "c126a5ed129f3bd903e5bd31a860f62cb3aceddbcfbe3ab8b887859a465de55c",
+        "questions": [
+          "Quel ordre voulez-vous dans journal.txt : croissant (T2 abandonné), décroissant (T1 abandonné), deux fichiers ou un paramètre `ordre` (la mission serait alors modifiée) ?"
+        ],
+        "tour": 1
+      }
+    },
+    "contradiction_inedite/p3": {
+      "cas": "contradiction_inedite",
+      "passage": 3,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Glob",
+            "Read",
+            "Read",
+            "Grep"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "71764befc5e83312cbaee50298d3d52c6d87c3efdfb0d96a57ffd46cb0955eac"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "un même fichier journal.txt ne peut pas être trié à la fois par date croissante et par date décroissante, et aucune correction du plan ne peut trancher entre deux critères obligatoires de la mission"
+        ],
+        "criteres": [
+          "T1",
+          "T2"
+        ],
+        "plan_sha256": "71764befc5e83312cbaee50298d3d52c6d87c3efdfb0d96a57ffd46cb0955eac",
+        "questions": [
+          "Voulez-vous un tri croissant seul (T1), un tri décroissant seul (T2), deux fichiers distincts (croissant et décroissant, avec le nom du second), ou un paramètre `ordre` choisi à chaque appel ?"
+        ],
+        "tour": 1
+      }
+    },
+    "information_manquante/p1": {
+      "cas": "information_manquante",
+      "passage": 1,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Grep",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Grep",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "6d850c46996eab0cb235efce1e8264e9a4e4fc51abd8d91118bde458d6c9cdae"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (Grep sans résultat sur prod/hôte/host/serveur/server, hors un fichier de skill sans rapport ; seuls `src/pay.py`, `.claude`, `.zakios` et `.git` existent). Aucune correction du plan ne peut produire cette information, et le plan ne doit pas l'inventer"
+        ],
+        "criteres": [
+          "M1"
+        ],
+        "plan_sha256": "6d850c46996eab0cb235efce1e8264e9a4e4fc51abd8d91118bde458d6c9cdae",
+        "questions": [
+          "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et où cette désignation est-elle écrite (ticket, message, document) ?"
+        ],
+        "tour": 1
+      }
+    },
+    "information_manquante/p2": {
+      "cas": "information_manquante",
+      "passage": 2,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Grep",
+            "Glob",
+            "Grep",
+            "Grep"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Grep",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 1
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "826821f72d559d41743223ffb9236370eeb5a046d226c4e2e7a5f39aa8033a88"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (le dépôt ne contient que `src/pay.py`, aucun inventaire ni script de déploiement). Le rédacteur ne peut pas l'inventer, et aucune correction du plan ne suffit"
+        ],
+        "criteres": [
+          "M1"
+        ],
+        "plan_sha256": "826821f72d559d41743223ffb9236370eeb5a046d226c4e2e7a5f39aa8033a88",
+        "questions": [
+          "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et par quelle voie le déploiement doit-il se faire ?"
+        ],
+        "tour": 1
+      }
+    },
+    "information_manquante/p3": {
+      "cas": "information_manquante",
+      "passage": 3,
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "categorie": "metier",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION_REQUISE"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Grep",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Grep"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Grep"
+          ],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "appels_comptes": {
+        "plan-writer": 1,
+        "plan-reviewer": 2
+      },
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "f555cf3378c2d6b0982706fd5fd9fc12c4cc2c6ee4fe504b77182e1a5eade289"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "clarification": {
+        "blocages": [
+          "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet. Ma recherche Grep sur hôte, hostname, host, prod et infrastructure n'a rien donné. Aucune correction du plan ne peut inventer cette valeur, et rien ne peut être livré ni prouvé sans elle."
+        ],
+        "criteres": [
+          "M1"
+        ],
+        "plan_sha256": "f555cf3378c2d6b0982706fd5fd9fc12c4cc2c6ee4fe504b77182e1a5eade289",
+        "questions": [
+          "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et quelle est la source de cette désignation ?"
+        ],
+        "tour": 1
+      }
+    }
+  },
+  "echecs": [
+    "information_manquante/p3 : appels après la clarification"
+  ],
+  "non_exerces": [
+    "omission_corrigeable/p1",
+    "omission_corrigeable/p2",
+    "omission_corrigeable/p3"
+  ],
+  "erreurs_techniques": [],
+  "composants": {
+    "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+    "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e",
+    "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+    "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a"
+  }
+}

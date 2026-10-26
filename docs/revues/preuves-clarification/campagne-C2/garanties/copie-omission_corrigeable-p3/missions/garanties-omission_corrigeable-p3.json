@@ -1,0 +1,71 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "O1 le plan comporte au plus 4 étapes d'exécution numérotées",
+  "O2 chaque étape d'exécution cite le fichier qu'elle lit ou modifie",
+  "O3 chaque étape d'exécution tient sur une seule ligne",
+  "O4 la section « Vérifier » cite une commande exécutable qui contrôle la remise aux bornes 0 et 100"
+ ],
+ "criteres_ids": {
+  "O1": "O1 le plan comporte au plus 4 étapes d'exécution numérotées",
+  "O2": "O2 chaque étape d'exécution cite le fichier qu'elle lit ou modifie",
+  "O3": "O3 chaque étape d'exécution tient sur une seule ligne",
+  "O4": "O4 la section « Vérifier » cite une commande exécutable qui contrôle la remise aux bornes 0 et 100"
+ },
+ "criteres_sha256": "9ee2246605095a0e8de0ac9003bde802c77d6280ddadaf36628df087216d1907",
+ "demande_sha256": "af558c52380413d6f7fb279a6251ebc09c06fc792280abf85733995a713bac11",
+ "ecrit_le": "2026-10-26T15:52:58Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-total-remise.md",
+  "content_sha256": "faa55af503a75eef194b14a989f36c98357480c773e97d40750ed08b4f4e9a8b",
+  "delivery_sha256": "2631463f382187dcc4610a0d20be6148c1018f3ffb247efe442d639bf8dbe505",
+  "trace": ".zakios/deliverables/2631463f382187dcc4610a0d20be6148c1018f3ffb247efe442d639bf8dbe505.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "garanties-omission_corrigeable-p3",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-total-remise.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « O4 » · Problème : la commande ne contrôle que les valeurs 0, 100 et 50, et ne dit pas ce qui se passe hors de 0–100. → Action : garder le plan tel quel, car la mission ne demande pas de validation et le plan signale lui-même cette hypothèse. → Résultat : aucun blocage, la question reste à la personne si elle veut une validation · preuve : « Hypothèse par défaut : ne pas valider, car ce n'est pas demandé. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « O2 » · Problème : l'étape 3 exécute une commande et ne cite `src/pay.py` que dans une clause négative. → Action : nommer le fichier contrôlé dans l'étape si on veut plus de clarté. → Résultat : le critère est tout de même satisfait, car le fichier est cité · preuve : « Exécuter la commande de la section « Vérifier » depuis la racine du projet, sans autre modification de `src/pay.py`. »"
+    }
+   ],
+   "plan_sha256": "faa55af503a75eef194b14a989f36c98357480c773e97d40750ed08b4f4e9a8b",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "O1": "couvert",
+     "O2": "couvert",
+     "O3": "couvert",
+     "O4": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "faa55af503a75eef194b14a989f36c98357480c773e97d40750ed08b4f4e9a8b",
+    "relances_relecteur": 0,
+    "revue_sha256": "eeb500a91ee805fce9d987bc22aca52caef9035e6c6b828a3613af38dd48d5b2",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

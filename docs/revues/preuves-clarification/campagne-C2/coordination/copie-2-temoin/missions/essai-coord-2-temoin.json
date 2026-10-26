@@ -1,0 +1,68 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:54:42Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-paiement-remise.md",
+  "content_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+  "delivery_sha256": "7f20132379d46413bf8f39807557ae00581edcdd551499f2bd32976e41d88c0e",
+  "trace": ".zakios/deliverables/7f20132379d46413bf8f39807557ae00581edcdd551499f2bd32976e41d88c0e.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-temoin",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la référence de non-régression n'utilise que des appels à remise nulle, donc un appel existant avec une remise non nulle n'est pas comparé avant et après → Action : si l'étape 1 relève de tels appels, les ajouter à `test_appels_existants` en précisant que leur valeur change volontairement ; sinon le constater explicitement → Résultat : la portée de la non-régression est explicite, et le critère reste vérifiable par la commande prévue · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : `sum(prices) * (1 - discount / 100)` renvoie un `float` même pour des prix entiers, ce qui peut différer du type d'origine ; `30.0 == 30` reste vrai en Python, donc les assertions prévues passent → Action : ajouter si besoin un contrôle du type de retour dans `test_appels_existants` → Résultat : aucune régression de type non détectée · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    }
+   ],
+   "plan_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+    "relances_relecteur": 0,
+    "revue_sha256": "bb9f69c8ff5a62ce3dfc4aafc08a5527e5f3e2a86a64cd43345931c92b5702c6",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

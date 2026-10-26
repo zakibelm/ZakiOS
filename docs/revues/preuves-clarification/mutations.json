@@ -1,0 +1,86 @@
+[
+ {
+  "mutation": "(base, aucune)",
+  "attendu": "tests verts",
+  "code": 0,
+  "detail": "OK",
+  "detectee": true
+ },
+ {
+  "mutation": "acceptation_malgre_bloquant",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=6)",
+  "detectee": true
+ },
+ {
+  "mutation": "acceptation_malgre_clarification",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "acceptation_malgre_critere_abandonne",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=2)",
+  "detectee": true
+ },
+ {
+  "mutation": "livraison_apres_clarification",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=3)",
+  "detectee": true
+ },
+ {
+  "mutation": "boucle_continue_apres_clarification",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=3)",
+  "detectee": true
+ },
+ {
+  "mutation": "plafond_de_corrections",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=6)",
+  "detectee": true
+ },
+ {
+  "mutation": "liaison_a_l_empreinte",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=2)",
+  "detectee": true
+ },
+ {
+  "mutation": "couverture_des_criteres",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "clarification_sans_question",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "a_corriger_sans_constat_majeur",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=2)",
+  "detectee": true
+ },
+ {
+  "mutation": "(restauration, aucune)",
+  "attendu": "tests verts",
+  "code": 0,
+  "detail": "OK",
+  "detectee": true
+ }
+]

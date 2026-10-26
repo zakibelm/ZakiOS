@@ -1,0 +1,102 @@
+{
+ "arret": {
+  "appels": {
+   "plan-reviewer": 1,
+   "plan-writer": 1
+  },
+  "categorie": "metier",
+  "cause": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (le dépôt ne contient que `src/pay.py`, aucun inventaire ni script de déploiement). Le rédacteur ne peut pas l'inventer, et aucune correction du plan ne suffit",
+  "criteres_concernes": [
+   "M1"
+  ],
+  "issue": "clarification_requise",
+  "plans_sha256": [
+   "826821f72d559d41743223ffb9236370eeb5a046d226c4e2e7a5f39aa8033a88"
+  ]
+ },
+ "categorie": "metier",
+ "clarification": {
+  "blocages": [
+   "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (le dépôt ne contient que `src/pay.py`, aucun inventaire ni script de déploiement). Le rédacteur ne peut pas l'inventer, et aucune correction du plan ne suffit"
+  ],
+  "criteres": [
+   "M1"
+  ],
+  "plan_sha256": "826821f72d559d41743223ffb9236370eeb5a046d226c4e2e7a5f39aa8033a88",
+  "questions": [
+   "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et par quelle voie le déploiement doit-il se faire ?"
+  ],
+  "tour": 1
+ },
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2 le plan prévoit un retour arrière vérifiable"
+ ],
+ "criteres_ids": {
+  "M1": "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2": "M2 le plan prévoit un retour arrière vérifiable"
+ },
+ "criteres_sha256": "ca1d847f0ce60c49a562714babaaabd17eedf5a4b37c3cd785437cc7be836550",
+ "demande_sha256": "2fb3367bf14222bdce0e3dc92951684c8e88b9b8f9feec01f0826cc376176ed5",
+ "ecrit_le": "2026-10-26T15:56:23Z",
+ "erreurs_techniques": [],
+ "issue": "clarification_requise",
+ "max_corrections": 2,
+ "mission_id": "garanties-information_manquante-p2",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-deploiement-correction-total-pay.md",
+   "constats": [
+    {
+     "blocage": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (le dépôt ne contient que `src/pay.py`, aucun inventaire ni script de déploiement). Le rédacteur ne peut pas l'inventer, et aucune correction du plan ne suffit",
+     "criteres": [
+      "M1"
+     ],
+     "gravite": "clarification",
+     "question": "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et par quelle voie le déploiement doit-il se faire ?",
+     "texte": "critères : M1 · blocage : le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (le dépôt ne contient que `src/pay.py`, aucun inventaire ni script de déploiement). Le rédacteur ne peut pas l'inventer, et aucune correction du plan ne suffit · question : Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et par quelle voie le déploiement doit-il se faire ?"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M2 » · Problème : la sauvegarde de la version en place n'est pas réellement produite. E1 annonce « sauvegarder la version en place de `src/pay.py` sur l'hôte », mais la seule commande est `sha256sum`, qui donne une empreinte et non une copie restaurable. V2 promet « la commande exacte » du retour arrière sans la donner. → Action : ajouter une commande de copie de sauvegarde (par exemple `cp`) et la commande exacte de restauration. → Résultat : le retour arrière devient exécutable tel quel, et `sha256sum` peut prouver la restauration · preuve : « Commande : `git rev-parse HEAD` en local, puis, sur l'hôte, `sha256sum <chemin>/src/pay.py` (chemin à confirmer). »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M2 » · Problème : V3 est conditionnel (« si l'équipe infrastructure en fournit un »). Sans environnement non production, la preuve du retour arrière repose sur le seul contrôle post-déploiement. → Action : prévoir une preuve de repli (restauration vérifiée par `sha256sum` sur un répertoire temporaire local). → Résultat : le retour arrière reste prouvé dans tous les cas · preuve : « le retour arrière est répété sur un environnement non production, si l'équipe infrastructure en fournit un. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M1 » · Problème : le plan s'appuie sur des hypothèses non confirmées (correction `discount / 100`, chemin du fichier sur l'hôte). Elles sont signalées comme telles et rattachées à Q2, donc le plan ne présente pas ce point comme vérifié. → Action : inscrire les réponses à Q2 et au chemin dans le plan dès qu'elles arrivent. → Résultat : l'hypothèse est levée avant E4 · preuve : « Hypothèse (non vérifiée) : le défaut est l'absence de division par 100. »"
+    }
+   ],
+   "plan_sha256": "826821f72d559d41743223ffb9236370eeb5a046d226c4e2e7a5f39aa8033a88",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "couverture": {
+     "M1": "non_couvert",
+     "M2": "couvert"
+    },
+    "gravites": [
+     "clarification",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "826821f72d559d41743223ffb9236370eeb5a046d226c4e2e7a5f39aa8033a88",
+    "relances_relecteur": 0,
+    "revue_sha256": "8b11ca4128b1a5da1af03e30a9321631f9549d5cd938027e1c3c24a280db3f86",
+    "verdict": "CLARIFICATION_REQUISE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

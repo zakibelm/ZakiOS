@@ -1,0 +1,73 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:57:42Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-paiement-remise.md",
+  "content_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+  "delivery_sha256": "978de97f5d41f3b80914305da1f1e3fc5d4d89a51ed53231bd387cceb6d16792",
+  "trace": ".zakios/deliverables/978de97f5d41f3b80914305da1f1e3fc5d4d89a51ed53231bd387cceb6d16792.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-temoin",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la référence de non-régression n'utilise que des appels à remise nulle, donc elle ne protège pas les appels existants qui passent une remise non nulle (leur résultat change volontairement avec la correction) → Action : lors de l'étape 1, noter si des appels existants ont une remise non nulle et traiter ce cas dans le rapport d'écart → Résultat : le périmètre de C3 est explicite · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le plan ne précise pas que `read_user` renvoie des lignes (par exemple via `fetchall()`), alors que le test compte des lignes → Action : fixer la forme de retour à l'étape 1 → Résultat : le test d'injection est sans ambiguïté · preuve : « `read_user(db, \"' OR '1'='1\")` renvoie 0 ligne et `read_user(db, 'Alice')` en renvoie 1 »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : les commandes `python -m unittest tests.test_remise` demandent que `tests` soit importable (présence de `__init__.py`), ce que le plan ne garantit pas → Action : ajouter `tests/__init__.py` ou lancer par chemin de fichier → Résultat : la commande de preuve s'exécute telle quelle · preuve : « C1 : `python -m unittest tests.test_remise` »"
+    }
+   ],
+   "plan_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+    "relances_relecteur": 0,
+    "revue_sha256": "3f40a1aca265b95e833ab0b5f5c3ee55789febd9d5f586b8c3ba95116bc118b8",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

@@ -1,0 +1,110 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:57:53Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "4742b1c010ff518938dc72ecf710c7536bc669272555171be2280c59976579ea",
+  "delivery_sha256": "752968a518cb503725980a9914a3227dd135d10215ad3640f6385e40cad3ee46",
+  "trace": ".zakios/deliverables/752968a518cb503725980a9914a3227dd135d10215ad3640f6385e40cad3ee46.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « structure PDCA » · Problème : le plan n'a pas de section « Vérifier » ; les lancements de tests sont dans « Exécuter » (étape 4) et aucune étape ne relance la suite complète après les corrections des étapes 5 et 6, donc aucune comparaison aux critères C1, C2, C3 n'est prévue avec sortie attendue. → Action : ajouter une section « Vérifier » distincte qui relance `python -m unittest discover tests` après les étapes 5 et 6 et lie chaque critère à son test et à sa sortie attendue (C1 : `test_remise` passe ; C2 : `test_injection` passe ; C3 : `test_appels_existants` passe). → Résultat : attendu : les trois critères sont comparés à des preuves exécutées ; vérifié : non, rien n'est encore exécuté. · preuve : absence de section « Vérifier » ; le plan ne contient que « Planifier », « Exécuter » et « Agir »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la formule `sum(prices) * (1 - discount / 100)` est indiquée sans préciser que `test_remise` contrôle explicitement les valeurs attendues aux bornes (remise 0 donne la somme, remise 100 donne 0). → Action : indiquer ces valeurs attendues dans l'étape 2. → Résultat : la vérification de C1 devient non ambiguë. · preuve : « Créer `tests/test_remise.py` (bornes 0 et 100) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'étape 2 ne dit pas quelle entrée d'injection est testée ni quelle sortie est attendue. → Action : préciser une entrée du type `' OR '1'='1` et le résultat attendu (aucune ligne renvoyée). → Résultat : la preuve de C2 est concrète. · preuve : « `tests/test_injection.py` (base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob`) »"
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 0,
+    "revue_sha256": "000f26f03f6715dd86a3c0e92a08da07cceb4669f01e23b877de94d73e48c4c3",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le dépôt ne contient aucun appel existant, donc la non-régression ne porte que sur les signatures et la remise nulle. Les appelants externes qui passeraient une fraction 0-1 ne sont pas couverts. → Action : garder la question à la personne et la réserve « vérifié sur le périmètre du dépôt seulement », que le plan prévoit déjà. → Résultat : le critère reste relié à `test_appels_existants`, exécutable par `python -m unittest discover tests -v`, sans fausse validation · preuve : « C3 sera déclaré \"vérifié sur le périmètre du dépôt seulement\" et jamais \"vérifié\" sans réserve »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le contrôle complémentaire par Grep (« aucune concaténation `+ name` ») ne détecte qu'une forme de concaténation. Un f-string ou un `%` passerait. → Action : élargir le motif, par exemple en cherchant aussi `f\"` et `%` dans la requête, ou s'en tenir au test d'injection, qui est la preuve principale. → Résultat : le complément devient plus fiable, mais le critère est déjà prouvé par `test_injection` · preuve : « Grep dans `src/pay.py` : aucune concaténation `+ name` dans la requête »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'hypothèse H3 (style de paramètre `?` de sqlite) n'est pas confirmée dans le dépôt. → Action : le plan la signale déjà et indique que seul le marqueur change si la base est autre. Aucune action supplémentaire n'est requise. → Résultat : la limite est déclarée, sans risque de présenter comme vérifié ce qui ne l'est pas · preuve : « H3 : `db` est une connexion `sqlite3` … Rien dans le dépôt ne le confirme »."
+    }
+   ],
+   "plan_sha256": "4742b1c010ff518938dc72ecf710c7536bc669272555171be2280c59976579ea",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "4742b1c010ff518938dc72ecf710c7536bc669272555171be2280c59976579ea",
+    "relances_relecteur": 0,
+    "revue_sha256": "6f8fc76ff78e3254d3ac855aebf81013220aee524ec4365e45963722b830fa50",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 2
+}

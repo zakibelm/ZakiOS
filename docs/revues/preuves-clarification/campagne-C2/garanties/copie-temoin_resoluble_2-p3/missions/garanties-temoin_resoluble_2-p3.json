@@ -1,0 +1,73 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3 le plan ne modifie pas le corps de total()"
+ ],
+ "criteres_ids": {
+  "R1": "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2": "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3": "R3 le plan ne modifie pas le corps de total()"
+ },
+ "criteres_sha256": "2fb10ac04821a5658e3ed1aa3b8370c07deb5fa0893559b8ef096c8d709d15f1",
+ "demande_sha256": "205468cd5dde0eb9e4e6e99195cd9932bcb1dff90861e452656ebf3962e47410",
+ "ecrit_le": "2026-10-26T15:51:26Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-docstring-total-pay.md",
+  "content_sha256": "0ec72bcd074ac1a654ffc09c57fa6785e60aacdc5c09f4900c5c454ab06e2b1a",
+  "delivery_sha256": "906176cac514a0e77c13b3a9a16a91ba687405aef75a3be3b4273f01318b9cc6",
+  "trace": ".zakios/deliverables/906176cac514a0e77c13b3a9a16a91ba687405aef75a3be3b4273f01318b9cc6.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "garanties-temoin_resoluble_2-p3",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-docstring-total-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « R2 » · Problème : la présence de pytest, de `src/__init__.py` et de la configuration d'import n'est pas confirmée, donc la commande de test pourrait échouer à l'import. → Action : le plan prévoit déjà un ajustement de l'import ou de la configuration, sans toucher à `total()`. Il peut aussi vérifier ces éléments avant l'exécution, avec Glob ou `python -m pytest --version`. → Résultat : le risque est couvert par une action corrective, donc l'exécution reste possible. · preuve : « Hypothèses non vérifiées : la présence de pytest, d'un `src/__init__.py` et de la configuration d'import. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R1 » · Problème : le commentaire erroné de la ligne 2 (« pourcentage 0-100 ») reste dans le corps de la fonction et contredit la docstring. → Action : le plan le signale et pose la question à la personne, sans le modifier. Il faut garder cette décision hors de cette mission. → Résultat : R1 et R3 sont respectés, et la contradiction reste visible pour la personne. · preuve : « Question : voulez-vous une mission séparée pour corriger ou supprimer ce commentaire ? »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R3 » · Problème : la vérification par `git diff` suppose que `src/pay.py` est suivi par git et que la docstring s'insère sans autre changement, par exemple sur les fins de ligne. → Action : ajouter `git diff --stat`, ou un contrôle avec `git diff -U0`, pour confirmer qu'aucune ligne `-` n'apparaît. → Résultat : la preuve de R3 serait plus nette, mais elle est déjà concrète et exécutable. · preuve : « `git diff src/pay.py` : uniquement des ajouts de docstring, la ligne `return …` est inchangée. »"
+    }
+   ],
+   "plan_sha256": "0ec72bcd074ac1a654ffc09c57fa6785e60aacdc5c09f4900c5c454ab06e2b1a",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "R1": "couvert",
+     "R2": "couvert",
+     "R3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "0ec72bcd074ac1a654ffc09c57fa6785e60aacdc5c09f4900c5c454ab06e2b1a",
+    "relances_relecteur": 0,
+    "revue_sha256": "180fad377d8df90fec63389c8f4385ada82f751a1cb8f4c204ebce987047bf65",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

@@ -1,0 +1,105 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:49:27Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "f55e73a674b738568c48d5ea8714fa11a9d6f4698c4f39f85c83bfee15168922",
+  "delivery_sha256": "18b319191f4506f9852f95aff341eb336391030de1651e91b3e5982d7e8addbe",
+  "trace": ".zakios/deliverables/18b319191f4506f9852f95aff341eb336391030de1651e91b3e5982d7e8addbe.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 est « Vérifier que le code est de bonne qualité », sans commande, test ni sortie attendue, alors que le critère « aucune régression sur les appels existants » reste sans moyen de preuve concret dans la section Vérifier · Action : remplacer par `python -m unittest tests.test_appels_existants` (créé à l'étape 3) avec la sortie attendue (tous les tests passent, valeurs égales aux sommes calculées à la main), plus `python -m unittest discover tests` complet · Résultat : C3 devient prouvable par une exécution comparée à la référence de l'étape 4 · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la remise 0 et 100 est testée sur un seul jeu de prix, et les valeurs de `total()` en float peuvent poser une comparaison d'égalité exacte · Action : utiliser `assertAlmostEqual` ou des valeurs entières · Résultat : test plus robuste sans changer la couverture · preuve : « `total([10, 20], 100) == 0` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : les tests d'appels existants (étape 3) utilisent une remise nulle, donc ne couvrent pas les appels existants avec une remise non nulle, dont le comportement change légitimement avec la correction · Action : préciser que les appels relevés avec remise non nulle sont signalés à la personne plutôt que testés comme invariants · Résultat : périmètre de la non-régression explicite · preuve : « avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "c5b25b3700b6d5c22ec64aec6d29107f194b728faddca08c0262a297328a6b79",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la preuve de non-régression ne couvre que les appels à remise nulle, et aucun appel n'existe dans le dépôt. Les appelants externes restent inconnus. → Action : garder la limite déjà déclarée et demander à la personne la liste des appelants externes, si elle en a. → Résultat : le plan présente cette limite comme assumée, et les résultats sont étiquetés « attendus », pas « vérifiés ». · preuve : « Aucun appel n'existe dans le dépôt, donc la preuve ne couvre pas d'éventuels appelants externes. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la remise de 0 à 100 n'est pas validée, et les valeurs hors bornes ne sont pas testées. → Action : le plan pose déjà cette décision à la personne (Q1), donc rien à corriger. → Résultat : la décision est reportée sans bloquer la livraison, car ce n'est pas un critère de la mission. · preuve : « Q1 (non bloquante) : faut-il rejeter les remises hors de 0-100 »"
+    }
+   ],
+   "plan_sha256": "f55e73a674b738568c48d5ea8714fa11a9d6f4698c4f39f85c83bfee15168922",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "f55e73a674b738568c48d5ea8714fa11a9d6f4698c4f39f85c83bfee15168922",
+    "relances_relecteur": 0,
+    "revue_sha256": "cde48bcdcd8386d0dcb7aacaeb36fb9f1c4c8bea8c419c2b65c5190a928f5fe2",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 2
+}

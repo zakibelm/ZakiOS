@@ -1,0 +1,105 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:55:56Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "c5cdac2986db4fb84daa3b41668bb2882d3ff449e399c361a7e5f062aca424c0",
+  "delivery_sha256": "36fda66bf648973ede30f60f9c835c2b7c09db523a2a9403c1645536091e5ac1",
+  "trace": ".zakios/deliverables/36fda66bf648973ede30f60f9c835c2b7c09db523a2a9403c1645536091e5ac1.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : le critère C3 (aucune régression sur les appels existants) n'est pas repris dans « Planifier », qui ne liste que C1 et C2. Aucune vérification ne lui est associée dans « Vérifier ». L'étape 1 relève les appels de `total()` et `read_user()`, mais aucune étape ne les rejoue après correction. → Action : reprendre C3 dans les critères et ajouter une vérification concrète. Par exemple, avant correction, figer les résultats des appels existants relevés à l'étape 1 dans un test de non-régression. Après correction, lancer `python -m unittest discover tests` en entier et comparer les sorties attendues et obtenues. Le test doit tenir compte du changement voulu de sémantique de la remise. → Résultat : C3 deviendrait couvert et prouvable par une sortie exécutée. Aujourd'hui il ne l'est pas. · preuve : absence du critère C3 (non-régression sur les appels existants) et de toute vérification de non-régression dans « Vérifier »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 3 affirme que `test_remise` doit échouer sur le code d'origine, mais le comportement d'origine de `total()` n'est pas établi à ce stade. Cela dépend de l'étape 1. · Action : préciser que si le test passe déjà sur le code d'origine, il faut le signaler et rendre compte, au lieu de supposer qu'il échoue. → Résultat : l'attendu et le vérifié restent distincts. · preuve : « `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts) »."
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "908cd3a42c37f0b9212fb50ce54f0777cb91c66abb47eaa6b5ac5a975d4b1ff4",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : les appelants hors dépôt (H3) restent non vérifiés, et la question posée à la personne n'est pas bloquante pour l'exécution. → Action : garder la limite assumée, déjà écrite, et transmettre la question avec le compte rendu final. → Résultat : C3 est prouvé pour les appels couverts par les tests, et le reste est signalé comme non vérifié · preuve : « Pour les appelants hors dépôt (H3), il reste non vérifié tant que la question de la section Planifier n'a pas de réponse. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : les remises hors de 0-100 (négative, supérieure à 100) ne sont ni testées ni écartées explicitement. La mission ne l'exige pas. → Action : ajouter une phrase qui les déclare hors périmètre, ou un cas de test si la personne le souhaite. → Résultat : le comportement hors bornes est connu et non implicite · preuve : « total([10, 20], 0) == 30, total([10, 20], 100) == 0 et total([10, 20], 50) == 15 »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le cas d'injection ne teste qu'une seule entrée (`' OR '1'='1`). Le contrôle de lecture par Grep complète déjà la preuve. → Action : ajouter éventuellement une entrée avec `;` ou `--`. → Résultat : la preuve de C2 est renforcée, sans que le plan actuel soit insuffisant · preuve : « L'entrée `' OR '1'='1` doit renvoyer 0 ligne et `Alice` doit en renvoyer 1. »"
+    }
+   ],
+   "plan_sha256": "c5cdac2986db4fb84daa3b41668bb2882d3ff449e399c361a7e5f062aca424c0",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "c5cdac2986db4fb84daa3b41668bb2882d3ff449e399c361a7e5f062aca424c0",
+    "relances_relecteur": 0,
+    "revue_sha256": "5280ac3b65ce86110b2f29608c3277e79c2450e2f63b725e8854d2095f191aa9",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 2
+}

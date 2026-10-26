@@ -1,0 +1,105 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:56:48Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "f6ea8dcd2eddc1f1f9b97f84f1b6709f4fcab5d7cb4ff2583748bb9e9f3aadb1",
+  "delivery_sha256": "aba65a53e421d807e7aef497f3b8898ce85bf5b4b8442c4dd86badb73243a9df",
+  "trace": ".zakios/deliverables/aba65a53e421d807e7aef497f3b8898ce85bf5b4b8442c4dd86badb73243a9df.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 est « Vérifier que le code est de bonne qualité », sans commande, test ni sortie attendue, alors que le critère C3 (aucune régression sur les appels existants) reste non prouvable dans la section Vérifier ; le test `tests/test_appels_existants.py` créé à l'étape 3 n'y est pas relié → Action : remplacer cette ligne par `python -m unittest tests.test_appels_existants` (ou `discover tests`) avec la sortie attendue (tous les tests passent, valeurs égales à la somme des prix calculée à la main) → Résultat : C3 relié à une preuve concrète et exécutable · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la formule `sum(prices) * (1 - discount / 100)` est donnée sans cas intermédiaire (ex. 50) ni contrôle des valeurs hors 0-100 → Action : ajouter si souhaité un cas à 50 dans `test_remise` → Résultat : renforcement facultatif, les bornes 0 et 100 sont déjà vérifiées · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le plan suppose que `read_user()` reçoit un objet `db` avec `execute` (hypothèse non listée, confirmée seulement implicitement à l'étape 1) → Action : ajouter cette hypothèse à H1/H2 → Résultat : hypothèse explicite · preuve : « `db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))` »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "dbf56e4d96d2da7b2b9200f794ef1a0166dace1d5ffee629c2cf57ae974d18df",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : l'hypothèse H4 (aucun appelant hors dépôt) n'est pas confirmée, donc C3 n'est prouvé que sur le contrat et non sur des appelants réels. Le plan le déclare et pose la question à la personne. → Action : aucune correction requise ; ajouter les appels réels aux tests si la personne en fournit. → Résultat : la limite est déjà documentée, l'attendu et le vérifié restent distincts · preuve : « Limite déclarée : C3 n'est prouvé que sur les appels relevés ou fournis. Le dépôt n'en contient aucun. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : le contrôle des valeurs hors 0-100 (`-1`, `101`) n'a pas de résultat attendu chiffré. Il sert à constater et signaler, et ne sert pas de critère. → Action : préciser, si souhaité, que ce test est informatif et ne conditionne pas l'acceptation. → Résultat : le rôle du test est sans ambiguïté, sans effet sur la couverture de C1 · preuve : « Ajouter un contrôle des valeurs hors 0-100 (`-1`, `101`) : le comportement est constaté et signalé, pas inventé »"
+    }
+   ],
+   "plan_sha256": "f6ea8dcd2eddc1f1f9b97f84f1b6709f4fcab5d7cb4ff2583748bb9e9f3aadb1",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "f6ea8dcd2eddc1f1f9b97f84f1b6709f4fcab5d7cb4ff2583748bb9e9f3aadb1",
+    "relances_relecteur": 0,
+    "revue_sha256": "8dbfd81a577385ab8d79d19d85f92a6526472dbf581f2554f972451fd4242f8f",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 2
+}

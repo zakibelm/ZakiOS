@@ -1,0 +1,97 @@
+{
+ "arret": {
+  "appels": {
+   "plan-reviewer": 2,
+   "plan-writer": 1
+  },
+  "categorie": "metier",
+  "cause": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet. Ma recherche Grep sur hôte, hostname, host, prod et infrastructure n'a rien donné. Aucune correction du plan ne peut inventer cette valeur, et rien ne peut être livré ni prouvé sans elle.",
+  "criteres_concernes": [
+   "M1"
+  ],
+  "issue": "clarification_requise",
+  "plans_sha256": [
+   "f555cf3378c2d6b0982706fd5fd9fc12c4cc2c6ee4fe504b77182e1a5eade289"
+  ]
+ },
+ "categorie": "metier",
+ "clarification": {
+  "blocages": [
+   "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet. Ma recherche Grep sur hôte, hostname, host, prod et infrastructure n'a rien donné. Aucune correction du plan ne peut inventer cette valeur, et rien ne peut être livré ni prouvé sans elle."
+  ],
+  "criteres": [
+   "M1"
+  ],
+  "plan_sha256": "f555cf3378c2d6b0982706fd5fd9fc12c4cc2c6ee4fe504b77182e1a5eade289",
+  "questions": [
+   "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et quelle est la source de cette désignation ?"
+  ],
+  "tour": 1
+ },
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2 le plan prévoit un retour arrière vérifiable"
+ ],
+ "criteres_ids": {
+  "M1": "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2": "M2 le plan prévoit un retour arrière vérifiable"
+ },
+ "criteres_sha256": "ca1d847f0ce60c49a562714babaaabd17eedf5a4b37c3cd785437cc7be836550",
+ "demande_sha256": "2fb3367bf14222bdce0e3dc92951684c8e88b9b8f9feec01f0826cc376176ed5",
+ "ecrit_le": "2026-10-26T15:57:25Z",
+ "erreurs_techniques": [],
+ "issue": "clarification_requise",
+ "max_corrections": 2,
+ "mission_id": "garanties-information_manquante-p3",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-deploiement-correction-total-pay.md",
+   "constats": [
+    {
+     "blocage": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet. Ma recherche Grep sur hôte, hostname, host, prod et infrastructure n'a rien donné. Aucune correction du plan ne peut inventer cette valeur, et rien ne peut être livré ni prouvé sans elle.",
+     "criteres": [
+      "M1"
+     ],
+     "gravite": "clarification",
+     "question": "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et quelle est la source de cette désignation ?",
+     "texte": "critères : M1 · blocage : le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet. Ma recherche Grep sur hôte, hostname, host, prod et infrastructure n'a rien donné. Aucune correction du plan ne peut inventer cette valeur, et rien ne peut être livré ni prouvé sans elle. · question : Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et quelle est la source de cette désignation ?"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M2 » · Problème : la preuve de retour arrière repose sur un contrôle de comportement (`-900`) et une empreinte SHA-256 qui dépendent du chemin de déploiement. Ce chemin reste `<chemin>` tant que Q2 n'a pas de réponse. → Action : préciser le chemin et la méthode de restauration une fois Q2 levée. → Résultat : le retour arrière est exécutable tel quel. · preuve : « Commande de vérification : `sha256sum <chemin>/src/pay.py` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M2 » · Problème : `total([100],10)` redonne `-900` après retour arrière, alors que le plan écrit plus haut que le facteur vaut `-9`, soit `100 * -9 = -900`. Les deux chiffres sont cohérents, mais la valeur n'est pas calculée dans la section « Planifier ». → Action : l'y ajouter pour que le résultat attendu du retour arrière y soit lisible. → Résultat : la valeur attendue est explicite avant l'exécution. · preuve : « `total([100],10)` redonne le comportement d'avant (`-900`) »"
+    }
+   ],
+   "plan_sha256": "f555cf3378c2d6b0982706fd5fd9fc12c4cc2c6ee4fe504b77182e1a5eade289",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "M1": "non_couvert",
+     "M2": "couvert"
+    },
+    "gravites": [
+     "clarification",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "f555cf3378c2d6b0982706fd5fd9fc12c4cc2c6ee4fe504b77182e1a5eade289",
+    "relances_relecteur": 1,
+    "revue_sha256": "6a7627740f14643398e2052a4efbbc865e64febf26fdf51db12ff3d3dfc1445a",
+    "verdict": "CLARIFICATION_REQUISE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

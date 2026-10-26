@@ -1,0 +1,105 @@
+{
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_ids": {
+  "C1": "C1 remise correcte aux bornes 0 et 100",
+  "C2": "C2 requête SQL paramétrée",
+  "C3": "C3 aucune régression sur les appels existants"
+ },
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:50:43Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement.md",
+  "content_sha256": "1096dd03c06d5dd83d02f0db7e55230796ec6a6bb7d9edfaaaa3bb80dce05547",
+  "delivery_sha256": "3327290120ebe99012121f4938ed0bfcf4ca9d478a8a952170a759dea5584fe3",
+  "trace": ".zakios/deliverables/3327290120ebe99012121f4938ed0bfcf4ca9d478a8a952170a759dea5584fe3.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C1, C2, C3 » · Problème : le plan n'a pas de section « Vérifier ». Les sections sont Planifier, Exécuter et Agir. La seule exécution des tests (étape 4) a lieu avant toute correction. Aucune étape ne lance `test_remise`, `test_injection` et `test_appels_existants` après les étapes 5 et 6. C1 (bornes 0 et 100), C2 (requête paramétrée) et C3 (aucune régression) restent donc sans preuve sur le code corrigé → Action : ajouter une section « Vérifier » placée après la correction. Elle doit lancer `python -m unittest discover tests` sur le code corrigé et préciser la sortie attendue pour chaque critère : `test_remise` et `test_injection` passent, `test_appels_existants` passe toujours. Elle doit aussi comparer ces résultats aux critères et expliquer les écarts → Résultat : chaque critère est relié à une vérification exécutable après correction, et la structure PDCA est complète · preuve : absence de section « Vérifier » ; critères C1, C2 et C3 attendus avec une exécution des tests après les étapes 5 et 6. L'étape 4 précise « sur le code d'origine, avant toute correction »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : le plan ne dit pas quelles valeurs sont testées aux bornes (par exemple prix connu avec remise 0 donne le total, remise 100 donne 0) ni ce qui est attendu pour des prix flottants → Action : préciser les cas et les valeurs attendues, avec une tolérance ou `assertAlmostEqual` pour les flottants → Résultat : la vérification de C1 est entièrement déterminée · preuve : « Créer `tests/test_remise.py` (bornes 0 et 100) »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le test d'injection ne donne ni l'entrée malveillante ni le résultat attendu → Action : indiquer par exemple `name = \"x' OR '1'='1\"` avec zéro ligne attendue, et `Alice` avec une seule ligne → Résultat : la preuve de C2 est reproductible · preuve : « `tests/test_injection.py` (base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob`) »."
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "non_couvert",
+     "C2": "non_couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 0,
+    "revue_sha256": "1e5aa54d68900e984c7dfc69ff2f7c18bc64531d5fefb294adb180e2e89059c8",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : les appels existants se limitent à une remise 0 et à un nom ordinaire, car le dépôt ne contient aucun appelant, et le plan signale lui-même que les appelants hors dépôt ou ceux qui passent une fraction ne sont pas couverts → Action : garder la question à la personne sur les appelants externes et la limite déclarée dans « Vérifier » ; elle n'empêche pas de livrer ce que le dépôt permet de tester → Résultat : C3 est prouvable dans le périmètre du dépôt, et la part non vérifiée est tracée · preuve : « Limite connue : C3 ne couvre ni les appelants hors dépôt, ni les appelants passant une fraction (voir la question). »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'hypothèse H3 (connexion sqlite3 avec le marqueur `?`) n'est pas prouvée dans le dépôt → Action : le plan prévoit déjà d'adapter le marqueur et d'avertir la personne si H3 est contredite, sans autre ajout nécessaire → Résultat : le risque est identifié et la procédure d'arrêt existe · preuve : « H3 : `db` est une connexion `sqlite3` (ou compatible `?`). Rien dans le dépôt ne le prouve. »"
+    }
+   ],
+   "plan_sha256": "1096dd03c06d5dd83d02f0db7e55230796ec6a6bb7d9edfaaaa3bb80dce05547",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "1096dd03c06d5dd83d02f0db7e55230796ec6a6bb7d9edfaaaa3bb80dce05547",
+    "relances_relecteur": 0,
+    "revue_sha256": "f9bf5dcf889d68c6b34313d4a3da85ef94aa00a792ba6809a84205cab7fb511e",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 2
+}

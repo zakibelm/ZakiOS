@@ -79,3 +79,6 @@ Un seul modèle ; pas de délégation libre entre agents ; le relecteur de plan 
 | Trace | Écrite une seule fois, sans remplacement, par un mécanisme contrôlé ; si elle existe, elle doit être identique, sinon erreur. |
 | Omissions | Pour un critère absent, la revue écrit `preuve : absence` + critère attendu + couverture manquante, sans inventer d'extrait. |
 | Limite du contrôle | Le script vérifie format et cohérence gravité/verdict ; il ne prouve pas que la revue est juste. Les scénarios A, B et le témoin mesurent cette justesse sur des cas connus. |
+
+## Trois verdicts (ajout)
+Le relecteur rend ACCEPTE, A_CORRIGER ou CLARIFICATION_REQUISE ; le coordinateur refuse toute sortie incohérente (ACCEPTE avec constat bloquant ou clarification, clarification sans critères/blocage/question, verdict inconnu, revue liée à une autre empreinte, couverture incohérente). La clarification arrête la boucle sans livraison ni correction. Les contrôles déterministes portent sur le format et la cohérence ; la couverture sémantique reste un jugement du relecteur. Résultats mesurés : `docs/revues/essai-clarification.md`.
