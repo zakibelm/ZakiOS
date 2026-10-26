@@ -104,7 +104,7 @@
   }
  },
  "incomplete_fingerprints": [],
- "manifest_sha256": "aedb118932c923a33701f8f0c4cc3317a7ed255d25462ee17be8723524880096",
+ "manifest_sha256": "4da8b7fc6561bb600d6a4cb70375e6f32c55c9e39b7d85646579417a3aec496a",
  "metadata_issues": [
   {
    "issue": "yaml_invalide: mapping values are not allowed here",
@@ -182,7 +182,7 @@
  "orphan_licenses": [],
  "provisional": true,
  "provisional_reason": "comparaison ZAKI OS manquante",
- "registry_sha256": "0a658f46396bfca7c24427da5605a872f7e969174c246635e4ea2ac2af4b5af0",
+ "registry_sha256": "1997b6b38fe69abda1d7c99ccd9e65738e513fa20b68f19a4aa627af708c21d8",
  "schema_version": "5",
  "sources": [
   {
@@ -270,7 +270,7 @@
    "status": "absente_facultative"
   },
   {
-   "commit": "8fc45c68153346fdfcb34fc61f799069d68ac604",
+   "commit": "4c9dc2dbee628d4825fa8b8f62374b43dc4ae8c5",
    "components": 6,
    "repo": "zakibelm/ZakiOS",
    "role": "propre",
