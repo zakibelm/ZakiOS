@@ -214,7 +214,8 @@ function erreurs(m) {
 function ecarts(m) {
   const SENS = {demande_refusee: "demande refusée par la plateforme (sans effet, visible)", execution_confirmee: "EXÉCUTION CONFIRMÉE — mission arrêtée", indetermine: "RÉSULTAT INDÉTERMINÉ — mission arrêtée"};
   return h("section", {class: "card", id: "m-ecarts"}, h("h3", {}, "Écarts comportementaux (outils interdits demandés)"),
-    m.ecarts_comportementaux.length ? h("ul", {class: "list"}, m.ecarts_comportementaux.map((x) => h("li", {}, x.role + ", tour " + x.tour + " : " + x.outil + " — " + (SENS[x.statut] || x.statut)))) : h("p", {class: "note"}, "Aucun écart comportemental."));
+    m.ecarts_comportementaux.length ? [h("ul", {class: "list"}, m.ecarts_comportementaux.map((x) => h("li", {}, x.role + ", tour " + x.tour + " : " + x.outil + " — " + (SENS[x.statut] || x.statut)))),
+      h("p", {class: "note"}, "Tentative refusée par la plateforme : sans effet, la livraison reste possible. Une exécution interdite confirmée ou indéterminée arrête la mission sans aucune livraison.")] : h("p", {class: "note"}, "Aucun écart comportemental."));
 }
 function preuvesMission(m) {
   const pre = h("pre", {hidden: true, id: "m-preuve-texte", tabindex: "0"});
