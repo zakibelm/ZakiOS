@@ -79,3 +79,42 @@ Le contrôle du script (appels = tours) ignore aussi les relances techniques lé
 
 ## 9. Jalon suivant (préparé, non implémenté)
 Connecter l'interface au moteur pour un pilote supervisé : affichage distinct des trois verdicts, aucune livraison sur clarification (question affichée à la personne). À n'engager qu'après décision sur les défauts du §7.
+
+---
+
+# Campagne C3 (ciblée) — traçabilité des relances
+
+Commit testé : 4c0157a (poussé avant le lancement ; CI verte). Rôles **inchangés depuis C2** (plan-reviewer sha256 67149be0…, plan-writer 0d97e481… : identiques). Éléments figés et empreintes : `mission.py` 72a26e39…, `essai_coordination.py` bad76913…, `essai_garanties_reelles.py` 943f5906…, `audit_artefacts.py` ef19c3e4…, `verifier_mutations.py` 1d689432… (revérifiées identiques après la campagne). Cas : information_manquante, contradiction_inedite, temoin_resoluble_2 — inchangés depuis C2, 3 passages chacun, sessions neuves, plan 1 produit par le modèle. C1 et C2 sont préservées intactes. Les scénarios injectés A/B/M4/témoin ne sont pas rejoués : leur preuve du fonctionnement de la boucle reste celle de C2 (3/3).
+
+## Correctifs testés (simulé)
+- Chaque tentative refusée est tracée dans `erreurs_techniques`, même récupérée : rôle, tour, tentative, catégorie, cause, empreinte de la sortie, lien vers le journal, `recuperee`. Registre ordonné `appels_detail` ; vérificateur `mission.check_trace`.
+- Tests : reproduction exacte du passage information_manquante n°3 (identifiants invalides → refus → relance valide → clarification → arrêt sans livraison, aucun appel après), épuisement des relances (0, 1, 2) avec conservation de toutes les erreurs, erreurs de plusieurs tours, erreur d'exécution, vérificateur de trace, audit sur traces fabriquées.
+- Script : distingue tours métier et tentatives techniques (`tours_metier`, `tentatives_techniques`), contrôle appels = valides + refus par rôle, dernier appel du registre = revue de la clarification.
+- Observé : **198 tests OK** (relancé après C3) ; **14 mutations sur 14 détectées** (dont 4 nouvelles : relance non tracée, relances non bornées, erreur récupérée non marquée, vérificateur sans contrôle d'appel après clarification) ; `verify` valide ; CI verte.
+
+## Résultats C3 (exit script 1 ; audit 1)
+| Cas | p1 | p2 | p3 |
+|---|---|---|---|
+| information_manquante (clarification sur M1) | clarification, 1 tour, 0 relance | idem | clarification, 1 tour, **1 relance technique récupérée**, **échec : outil modifiant tenté** |
+| contradiction_inedite (T1/T2) | clarification, 0 relance | idem | idem |
+| temoin_resoluble_2 | ACCEPTE tour 1, livré | idem | idem |
+- Clarifications 6/6 sans livraison ni appel après la clarification ; témoin livré 3/3 avec octets et empreintes concordants.
+- Relance : p3 a de nouveau un avis hors contrat du relecteur (couverture `['C1','C2','M1','M2']` au lieu de `['M1','M2']`), refusé, relancé, valide. L'erreur est désormais **visible dans la trace** avec journal et empreinte, et l'audit l'a revérifiée (1 erreur relancée vérifiée). Le défaut de traçabilité de C2 est corrigé.
+- **Échec observé (non masqué)** : dans information_manquante/p3, le rédacteur a **tenté d'appeler `Bash`** (`git log --oneline -5`). Les outils effectifs étaient Read/Glob/Grep ; la plateforme a répondu « No such tool available: Bash ». Aucun effet : arbre du projet inchangé, aucun fichier créé. Le script et l'audit indépendant le signalent tous deux (divergence unique). C'est une tentative refusée, pas une modification — mais le critère « aucun outil modifiant appelé » est volontairement strict et n'est pas satisfait. Aucun ajustement n'a été fait pendant C3.
+
+## Jalon de sortie
+| Critère | État |
+|---|---|
+| Aucune divergence de trace | **Non atteint** : 1 divergence (tentative d'outil Bash non disponible, p3) ; aucune divergence de traçabilité des relances |
+| Relances bornées et explicites | Atteint sur C3 (1 relance, tracée, vérifiée) ; bornes vérifiées en simulé (0/1/2) |
+| Aucune livraison après clarification ou erreur terminale | Atteint (6/6, audit) |
+| Livraison correcte du témoin | Atteint (3/3) |
+Le jalon n'est donc **pas entièrement satisfait**. Ne pas avancer au pilote tant que le point « outil non disponible tenté » n'est pas tranché.
+
+## Omission inédite
+`omission_corrigeable` n'est pas dans C3. Le script distingue désormais « défaut absent, détection non exercée » (aucun défaut constatable par le contrôle déterministe O1), « défaut présent, détecté » et « défaut présent, manqué » (échec du relecteur). Limite : seul O1 est vérifié mécaniquement ; O2–O4 restent un jugement. Le cas n'est pas ajusté pour provoquer une correction ; la boucle de correction reste démontrée par les scénarios injectés (C2).
+
+## Défauts restants et décision à prendre
+1. Tentative d'un outil absent (Bash) par le rédacteur : décider si le critère doit distinguer « tentative refusée par la plateforme » de « appel exécuté » (lecture des résultats d'outil dans les journaux : `No such tool`), ou si le prompt du rédacteur doit interdire explicitement ces appels. Toute correction = campagne C4 identifiée.
+2. Variance du relecteur sur les identifiants de couverture (2 occurrences sur C2+C3) : bornée par la relance, mais coûteuse.
+3. Échantillon : 9 passages, un modèle, projets jetables minuscules.

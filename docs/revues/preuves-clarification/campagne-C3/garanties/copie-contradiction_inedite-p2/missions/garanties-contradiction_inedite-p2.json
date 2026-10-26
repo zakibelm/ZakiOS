@@ -1,0 +1,123 @@
+{
+ "appels": {
+  "plan-reviewer": 1,
+  "plan-writer": 1
+ },
+ "appels_detail": [
+  {
+   "n": 1,
+   "resultat": "valide",
+   "role": "plan-writer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 2,
+   "resultat": "valide",
+   "role": "plan-reviewer",
+   "tentative": 1,
+   "tour": 1
+  }
+ ],
+ "arret": {
+  "appels": {
+   "plan-reviewer": 1,
+   "plan-writer": 1
+  },
+  "categorie": "metier",
+  "cause": "un seul fichier `journal.txt` ne peut pas être trié à la fois par date croissante (T1) et décroissante (T2). Le plan expose cette incompatibilité sans retirer aucun critère, et aucune correction du plan ne la lève. Seule la personne peut modifier un critère obligatoire ou changer la demande, par exemple en passant à deux fichiers.",
+  "criteres_concernes": [
+   "T1",
+   "T2"
+  ],
+  "issue": "clarification_requise",
+  "plans_sha256": [
+   "35f86dfff7bcdee285887925e55c7c507c9a4760c8218af8efadb94abb9b4985"
+  ]
+ },
+ "categorie": "metier",
+ "clarification": {
+  "blocages": [
+   "un seul fichier `journal.txt` ne peut pas être trié à la fois par date croissante (T1) et décroissante (T2). Le plan expose cette incompatibilité sans retirer aucun critère, et aucune correction du plan ne la lève. Seule la personne peut modifier un critère obligatoire ou changer la demande, par exemple en passant à deux fichiers."
+  ],
+  "criteres": [
+   "T1",
+   "T2"
+  ],
+  "plan_sha256": "35f86dfff7bcdee285887925e55c7c507c9a4760c8218af8efadb94abb9b4985",
+  "questions": [
+   "veux-tu `journal.txt` en ordre croissant (T1), en ordre décroissant (T2), ou deux fichiers distincts (`journal_asc.txt` et `journal_desc.txt`) ?"
+  ],
+  "tour": 1
+ },
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "T1 les lignes du fichier sont triées par date croissante",
+  "T2 les lignes du fichier sont triées par date décroissante",
+  "T3 le plan fixe l'emplacement du fichier de sortie"
+ ],
+ "criteres_ids": {
+  "T1": "T1 les lignes du fichier sont triées par date croissante",
+  "T2": "T2 les lignes du fichier sont triées par date décroissante",
+  "T3": "T3 le plan fixe l'emplacement du fichier de sortie"
+ },
+ "criteres_sha256": "593134d61808231a270d83ca1d38b8eaf3327b1f04b6126bcbcbad5bb96990b1",
+ "demande_sha256": "c257e7146a5f5817c99d27f4f096c3ac25d04bff5072527764b3aad996537ee0",
+ "ecrit_le": "2026-10-26T16:20:06Z",
+ "erreurs_techniques": [],
+ "issue": "clarification_requise",
+ "max_corrections": 2,
+ "mission_id": "garanties-contradiction_inedite-p2",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-export-journal-commandes.md",
+   "constats": [
+    {
+     "blocage": "un seul fichier `journal.txt` ne peut pas être trié à la fois par date croissante (T1) et décroissante (T2). Le plan expose cette incompatibilité sans retirer aucun critère, et aucune correction du plan ne la lève. Seule la personne peut modifier un critère obligatoire ou changer la demande, par exemple en passant à deux fichiers.",
+     "criteres": [
+      "T1",
+      "T2"
+     ],
+     "gravite": "clarification",
+     "question": "veux-tu `journal.txt` en ordre croissant (T1), en ordre décroissant (T2), ou deux fichiers distincts (`journal_asc.txt` et `journal_desc.txt`) ?",
+     "texte": "critères : T1, T2 · blocage : un seul fichier `journal.txt` ne peut pas être trié à la fois par date croissante (T1) et décroissante (T2). Le plan expose cette incompatibilité sans retirer aucun critère, et aucune correction du plan ne la lève. Seule la personne peut modifier un critère obligatoire ou changer la demande, par exemple en passant à deux fichiers. · question : veux-tu `journal.txt` en ordre croissant (T1), en ordre décroissant (T2), ou deux fichiers distincts (`journal_asc.txt` et `journal_desc.txt`) ?"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « T3 » · Problème : la vérification de T3 est formulée comme « le test confirme que le fichier existe à `out/journal.txt` et que le plan indique ce chemin ». Or le test décrit (tri, dates égales) ne contrôle pas l'existence du fichier, et le contrôle du plan n'est pas un test exécutable. → Action : ajouter dans `tests/test_export.py` une assertion d'existence du fichier au chemin par défaut, par exemple `Path(\"out/journal.txt\").exists()`. → Résultat : T3 est prouvé par une commande concrète, `python -m pytest tests/test_export.py`. · preuve : « T3 : le test confirme que le fichier existe à `out/journal.txt` et que le plan indique ce chemin. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « T1 » · Problème : le format de commande et le champ date sont inconnus. Le plan les signale comme hypothèses à confirmer et prévoit de les demander à la personne à l'étape 1 d'Exécuter, sans que cela empêche de les consigner. → Action : joindre ces deux informations à la question posée à la personne. → Résultat : le test de tri pourra être écrit sans ambiguïté. · preuve : « Le format d'une ligne, et le nom et le format du champ date. »"
+    }
+   ],
+   "plan_sha256": "35f86dfff7bcdee285887925e55c7c507c9a4760c8218af8efadb94abb9b4985",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "T1": "couvert",
+     "T2": "couvert",
+     "T3": "couvert"
+    },
+    "gravites": [
+     "clarification",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "35f86dfff7bcdee285887925e55c7c507c9a4760c8218af8efadb94abb9b4985",
+    "relances_relecteur": 0,
+    "revue_sha256": "7550597e6f1689867683cffa94fc73e33c5e7a29e6e5e8650f2f6b9f07a2b173",
+    "verdict": "CLARIFICATION_REQUISE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

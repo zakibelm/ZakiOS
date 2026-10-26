@@ -1,0 +1,3 @@
+{"missions": 9, "appels_reels": 19, "liens_revue_plan": 9, "livraisons_verifiees": 3, "arrets_verifies": 6, "erreurs_relancees_verifiees": 1}
+DIVERGENCE : information_manquante/p3 : outil modifiant appelé ['Bash'] dans log-information_manquante-p3-0.jsonl
+1 DIVERGENCE(S)

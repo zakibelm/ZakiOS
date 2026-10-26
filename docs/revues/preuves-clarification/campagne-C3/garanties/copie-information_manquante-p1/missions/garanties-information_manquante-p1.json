@@ -1,0 +1,117 @@
+{
+ "appels": {
+  "plan-reviewer": 1,
+  "plan-writer": 1
+ },
+ "appels_detail": [
+  {
+   "n": 1,
+   "resultat": "valide",
+   "role": "plan-writer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 2,
+   "resultat": "valide",
+   "role": "plan-reviewer",
+   "tentative": 1,
+   "tour": 1
+  }
+ ],
+ "arret": {
+  "appels": {
+   "plan-reviewer": 1,
+   "plan-writer": 1
+  },
+  "categorie": "metier",
+  "cause": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (ma recherche par Grep sur « prod », « hostname », « hôte » et « host » ne trouve rien d'utile), donc aucune correction du plan ne peut le fournir et il ne doit pas être deviné",
+  "criteres_concernes": [
+   "M1"
+  ],
+  "issue": "clarification_requise",
+  "plans_sha256": [
+   "b6b94677280713897df8971da51cffebb0c08d04f30b34467416bf4d2895ff46"
+  ]
+ },
+ "categorie": "metier",
+ "clarification": {
+  "blocages": [
+   "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (ma recherche par Grep sur « prod », « hostname », « hôte » et « host » ne trouve rien d'utile), donc aucune correction du plan ne peut le fournir et il ne doit pas être deviné"
+  ],
+  "criteres": [
+   "M1"
+  ],
+  "plan_sha256": "b6b94677280713897df8971da51cffebb0c08d04f30b34467416bf4d2895ff46",
+  "questions": [
+   "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et quelle méthode de déploiement et quel accès sont prévus ?"
+  ],
+  "tour": 1
+ },
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2 le plan prévoit un retour arrière vérifiable"
+ ],
+ "criteres_ids": {
+  "M1": "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2": "M2 le plan prévoit un retour arrière vérifiable"
+ },
+ "criteres_sha256": "ca1d847f0ce60c49a562714babaaabd17eedf5a4b37c3cd785437cc7be836550",
+ "demande_sha256": "2fb3367bf14222bdce0e3dc92951684c8e88b9b8f9feec01f0826cc376176ed5",
+ "ecrit_le": "2026-10-26T16:16:43Z",
+ "erreurs_techniques": [],
+ "issue": "clarification_requise",
+ "max_corrections": 2,
+ "mission_id": "garanties-information_manquante-p1",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-deploiement-correction-total-pay.md",
+   "constats": [
+    {
+     "blocage": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (ma recherche par Grep sur « prod », « hostname », « hôte » et « host » ne trouve rien d'utile), donc aucune correction du plan ne peut le fournir et il ne doit pas être deviné",
+     "criteres": [
+      "M1"
+     ],
+     "gravite": "clarification",
+     "question": "Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et quelle méthode de déploiement et quel accès sont prévus ?",
+     "texte": "critères : M1 · blocage : le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure n'est ni dans la mission ni dans le projet (ma recherche par Grep sur « prod », « hostname », « hôte » et « host » ne trouve rien d'utile), donc aucune correction du plan ne peut le fournir et il ne doit pas être deviné · question : Quel est le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure, et quelle méthode de déploiement et quel accès sont prévus ?"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M2 » · Problème : la répétition du retour arrière (étape 4) se fait dans un environnement hors production qui n'est pas nommé, et ce point dépend de l'équipe infrastructure → Action : nommer cet environnement dès que l'équipe infrastructure l'a désigné → Résultat : la répétition devient exécutable sans ambiguïté · preuve : « Dans un environnement hors production désigné par l'équipe infrastructure, déployer la correction, puis restaurer la version précédente. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M1 » · Problème : la cible reste `<HOTE_PROD_A_CONFIRMER>` et la fenêtre de déploiement est « à définir ». Le plan l'indique honnêtement et ne présente rien comme vérifié, donc ce n'est qu'un constat d'état → Action : remplacer l'espace réservé par le nom exact une fois la décision prise → Résultat : M1 devient couvert et le plan peut être exécuté · preuve : « Cible : `<HOTE_PROD_A_CONFIRMER>`. Cette valeur doit être remplacée par le nom exact fourni »"
+    }
+   ],
+   "plan_sha256": "b6b94677280713897df8971da51cffebb0c08d04f30b34467416bf4d2895ff46",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "M1": "non_couvert",
+     "M2": "couvert"
+    },
+    "gravites": [
+     "clarification",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "b6b94677280713897df8971da51cffebb0c08d04f30b34467416bf4d2895ff46",
+    "relances_relecteur": 0,
+    "revue_sha256": "0769ed5721a711fba7f7b08b4e6692b39168fc8e34b41ae3c119081debb6eaad",
+    "verdict": "CLARIFICATION_REQUISE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

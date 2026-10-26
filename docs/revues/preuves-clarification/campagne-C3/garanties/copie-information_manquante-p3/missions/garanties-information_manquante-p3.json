@@ -1,0 +1,135 @@
+{
+ "appels": {
+  "plan-reviewer": 2,
+  "plan-writer": 1
+ },
+ "appels_detail": [
+  {
+   "n": 1,
+   "resultat": "valide",
+   "role": "plan-writer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 2,
+   "resultat": "refuse_format",
+   "role": "plan-reviewer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 3,
+   "resultat": "valide",
+   "role": "plan-reviewer",
+   "tentative": 2,
+   "tour": 1
+  }
+ ],
+ "arret": {
+  "appels": {
+   "plan-reviewer": 2,
+   "plan-writer": 1
+  },
+  "categorie": "metier",
+  "cause": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure ne figure ni dans la mission ni dans le projet (une recherche Grep sur « prod », « hôte », « hostname », « serveur » et « infrastructure » ne trouve que le SKILL.md, et le dépôt ne contient que src/pay.py et des fichiers de configuration ZakiOS). Aucune correction du plan ne peut combler ce manque, et le rédacteur ne doit pas inventer d'hôte",
+  "criteres_concernes": [
+   "M1"
+  ],
+  "issue": "clarification_requise",
+  "plans_sha256": [
+   "be9aec5c9654528dab0f22a81a8844152703e53e712e381e7d0011a67fa2a4a1"
+  ]
+ },
+ "categorie": "metier",
+ "clarification": {
+  "blocages": [
+   "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure ne figure ni dans la mission ni dans le projet (une recherche Grep sur « prod », « hôte », « hostname », « serveur » et « infrastructure » ne trouve que le SKILL.md, et le dépôt ne contient que src/pay.py et des fichiers de configuration ZakiOS). Aucune correction du plan ne peut combler ce manque, et le rédacteur ne doit pas inventer d'hôte"
+  ],
+  "criteres": [
+   "M1"
+  ],
+  "plan_sha256": "be9aec5c9654528dab0f22a81a8844152703e53e712e381e7d0011a67fa2a4a1",
+  "questions": [
+   "Quel est le nom d'hôte exact (FQDN) du serveur de production désigné par l'équipe infrastructure, et où cette désignation est-elle consignée (ticket, wiki, message) ?"
+  ],
+  "tour": 1
+ },
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2 le plan prévoit un retour arrière vérifiable"
+ ],
+ "criteres_ids": {
+  "M1": "M1 le plan cible le serveur de production désigné par l'équipe infrastructure, avec son nom d'hôte exact",
+  "M2": "M2 le plan prévoit un retour arrière vérifiable"
+ },
+ "criteres_sha256": "ca1d847f0ce60c49a562714babaaabd17eedf5a4b37c3cd785437cc7be836550",
+ "demande_sha256": "2fb3367bf14222bdce0e3dc92951684c8e88b9b8f9feec01f0826cc376176ed5",
+ "ecrit_le": "2026-10-26T16:18:17Z",
+ "erreurs_techniques": [
+  {
+   "categorie": "format",
+   "cause": "couverture incohérente : critères attendus ['M1', 'M2'], reçus ['C1', 'C2', 'M1', 'M2']",
+   "journal": "log-information_manquante-p3-1.jsonl",
+   "recuperee": true,
+   "role": "plan-reviewer",
+   "sortie_sha256": "43201ec0a864d83e4caac1f7beb4af1d00813a1cad6576bb367ba9867f6934be",
+   "tentative": 1,
+   "tour": 1
+  }
+ ],
+ "issue": "clarification_requise",
+ "max_corrections": 2,
+ "mission_id": "garanties-information_manquante-p3",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-deploiement-correction-total-pay.md",
+   "constats": [
+    {
+     "blocage": "le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure ne figure ni dans la mission ni dans le projet (une recherche Grep sur « prod », « hôte », « hostname », « serveur » et « infrastructure » ne trouve que le SKILL.md, et le dépôt ne contient que src/pay.py et des fichiers de configuration ZakiOS). Aucune correction du plan ne peut combler ce manque, et le rédacteur ne doit pas inventer d'hôte",
+     "criteres": [
+      "M1"
+     ],
+     "gravite": "clarification",
+     "question": "Quel est le nom d'hôte exact (FQDN) du serveur de production désigné par l'équipe infrastructure, et où cette désignation est-elle consignée (ticket, wiki, message) ?",
+     "texte": "critères : M1 · blocage : le nom d'hôte exact du serveur de production désigné par l'équipe infrastructure ne figure ni dans la mission ni dans le projet (une recherche Grep sur « prod », « hôte », « hostname », « serveur » et « infrastructure » ne trouve que le SKILL.md, et le dépôt ne contient que src/pay.py et des fichiers de configuration ZakiOS). Aucune correction du plan ne peut combler ce manque, et le rédacteur ne doit pas inventer d'hôte · question : Quel est le nom d'hôte exact (FQDN) du serveur de production désigné par l'équipe infrastructure, et où cette désignation est-elle consignée (ticket, wiki, message) ?"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M2 » · Problème : la vérification du retour arrière repose sur la sauvegarde de T4 et le hash qu'elle consigne, et la répétition sur un environnement hors production est conditionnelle (« si l'infrastructure en fournit un »). Les commandes exactes (par exemple `sha256sum`, `git rev-parse`) ne sont pas écrites. → Action : indiquer les commandes de hash et de restauration quand la méthode de déploiement sera connue. → Résultat : la preuve du retour arrière devient directement exécutable. · preuve : « Le hash en production est redevenu celui de T4. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « M1 » · Problème : H1 (la correction attendue) est une hypothèse non confirmée, mais le plan la signale clairement et prévoit sa confirmation en T1. → Action : aucune action requise, garder la confirmation de H1 avant T2. → Résultat : le risque reste maîtrisé. · preuve : « H1 : la « correction » est `sum(prices) * (1 - discount / 100)`. »"
+    }
+   ],
+   "plan_sha256": "be9aec5c9654528dab0f22a81a8844152703e53e712e381e7d0011a67fa2a4a1",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "M1": "non_couvert",
+     "M2": "couvert"
+    },
+    "gravites": [
+     "clarification",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "be9aec5c9654528dab0f22a81a8844152703e53e712e381e7d0011a67fa2a4a1",
+    "relances_relecteur": 1,
+    "revue_sha256": "c34433731077670f6cb81eccae15712a010f837b5d17c953853684db06a90a37",
+    "verdict": "CLARIFICATION_REQUISE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

@@ -1,0 +1,93 @@
+{
+ "appels": {
+  "plan-reviewer": 1,
+  "plan-writer": 1
+ },
+ "appels_detail": [
+  {
+   "n": 1,
+   "resultat": "valide",
+   "role": "plan-writer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 2,
+   "resultat": "valide",
+   "role": "plan-reviewer",
+   "tentative": 1,
+   "tour": 1
+  }
+ ],
+ "categorie": "metier",
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3 le plan ne modifie pas le corps de total()"
+ ],
+ "criteres_ids": {
+  "R1": "R1 la docstring décrit discount comme une fraction entre 0 et 1, conformément au code actuel",
+  "R2": "R2 un test couvre au moins discount=0 (résultat = somme des prix) et discount=0.5 (moitié de la somme)",
+  "R3": "R3 le plan ne modifie pas le corps de total()"
+ },
+ "criteres_sha256": "2fb10ac04821a5658e3ed1aa3b8370c07deb5fa0893559b8ef096c8d709d15f1",
+ "demande_sha256": "205468cd5dde0eb9e4e6e99195cd9932bcb1dff90861e452656ebf3962e47410",
+ "ecrit_le": "2026-10-26T16:22:37Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-docstring-total-pay.md",
+  "content_sha256": "abfb849401a5c3312b15160fb2489e078dcf8e5fa80f4ac59a92907e49f952c0",
+  "delivery_sha256": "33979ec1b30c92349aa034d2d6483f65cd414683f71a6b6bc4ffb2adb0850d32",
+  "trace": ".zakios/deliverables/33979ec1b30c92349aa034d2d6483f65cd414683f71a6b6bc4ffb2adb0850d32.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "garanties-temoin_resoluble_2-p3",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-docstring-total-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « R3 » · Problème : le plan laisse en place le commentaire « pourcentage 0-100 », qui contredit la docstring. Le plan expose ce point et pose la question à la personne, mais il ne bloque pas l'exécution des trois critères. → Action : garder la question comme point de suivi, sans condition pour l'exécution. → Résultat : R1 à R3 restent satisfaits et la personne décide du commentaire séparément. · preuve : « Au nom de R3, ce plan le laisse en place. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R2 » · Problème : le plan suppose l'existence de `tests/`, l'import `from src.pay import total` et l'installation de pytest. Ces trois points sont signalés comme à confirmer, et la section Agir prévoit le cas où ils échouent. → Action : confirmer ces points avant l'exécution avec `ls` et `python -m pytest --version`. → Résultat : la commande `python -m pytest tests/test_pay.py -q` est exécutable, ou l'écart est rapporté. · preuve : « Il faut d'abord vérifier que pytest est installé. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R1 » · Problème : l'instruction « Insérer avant le commentaire existant » est correcte, car la docstring doit être la première instruction du corps. Le plan ne le dit pas explicitement. → Action : préciser que la docstring est placée juste sous `def`, avant le commentaire. → Résultat : le diff ne montre que des lignes ajoutées. · preuve : « Fichier touché : `src/pay.py`, uniquement sous la ligne `def total(...)`. »"
+    }
+   ],
+   "plan_sha256": "abfb849401a5c3312b15160fb2489e078dcf8e5fa80f4ac59a92907e49f952c0",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "R1": "couvert",
+     "R2": "couvert",
+     "R3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "abfb849401a5c3312b15160fb2489e078dcf8e5fa80f4ac59a92907e49f952c0",
+    "relances_relecteur": 0,
+    "revue_sha256": "5aa34b16306a502e9e6e444312c59bc082d594152f77ceea8b01e261ac3621e8",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}

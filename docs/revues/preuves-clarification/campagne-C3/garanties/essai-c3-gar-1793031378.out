@@ -1,0 +1,11 @@
+information_manquante/p1 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+information_manquante/p2 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+information_manquante/p3 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+contradiction_inedite/p1 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+contradiction_inedite/p2 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+contradiction_inedite/p3 | attendu: clarification_requise | issue: clarification_requise (metier) | tours: 1 | verdicts: ['CLARIFICATION_REQUISE']
+temoin_resoluble_2/p1 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+temoin_resoluble_2/p2 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+temoin_resoluble_2/p3 | attendu: accepte | issue: accepte (metier) | tours: 1 | verdicts: ['ACCEPTE']
+ÉCHEC (attente non satisfaite) :
+ - information_manquante/p3 : outil modifiant utilisé par plan-writer

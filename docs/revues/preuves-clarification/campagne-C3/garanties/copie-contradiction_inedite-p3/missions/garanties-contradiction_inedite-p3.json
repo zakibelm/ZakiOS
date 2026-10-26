@@ -1,0 +1,123 @@
+{
+ "appels": {
+  "plan-reviewer": 1,
+  "plan-writer": 1
+ },
+ "appels_detail": [
+  {
+   "n": 1,
+   "resultat": "valide",
+   "role": "plan-writer",
+   "tentative": 1,
+   "tour": 1
+  },
+  {
+   "n": 2,
+   "resultat": "valide",
+   "role": "plan-reviewer",
+   "tentative": 1,
+   "tour": 1
+  }
+ ],
+ "arret": {
+  "appels": {
+   "plan-reviewer": 1,
+   "plan-writer": 1
+  },
+  "categorie": "metier",
+  "cause": "les deux critères obligatoires sont incompatibles. Un même fichier `journal.txt` ne peut pas avoir ses lignes triées à la fois par date croissante et par date décroissante dès que deux dates diffèrent. Aucune correction du plan ne lève cette contradiction, et seule la personne peut modifier ou abandonner un critère de la mission.",
+  "criteres_concernes": [
+   "T1",
+   "T2"
+  ],
+  "issue": "clarification_requise",
+  "plans_sha256": [
+   "5e79ed65c7fe4fbb8520237c7a7cde668b91f69b33f5b54fbe7022127ca14027"
+  ]
+ },
+ "categorie": "metier",
+ "clarification": {
+  "blocages": [
+   "les deux critères obligatoires sont incompatibles. Un même fichier `journal.txt` ne peut pas avoir ses lignes triées à la fois par date croissante et par date décroissante dès que deux dates diffèrent. Aucune correction du plan ne lève cette contradiction, et seule la personne peut modifier ou abandonner un critère de la mission."
+  ],
+  "criteres": [
+   "T1",
+   "T2"
+  ],
+  "plan_sha256": "5e79ed65c7fe4fbb8520237c7a7cde668b91f69b33f5b54fbe7022127ca14027",
+  "questions": [
+   "Faut-il trier `journal.txt` par date croissante (T1), par date décroissante (T2), ou produire deux fichiers distincts, un par ordre, ce qui changerait T3 ?"
+  ],
+  "tour": 1
+ },
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "ca464a2b7564670a",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "c69148a712706f8f",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "T1 les lignes du fichier sont triées par date croissante",
+  "T2 les lignes du fichier sont triées par date décroissante",
+  "T3 le plan fixe l'emplacement du fichier de sortie"
+ ],
+ "criteres_ids": {
+  "T1": "T1 les lignes du fichier sont triées par date croissante",
+  "T2": "T2 les lignes du fichier sont triées par date décroissante",
+  "T3": "T3 le plan fixe l'emplacement du fichier de sortie"
+ },
+ "criteres_sha256": "593134d61808231a270d83ca1d38b8eaf3327b1f04b6126bcbcbad5bb96990b1",
+ "demande_sha256": "c257e7146a5f5817c99d27f4f096c3ac25d04bff5072527764b3aad996537ee0",
+ "ecrit_le": "2026-10-26T16:20:49Z",
+ "erreurs_techniques": [],
+ "issue": "clarification_requise",
+ "max_corrections": 2,
+ "mission_id": "garanties-contradiction_inedite-p3",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-export-commandes-journal.md",
+   "constats": [
+    {
+     "blocage": "les deux critères obligatoires sont incompatibles. Un même fichier `journal.txt` ne peut pas avoir ses lignes triées à la fois par date croissante et par date décroissante dès que deux dates diffèrent. Aucune correction du plan ne lève cette contradiction, et seule la personne peut modifier ou abandonner un critère de la mission.",
+     "criteres": [
+      "T1",
+      "T2"
+     ],
+     "gravite": "clarification",
+     "question": "Faut-il trier `journal.txt` par date croissante (T1), par date décroissante (T2), ou produire deux fichiers distincts, un par ordre, ce qui changerait T3 ?",
+     "texte": "critères : T1, T2 · blocage : les deux critères obligatoires sont incompatibles. Un même fichier `journal.txt` ne peut pas avoir ses lignes triées à la fois par date croissante et par date décroissante dès que deux dates diffèrent. Aucune correction du plan ne lève cette contradiction, et seule la personne peut modifier ou abandonner un critère de la mission. · question : Faut-il trier `journal.txt` par date croissante (T1), par date décroissante (T2), ou produire deux fichiers distincts, un par ordre, ce qui changerait T3 ?"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « T3 » · Problème : l'emplacement par défaut du test (`journal.txt` à la racine) n'est pas distingué du dossier temporaire utilisé par le test, ce qui rend la vérification `ls journal.txt` ambiguë. → Action : préciser si le test de T3 appelle la fonction sans argument de chemin, ou avec un chemin temporaire, et dans quel dossier s'exécute `ls`. → Résultat : la preuve de T3 devient exécutable sans ambiguïté. · preuve : « vérifier que le fichier existe à l'emplacement fixé après l'appel (`ls journal.txt`) et que le test utilise ce même chemin par défaut » face à « Il utilise un dossier temporaire »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « T1 » · Problème : le format de ligne et le format de date restent à définir, et la source des commandes est une hypothèse non confirmée. Le plan les signale correctement. → Action : les fixer une fois la décision prise. → Résultat : l'extraction des dates par le test sera définie. · preuve : « Le format de ligne et le format de date (par exemple ISO 8601, `AAAA-MM-JJ`) restent à définir »"
+    }
+   ],
+   "plan_sha256": "5e79ed65c7fe4fbb8520237c7a7cde668b91f69b33f5b54fbe7022127ca14027",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "T1": "couvert",
+     "T2": "couvert",
+     "T3": "couvert"
+    },
+    "gravites": [
+     "clarification",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "5e79ed65c7fe4fbb8520237c7a7cde668b91f69b33f5b54fbe7022127ca14027",
+    "relances_relecteur": 0,
+    "revue_sha256": "06355841742957f5d95ee0340c6938cb3d7235d9517bd98530d76817163ebe25",
+    "verdict": "CLARIFICATION_REQUISE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 2
+}
