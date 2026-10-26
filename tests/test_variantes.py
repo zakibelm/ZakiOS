@@ -14,10 +14,16 @@ class Variantes(unittest.TestCase):
     files = list(V.rglob("*.md"))
 
     def test_trois_variantes(self):
-        self.assertEqual(len(self.files), 3)
+        self.assertEqual(len(self.files), 4)
 
     def test_reviewer_lecture_seule(self):
         text = (V / "agents/code-reviewer.md").read_text()
+        tools = re.search(r"^tools:(.*)$", text, re.M).group(1)
+        for forbidden in ("Write", "Edit", "Bash"):
+            self.assertNotIn(forbidden, tools)
+
+    def test_plan_writer_sans_ecriture_ni_bash(self):
+        text = (V / "agents/plan-writer.md").read_text()
         tools = re.search(r"^tools:(.*)$", text, re.M).group(1)
         for forbidden in ("Write", "Edit", "Bash"):
             self.assertNotIn(forbidden, tools)
@@ -36,7 +42,7 @@ class Variantes(unittest.TestCase):
             self.assertIn(marker, t, f)
 
     def test_provenance_des_adaptations(self):
-        for name in ("agents/code-reviewer.md", "skills/writing-plans/SKILL.md"):
+        for name in ("agents/code-reviewer.md", "skills/writing-plans/SKILL.md", "agents/plan-writer.md"):
             self.assertIn("Provenance", (V / name).read_text())
 
     def test_run_tests_declare_ni_write_ni_edit_mais_bash_peut_ecrire(self):
