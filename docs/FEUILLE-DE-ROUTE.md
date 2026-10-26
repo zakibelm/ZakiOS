@@ -20,6 +20,7 @@ Ordre fixé par l'audit du commit a29d2df (`docs/AUDIT-a29d2df.md`). Chaque éta
 | 7 | Activation par projet : pilote **fait** (aperçu, tout ou rien, retour arrière) ; reste le premier lot réel sur projet jetable | passe du catalogue à l'usage |
 | 8 | Intégration continue : **faite** (tests + `verify`) | empêche les régressions |
 | 9 | Profil de travail, règles de décision, mémoire par projet, délégation, mesure d'utilité (`docs/PROFIL.md`) | fait de ZakiOS ton Socle personnel, pas un simple échantillon |
+| 11 | Architecture cible : demande en langage naturel → orchestration PDCA → résultat avec preuves, routage OpenRouter/OmniRoute (`docs/CIBLE.md`) ; **objectif à vérifier, non acquis** | ZakiOS devient un système d'usage, pas seulement un catalogue |
 | 10 | Lot 1 en variantes ZakiOS : relecteur, planificateur, lanceur de tests | premier composant à ta mesure |
 
 ## Périmètre V1

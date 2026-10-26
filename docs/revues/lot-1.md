@@ -149,3 +149,5 @@ Fichiers : `variantes/agents/code-reviewer.md`, `variantes/skills/writing-plans/
 **Ce qui est prouvé :** 6 tests statiques (112 au total) vérifient permissions, absence de dépendances orphelines, renvoi au Socle et marqueur, provenance.
 **Limite :** la présence du texte ne prouve pas que l'agent obéit. Test de comportement à faire sur le projet jetable après ton accord : lancer chaque variante et exiger la ligne `ZAKIOS-SOCLE v1 · PDCA` en tête de réponse ; pour le relecteur, lui soumettre un diff avec un défaut connu et vérifier le constat (fichier:ligne) sans aucune modification de fichier ; pour run-tests, un projet avec un test en échec (échec rapporté, aucun « validé »).
 **Licence ZakiOS :** ne bloque pas la rédaction ; à fixer avant diffusion.
+
+**Précision (consigne du 2026-10-26) :** le marqueur n'est qu'un indice. Le chargement du Socle est déclaré « prouvé » uniquement après le test de comportement ; les variantes doivent aussi être limitées **techniquement** (outils déclarés), ce que les tests statiques vérifient déjà, et suivre les règles, ce que seul le test de comportement montre.

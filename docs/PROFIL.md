@@ -2,7 +2,7 @@
 
 État : **confirmé** = décision de Zaki ; **proposé** = déduit, à confirmer. Seules les lignes confirmées deviennent des règles du Socle (`socle/REGLES.md`).
 
-## Méthode commune : PDCA (roue de Deming) — confirmé*
+## Méthode commune : PDCA (roue de Deming) — confirmé
 
 - **Planifier** : clarifier le besoin, établir la situation initiale, définir le résultat attendu, les contraintes et les critères d'acceptation.
 - **Exécuter** : réaliser les actions prévues dans le périmètre autorisé et conserver les éléments de traçabilité.
@@ -11,7 +11,7 @@
 
 EVV est mis de côté comme cadre distinct ; la validation du résultat s'inscrit dans le PDCA.
 
-\* Décision rapportée par l'audit du commit 844c64b, non retrouvée dans les échanges de ce dépôt. Elle est appliquée comme confirmée à la demande de l'audit ; un « oui » de Zaki suffit pour lever ce astérisque. Attention : l'ancien protocole de développement (EVV+) reste en vigueur ailleurs tant que Zaki ne l'a pas retiré.
+Décision confirmée par Zaki (message du 2026-10-26) : dans ZakiOS, le PDCA remplace EVV/EVV+ comme cadre distinct, **sans toucher automatiquement à des systèmes extérieurs** (autres protocoles, mémoires, dépôts). Ce profil est un **profil de départ adaptable** : préférences, mémoires, projets, permissions et budgets sont séparés par utilisateur (`docs/CIBLE.md`).
 
 ## Autres éléments
 
