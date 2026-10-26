@@ -135,3 +135,17 @@ Pour le skill : MIT, Copyright (c) 2025 Jesse Vincent (obra/superpowers, commit 
 1. Tu choisis pour chaque composant : valider, changer de candidat ou laisser de côté (surtout la commande).
 2. Tu complètes les licences (copyright lu à la source).
 3. Je rebuild, vérifie, affiche l'aperçu exact, puis j'installe sur un projet jetable, relance pour vérifier l'absence de duplication et teste le retour arrière.
+
+## Révision 3 — variantes ZakiOS (brouillons, non installées)
+
+Fichiers : `variantes/agents/code-reviewer.md`, `variantes/skills/writing-plans/SKILL.md`, `variantes/commands/run-tests.md`, règles dans `socle/REGLES.md` (PDCA, porté une seule fois).
+
+| Variante | Permissions | Garde-fou | Provenance |
+|---|---|---|---|
+| code-reviewer | Read, Glob, Grep, Bash limité à `git diff/log/show/status` | pas de Write/Edit (testé) | adaptée d'aitmpl (MIT, Daniel (San) Ávila) ; texte réécrit |
+| writing-plans | aucune action propre (rédige un plan) | aucun renvoi `superpowers:*` (testé) | adaptée d'obra/superpowers (MIT, Jesse Vincent) via aitmpl ; filiation exacte non prouvée |
+| run-tests | Read, Glob, Grep, Bash | pas d'installation, de modification ni de snapshot (testé : pas de Write/Edit) | contenu original |
+
+**Ce qui est prouvé :** 6 tests statiques (112 au total) vérifient permissions, absence de dépendances orphelines, renvoi au Socle et marqueur, provenance.
+**Limite :** la présence du texte ne prouve pas que l'agent obéit. Test de comportement à faire sur le projet jetable après ton accord : lancer chaque variante et exiger la ligne `ZAKIOS-SOCLE v1 · PDCA` en tête de réponse ; pour le relecteur, lui soumettre un diff avec un défaut connu et vérifier le constat (fichier:ligne) sans aucune modification de fichier ; pour run-tests, un projet avec un test en échec (échec rapporté, aucun « validé »).
+**Licence ZakiOS :** ne bloque pas la rédaction ; à fixer avant diffusion.
