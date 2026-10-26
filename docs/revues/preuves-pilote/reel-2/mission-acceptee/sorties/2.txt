@@ -1,0 +1,11 @@
+ZAKIOS-SOCLE v1 · PDCA
+=== DEBUT DE LA REVUE ZAKIOS ===
+Verdict : ACCEPTE
+Plan examiné : a7bf6fe92a3b85d1
+Couverture C1 : couvert
+Couverture C2 : couvert
+Couverture C3 : couvert
+- [mineur] critère « C1 » · Problème : le plan exige que le test échoue avant la correction, mais l'étape 2 ne prévoit pas de lancer le test avant l'étape 3, donc l'échec préalable n'est pas prouvé → Action : ajouter une exécution de `python -m pytest tests/test_pay.py` entre les étapes 2 et 3 et noter les échecs attendus → Résultat : la détection des régressions par le test serait démontrée · preuve : « Il doit échouer avant la correction. »
+- [mineur] critère « C2 » · Problème : le style de paramètre (`?` ou `%s`) dépend du pilote, que le plan n'a pas identifié (H2), et l'étape 4 le laisse à « Remplacer `?` selon H2 » sans moyen de le déterminer → Action : ajouter une étape de lecture du code ou des dépendances pour identifier le pilote avant l'étape 4 → Résultat : l'étape 4 serait exécutable sans ambiguïté · preuve : « Le pilote n'apparaît pas dans le projet (non vérifié). »
+- [mineur] critère « C1 » · Problème : l'état attendu et l'état vérifié sont bien distingués, mais le plan ne couvre pas les types non numériques ou booléens pour `discount` → Action : envisager un cas de test supplémentaire facultatif → Résultat : un renforcement de la robustesse, sans effet sur la couverture du critère · preuve : « test_remise_hors_bornes : -1 et 101 lèvent ValueError »
+=== FIN DE LA REVUE ZAKIOS ===

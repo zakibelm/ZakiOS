@@ -323,6 +323,22 @@ class Manager:
                 pub["etat_final"] = "erreur_technique"
         return pub
 
+    def lister(self, limit=30):
+        """Résumés des missions (les plus récentes d'abord) : uniquement des informations déjà publiques par mission."""
+        root = os.path.join(self.data, "missions")
+        rows = []
+        for mid in os.listdir(root):
+            p = os.path.join(root, mid, "etat.json")
+            if not os.path.exists(p):
+                continue
+            st = _load(p)
+            tr = self._trace(os.path.join(root, mid), mid)
+            rows.append({"id": mid, "statut": st["statut"], "mode": st["mode"], "cree_le": st["cree_le"],
+                         "demande": st["demande"][:140], "etat_final": (tr or {}).get("issue"),
+                         "livre": bool(st.get("livraison"))})
+        rows.sort(key=lambda r: r["cree_le"], reverse=True)
+        return rows[:limit]
+
     def limites(self):
         c = self.cfg
         return {"missions_simultanees": c.max_concurrent, "duree_max_mission_s": c.mission_timeout, "appels_max": c.max_calls,

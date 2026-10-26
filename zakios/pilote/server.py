@@ -16,8 +16,9 @@ from urllib.parse import urlparse
 from .config import Config
 from .missions import Busy, Conflict, Invalid, Manager, NotFound
 
+REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
-TYPES = {"index.html": "text/html; charset=utf-8", "app.js": "text/javascript; charset=utf-8", "style.css": "text/css; charset=utf-8"}
+TYPES = {"index.html": "text/html; charset=utf-8", "app.js": "text/javascript; charset=utf-8", "style.css": "text/css; charset=utf-8", "gsap.min.js": "text/javascript; charset=utf-8"}
 CSP = ("default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; "
        "base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
 MID = r"(p-[0-9a-f]{10})"
@@ -56,6 +57,27 @@ class Pilot:
     def note_failure(self, ip):
         with self.lock:
             self.failures.setdefault(ip, []).append(time.time())
+
+
+def bibliotheque():
+    """Rôles et règles du moteur lus dans le dépôt (lecture seule) : nom, description, empreinte, texte source."""
+    import hashlib
+    out = []
+    for rel in ["socle/REGLES.md"] + ["variantes/agents/%s" % f for f in sorted(os.listdir(os.path.join(REPO, "variantes", "agents")))]:
+        with open(os.path.join(REPO, rel), "rb") as fh:
+            raw = fh.read()
+        text = raw.decode("utf-8")
+        name, desc = os.path.basename(rel), ""
+        if text.startswith("---"):
+            head = text.split("---", 2)[1]
+            for line in head.splitlines():
+                if line.startswith("name:"):
+                    name = line[5:].strip()
+                if line.startswith("description:"):
+                    desc = line[12:].strip().strip('"')
+        out.append({"chemin": rel, "nom": name, "type": "Socle" if rel.startswith("socle") else "Agent", "description": desc,
+                    "sha256": hashlib.sha256(raw).hexdigest(), "texte": text})
+    return out
 
 
 def make_handler(pilot):
@@ -121,15 +143,22 @@ def make_handler(pilot):
             try:
                 if path in ("/", "/index.html"):
                     return self._static("index.html")
-                if path in ("/app.js", "/style.css"):
+                if path in ("/app.js", "/style.css", "/gsap.min.js"):
                     return self._static(path[1:])
                 if path == "/api/sante":
-                    return self._json(200, {"ok": True, "mode": pilot.manager.mode})
+                    return self._json(200, {"ok": True, "mode": pilot.manager.mode, "connecte": self._authed()})
                 if not self._authed():
                     return self._err(401, "accès non autorisé")
                 if path == "/api/etat":
                     return self._json(200, {"mode": pilot.manager.mode, "limites": pilot.manager.limites(),
                                             "exemple": {"src/pay.py": __import__("zakios.pilote.missions", fromlist=["x"]).SAMPLE_PAY}})
+                if path == "/api/missions":
+                    return self._json(200, {"missions": pilot.manager.lister()})
+                if path == "/api/campagnes":
+                    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "campagnes.json"), encoding="utf-8") as fh:
+                        return self._json(200, json.load(fh))
+                if path == "/api/bibliotheque":
+                    return self._json(200, {"composants": bibliotheque()})
                 m = re.fullmatch(r"/api/missions/%s" % MID, path)
                 if m:
                     return self._json(200, pilot.manager.get(m.group(1)))

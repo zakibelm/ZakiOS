@@ -31,9 +31,26 @@ Placer le pilote derrière un proxy HTTPS (et `ZAKIOS_PILOT_SECURE_COOKIE=1`).
   ACCEPTE et couvre tous les critères ; double clic idempotent ; refus d'écraser un fichier existant.
   Clarification, erreur technique et plafond atteint n'offrent aucune livraison.
 
+## Interface (habillage issu de ZakiOS_Frontend.zip)
+
+Le design du zip (barre latérale sombre, surfaces neutres, accent vert, roue PDCA) habille le vrai pilote ; ses données de
+démonstration et ses « livraisons » dans le navigateur ont été supprimées. Le coordinateur reste la seule autorité pour les
+verdicts et la livraison : le navigateur n'active « Confirmer » que si le serveur le déclare possible.
+
+- Pages : vue d'ensemble, atelier de mission (saisie, suivi, plans, revues, aperçu exact, confirmation, preuves de la
+  mission), preuves **par campagne** (`/api/campagnes`, généré par `scripts/generer_campagnes.py` depuis les preuves ;
+  C3 et son échec conservés ; aucun taux agrégé), bibliothèque (rôles et socle lus dans le dépôt, lecture seule).
+- Verdicts distincts avec icône + texte + couleur : ✔ ACCEPTÉ, ↻ À CORRIGER, ? CLARIFICATION REQUISE ; issues : ■ PLAFOND
+  ATTEINT, ⚠ ERREUR TECHNIQUE. Erreurs techniques et écarts comportementaux toujours affichés (ou « aucun »).
+- Aucune dépendance externe : police système, GSAP 3.12.5 embarqué (licence GreenSock standard), CSP sans script ni style
+  en ligne. Animations discrètes, désactivées par `prefers-reduced-motion`.
+- Différences volontaires avec le zip : tailles de texte relevées (le zip descendait à 7–11 px), thème clair conservé,
+  Google Fonts retirées, page « Bibliothèque » alimentée par le dépôt et non par un `data.json` figé à un autre commit.
+
 ## Preuves
 
-- `tests/test_pilote.py` : 19 tests **simulés** (rôles simulés, aucun modèle appelé) via un vrai serveur HTTP.
+- `tests/test_pilote.py` : 23 tests **simulés** (rôles simulés, aucun modèle appelé) via un vrai serveur HTTP.
+- `tests/test_pilote_navigateur.py` : 12 tests **simulés dans un vrai Chromium** (parcours, verdicts, double clic, refus d'écrasement, 390/820/1440 px, clavier, focus, mouvement réduit, contrastes WCAG AA calculés).
 - `scripts/essai_pilote_reel.py` : parcours **réel** dans Chromium avec de vrais agents ; résultats sous
   `docs/revues/preuves-pilote/`.
 
@@ -52,3 +69,13 @@ Le premier push a fait échouer la CI : le test de double confirmation concurren
 pilote) était intermittent — course réelle dans `deliver.save_plan` entre la vérification d'existence et l'écriture. Corrigé
 par un verrou par mission dans le processus (une seule instance de serveur supposée). Sans le verrou, le test échoue
 environ 1 fois sur 3 : il détecte la régression de façon probabiliste, pas déterministe.
+
+## Essai réel n°2 (reel-2, nouvelle interface, vrais agents, Chromium 820 px + captures 390/820/1440)
+
+Mauvais jeton refusé ; mission acceptée (verdict ✔ ACCEPTÉ, aperçu exact, double clic réel → un seul enregistrement,
+trace/journaux concordants) ; mission contradictoire (? CLARIFICATION REQUISE, aucun bouton de livraison) ; aucun
+débordement horizontal à 390/820/1440 px sur l'accueil, la mission et les preuves. Un passage par cas ; pannes, plafond,
+écart comportemental et refus d'écrasement restent prouvés en simulation (tests navigateur simulés). Bug trouvé par les tests
+et corrigé : le message de refus d'écrasement était effacé par le rafraîchissement de la mission.
+Limites : contrastes calculés sur les couples texte/fond du DOM (pas d'audit lecteur d'écran réel) ; thème clair seulement ;
+`reel-1` (ancienne interface) est conservé tel quel.

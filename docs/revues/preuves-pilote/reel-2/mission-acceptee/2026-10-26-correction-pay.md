@@ -1,0 +1,71 @@
+# Plan : correction de src/pay.py (remise en pourcentage, requête paramétrée)
+
+## Planifier
+
+**Situation initiale (faits lus dans `src/pay.py`)**
+- `total(prices, discount)` : le commentaire dit « pourcentage 0-100 », mais le code calcule `sum(prices) * (1 - discount)`. Avec `discount=10`, le résultat est `sum * -9`, donc négatif. Le code traite la remise comme une fraction 0-1. Aucune validation de borne.
+- `read_user(db, name)` : la requête est construite par concaténation de chaînes, ce qui permet une injection SQL.
+- Aucun fichier de test trouvé (Glob `**/*test*` : vide). Il n'y a donc pas de test existant à relancer.
+
+**Résultat attendu (mesurable)**
+- `total([100], 10)` donne 90.0, `total([100], 0)` donne 100 et `total([100], 100)` donne 0.
+- Une remise inférieure à 0 ou supérieure à 100 est rejetée (`ValueError`).
+- `read_user` envoie le nom comme paramètre et non dans le texte SQL.
+
+**Hypothèses à confirmer (non vérifiées)**
+- H1 : le rejet par `ValueError` est le comportement voulu pour une remise hors bornes. L'alternative serait de borner la valeur silencieusement. Je recommande l'exception.
+- H2 : le style de paramètre dépend du pilote de base de données. `?` convient à sqlite3, `%s` à psycopg ou MySQL. Le pilote n'apparaît pas dans le projet (non vérifié).
+- H3 : aucun autre appelant de `total` ne passe une fraction 0-1. Grep sur le projet à faire avant de modifier. Si un tel appelant existe, il changerait de résultat.
+
+**Contraintes**
+- Périmètre : `src/pay.py` et un nouveau fichier de test. Rien d'autre.
+- Montants en $ CAD. Aucun changement d'unité n'est prévu.
+
+**Critères d'acceptation de la mission (repris tels quels)**
+- C1 : la remise est traitée comme un pourcentage de 0 à 100 (bornes comprises).
+- C2 : la requête de lecture d'utilisateur est paramétrée.
+- C3 : le plan nomme au moins un test de régression à exécuter par la personne.
+
+Les trois critères sont compatibles entre eux. Aucune information bloquante ne manque : H2 se règle en lisant le pilote, et H1 a une valeur par défaut recommandée.
+
+## Exécuter
+
+Ce sont deux petits changements. Un test d'abord n'est utile que pour C1, où le risque de régression est réel.
+
+1. **Vérifier les appelants** (H3).
+   - Commande : `grep -rn "total(" .`
+   - Périmètre : lecture seule.
+2. **Créer le test de régression** `tests/test_pay.py`. Il doit échouer avant la correction.
+   - `test_remise_10_pct` : `total([100], 10) == 90`
+   - `test_remise_bornes` : 0 donne 100 et 100 donne 0
+   - `test_remise_hors_bornes` : -1 et 101 lèvent `ValueError`
+   - `test_read_user_parametre` : une fausse base enregistre `(sql, params)`. Le test vérifie que `name` est dans `params`, que `name` n'apparaît pas dans `sql`, et qu'avec `"x' OR '1'='1"` le texte SQL reste inchangé.
+   - Commande : `python -m pytest tests/test_pay.py`
+3. **Corriger `total`** dans `src/pay.py`.
+   - Ajouter `if not 0 <= discount <= 100: raise ValueError("discount doit être entre 0 et 100")`.
+   - Remplacer le calcul par `sum(prices) * (1 - discount / 100)`.
+4. **Corriger `read_user`** dans `src/pay.py`.
+   - Utiliser `db.execute("SELECT * FROM users WHERE name = ?", (name,))`. Remplacer `?` selon H2.
+5. **Relancer** `python -m pytest tests/test_pay.py`.
+
+## Vérifier
+
+| Critère | Preuve | État |
+|---|---|---|
+| C1 | `test_remise_10_pct`, `test_remise_bornes` et `test_remise_hors_bornes` passent. | Attendu, non vérifié (aucun test exécuté par moi) |
+| C2 | `test_read_user_parametre` passe. Relecture du code : plus aucune concaténation dans la requête. | Attendu, non vérifié |
+| C3 | Test de régression nommé : `tests/test_pay.py::test_remise_10_pct`. C'est la personne qui l'exécute avec `python -m pytest tests/test_pay.py`. | Nommé ; exécution à faire par la personne |
+
+Je n'ai pas pu exécuter de commande (outils limités à Read, Glob et Grep). Aucun résultat n'est donc vérifié à ce stade.
+
+## Agir
+
+- **Si un test échoue** : corriger `src/pay.py`, puis relancer le test. Ne pas modifier le test pour le faire passer sans en expliquer la raison.
+- **Si H3 est fausse** (un appelant passe une fraction 0-1) : s'arrêter et demander à la personne. Ne pas adapter l'appelant sans son accord.
+- **Si le pilote n'accepte pas `?`** : utiliser le style de paramètre de ce pilote (H2).
+- **À standardiser** :
+  - garder `tests/test_pay.py` dans le dépôt ;
+  - toujours passer les valeurs en paramètres dans les requêtes SQL ;
+  - documenter l'unité de la remise (pourcentage 0-100) dans la docstring de `total`.
+
+**Proposition** : la personne ou un agent peut exécuter les étapes 1 à 5. Je recommande de confirmer H1 avant de commencer.

@@ -28,7 +28,7 @@ pip install -r requirements.txt            # PyYAML
 # cloner les sources aux commits de sources.json sous ./sources/<owner>/<repo>
 python3 -m zakios build                    # génère catalog/ (registry.json, crosswalk.csv, build_report.json)
 python3 -m zakios verify                   # revalide un catalogue existant
-python3 -m unittest discover -s tests -t . # 238 tests
+python3 -m unittest discover -s tests -t . # 254 tests
 ```
 
 Le moteur refuse de construire si une source obligatoire manque, si son commit diffère du manifeste (40 caractères exigés) ou si le dépôt a des modifications locales. `--allow-dirty` donne un build **expérimental** (`build_mode: experimental_dirty`), à ne pas présenter comme une reconstruction exacte. Un verrou empêche deux générations simultanées. La génération se fait dans un dossier temporaire unique, est validée, puis remplace `catalog/` par un échange atomique : un lecteur voit toujours soit l'ancien, soit le nouveau catalogue. `verify` lit les trois fichiers d'une même génération, puis recalcule le CSV, les comptes et les références à partir du registre. La génération précédente est gardée dans `catalog.prev`.
@@ -43,7 +43,7 @@ ZakiOS/
 ├── decisions/              validated.json (décisions), licenses.json (licences vérifiées), annotations.json (dépendances, conflits, compatibilité)
 ├── catalog/                registre généré (ne pas éditer à la main)
 ├── zakios/                 moteur : parse, classify, policy, scan, similarity, build
-├── tests/                  238 tests, sur de petits dépôts git créés à la volée
+├── tests/                  254 tests, sur de petits dépôts git créés à la volée
 ├── docs/                   méthodologie, catalogue, architecture, activation, revues de lots, feuille de route, audits
 └── archive/pre-audit-a29d2df/   ancien catalogue et scripts, gardés pour l'historique seulement
 ```

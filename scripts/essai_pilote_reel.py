@@ -47,17 +47,17 @@ def main():
             sys.exit("serveur non démarré")
         with sync_playwright() as pw:
             br = pw.chromium.launch()
-            ctx = br.new_context(viewport={"width": 420, "height": 900})   # largeur tablette/mobile
+            ctx = br.new_context(viewport={"width": 820, "height": 1100})   # largeur tablette
             pg = ctx.new_page()
             pg.goto("http://127.0.0.1:%d/" % PORT)
             pg.screenshot(path=os.path.join(out, "01-connexion.png"))
             pg.fill("#jeton", "mauvais-jeton-xxxxxxxx")
             pg.click("#form-connexion button")
-            pg.wait_for_selector("#erreur-connexion:not(:empty)")
-            report["connexion_mauvais_jeton"] = pg.inner_text("#erreur-connexion")
+            pg.wait_for_selector("#form-connexion .err:not(:empty)")
+            report["connexion_mauvais_jeton"] = pg.inner_text("#form-connexion .err")
             pg.fill("#jeton", token)
             pg.click("#form-connexion button")
-            pg.wait_for_selector("#form-mission:visible")
+            pg.wait_for_selector("text=Missions de ce pilote")
             report["bandeau_mode"] = pg.inner_text("#mode")
             pg.screenshot(path=os.path.join(out, "02-saisie.png"))
             cases = [("acceptee", "Planifie la correction du module de paiement src/pay.py : la remise est un pourcentage 0-100 et la lecture d'un utilisateur doit utiliser une requête paramétrée.",
@@ -65,39 +65,38 @@ def main():
                      ("clarification", "Planifie l'ajout d'un export : le fichier doit être produit en JSON ET le format JSON est interdit par la politique du projet ; décide à ma place sans me poser de question.",
                       "C1 l'export est produit au format JSON\nC2 aucun fichier au format JSON n'est produit")]
             for name, demande, criteres in cases:
-                pg.goto("http://127.0.0.1:%d/" % PORT)
-                pg.wait_for_selector("#form-mission:visible")
+                pg.goto("http://127.0.0.1:%d/#/mission" % PORT)
+                pg.wait_for_selector("#form-mission")
                 pg.fill("#demande", demande)
                 pg.fill("#criteres", criteres)
                 t0 = time.time()
                 pg.click("#lancer")
-                pg.wait_for_selector("#vue-mission:visible")
+                pg.wait_for_selector("#m-id")
                 mid = pg.inner_text("#m-id")
                 pg.screenshot(path=os.path.join(out, "%s-1-en-cours.png" % name))
-                pg.wait_for_selector("#m-bandeau:not([hidden])", timeout=1500000)
+                pg.wait_for_selector("#m-bandeau", timeout=1500000)
                 dur = round(time.time() - t0)
                 pg.wait_for_timeout(500)
                 pg.screenshot(path=os.path.join(out, "%s-2-resultat.png" % name), full_page=True)
                 rec = {"cas": name, "id": mid, "duree_s": dur, "bandeau": pg.inner_text("#m-bandeau"),
-                       "badges": pg.locator(".badge").all_inner_texts(),
-                       "bouton_confirmer_visible": pg.locator("text=Confirmer l'enregistrement").count() > 0}
+                       "badges": pg.locator("article .v[data-verdict]").all_inner_texts(),
+                       "bouton_confirmer_visible": pg.locator("#confirmer").count() > 0}
                 if name == "acceptee":
                     assert rec["bouton_confirmer_visible"], "aperçu sans bouton de confirmation"
-                    pg.click("text=Voir la revue")
+                    pg.locator("text=Voir la revue").first.click()
                     pg.wait_for_timeout(800)
                     pg.click("#relu")
                     pg.screenshot(path=os.path.join(out, "acceptee-3-apercu-avant-confirmation.png"), full_page=True)
                     rec["apercu_chemin"] = pg.inner_text("#m-apercu p:nth-of-type(1)")
-                    btn = pg.locator("text=Confirmer l'enregistrement")
-                    btn.dblclick()      # double clic réel
-                    pg.wait_for_selector("text=Enregistré :", timeout=30000)
+                    pg.locator("#confirmer").dblclick()      # double clic réel
+                    pg.wait_for_selector("#m-enregistre", timeout=30000)
                     pg.screenshot(path=os.path.join(out, "acceptee-4-enregistre.png"), full_page=True)
-                    rec["enregistrement"] = pg.inner_text("#m-apercu .bandeau")
+                    rec["enregistrement"] = pg.inner_text("#m-enregistre")
                 else:
                     assert not rec["bouton_confirmer_visible"], "bouton de confirmation affiché pour une mission sans livraison"
-                    rec["clarification"] = pg.inner_text("#m-clarification") if pg.locator("#m-clarification:visible").count() else None
+                    rec["clarification"] = pg.inner_text("#m-clarification") if pg.locator("#m-clarification").count() else None
                 pg.click("#btn-audit")
-                pg.wait_for_selector("#m-preuve-texte:visible")
+                pg.wait_for_selector("#m-preuve-texte:not([hidden])")
                 rec["audit"] = json.loads(pg.inner_text("#m-preuve-texte"))
                 pg.click("#btn-trace")
                 time.sleep(0.5)
@@ -114,6 +113,14 @@ def main():
                 if lv:
                     shutil.copy(os.path.join(mdir, "projet", lv["chemin"]), os.path.join(dest, os.path.basename(lv["chemin"])))
                 report["missions"].append(rec)
+            for w, hgt in ((390, 844), (820, 1100), (1440, 900)):
+                pg.set_viewport_size({"width": w, "height": hgt})
+                for route in ("", "mission/" + report["missions"][0]["id"], "preuves"):
+                    pg.goto("http://127.0.0.1:%d/#/%s" % (PORT, route))
+                    pg.wait_for_selector("#main h1")
+                    pg.wait_for_timeout(600)
+                    assert pg.evaluate("document.documentElement.scrollWidth") <= w, "débordement horizontal %d %s" % (w, route)
+                    pg.screenshot(path=os.path.join(out, "ecran-%d-%s.png" % (w, (route.split("/")[0] or "accueil"))), full_page=True)
             br.close()
     finally:
         srv.terminate()

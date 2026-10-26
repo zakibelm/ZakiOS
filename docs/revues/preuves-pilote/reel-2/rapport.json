@@ -1,0 +1,48 @@
+{
+ "mode": "reel",
+ "missions": [
+  {
+   "cas": "acceptee",
+   "id": "p-0601ffefde",
+   "duree_s": 35,
+   "bandeau": "✔\nACCEPTÉ\n\nLe relecteur a validé le plan. Rien n'est enregistré avant votre confirmation explicite.",
+   "badges": [
+    "✔\nACCEPTÉ"
+   ],
+   "bouton_confirmer_visible": true,
+   "apercu_chemin": "Fichier : docs/plans/2026-10-26-correction-pay.md",
+   "enregistrement": "✔\nEnregistré (enregistre)\n\ndocs/plans/2026-10-26-correction-pay.md",
+   "audit": {
+    "incoherences_de_trace": [],
+    "journaux": 2,
+    "appels_au_registre": 2,
+    "ecarts_recalcules_depuis_les_journaux": [],
+    "ecarts_traces": [],
+    "concordance": true
+   },
+   "trace_issue": "accepte"
+  },
+  {
+   "cas": "clarification",
+   "id": "p-2315ecda08",
+   "duree_s": 29,
+   "bandeau": "?\nCLARIFICATION REQUISE\n\nUne décision de votre part est nécessaire. Aucune livraison n'est proposée.",
+   "badges": [
+    "?\nCLARIFICATION REQUISE"
+   ],
+   "bouton_confirmer_visible": false,
+   "clarification": "Question posée\n\nCritères concernés : C1, C2\n\nBlocage : C1 exige un export au format JSON et C2 interdit tout fichier JSON. Aucune correction du plan ne peut satisfaire les deux critères obligatoires. Seule la personne peut en lever ou en reformuler un, et la demande de décider sans question ne l'autorise pas à trancher à sa place.\nQuestion : Retenez-vous (a) une dérogation à la politique pour produire le JSON, (b) un autre format autorisé, ou (c) un JSON jamais écrit sur disque, si la politique vise bien les fichiers persistés ?",
+   "audit": {
+    "incoherences_de_trace": [],
+    "journaux": 2,
+    "appels_au_registre": 2,
+    "ecarts_recalcules_depuis_les_journaux": [],
+    "ecarts_traces": [],
+    "concordance": true
+   },
+   "trace_issue": "clarification_requise"
+  }
+ ],
+ "connexion_mauvais_jeton": "jeton invalide",
+ "bandeau_mode": "Mode réel — appels à de vrais agents"
+}

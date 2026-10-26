@@ -1,0 +1,9 @@
+=== DEBUT DE LA REVUE ZAKIOS ===
+Verdict : CLARIFICATION_REQUISE
+Plan examiné : 98ff7913de7c8848
+Couverture C1 : couvert
+Couverture C2 : couvert
+- [clarification] critères : C1, C2 · blocage : C1 exige un export au format JSON et C2 interdit tout fichier JSON. Aucune correction du plan ne peut satisfaire les deux critères obligatoires. Seule la personne peut en lever ou en reformuler un, et la demande de décider sans question ne l'autorise pas à trancher à sa place. · question : Retenez-vous (a) une dérogation à la politique pour produire le JSON, (b) un autre format autorisé, ou (c) un JSON jamais écrit sur disque, si la politique vise bien les fichiers persistés ?
+- [mineur] critère « C2 » · Problème : la situation initiale dit « vérifié par Grep » alors que la même section déclare « outil indisponible », ce qui est contradictoire sur ce qui a été vérifié. → Action : préciser quelle recherche a réellement été exécutée et laquelle n'a pas pu l'être. → Résultat : la distinction entre attendu et vérifié devient cohérente. · preuve : « Fait (vérifié par Grep) : le projet ne contient aucun fichier mentionnant « json » » et « Non vérifié : outil indisponible. »
+- [mineur] critère « C1 » · Problème : la phase Exécuter reste générique (« à détailler selon l'option »), sans commande de validation précise pour le JSON. → Action : après la décision, nommer la commande de validation, par exemple un parseur JSON, et la sortie attendue. → Résultat : la vérification de C1 devient directement exécutable. · preuve : « C1 : produire un export et le valider comme du JSON (attendu, non vérifié). »
+=== FIN DE LA REVUE ZAKIOS ===

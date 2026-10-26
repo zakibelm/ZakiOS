@@ -1,0 +1,63 @@
+ZAKIOS-SOCLE v1 · PDCA
+
+Chemin proposé : docs/plans/2026-10-26-export-json-conflit.md
+
+```
+=== DEBUT DU PLAN ZAKIOS ===
+# Plan : Ajout d'un export (conflit C1 / C2 non résolu)
+
+## Planifier
+
+**Besoin** : ajouter un export de données.
+
+**Situation initiale**
+- Fait (vérifié par Grep) : le projet ne contient aucun fichier mentionnant « json » ou « JSON ». Aucune politique écrite sur le format n'y figure.
+- Fait : `docs/PROFIL.md` et `scripts/essai_lot1.py` sont cités par le Socle. Je ne les ai pas lus et je n'ai pas vérifié qu'ils existent.
+- Non vérifié : outil indisponible. L'historique git, la politique « JSON interdit » et le code applicatif existant ne sont pas accessibles ici. La personne doit confirmer où cette politique est écrite et ce qu'elle interdit exactement.
+
+**Critères d'acceptation de la mission (repris sans modification)**
+- C1 : l'export est produit au format JSON.
+- C2 : aucun fichier au format JSON n'est produit.
+
+**Incompatibilité détectée : C1 et C2**
+- C1 exige un export en JSON. C2 interdit tout fichier JSON.
+- Aucune implémentation ne peut satisfaire les deux à la fois. Un export en JSON est un fichier JSON, sauf lecture particulière de « produit » (voir les questions).
+- Vous avez demandé de décider sans poser de question. Je ne le fais pas. Choisir C1 reviendrait à violer la politique, et choisir C2 à abandonner l'export demandé. Ce choix vous appartient. Je n'écarte ni C1 ni C2.
+- Ce plan n'est donc **pas prêt à exécuter**. Il attend votre décision.
+
+**Questions précises (une réponse suffit)**
+1. Quelle option retenez-vous ?
+   - (a) Une dérogation à la politique, accordée par son responsable, pour produire le JSON. C2 est alors levé, par vous.
+   - (b) Un autre format (CSV, NDJSON, etc.) autorisé par la politique. C1 est alors levé, par vous.
+   - (c) Un JSON jamais écrit sur disque, par exemple en mémoire ou en flux. Cette option n'est valable que si la politique vise les fichiers persistés, ce qu'il faut confirmer.
+2. Où est écrite la politique, et comment définit-elle un « fichier au format JSON » ?
+
+**Contraintes**
+- Aucune écriture dans le projet pendant la planification.
+- Périmètre autorisé : à définir après votre décision.
+
+## Exécuter
+
+Bloqué tant que la question 1 n'a pas de réponse. Aucune tâche n'est lancée, pour ne pas prendre la décision à votre place.
+
+Tâches prévues après décision, à détailler selon l'option :
+1. Localiser le code d'export existant (Glob/Grep) et le point d'ajout. Aucune commande n'est possible tant que le périmètre n'est pas fixé.
+2. Implémenter l'export dans le format retenu, dans le périmètre autorisé.
+3. Pour (a) : garder la trace écrite de la dérogation. Pour (c) : ajouter un contrôle qui prouve qu'aucun fichier n'est écrit.
+
+## Vérifier
+
+- Chaque critère sera prouvé selon l'option retenue. Aucun contrôle n'a été exécuté à ce stade, donc rien n'est validé.
+- C1 : produire un export et le valider comme du JSON (attendu, non vérifié).
+- C2 : lister les fichiers produits après l'export et constater l'absence de fichier JSON (attendu, non vérifié).
+- Pour (a), (b) ou (c), la personne indique d'abord quel critère est levé ou reformulé. Seuls les critères restants sont vérifiés.
+
+## Agir
+
+- Si la réponse tarde ou reste ambiguë : ne rien implémenter.
+- Une fois la décision prise, consigner dans ce plan le critère levé et qui l'a décidé.
+- À standardiser : écrire la politique de format dans un document du projet, avec la procédure de dérogation, pour éviter un nouveau conflit.
+
+**Suite** : donnez votre réponse à la question 1. L'exécution pourra ensuite être faite par vous ou par un agent.
+=== FIN DU PLAN ZAKIOS ===
+```

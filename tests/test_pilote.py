@@ -150,10 +150,70 @@ class Pilote(unittest.TestCase):
         st, body, h = self.req("GET", "/", auth=False, raw=True)
         self.assertEqual(st, 200)
         self.assertIn("script-src 'self'", h["Content-Security-Policy"])
-        self.assertNotIn("<script>", body.decode().replace('<script src="/app.js"></script>', ""))
+        html = body.decode()
+        self.assertNotRegex(html, r"<script(?![^>]*\ssrc=)")      # aucun script en ligne
+        self.assertNotRegex(html, r"\son[a-z]+=")                  # aucun gestionnaire d'événement en ligne
+        self.assertNotIn("style=", html)
         self.assertEqual(h["Cache-Control"], "no-store")
+        for f in ("/app.js", "/style.css", "/gsap.min.js"):
+            self.assertEqual(self.req("GET", f, auth=False, raw=True)[0], 200, f)
         js = self.req("GET", "/app.js", auth=False, raw=True)[1].decode()
         self.assertNotIn("innerHTML", js)
+        self.assertNotIn("localStorage", js)       # aucune livraison ni donnée stockée dans le navigateur
+
+    def test_aucune_dependance_externe_dans_l_interface(self):
+        import re
+        for f in ("index.html", "app.js", "style.css"):
+            with open(os.path.join(REPO, "zakios", "pilote", "static", f), encoding="utf-8") as fh:
+                txt = fh.read()
+            urls = set(re.findall(r"https?://[^\s\"')<>]+", txt))
+            self.assertEqual(urls - {"https://github.com/zakibelm/ZakiOS"}, set(), f)
+            self.assertNotIn("@import", txt)
+            self.assertNotIn("googleapis", txt)
+
+    def test_campagnes_separees_avec_echec_c3_et_sans_taux_agrege(self):
+        self.assertEqual(self.req("GET", "/api/campagnes", auth=False)[0], 401)
+        self.login()
+        st, d, _ = self.req("GET", "/api/campagnes")
+        self.assertEqual(st, 200)
+        ids = [c["id"] for c in d["campagnes"]]
+        self.assertEqual(ids, ["avant", "C1", "C2", "C3", "C4"])
+        c3 = next(c for c in d["campagnes"] if c["id"] == "C3")
+        self.assertFalse(c3["criteres_satisfaits"])
+        self.assertTrue(any("outil modifiant" in e for s in c3["scripts"] for e in s["echecs"]))
+        self.assertTrue(next(c for c in d["campagnes"] if c["id"] == "C4")["criteres_satisfaits"])
+        cles = set()
+
+        def collecter(x):
+            if isinstance(x, dict):
+                for k, v in x.items():
+                    cles.add(k.lower())
+                    collecter(v)
+            elif isinstance(x, list):
+                for v in x:
+                    collecter(v)
+        collecter(d)
+        for k in cles:                      # aucune clé d'agrégat entre campagnes (mots entiers)
+            self.assertFalse(set(k.split("_")) & {"taux", "rate", "total", "global", "score", "moyenne"}, k)
+        self.assertIn("Aucun taux agrégé", d["avertissement"])
+
+    def test_campagnes_json_a_jour_avec_les_preuves(self):
+        r = subprocess.run(["python3", "-B", os.path.join(REPO, "scripts", "generer_campagnes.py"), "--check"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
+    def test_bibliotheque_et_liste_des_missions(self):
+        self.login()
+        st, d, _ = self.req("GET", "/api/bibliotheque")
+        self.assertEqual(st, 200)
+        self.assertEqual(sorted(c["nom"] for c in d["composants"]), ["REGLES.md", "code-reviewer", "plan-reviewer", "plan-writer"])
+        with open(os.path.join(REPO, "variantes", "agents", "plan-reviewer.md"), "rb") as fh:
+            attendu = sha(fh.read())
+        self.assertEqual(next(c for c in d["composants"] if c["nom"] == "plan-reviewer")["sha256"], attendu)
+        self.assertEqual(self.req("GET", "/api/missions")[1], {"missions": []})
+        mid = self.start()
+        self.wait(mid)
+        lst = self.req("GET", "/api/missions")[1]["missions"]
+        self.assertEqual([(m["id"], m["etat_final"], m["livre"]) for m in lst], [(mid, "accepte", False)])
 
     def test_validation_des_entrees(self):
         self.login()

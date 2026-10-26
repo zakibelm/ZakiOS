@@ -3,68 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pilote ZakiOS</title>
+<meta name="theme-color" content="#1b1e22">
+<title>ZakiOS — Poste de pilotage</title>
+<meta name="description" content="Pilote privé ZakiOS : missions, plans, revues, livraison contrôlée et preuves par campagne.">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<header>
-  <h1>Pilote ZakiOS</h1>
-  <p id="mode" class="mode" role="status"></p>
-</header>
-<main>
-  <section id="vue-connexion" hidden>
-    <h2>Accès au pilote</h2>
-    <form id="form-connexion">
-      <label for="jeton">Jeton d'accès</label>
-      <input id="jeton" type="password" autocomplete="current-password" required>
-      <button type="submit">Entrer</button>
-      <p id="erreur-connexion" class="erreur" role="alert"></p>
-    </form>
-  </section>
-
-  <section id="vue-app" hidden>
-    <section id="vue-saisie">
-      <h2>Nouvelle mission</h2>
-      <form id="form-mission">
-        <label for="demande">Demande</label>
-        <textarea id="demande" rows="4" maxlength="2000" required></textarea>
-        <label for="criteres">Critères obligatoires (un par ligne, chacun commence par un identifiant : C1, C2…)</label>
-        <textarea id="criteres" rows="5" required></textarea>
-        <button id="lancer" type="submit">Lancer la mission</button>
-        <p id="erreur-mission" class="erreur" role="alert"></p>
-      </form>
-      <details>
-        <summary>Projet d'exemple (espace jetable, lecture seule pour les agents)</summary>
-        <pre id="exemple"></pre>
-      </details>
-      <p class="note">Chaque mission s'exécute dans une copie jetable de ce projet. Rien n'est écrit dans un projet réel.</p>
-      <p id="limites" class="note"></p>
-    </section>
-
-    <section id="vue-mission" hidden>
-      <h2>Mission <code id="m-id"></code></h2>
-      <p id="m-statut" class="statut" role="status"></p>
-      <div id="m-bandeau" class="bandeau" hidden></div>
-      <h3>Déroulement</h3>
-      <ol id="m-evenements" class="evenements"></ol>
-      <div id="m-resultat" hidden>
-        <div id="m-clarification" hidden></div>
-        <div id="m-apercu" hidden></div>
-        <h3>Plans et revues</h3>
-        <div id="m-tours"></div>
-        <div id="m-erreurs" hidden></div>
-        <div id="m-ecarts" hidden></div>
-        <div id="m-preuves">
-          <h3>Preuves</h3>
-          <button type="button" id="btn-trace">Voir la trace de mission</button>
-          <button type="button" id="btn-audit">Voir le recoupement trace/journaux</button>
-          <pre id="m-preuve-texte" hidden></pre>
-        </div>
-      </div>
-      <p><button type="button" id="btn-nouvelle">Nouvelle mission</button></p>
-    </section>
-  </section>
-</main>
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="#/" aria-label="ZakiOS, vue d'ensemble">
+      <span class="brand-icon" aria-hidden="true">Z<i>·</i></span>
+      <span class="brand-text">Zaki<span>OS</span><small>Votre méthode. Vos agents.</small></span>
+    </a>
+    <nav aria-label="Navigation principale" id="nav">
+      <a href="#/" data-nav="dashboard"><span aria-hidden="true">◫</span>Vue d’ensemble</a>
+      <a href="#/mission" data-nav="mission"><span aria-hidden="true">↗</span>Atelier de mission</a>
+      <a href="#/preuves" data-nav="preuves"><span aria-hidden="true">◎</span>Preuves par campagne</a>
+      <a href="#/bibliotheque" data-nav="bibliotheque"><span aria-hidden="true">▦</span>Bibliothèque</a>
+    </nav>
+    <div class="side-foot">
+      <p class="pdca"><span aria-hidden="true">↻</span> Planifier · Exécuter · Vérifier · Agir</p>
+      <a href="https://github.com/zakibelm/ZakiOS" target="_blank" rel="noopener">Dépôt source (nouvel onglet) ↗</a>
+    </div>
+  </aside>
+  <div class="main-shell">
+    <header class="topbar">
+      <div class="crumbs">Espace personnel <span aria-hidden="true">/</span> <strong id="crumb">Vue d’ensemble</strong></div>
+      <p id="mode" class="mode" role="status"></p>
+    </header>
+    <main id="main" tabindex="-1"></main>
+    <footer>ZakiOS · pilote supervisé · les verdicts et les livraisons viennent uniquement du serveur.</footer>
+  </div>
+</div>
+<dialog id="detail" aria-labelledby="detail-title">
+  <div class="dlg-head"><h2 id="detail-title"></h2><button type="button" id="detail-close" class="btn secondary">Fermer</button></div>
+  <p id="detail-desc"></p>
+  <p class="note" id="detail-hash"></p>
+  <pre id="detail-text" tabindex="0"></pre>
+</dialog>
+<script src="/gsap.min.js"></script>
 <script src="/app.js"></script>
 </body>
 </html>
