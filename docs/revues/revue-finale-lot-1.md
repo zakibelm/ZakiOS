@@ -76,7 +76,7 @@ Chaque validation est liée à l'empreinte ci-dessus : si le contenu change, ell
  "zakibelm/ZakiOS:variantes/agents/code-reviewer.md": {"variant_of": ["davila7/claude-code-templates:cli-tool/components/agents/development-tools/code-reviewer.md"]}}
 ```
 
-(Si le format de `variant_of` du moteur attend une chaîne plutôt qu'une liste, le build te le dira ; je l'ajuste.) Le Socle n'a pas de dépendance déclarée : son installation est choisie dans la sélection du projet.
+Ces trois extraits ont été chargés par le moteur dans un dossier temporaire (avec un SPDX d'essai) : 4 décisions valides, aucune périmée, dépendance et variante reconnues. Le Socle n'a pas de dépendance déclarée : son installation est choisie dans la sélection du projet.
 
 ## Licences : preuves et incertitudes
 
@@ -86,7 +86,7 @@ Chaque validation est liée à l'empreinte ci-dessus : si le contenu change, ell
 | Skill | Adapté de `writing-plans` d'aitmpl, issu probablement d'**obra/superpowers : MIT, Copyright (c) 2025 Jesse Vincent** (LICENSE lu au commit `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b`). Ressemblance textuelle 0,03 à 0,05 | la copie aitmpl diffère du texte amont actuel : filiation exacte non prouvée |
 | Socle, plan-writer, run-tests | Contenu original ZakiOS | **la licence du code de ZakiOS n'est pas choisie** |
 
-Une entrée de `licenses.json` exige un SPDX, un vérificateur et le commit de la source : il faut donc **ta licence** avant de l'enregistrer, et **mettre à jour le commit chaque fois que la source est re-figée**.
+Une licence enregistrée au niveau du dépôt vaudrait aussi pour `run-tests`, hors lot : sans décision validée, il reste non installable. Une entrée de `licenses.json` exige un SPDX, un vérificateur et le commit de la source : il faut donc **ta licence** avant de l'enregistrer, et **mettre à jour le commit chaque fois que la source est re-figée**.
 
 ```json
 // decisions/licenses.json — modèle, à compléter après ton choix de licence
@@ -114,6 +114,6 @@ Demande unique → coordination → planificateur → **revue du plan** → corr
 
 ## Ce que j'attends de toi
 
-1. Validation ou refus de chacun des quatre composants (et du Socle) après lecture de leur texte.
+1. Validation ou refus de chacun des quatre éléments (Socle, relecteur, plan-writer, skill) après lecture de leur texte.
 2. Ton choix de licence pour le code de ZakiOS.
 3. Ton accord pour le jalon de coordination.
