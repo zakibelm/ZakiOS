@@ -191,6 +191,7 @@ def main():
                     if name == "A":
                         check("C3" in final, tag + " : plan corrigé sans C3")
             if out["issue"] == "accepte":
+                check(set(tours[-1]["revue"]["couverture"].values()) == {"couvert"}, tag + " : accepté avec un critère non couvert/abandonné")
                 lv = out["livraison"]
                 check(lv["statut"] == "enregistre" and lv["second"] == "deja_enregistre", tag + " : statuts de livraison")
                 check(sha_tree(d).get(lv["chemin"]) is not None, tag + " : plan non enregistré")

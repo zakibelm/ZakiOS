@@ -1,0 +1,66 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "K1 total() ne lève jamais d'exception, même si prices vaut None",
+  "K2 total() lève TypeError si prices vaut None"
+ ],
+ "criteres_sha256": "685603fbd80b2301867ef4c6f02e6e5257a5ccb764708e837646253dd0cfc67f",
+ "demande_sha256": "18e78595bb53984973fb76d4b0a4a70c5dedcc97f28fd95e95ec18a558b86d73",
+ "ecrit_le": "2026-10-26T15:34:22Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-total-prices-none.md",
+  "content_sha256": "77912dc73397e44db791abcbd1e39a4a20d456f670faafdbfc6276775f370a43",
+  "delivery_sha256": "c0245b892b50b397fa342da5ad7b96903e9ea1eac0b50350000bcfaaebfcf9f4",
+  "trace": ".zakios/deliverables/c0245b892b50b397fa342da5ad7b96903e9ea1eac0b50350000bcfaaebfcf9f4.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "garanties-reelles-contradictoire_2",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-total-prices-none.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « K1 / K2 » · Problème : les deux critères sont contradictoires, et le plan le signale. Il bloque l'exécution jusqu'à la décision de la personne, donc K1 et K2 ne sont pas vérifiables tels quels. → Action : garder la tâche 0, qui fige un seul critère avant d'exécuter. → Résultat : après décision, un seul comportement est testable, par exemple `pytest.raises(TypeError)` pour A ou le résultat `0` pour B. · preuve : « Les deux ne peuvent pas être vrais en même temps. Décision requise de la personne avant toute exécution »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « K2 » · Problème : la preuve de la « Contradiction levée » est une validation humaine des critères reformulés. Elle n'a ni commande ni sortie attendue. → Action : consigner la décision par écrit (option choisie et texte du critère retenu) dans la trace de mission. → Résultat : la levée de la contradiction devient traçable. · preuve : « Contradiction levée : preuve = critères K1/K2 reformulés, validés par la personne. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « K1 » · Problème : l'emplacement du test est une hypothèse non confirmée. L'absence de tests existants est citée comme fait lu (Glob) et je ne l'ai pas revérifiée. → Action : confirmer le dossier `tests/` et le chemin de l'import `src.pay` avant la tâche 2. → Résultat : `python -m pytest tests/test_pay.py` s'exécute sans erreur d'import. · preuve : « `tests/test_pay.py` (emplacement à confirmer) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « K2 » · Problème : le plan indique que `sum(None)` lève déjà `TypeError` mais ne l'a pas exécuté. Il le dit lui-même et distingue bien attendu et vérifié. → Action : exécuter `python -c \"from src.pay import total; total(None,0)\"` avant toute modification, pour établir l'état initial. → Résultat : la situation initiale passe de l'hypothèse au fait vérifié. · preuve : « `sum(None)` lève déjà un `TypeError` (comportement attendu de Python, non exécuté ici). »"
+    }
+   ],
+   "plan_sha256": "77912dc73397e44db791abcbd1e39a4a20d456f670faafdbfc6276775f370a43",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "77912dc73397e44db791abcbd1e39a4a20d456f670faafdbfc6276775f370a43",
+    "relances_relecteur": 0,
+    "revue_sha256": "6f23ed72d1e635dc69e3eb39403325b4800be30364d19c7015b4dba549dfa55c",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 1
+}

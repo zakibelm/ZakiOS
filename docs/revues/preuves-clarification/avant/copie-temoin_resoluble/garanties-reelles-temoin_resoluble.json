@@ -1,0 +1,61 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "905f8a206c5e423e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "R1 la docstring décrit discount comme un pourcentage de 0 à 100",
+  "R2 un test couvre au moins discount=0 et discount=100"
+ ],
+ "criteres_sha256": "b80eaaf3d9bf7cbbd4d2022f21a8d268a3c5e55bdfca27b2c3324e99c8e801c0",
+ "demande_sha256": "f4c92389e617fb01d7ede9b73db77006f9936f17a98f2eef4e03f1eebe7491f6",
+ "ecrit_le": "2026-10-26T15:34:52Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-docstring-test-total.md",
+  "content_sha256": "29d6aa7027ca4296795a0d8d156b7c593187120164c90cc90d9eefea72b287b0",
+  "delivery_sha256": "dea5e71d99dde7d0a321d02d70ba1be604319aef31364b9b97689dbc7b9494d1",
+  "trace": ".zakios/deliverables/dea5e71d99dde7d0a321d02d70ba1be604319aef31364b9b97689dbc7b9494d1.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "garanties-reelles-temoin_resoluble",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-docstring-test-total.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « R2 » · Problème : en option B, le test `discount=100` est marqué `xfail`. Il est exécuté et visible, mais il ne passe pas, et le plan ne dit pas que `xfail` non strict peut masquer une régression. → Action : préciser `xfail(strict=True)` pour que la correction ultérieure du code soit détectée. → Résultat : le cas 100 reste couvert et l'écart reste suivi · preuve : « Option B : le second test est marqué `xfail` avec la raison « code utilise une fraction, pas un pourcentage ». »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R1 » · Problème : la formulation prévue de la docstring, « renvoie la somme moins ce pourcentage », est imprécise. Elle ne dit pas que le résultat est la somme réduite de `discount` %. → Action : écrire « somme des prix après réduction de `discount` % ». → Résultat : la docstring est exacte et cohérente avec le calcul corrigé · preuve : « la fonction renvoie la somme moins ce pourcentage »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « R2 » · Problème : le chemin `tests/test_pay.py` et l'outil pytest sont des hypothèses non confirmées. Le plan les signale et prévoit une adaptation. → Action : confirmer l'outil et le dossier avant l'étape 4, par exemple avec `python -m pytest --version`. → Résultat : l'hypothèse devient un fait vérifié · preuve : « créer `tests/test_pay.py` (chemin à confirmer) »"
+    }
+   ],
+   "plan_sha256": "29d6aa7027ca4296795a0d8d156b7c593187120164c90cc90d9eefea72b287b0",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "29d6aa7027ca4296795a0d8d156b7c593187120164c90cc90d9eefea72b287b0",
+    "relances_relecteur": 0,
+    "revue_sha256": "e6393d03f6019a6a4181342b3e33518302dca5fc2198ab8eb77357f520cbeb95",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 1
+}

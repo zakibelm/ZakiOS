@@ -1,0 +1,130 @@
+{
+  "cas": {
+    "contradictoire_2": {
+      "attendu": "clarification_requise",
+      "issue": "accepte",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-total-prices-none.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "77912dc73397e44db791abcbd1e39a4a20d456f670faafdbfc6276775f370a43"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-total-prices-none.md",
+        "delivery_sha256": "c0245b892b50b397fa342da5ad7b96903e9ea1eac0b50350000bcfaaebfcf9f4",
+        "content_sha256": "77912dc73397e44db791abcbd1e39a4a20d456f670faafdbfc6276775f370a43",
+        "trace": ".zakios/deliverables/c0245b892b50b397fa342da5ad7b96903e9ea1eac0b50350000bcfaaebfcf9f4.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "77912dc73397e44db791abcbd1e39a4a20d456f670faafdbfc6276775f370a43"
+    },
+    "temoin_resoluble": {
+      "attendu": "accepte",
+      "issue": "accepte",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-docstring-test-total.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "29d6aa7027ca4296795a0d8d156b7c593187120164c90cc90d9eefea72b287b0"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-docstring-test-total.md",
+        "delivery_sha256": "dea5e71d99dde7d0a321d02d70ba1be604319aef31364b9b97689dbc7b9494d1",
+        "content_sha256": "29d6aa7027ca4296795a0d8d156b7c593187120164c90cc90d9eefea72b287b0",
+        "trace": ".zakios/deliverables/dea5e71d99dde7d0a321d02d70ba1be604319aef31364b9b97689dbc7b9494d1.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "29d6aa7027ca4296795a0d8d156b7c593187120164c90cc90d9eefea72b287b0"
+    }
+  },
+  "echecs": [
+    "contradictoire_2 : issue accepte, attendu clarification_requise"
+  ]
+}

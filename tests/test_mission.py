@@ -16,8 +16,11 @@ def plan_text(title="v1", path="docs/plans/2026-10-26-paiement.md", extra=""):
     return ("Chemin proposé : %s\n%s\n# Plan : %s\n## Planifier\nC1 C2 C3\n%s\n%s\n" % (path, deliver.BEGIN, title, extra, deliver.END))
 
 
-def review_text(verdict, *findings):
-    body = "\n".join(findings)
+def review_text(verdict, *findings, couverture=None):
+    """Revue simulée. Par défaut, chaque critère de la mission est « couvert »."""
+    cov = couverture if couverture is not None else {mission.criterion_id(c): "couvert" for c in CRITERIA}
+    lines = ["Couverture %s : %s" % (k, v) for k, v in cov.items()]
+    body = "\n".join(lines + list(findings))
     return "%s\nVerdict : %s\n%s\n%s\n" % (mission.REVIEW_BEGIN, verdict, body, mission.REVIEW_END)
 
 

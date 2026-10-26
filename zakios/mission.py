@@ -9,6 +9,10 @@ Règles :
 - v1 + `max_corrections` corrections au plus (3 plans et 3 revues avec 2) ;
 - chaque revue est liée à l'empreinte du plan examiné ; seule une revue ACCEPTE du **dernier** plan autorise la livraison ;
 - les relances techniques (sortie hors format, erreur d'exécution) sont bornées à part ;
+- verdict CLARIFICATION (critères contradictoires ou décision nécessaire de la personne) : arrêt immédiat, questions
+  rapportées, aucune correction tentée, rien n'est enregistré ;
+- ACCEPTE exige que chaque critère de la mission soit « couvert » : un critère abandonné ou non couvert l'interdit
+  (contrôlé par le code sur la couverture rendue par le relecteur, pas laissé à son jugement) ;
 - au plafond ou après épuisement des relances : arrêt, rapport, rien n'est enregistré.
 """
 import hashlib
@@ -21,9 +25,13 @@ from .activate import Root, UnsafePath
 
 REVIEW_BEGIN = "=== DEBUT DE LA REVUE ZAKIOS ==="
 REVIEW_END = "=== FIN DE LA REVUE ZAKIOS ==="
-GRAVITIES = ("bloquant", "majeur", "mineur")
-_VERDICT = re.compile(r"^Verdict\s*:\s*(ACCEPTE|A_CORRIGER)\s*$")
-_FINDING = re.compile(r"^- \[(bloquant|majeur|mineur)\]\s+(.+)$")
+GRAVITIES = ("bloquant", "majeur", "mineur", "clarification")
+VERDICTS = ("ACCEPTE", "A_CORRIGER", "CLARIFICATION")
+COVERAGE_OK = "couvert"
+COVERAGE_VALUES = ("couvert", "non_couvert", "abandonne")
+_VERDICT = re.compile(r"^Verdict\s*:\s*(ACCEPTE|A_CORRIGER|CLARIFICATION)\s*$")
+_FINDING = re.compile(r"^- \[(bloquant|majeur|mineur|clarification)\]\s+(.+)$")
+_COVERAGE = re.compile(r"^Couverture\s+(\S+)\s*:\s*(couvert|non_couvert|abandonn[ée])\s*$")
 
 
 class MissionError(deliver.DeliveryError):
@@ -40,14 +48,29 @@ def _sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def parse_review(text):
-    """(verdict, constats) d'après la réponse du relecteur de plan. Refuse tout ce qui est hors format ou incohérent."""
+def criterion_id(criterion):
+    """Identifiant d'un critère de mission : son premier mot (ex. « C1 remise correcte… » -> « C1 »)."""
+    parts = criterion.split()
+    if not parts:
+        raise MissionError("critère de mission vide")
+    return parts[0]
+
+
+def parse_review_full(text, criteria=None):
+    """(verdict, constats, couverture) d'après la réponse du relecteur de plan.
+
+    Règles imposées par le code, pas par la bonne volonté du relecteur :
+    - ACCEPTE exige : aucun constat bloquant, majeur ou de clarification, et **chaque critère de la mission « couvert »** ;
+      un critère abandonné ou non couvert interdit ACCEPTE ;
+    - A_CORRIGER exige au moins un constat bloquant ou majeur et aucune clarification ;
+    - CLARIFICATION exige au moins un constat de clarification (une décision de la personne est nécessaire) ;
+    - si `criteria` est fourni, la couverture doit nommer chaque critère une fois, sans en inventer."""
     lines = text.split("\n")
     begins = [i for i, l in enumerate(lines) if l.strip() == REVIEW_BEGIN]
     ends = [i for i, l in enumerate(lines) if l.strip() == REVIEW_END]
     if len(begins) != 1 or len(ends) != 1 or begins[0] >= ends[0]:
         raise TechnicalError("revue absente ou ambiguë : un seul bloc %s … %s attendu" % (REVIEW_BEGIN, REVIEW_END))
-    verdict, findings = None, []
+    verdict, findings, coverage = None, [], {}
     for raw in lines[begins[0] + 1:ends[0]]:
         line = raw.strip()
         if not line:
@@ -57,6 +80,13 @@ def parse_review(text):
             if verdict is not None:
                 raise TechnicalError("deux verdicts dans la revue")
             verdict = m.group(1)
+            continue
+        m = _COVERAGE.match(line)
+        if m:
+            cid, value = m.group(1), m.group(2).replace("é", "e")
+            if cid in coverage:
+                raise TechnicalError("couverture en double pour le critère %s" % cid)
+            coverage[cid] = value
             continue
         m = _FINDING.match(line)
         if not m:
@@ -69,11 +99,34 @@ def parse_review(text):
         findings.append({"gravite": m.group(1), "texte": body})
     if verdict is None:
         raise TechnicalError("verdict absent de la revue")
+    if criteria is not None:
+        expected = [criterion_id(c) for c in criteria]
+        if sorted(coverage) != sorted(expected):
+            raise TechnicalError("couverture incohérente : critères attendus %s, reçus %s" % (expected, sorted(coverage)))
     blocking = [f for f in findings if f["gravite"] in ("bloquant", "majeur")]
-    if verdict == "ACCEPTE" and blocking:
-        raise TechnicalError("revue incohérente : ACCEPTE malgré un constat %s" % blocking[0]["gravite"])
-    if verdict == "A_CORRIGER" and not blocking:
-        raise TechnicalError("revue incohérente : A_CORRIGER sans constat bloquant ni majeur")
+    clarif = [f for f in findings if f["gravite"] == "clarification"]
+    not_covered = sorted(c for c, v in coverage.items() if v != COVERAGE_OK)
+    if verdict == "ACCEPTE":
+        if blocking:
+            raise TechnicalError("revue incohérente : ACCEPTE malgré un constat %s" % blocking[0]["gravite"])
+        if clarif:
+            raise TechnicalError("revue incohérente : ACCEPTE malgré une clarification requise")
+        if not_covered:
+            raise TechnicalError("revue incohérente : ACCEPTE malgré un critère abandonné ou non couvert (%s)" % ", ".join(not_covered))
+    elif verdict == "A_CORRIGER":
+        if clarif:
+            raise TechnicalError("revue incohérente : A_CORRIGER avec une clarification requise (verdict CLARIFICATION attendu)")
+        if not blocking:
+            raise TechnicalError("revue incohérente : A_CORRIGER sans constat bloquant ni majeur")
+    else:  # CLARIFICATION
+        if not clarif:
+            raise TechnicalError("revue incohérente : CLARIFICATION sans constat de clarification")
+    return verdict, findings, coverage
+
+
+def parse_review(text, criteria=None):
+    """(verdict, constats) — voir `parse_review_full`."""
+    verdict, findings, _ = parse_review_full(text, criteria)
     return verdict, findings
 
 
@@ -145,25 +198,33 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
         entry = {"tour": turn + 1, "plan_sha256": plan_sha, "chemin_propose": path, "relances_planificateur": len(errs)}
         trace["tours"].append(entry)
         try:
-            _, (verdict, found), errs = _attempt(
-                lambda: reviewer(request, criteria, plan), parse_review,
+            _, (verdict, found, coverage), errs = _attempt(
+                lambda: reviewer(request, criteria, plan), lambda raw: parse_review_full(raw, criteria),
                 max_technical_retries, trace["erreurs_techniques"], "relecteur tour %d" % (turn + 1))
         except TechnicalError:
             outcome = "erreur_technique"
             break
         entry["revue"] = {"plan_examine_sha256": plan_sha, "verdict": verdict, "constats": len(found),
                           "gravites": [f["gravite"] for f in found], "revue_sha256": _sha(json.dumps(found, ensure_ascii=False)),
-                          "relances_relecteur": len(errs)}
+                          "couverture": coverage, "relances_relecteur": len(errs)}
         entry["constats"] = found
+        if verdict == "CLARIFICATION":
+            # une décision de la personne est nécessaire : la boucle s'arrête, aucune correction n'est tentée, rien n'est livré
+            questions = [f["texte"] for f in found if f["gravite"] == "clarification"]
+            trace["clarification"] = {"tour": turn + 1, "plan_sha256": plan_sha, "questions": questions}
+            outcome = "clarification_requise"
+            break
         if verdict == "ACCEPTE":
             accepted_sha = plan_sha
             outcome = "accepte"
             break
         findings = [f["texte"] for f in found]
         outcome = "plafond_atteint"  # remplacé si un tour suivant est accepté
-    result = {"mission_id": mission_id, "issue": outcome, "tours": len(trace["tours"]), "livraison": None}
+    result = {"mission_id": mission_id, "issue": outcome, "tours": len(trace["tours"]), "livraison": None,
+              "questions": list(trace.get("clarification", {}).get("questions", []))}
     if outcome == "accepte":
         assert accepted_sha == _sha(plan)  # la revue acceptée porte sur le dernier plan
+        assert all(v == COVERAGE_OK for v in trace["tours"][-1]["revue"]["couverture"].values())  # aucun critère abandonné
         info = deliver.preview(path, plan, mission_id)
         saved = deliver.save_plan(project, path, plan, info["delivery_sha256"], mission=mission_id)
         saved2 = deliver.save_plan(project, path, plan, info["delivery_sha256"], mission=mission_id)

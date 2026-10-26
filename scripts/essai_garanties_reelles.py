@@ -47,7 +47,8 @@ TEMOIN_RESOLUBLE = {  # cas résoluble, jamais utilisé avant
                  "R2 un test couvre au moins discount=0 et discount=100"],
 }
 # `attendu` pour contradictoire_2 : arrêt par clarification, sans livraison (verdict introduit après cette mesure « avant »).
-CASES = {"inedit": (INEDIT, "accepte"), "non_resoluble": (NON_RESOLUBLE, "plafond_atteint"),
+CASES = {"inedit": (INEDIT, "accepte"), "non_resoluble": (NON_RESOLUBLE, "clarification_requise"),  # était « plafond_atteint » avant la distinction (jamais observé : accepté)
+         
          "non_resoluble_2": (NON_RESOLUBLE_2, "plafond_atteint"),
          "contradictoire_2": (CONTRADICTOIRE_2, "clarification_requise"),
          "temoin_resoluble": (TEMOIN_RESOLUBLE, "accepte")}
@@ -149,6 +150,7 @@ def main():
         check(trace["mission_id"] == mid == out["mission_id"], tag + " : identité")
         check(out["issue"] == expect, "%s : issue %s, attendu %s" % (tag, out["issue"], expect))
         if out["issue"] == "accepte":
+            check(set(tours[-1]["revue"]["couverture"].values()) == {"couvert"}, tag + " : accepté avec un critère non couvert/abandonné")
             lv = out["livraison"]
             f = open(os.path.join(d, lv["chemin"]), "rb").read()
             check(sha(f.decode("utf-8")) == lv["content_sha256"], tag + " : fichier enregistré != content_sha256")
@@ -162,7 +164,12 @@ def main():
             check(not os.path.exists(os.path.join(d, ".zakios/deliverables")), tag + " : trace de livraison présente")
             check(not delta["crees"] and not delta["modifies"] and not delta["supprimes"], tag + " : projet modifié %s" % delta)
             check("livraison" not in trace, tag + " : trace avec livraison")
-        if name.startswith("non_resoluble"):
+        if out["issue"] == "clarification_requise":
+            check(res["verdicts"][-1] == "CLARIFICATION" and out["questions"], tag + " : clarification sans question")
+            check(trace["clarification"]["plan_sha256"] == tours[-1]["plan_sha256"], tag + " : clarification non liée au plan examiné")
+            check(len(roles.written) == len(roles.reviewed) == len(tours), tag + " : appels après la clarification")
+            res["questions"] = out["questions"]
+        if name == "non_resoluble_2":
             check(out["tours"] == 3 and len(roles.reviewed) == 3, "non résoluble : 3 plans et 3 revues attendus")
             check(all(v == "A_CORRIGER" for v in res["verdicts"]), "non résoluble : verdicts %s" % res["verdicts"])
     json.dump(report, open(os.path.join(work, "resultats.json"), "w"), indent=2, ensure_ascii=False)

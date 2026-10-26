@@ -1,0 +1,4 @@
+contradictoire_2 | attendu: clarification_requise | issue: accepte | tours: 1 | verdicts: ['ACCEPTE']
+temoin_resoluble | attendu: accepte | issue: accepte | tours: 1 | verdicts: ['ACCEPTE']
+ÉCHEC :
+ - contradictoire_2 : issue accepte, attendu clarification_requise
