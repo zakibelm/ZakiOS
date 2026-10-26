@@ -10204,7 +10204,7 @@
      "wshobson/agents:plugins/content-marketing/agents/search-specialist.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.4252,
+    "score": 0.4253,
     "similar_in_catalog": [],
     "status": "partial_overlap"
    },
@@ -10390,7 +10390,7 @@
      "rohitg00/awesome-claude-code-toolkit:agents/core-development/api-designer.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.4306,
+    "score": 0.4307,
     "similar_in_catalog": [],
     "status": "partial_overlap"
    },
@@ -10637,7 +10637,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1318,
+    "score": 0.1319,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -11842,7 +11842,7 @@
      "rohitg00/awesome-claude-code-toolkit:agents/business-product/sales-engineer.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.4961,
+    "score": 0.4962,
     "similar_in_catalog": [],
     "status": "partial_overlap"
    },
@@ -12220,7 +12220,7 @@
      "rohitg00/awesome-claude-code-toolkit:agents/business-product/ux-researcher.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3294,
+    "score": 0.3295,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -12287,7 +12287,7 @@
     ],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1133,
+    "score": 0.1131,
     "similar_in_catalog": [],
     "status": "cross_layer_overlap"
    },
@@ -15677,7 +15677,7 @@
      "VoltAgent/awesome-claude-code-subagents:categories/05-data-ai/data-analyst.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2295,
+    "score": 0.2296,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -16540,7 +16540,7 @@
      "rohitg00/awesome-claude-code-toolkit:agents/core-development/backend-developer.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3708,
+    "score": 0.3709,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -17233,7 +17233,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1778,
+    "score": 0.178,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -17676,7 +17676,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1325,
+    "score": 0.1326,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -18303,7 +18303,7 @@
      "VoltAgent/awesome-claude-code-subagents:categories/04-quality-security/debugger.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.342,
+    "score": 0.3421,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -18739,7 +18739,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0807,
+    "score": 0.0808,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -18800,7 +18800,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2388,
+    "score": 0.2389,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -19544,7 +19544,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1358,
+    "score": 0.1359,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -19913,7 +19913,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3048,
+    "score": 0.3049,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -20795,7 +20795,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3253,
+    "score": 0.3254,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -22727,7 +22727,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2201,
+    "score": 0.22,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -22788,7 +22788,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1315,
+    "score": 0.1314,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -23542,7 +23542,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/agents/expert-advisors/mentor.md",
-      "score": 0.467
+      "score": 0.4671
      }
     ],
     "status": "novelty_to_review"
@@ -23857,7 +23857,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2575,
+    "score": 0.2576,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -24788,7 +24788,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/agents/expert-advisors/critical-thinking.md",
-      "score": 0.467
+      "score": 0.4671
      }
     ],
     "status": "novelty_to_review"
@@ -25039,7 +25039,7 @@
      "rohitg00/awesome-claude-code-toolkit:agents/orchestration/performance-monitor.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2301,
+    "score": 0.2302,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -25283,7 +25283,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1238,
+    "score": 0.1237,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -25405,7 +25405,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1897,
+    "score": 0.1898,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -26080,7 +26080,7 @@
      "VoltAgent/awesome-claude-code-subagents:categories/09-meta-orchestration/workflow-orchestrator.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2,
+    "score": 0.2001,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -26446,7 +26446,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1597,
+    "score": 0.1598,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -28124,7 +28124,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1573,
+    "score": 0.1574,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -28307,7 +28307,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1017,
+    "score": 0.1016,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -28673,7 +28673,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0825,
+    "score": 0.0826,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -28795,7 +28795,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0959,
+    "score": 0.096,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -29786,7 +29786,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2923,
+    "score": 0.2927,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -30470,7 +30470,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1192,
+    "score": 0.1193,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -30975,7 +30975,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2785,
+    "score": 0.2786,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -31498,7 +31498,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1451,
+    "score": 0.1452,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -32192,7 +32192,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2785,
+    "score": 0.2786,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -32897,7 +32897,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3309,
+    "score": 0.331,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -33829,7 +33829,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1032,
+    "score": 0.1033,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -34139,7 +34139,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2679,
+    "score": 0.268,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -35121,7 +35121,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2006,
+    "score": 0.2007,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -35426,7 +35426,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0864,
+    "score": 0.0865,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -36038,7 +36038,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2445,
+    "score": 0.2446,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -36352,7 +36352,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1998,
+    "score": 0.1999,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -36535,7 +36535,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1503,
+    "score": 0.1504,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -37338,7 +37338,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3176,
+    "score": 0.3177,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -37897,7 +37897,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3482,
+    "score": 0.3481,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -37958,7 +37958,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3295,
+    "score": 0.3296,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/documentation/generate-api-documentation.md",
@@ -38151,7 +38151,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1143,
+    "score": 0.1144,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -39440,7 +39440,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.142,
+    "score": 0.1421,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -39564,7 +39564,7 @@
      "rohitg00/awesome-claude-code-toolkit:commands/git/pr-review.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.148,
+    "score": 0.1481,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -39752,7 +39752,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.4923,
+    "score": 0.4924,
     "similar_in_catalog": [],
     "status": "partial_overlap"
    },
@@ -40611,7 +40611,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-workflow-meeting-prep.md",
-      "score": 0.4938
+      "score": 0.4939
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-workflow-standup-report.md",
@@ -40817,7 +40817,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-docs-write.md",
-      "score": 0.53
+      "score": 0.5301
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-gmail-send.md",
@@ -41078,11 +41078,11 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-chat-send.md",
-      "score": 0.53
+      "score": 0.5301
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-gmail-send.md",
-      "score": 0.5092
+      "score": 0.5093
      }
     ],
     "status": "novelty_to_review"
@@ -41144,11 +41144,11 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1307,
+    "score": 0.1308,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-slides.md",
-      "score": 0.7791
+      "score": 0.7792
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-docs-write.md",
@@ -41218,7 +41218,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0851,
+    "score": 0.0852,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-apps-script-push.md",
@@ -41226,7 +41226,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-docs-write.md",
-      "score": 0.4663
+      "score": 0.4664
      }
     ],
     "status": "novelty_to_review"
@@ -41547,7 +41547,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1188,
+    "score": 0.1189,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-docs.md",
@@ -41555,7 +41555,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-groupssettings.md",
-      "score": 0.4884
+      "score": 0.4885
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-slides.md",
@@ -41633,7 +41633,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-docs-write.md",
-      "score": 0.5092
+      "score": 0.5093
      }
     ],
     "status": "novelty_to_review"
@@ -41921,7 +41921,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-workflow.md",
-      "score": 0.4937
+      "score": 0.4938
      }
     ],
     "status": "novelty_to_review"
@@ -42184,7 +42184,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-modelarmor-sanitize-prompt.md",
-      "score": 0.5577
+      "score": 0.5578
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-modelarmor-sanitize-response.md",
@@ -42262,7 +42262,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-modelarmor-create-template.md",
-      "score": 0.5577
+      "score": 0.5578
      }
     ],
     "status": "novelty_to_review"
@@ -42659,7 +42659,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-sheets-read.md",
-      "score": 0.5873
+      "score": 0.5874
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-docs-write.md",
@@ -42729,7 +42729,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-sheets-append.md",
-      "score": 0.5873
+      "score": 0.5874
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-backup-sheet-as-csv.md",
@@ -42869,7 +42869,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-docs.md",
-      "score": 0.7791
+      "score": 0.7792
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-forms.md",
@@ -43000,7 +43000,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.075,
+    "score": 0.0751,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -43209,7 +43209,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-workflow.md",
-      "score": 0.5502
+      "score": 0.5503
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-workflow-standup-report.md",
@@ -43217,7 +43217,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-workflow-weekly-digest.md",
-      "score": 0.5157
+      "score": 0.5158
      }
     ],
     "status": "novelty_to_review"
@@ -43439,7 +43439,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/gws-workflow-meeting-prep.md",
-      "score": 0.5502
+      "score": 0.5503
      }
     ],
     "status": "novelty_to_review"
@@ -43501,7 +43501,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.085,
+    "score": 0.0849,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-researcher.md",
@@ -43509,7 +43509,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-project-manager.md",
-      "score": 0.5883
+      "score": 0.5882
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-hr-coordinator.md",
@@ -43587,7 +43587,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-project-manager.md",
-      "score": 0.5431
+      "score": 0.543
      }
     ],
     "status": "novelty_to_review"
@@ -43727,7 +43727,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-project-manager.md",
-      "score": 0.5549
+      "score": 0.5548
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-team-lead.md",
@@ -43871,7 +43871,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0822,
+    "score": 0.0823,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-researcher.md",
@@ -43883,7 +43883,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-customer-support.md",
-      "score": 0.4736
+      "score": 0.4735
      }
     ],
     "status": "novelty_to_review"
@@ -43953,7 +43953,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-content-creator.md",
-      "score": 0.5883
+      "score": 0.5882
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/personas/persona-researcher.md",
@@ -44911,7 +44911,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-create-events-from-sheet.md",
-      "score": 0.6719
+      "score": 0.6718
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-backup-sheet-as-csv.md",
@@ -45211,7 +45211,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-compare-sheet-tabs.md",
-      "score": 0.6719
+      "score": 0.6718
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-log-deal-update.md",
@@ -46029,7 +46029,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-share-event-materials.md",
-      "score": 0.6902
+      "score": 0.6903
      }
     ],
     "status": "novelty_to_review"
@@ -46313,7 +46313,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1075,
+    "score": 0.1074,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-create-doc-from-template.md",
@@ -46617,7 +46617,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-create-events-from-sheet.md",
-      "score": 0.5993
+      "score": 0.5994
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-schedule-recurring-event.md",
@@ -46687,7 +46687,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-send-team-announcement.md",
-      "score": 0.5856
+      "score": 0.5857
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-create-events-from-sheet.md",
@@ -46761,7 +46761,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-schedule-recurring-event.md",
-      "score": 0.7249
+      "score": 0.725
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-batch-invite-to-event.md",
@@ -47135,7 +47135,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-reschedule-meeting.md",
-      "score": 0.7249
+      "score": 0.725
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-create-events-from-sheet.md",
@@ -47275,7 +47275,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1219,
+    "score": 0.122,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-draft-email-from-doc.md",
@@ -47509,7 +47509,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/google-workspace/recipes/recipe-email-drive-link.md",
-      "score": 0.6902
+      "score": 0.6903
      }
     ],
     "status": "novelty_to_review"
@@ -48246,7 +48246,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2455,
+    "score": 0.2456,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -48429,7 +48429,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1317,
+    "score": 0.1318,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -48490,7 +48490,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1551,
+    "score": 0.1552,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -49598,7 +49598,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1084,
+    "score": 0.1083,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -49905,7 +49905,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2061,
+    "score": 0.2062,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -50098,7 +50098,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2172,
+    "score": 0.2173,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -50586,11 +50586,11 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0984,
+    "score": 0.0985,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/project-management/create-prd.md",
-      "score": 0.6134
+      "score": 0.6135
      }
     ],
     "status": "novelty_to_review"
@@ -50652,11 +50652,11 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1081,
+    "score": 0.1082,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/project-management/create-jtbd.md",
-      "score": 0.6134
+      "score": 0.6135
      }
     ],
     "status": "novelty_to_review"
@@ -50718,7 +50718,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.104,
+    "score": 0.1039,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -50840,7 +50840,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3211,
+    "score": 0.3212,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -51769,11 +51769,11 @@
      "rohitg00/awesome-claude-code-toolkit:commands/security/dependency-audit.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.396,
+    "score": 0.3961,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/setup/update-dependencies.md",
-      "score": 0.4991
+      "score": 0.4992
      }
     ],
     "status": "novelty_to_review"
@@ -51957,7 +51957,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3147,
+    "score": 0.3148,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -52890,7 +52890,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/security/dependency-audit.md",
-      "score": 0.4991
+      "score": 0.4992
      }
     ],
     "status": "novelty_to_review"
@@ -55545,7 +55545,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.252,
+    "score": 0.2521,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -56656,7 +56656,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/testing/write-tests.md",
-      "score": 0.457
+      "score": 0.4571
      }
     ],
     "status": "novelty_to_review"
@@ -56720,7 +56720,7 @@
      "rohitg00/awesome-claude-code-toolkit:plugins/unit-test-generator/commands/generate-tests.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2819,
+    "score": 0.282,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/testing/write-tests.md",
@@ -57422,7 +57422,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/testing/generate-test-cases.md",
-      "score": 0.457
+      "score": 0.4571
      }
     ],
     "status": "novelty_to_review"
@@ -57979,7 +57979,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1363,
+    "score": 0.1364,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -58040,7 +58040,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3237,
+    "score": 0.3238,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -58411,7 +58411,7 @@
      "disler/claude-code-hooks-mastery:.claude/commands/git_status.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.4284,
+    "score": 0.4285,
     "similar_in_catalog": [],
     "status": "partial_overlap"
    },
@@ -58906,7 +58906,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1449,
+    "score": 0.1448,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -59317,7 +59317,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0631,
+    "score": 0.063,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -59388,7 +59388,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/plan-mode-game/plan-detect.sh",
-      "score": 0.7841
+      "score": 0.7842
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/plan-mode-game/needs-input.sh",
@@ -59594,7 +59594,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/plan-mode-game/activity.sh",
-      "score": 0.7841
+      "score": 0.7842
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/plan-mode-game/needs-input.sh",
@@ -60013,7 +60013,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/slack-error-notifications.json",
-      "score": 0.4746
+      "score": 0.4745
      }
     ],
     "status": "behavior_audit_required"
@@ -60083,7 +60083,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/telegram-notifications.json",
-      "score": 0.644
+      "score": 0.6439
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/slack-detailed-notifications.json",
@@ -60227,7 +60227,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/telegram-detailed-notifications.json",
-      "score": 0.644
+      "score": 0.6439
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/telegram-error-notifications.json",
@@ -61183,7 +61183,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1062,
+    "score": 0.1064,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -61308,7 +61308,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2721,
+    "score": 0.272,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/post-tool/git-add-changes.json",
@@ -61876,7 +61876,7 @@
      "rohitg00/awesome-claude-code-toolkit:plugins/performance-monitor/.claude-plugin/plugin.json"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0947,
+    "score": 0.0946,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -62003,7 +62003,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2021,
+    "score": 0.202,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/post-tool/format-javascript-files.json",
@@ -62502,7 +62502,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1297,
+    "score": 0.1296,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -63181,7 +63181,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1236,
+    "score": 0.1235,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/hooks/automation/build-on-change.json",
@@ -63311,7 +63311,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0829,
+    "score": 0.0828,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/pong/README.md",
@@ -63323,7 +63323,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/minesweeper/README.md",
-      "score": 0.744
+      "score": 0.7439
      }
     ],
     "status": "behavior_audit_required"
@@ -63405,7 +63405,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/invaders/README.md",
-      "score": 0.5087
+      "score": 0.5086
      }
     ],
     "status": "behavior_audit_required"
@@ -63572,11 +63572,11 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/invaders/README.md",
-      "score": 0.5332
+      "score": 0.5333
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/pacman/README.md",
-      "score": 0.4723
+      "score": 0.4721
      }
     ],
     "status": "behavior_audit_required"
@@ -63654,11 +63654,11 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/2048/README.md",
-      "score": 0.6883
+      "score": 0.6882
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/invaders/README.md",
-      "score": 0.6765
+      "score": 0.6764
      }
     ],
     "status": "behavior_audit_required"
@@ -63732,11 +63732,11 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/pong/README.md",
-      "score": 0.7442
+      "score": 0.7441
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/2048/README.md",
-      "score": 0.733
+      "score": 0.7329
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/invaders/README.md",
@@ -63818,11 +63818,11 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/2048/README.md",
-      "score": 0.7331
+      "score": 0.733
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/tetris/README.md",
-      "score": 0.717
+      "score": 0.7169
      }
     ],
     "status": "behavior_audit_required"
@@ -63896,11 +63896,11 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/2048/README.md",
-      "score": 0.744
+      "score": 0.7439
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/pong/README.md",
-      "score": 0.7417
+      "score": 0.7416
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/snake/README.md",
@@ -63978,7 +63978,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/diff-invaders/README.md",
-      "score": 0.4723
+      "score": 0.4721
      }
     ],
     "status": "behavior_audit_required"
@@ -64052,15 +64052,15 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/2048/README.md",
-      "score": 0.4966
+      "score": 0.4965
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/pong/README.md",
-      "score": 0.4694
+      "score": 0.4693
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/typing-test/README.md",
-      "score": 0.4576
+      "score": 0.4575
      }
     ],
     "status": "behavior_audit_required"
@@ -64296,7 +64296,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/pong/README.md",
-      "score": 0.7437
+      "score": 0.7436
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/2048/README.md",
@@ -64304,7 +64304,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/invaders/README.md",
-      "score": 0.717
+      "score": 0.7169
      }
     ],
     "status": "behavior_audit_required"
@@ -65049,7 +65049,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0762,
+    "score": 0.0763,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -65459,7 +65459,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1186,
+    "score": 0.1187,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -66093,7 +66093,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1162,
+    "score": 0.1161,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/security/block-destructive-commands/README.md",
@@ -66295,7 +66295,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1128,
+    "score": 0.1126,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -66361,7 +66361,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0921,
+    "score": 0.092,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -66857,7 +66857,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1051,
+    "score": 0.1052,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -67101,7 +67101,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1312,
+    "score": 0.1313,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -67918,7 +67918,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/web-development/exa-search/SKILL.md",
-      "score": 0.5544
+      "score": 0.5543
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/codex-review/SKILL.md",
@@ -69363,7 +69363,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0586,
+    "score": 0.0587,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -69426,7 +69426,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0738,
+    "score": 0.0739,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -72891,7 +72891,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0621,
+    "score": 0.0622,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -73713,7 +73713,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1424,
+    "score": 0.1425,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/ai-research/optimization-gptq/SKILL.md",
@@ -77631,7 +77631,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1247,
+    "score": 0.1248,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -77692,7 +77692,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1977,
+    "score": 0.1978,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -78491,7 +78491,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.127,
+    "score": 0.1271,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -81019,7 +81019,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3871,
+    "score": 0.3869,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -81356,7 +81356,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1151,
+    "score": 0.1152,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -82510,7 +82510,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0578,
+    "score": 0.0579,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -82909,7 +82909,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.071,
+    "score": 0.0709,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -83618,7 +83618,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2055,
+    "score": 0.2056,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -85452,7 +85452,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2322,
+    "score": 0.2318,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -86018,7 +86018,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1375,
+    "score": 0.1376,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -86284,7 +86284,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.268,
+    "score": 0.2681,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -86946,7 +86946,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0941,
+    "score": 0.0942,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -87210,7 +87210,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1117,
+    "score": 0.1118,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/productivity/brainstorming/SKILL.md",
@@ -87709,7 +87709,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0362,
+    "score": 0.0361,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/cc-skill-strategic-compact/SKILL.md",
@@ -87777,7 +87777,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2013,
+    "score": 0.2014,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -87899,7 +87899,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2662,
+    "score": 0.2663,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -87960,7 +87960,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0362,
+    "score": 0.0361,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/cc-skill-continuous-learning/SKILL.md",
@@ -89015,7 +89015,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2164,
+    "score": 0.2165,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -89168,7 +89168,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/web-development/exa-search/SKILL.md",
-      "score": 0.4836
+      "score": 0.4835
      }
     ],
     "status": "novelty_to_review"
@@ -89357,7 +89357,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0874,
+    "score": 0.0873,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -92588,7 +92588,7 @@
     ],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1702,
+    "score": 0.1703,
     "similar_in_catalog": [],
     "status": "cross_layer_overlap"
    },
@@ -92996,7 +92996,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0619,
+    "score": 0.062,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -93782,7 +93782,7 @@
     ],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1951,
+    "score": 0.1952,
     "similar_in_catalog": [],
     "status": "cross_layer_overlap"
    },
@@ -94370,7 +94370,7 @@
     ],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3043,
+    "score": 0.3044,
     "similar_in_catalog": [],
     "status": "cross_layer_overlap"
    },
@@ -95257,7 +95257,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.106,
+    "score": 0.1061,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -95840,7 +95840,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1289,
+    "score": 0.1288,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -96526,7 +96526,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.132,
+    "score": 0.1321,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -97783,7 +97783,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1788,
+    "score": 0.1789,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/senior-data-engineer/SKILL.md",
@@ -98031,7 +98031,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/senior-frontend/SKILL.md",
-      "score": 0.6849
+      "score": 0.685
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/senior-fullstack/SKILL.md",
@@ -98115,7 +98115,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/senior-devops/SKILL.md",
-      "score": 0.6849
+      "score": 0.685
      }
     ],
     "status": "novelty_to_review"
@@ -98515,7 +98515,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/senior-fullstack/SKILL.md",
-      "score": 0.5001
+      "score": 0.5002
      }
     ],
     "status": "novelty_to_review"
@@ -98785,7 +98785,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0905,
+    "score": 0.0904,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -99460,7 +99460,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1083,
+    "score": 0.1082,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -100426,7 +100426,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1822,
+    "score": 0.1823,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -100619,7 +100619,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2159,
+    "score": 0.2161,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -100680,11 +100680,11 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.085,
+    "score": 0.0849,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/utilities/using-superpowers/SKILL.md",
-      "score": 0.8912
+      "score": 0.8913
      }
     ],
     "status": "novelty_to_review"
@@ -101330,7 +101330,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1591,
+    "score": 0.1592,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/productivity/writing-plans/SKILL.md",
@@ -101400,7 +101400,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/productivity/writing-skills/SKILL.md",
-      "score": 0.9526
+      "score": 0.9525
      }
     ],
     "status": "novelty_to_review"
@@ -101659,7 +101659,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.5282,
+    "score": 0.5283,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/document-processing/docx/SKILL.md",
@@ -101787,7 +101787,7 @@
      "anthropics/skills:skills/docx/SKILL.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.5282,
+    "score": 0.5283,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/document-processing/docx-official/SKILL.md",
@@ -101964,7 +101964,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0898,
+    "score": 0.0899,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -103239,7 +103239,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0587,
+    "score": 0.0586,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -103301,7 +103301,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0548,
+    "score": 0.0549,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -104373,7 +104373,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1246,
+    "score": 0.1247,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/enterprise-communication/isms-audit-expert/SKILL.md",
@@ -105793,7 +105793,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1391,
+    "score": 0.1392,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -106944,7 +106944,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1184,
+    "score": 0.1185,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -107443,7 +107443,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1117,
+    "score": 0.1118,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/brainstorming/SKILL.md",
@@ -107509,7 +107509,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.085,
+    "score": 0.0849,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -107757,7 +107757,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.148,
+    "score": 0.1479,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/create-plan/SKILL.md",
@@ -108475,7 +108475,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1053,
+    "score": 0.1054,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -109533,7 +109533,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2863,
+    "score": 0.2864,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -109656,7 +109656,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1308,
+    "score": 0.131,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -110412,7 +110412,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0844,
+    "score": 0.0843,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -110536,7 +110536,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1591,
+    "score": 0.1592,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/writing-plans/SKILL.md",
@@ -110663,11 +110663,11 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1231,
+    "score": 0.1232,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/writing-skills/SKILL.md",
-      "score": 0.9526
+      "score": 0.9525
      }
     ],
     "status": "novelty_to_review"
@@ -111617,7 +111617,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0646,
+    "score": 0.0647,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -113579,7 +113579,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/markitdown/SKILL.md",
-      "score": 0.614
+      "score": 0.6141
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/document-skills/pdf/SKILL.md",
@@ -115904,7 +115904,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/document-skills/docx/SKILL.md",
-      "score": 0.614
+      "score": 0.6141
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/document-skills/pdf/SKILL.md",
@@ -118965,7 +118965,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/scientific-critical-thinking/SKILL.md",
-      "score": 0.5111
+      "score": 0.5112
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/document-skills/docx/SKILL.md",
@@ -119033,7 +119033,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0712,
+    "score": 0.0711,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -119103,7 +119103,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/scholar-evaluation/SKILL.md",
-      "score": 0.5111
+      "score": 0.5112
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/document-skills/docx/SKILL.md",
@@ -119588,7 +119588,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0476,
+    "score": 0.0477,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -121918,7 +121918,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0748,
+    "score": 0.0749,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -122601,7 +122601,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1289,
+    "score": 0.129,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/security/pentest-commands/SKILL.md",
@@ -123445,7 +123445,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1354,
+    "score": 0.1355,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -123769,7 +123769,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3764,
+    "score": 0.3766,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -124323,7 +124323,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0402,
+    "score": 0.0403,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -125007,7 +125007,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/using-superpowers/SKILL.md",
-      "score": 0.8912
+      "score": 0.8913
      }
     ],
     "status": "novelty_to_review"
@@ -126277,11 +126277,11 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/ai-research/context7-auto-research/SKILL.md",
-      "score": 0.5544
+      "score": 0.5543
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/codex-review/SKILL.md",
-      "score": 0.4836
+      "score": 0.4835
      }
     ],
     "status": "novelty_to_review"
@@ -126469,7 +126469,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/web-development/tavily-web/SKILL.md",
-      "score": 0.6076
+      "score": 0.6075
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/ai-research/context7-auto-research/SKILL.md",
@@ -127542,7 +127542,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/web-development/firecrawl-scraper/SKILL.md",
-      "score": 0.6076
+      "score": 0.6075
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/web-development/exa-search/SKILL.md",
@@ -127994,7 +127994,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/workflow-automation/jira-automation/SKILL.md",
-      "score": 0.5142
+      "score": 0.5143
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/workflow-automation/slack-automation/SKILL.md",
@@ -128260,7 +128260,7 @@
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/workflow-automation/github-automation/SKILL.md",
-      "score": 0.5142
+      "score": 0.5143
      }
     ],
     "status": "novelty_to_review"
@@ -128933,7 +128933,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1789,
+    "score": 0.1788,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -129188,7 +129188,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1124,
+    "score": 0.1125,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -188807,7 +188807,7 @@
    "metadata_issue": null,
    "name": "socle-zakios",
    "provenance": {
-    "commit": "5b831d9f3d4cf7b1eadf749e950defeeae063a23",
+    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
     "content_sha256": "3176e133a4f9b8b5039327295c7879a64dbb851b0de68671baf103e72a0e3f1b",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -188852,7 +188852,7 @@
      "rohitg00/awesome-claude-code-toolkit:agents/quality-assurance/code-reviewer.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0229,
+    "score": 0.0232,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -188871,7 +188871,7 @@
    "metadata_issue": null,
    "name": "code-reviewer",
    "provenance": {
-    "commit": "5b831d9f3d4cf7b1eadf749e950defeeae063a23",
+    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
     "content_sha256": "2acab0221ac2e3e160f3162b8306a70fb4de6d9cd476d17889c5e62df5bca651",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -188880,6 +188880,67 @@
     "fingerprint_sha256": "c30e2348ce0387cf64b208be06f50e9e44c68edc8b91018a7b978d981eedfa4f",
     "fingerprint_unexplored": [],
     "path": "variantes/agents/code-reviewer.md",
+    "role": "propre",
+    "source": "zakibelm/ZakiOS"
+   },
+   "relations": {
+    "conflicts_with": [],
+    "depends_on": [],
+    "replaced_by": [],
+    "variant_of": []
+   },
+   "schema_version": "5",
+   "type": "agent"
+  },
+  {
+   "compatibility": {
+    "min_version": null,
+    "platform": null,
+    "required_tools": "Read, Glob, Grep"
+   },
+   "component_id": "zakibelm/ZakiOS:variantes/agents/plan-writer.md",
+   "decision": {
+    "justification": "",
+    "proposal": "Nouveauté à examiner : l'absence d'équivalent lexical ne prouve pas la nouveauté",
+    "stale_validation": null,
+    "validated": null,
+    "validated_by": null,
+    "validated_fingerprint_sha256": null,
+    "validated_on": null
+   },
+   "evaluation": {
+    "best_match_id": "wshobson/agents:plugins/ship-mate/agents/architect.md",
+    "cross_layer": [],
+    "homonym_of": [],
+    "provisional_reason": "comparaison ZAKI OS manquante",
+    "score": 0.0285,
+    "similar_in_catalog": [],
+    "status": "novelty_to_review"
+   },
+   "function": {
+    "summary": "Analyse un besoin et un projet en lecture seule, puis retourne un plan PDCA dans sa réponse. N'écrit aucun fichier."
+   },
+   "license": {
+    "attribution": null,
+    "repo_license_file": null,
+    "spdx": null,
+    "verified": false,
+    "verified_by": null,
+    "verified_commit": null,
+    "verified_on": null
+   },
+   "metadata_issue": null,
+   "name": "plan-writer",
+   "provenance": {
+    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
+    "content_sha256": "21b323ed7afb52fbaa25e3b2e658186ff0d6ef0f842b263669fa283f48ef2f32",
+    "fingerprint_complete": true,
+    "fingerprint_files": [
+     "variantes/agents/plan-writer.md"
+    ],
+    "fingerprint_sha256": "d6aaa2c70260530afcf35050400d1a7b7e0c16029784a06f99e70529699ee6ae",
+    "fingerprint_unexplored": [],
+    "path": "variantes/agents/plan-writer.md",
     "role": "propre",
     "source": "zakibelm/ZakiOS"
    },
@@ -188913,7 +188974,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0597,
+    "score": 0.0603,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -188932,7 +188993,7 @@
    "metadata_issue": null,
    "name": "run-tests",
    "provenance": {
-    "commit": "5b831d9f3d4cf7b1eadf749e950defeeae063a23",
+    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
     "content_sha256": "4981baf758cb8533284f40c508568c398e9414ba2e0105d84e6b0a1373989185",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -188974,7 +189035,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0199,
+    "score": 0.0178,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -188993,13 +189054,13 @@
    "metadata_issue": null,
    "name": "writing-plans",
    "provenance": {
-    "commit": "5b831d9f3d4cf7b1eadf749e950defeeae063a23",
-    "content_sha256": "7e8d887a88e1a644c9275dc0cab48dd58ae00f427032481795d758f49a2df63e",
+    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
+    "content_sha256": "37a36ff456822c97cc8cd36985f4424b6950e2f77b37fa9c5930358d6de0393f",
     "fingerprint_complete": true,
     "fingerprint_files": [
      "variantes/skills/writing-plans/SKILL.md"
     ],
-    "fingerprint_sha256": "711f6d5b4afbb937cd4d30f0c8b71a5782640b9c549f8e2fe47e9be17e693fb0",
+    "fingerprint_sha256": "9dd9d530663ac799249ec9331f97d4464b5d477f5b5dbd9c296f698c23d0921f",
     "fingerprint_unexplored": [],
     "path": "variantes/skills/writing-plans/SKILL.md",
     "role": "propre",
@@ -189015,6 +189076,6 @@
    "type": "skill"
   }
  ],
- "manifest_sha256": "e7d303cd2c987cefcd9df0a75573b7188cfce9fdca798f1f8e79142c966b663e",
+ "manifest_sha256": "bb0a307c1605d3c6bed477821cc122e5145fb4a07067953e16f332d807154ca4",
  "schema_version": "5"
 }

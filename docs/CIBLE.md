@@ -12,7 +12,7 @@ Demande en langage naturel → orchestration **PDCA** → résultat **avec preuv
 | Choisir la source | 1. pratiques déjà validées (décisions, Socle) ; 2. recherche dans le catalogue GitHub ; 3. recherche Web. Justifier : **réutiliser, adapter, combiner ou développer** | cible (catalogue + décisions : existant) |
 | Contrôler | Licences, dépendances, compatibilité avant toute copie | existant (moteur 0.6.0) pour le catalogue ; cible pour le Web |
 | Exécuter | Installation contrôlée des composants | **existant** (pilote `plan`/`apply`/`rollback`) |
-| Exécuter | Exécution des agents sous restrictions techniques (outils retirés, bac à sable, limites) | **partiel** : relecteur sans Bash (liste d'outils appliquée, mesurée à l'initialisation) ; planificateur non restreint (un skill ne l'est pas) ; `run-tests` non exécuté |
+| Exécuter | Exécution des agents sous restrictions techniques (outils retirés, bac à sable, limites) | **partiel** : relecteur sans Bash (liste d'outils appliquée, mesurée à l'initialisation) ; planificateur converti en agent en lecture seule (outils mesurés, 3 passages) ; enregistrement contrôlé et `run-tests` à construire |
 | Vérifier / Agir | Preuves, écarts, corrections, standardisation | cible |
 
 ## Rétro-ingénierie

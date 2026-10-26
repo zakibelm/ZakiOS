@@ -53,14 +53,14 @@
    "skill": 185
   },
   "zakibelm/ZakiOS": {
-   "agent": 1,
+   "agent": 2,
    "command": 1,
    "skill": 1,
    "socle": 1
   }
  },
  "counts_by_type": {
-  "agent": 944,
+  "agent": 945,
   "command": 784,
   "embedded_agent": 12,
   "framework_module": 4,
@@ -76,7 +76,7 @@
   "agent": {
    "cross_layer_overlap": 4,
    "equivalence_candidate": 88,
-   "novelty_to_review": 296,
+   "novelty_to_review": 297,
    "partial_overlap": 34
   },
   "command": {
@@ -104,7 +104,7 @@
   }
  },
  "incomplete_fingerprints": [],
- "manifest_sha256": "e7d303cd2c987cefcd9df0a75573b7188cfce9fdca798f1f8e79142c966b663e",
+ "manifest_sha256": "bb0a307c1605d3c6bed477821cc122e5145fb4a07067953e16f332d807154ca4",
  "metadata_issues": [
   {
    "issue": "yaml_invalide: mapping values are not allowed here",
@@ -182,7 +182,7 @@
  "orphan_licenses": [],
  "provisional": true,
  "provisional_reason": "comparaison ZAKI OS manquante",
- "registry_sha256": "60345fac421f04669d915366ea0f71cfc11b596f19e2b615e401404781d07b02",
+ "registry_sha256": "c8da8370f187982a1d853eb25b742385f4233a0e0b1a7b064442e15eedb1fd02",
  "schema_version": "5",
  "sources": [
   {
@@ -270,8 +270,8 @@
    "status": "absente_facultative"
   },
   {
-   "commit": "5b831d9f3d4cf7b1eadf749e950defeeae063a23",
-   "components": 4,
+   "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
+   "components": 5,
    "repo": "zakibelm/ZakiOS",
    "role": "propre",
    "status": "verifiee"

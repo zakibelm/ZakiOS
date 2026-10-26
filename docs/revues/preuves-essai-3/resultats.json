@@ -1,0 +1,277 @@
+{
+  "steps": {
+    "apercu": {
+      "creations": [
+        ".claude/CLAUDE.md",
+        ".claude/agents/code-reviewer.md",
+        ".claude/agents/plan-writer.md",
+        ".claude/skills/writing-plans/SKILL.md",
+        ".claude/socle/REGLES.md"
+      ],
+      "refus": [],
+      "plan_sha256": "8d2ad1230b2e14e5f06fa9f7192cf779f8375bbd128d6a2698efb46fd9977dae"
+    },
+    "installation": {
+      "appliques": 5,
+      "fichiers": [
+        ".claude/CLAUDE.md",
+        ".claude/agents/code-reviewer.md",
+        ".claude/agents/plan-writer.md",
+        ".claude/skills/writing-plans/SKILL.md",
+        ".claude/socle/REGLES.md"
+      ]
+    },
+    "reexecution": {
+      "appliques": 0,
+      "arbre_inchange": true,
+      "verrou_inchange": true,
+      "nouvelles_transactions": []
+    },
+    "inattendu": [],
+    "retour_arriere": {
+      "identique_a_l_etat_initial": true,
+      "ecarts": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      }
+    }
+  },
+  "passes": [
+    {
+      "canari": "CANARI-e9dfa09d",
+      "complet": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "import_seul": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "temoin": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": false,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "contradictoire": {
+        "utilises": [],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "canari_fin": true
+      },
+      "planificateur": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [
+          "Read",
+          "Read",
+          "Glob"
+        ],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "plan_dans_reponse": true
+      }
+    },
+    {
+      "canari": "CANARI-0e1073ef",
+      "complet": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "import_seul": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "temoin": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": false,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "contradictoire": {
+        "utilises": [],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "canari_fin": true
+      },
+      "planificateur": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [
+          "Read",
+          "Read",
+          "Glob"
+        ],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "plan_dans_reponse": true
+      }
+    },
+    {
+      "canari": "CANARI-1395b128",
+      "complet": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "import_seul": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "temoin": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": false,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "contradictoire": {
+        "utilises": [],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "canari_fin": true
+      },
+      "planificateur": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [
+          "Read",
+          "Read",
+          "Glob"
+        ],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "plan_dans_reponse": true
+      }
+    }
+  ],
+  "echecs": []
+}

@@ -67,3 +67,20 @@ Le chargement du Socle par `.claude/CLAUDE.md` est donc démontré avec un témo
 | Un seul modèle, 3 passages | Autres modèles et plus de passages avant toute généralisation | répétabilité |
 | `run-tests` et scénario 4 (écriture isolée) | Attendent l'environnement isolé | couverture complète |
 | Mode interactif non testé | À essayer | écart entre `-p` et usage réel |
+
+## Essai 3 : agent planificateur en lecture seule, script à critères d'échec (moteur 0.6.0)
+
+Évolution du lot : `variantes/agents/plan-writer.md` (outils `Read, Glob, Grep`, sans Bash, Write ni Edit) retourne le plan dans sa réponse ; le skill `writing-plans` reste la méthode. L'enregistrement sous `docs/plans/` n'est plus fait par l'agent : un mécanisme contrôlé (chemin vérifié, refus d'écraser un fichier de la personne) reste **à construire**.
+
+Le script `scripts/essai_lot1.py` échoue (code 1) si un critère manque : exécution en erreur, réponse vide, outils effectifs différents de ceux attendus, outil modifiant utilisé, tout fichier créé, modifié ou supprimé (union des chemins avant/après), canari attendu ou absent, défauts non trouvés, second `apply` qui écrit, ouvre une transaction ou change le verrou, retour arrière non identique. `diff_tree` est testé (créations, modifications, suppressions).
+
+| Constat | Détail |
+|---|---|
+| Critère qui a échoué, puis corrigé | 1re version : le `plan-writer` ne renvoyait pas la ligne finale du skill dans 3 passages sur 3 ⇒ le préchargement d'un skill par l'en-tête `skills:` **n'est pas démontré**. Correction : l'agent lit explicitement le skill, qui est déclaré comme dépendance dans l'essai |
+| Résultat final | **Tous les critères satisfaits**, 3 passages : outils effectifs `Read, Glob, Grep`, plan complet dans la réponse (ligne finale du skill, chemin proposé, canari du Socle), aucun fichier créé, modifié ou supprimé |
+| Second `apply` | 0 écriture, arbre et verrou identiques, aucune nouvelle transaction |
+| Retour arrière | état initial retrouvé, sans création, modification ni suppression |
+
+Preuves : `docs/revues/preuves-essai-3/`. Ce résultat supplante l'essai 2 pour le planificateur (le dossier `preuves-essai-2` reste comme historique).
+
+Reste ouvert : mécanisme d'enregistrement contrôlé ; autres modèles et plus de passages ; mode interactif ; `run-tests` avec isolation ; la dépendance `plan-writer` → `writing-plans` est déclarée dans l'essai, mais pas dans `decisions/annotations.json` (décision réelle à toi).
