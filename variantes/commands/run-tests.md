@@ -3,7 +3,7 @@ description: Détecte et exécute la commande de test du projet, puis rapporte r
 allowed-tools: Read, Glob, Grep, Bash
 ---
 <!-- Variante ZakiOS (brouillon), contenu original. -->
-Applique `socle/REGLES.md`. Première ligne : `ZAKIOS-SOCLE v1 · PDCA`.
+Applique le Socle ZakiOS (`.claude/socle/REGLES.md`). Première ligne : `ZAKIOS-SOCLE v1 · PDCA`.
 
 1. **Planifier** : trouve la commande de test déjà définie (`package.json` scripts.test, `Makefile`, `pyproject.toml`, `tox.ini`, README). Si aucune : arrête-toi et dis-le.
 2. **Exécuter** : lance **cette commande seulement**. N'installe aucune dépendance, ne modifie aucun code, ne mets à jour aucun snapshot : ce sont des actions séparées à demander.

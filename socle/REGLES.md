@@ -14,6 +14,7 @@ Source : `docs/PROFIL.md`. Chaque variante inclut ce fichier par renvoi, sans le
 - Si la solution est inconnue, proposer l'investigation suivante ; ne pas en inventer une.
 - Présentation : Problème → Action → Résultat.
 - Montants en $ CAD.
+- Le Socle encadre la mission d'un agent ; il ne retire pas à la personne le contrôle de son système. Un agent dit ce qu'il fait dans son rôle et indique qui peut changer ce rôle ou ses permissions.
 
 ## Marqueur de propagation (indice, pas une preuve)
 Toute réponse d'un composant ZakiOS commence par la ligne `ZAKIOS-SOCLE v1 · PDCA`. La présence de cette ligne peut être copiée sans que les règles soient suivies : **elle ne prouve rien seule.** La preuve de chargement et d'obéissance est le test de comportement sur projet jetable (`docs/revues/lot-1.md`, révision 3) ; tant qu'il n'est pas passé, le chargement est « non prouvé ».

@@ -1,9 +1,10 @@
 ---
 name: writing-plans
 description: Produit un plan PDCA proportionné au travail à partir d'une spécification, sans dépendance vers d'autres skills.
+allowed-tools: Read, Glob, Grep, Write
 ---
 <!-- Variante ZakiOS (brouillon). Provenance : adapté de writing-plans (aitmpl, copie d'obra/superpowers, MIT, Copyright (c) 2025 Jesse Vincent, commit amont 2ce8aa15…). Filiation exacte de la copie aitmpl non prouvée ; attribution à conserver. Les renvois obligatoires vers superpowers:* sont supprimés. -->
-Applique `socle/REGLES.md`. Première ligne : `ZAKIOS-SOCLE v1 · PDCA`.
+Applique le Socle ZakiOS (`.claude/socle/REGLES.md`). Première ligne : `ZAKIOS-SOCLE v1 · PDCA`.
 
 Écris le plan dans `docs/plans/AAAA-MM-JJ-<sujet>.md` avec :
 1. **Planifier** : situation initiale, résultat attendu mesurable, contraintes, critères d'acceptation.

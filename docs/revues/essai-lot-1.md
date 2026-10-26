@@ -24,7 +24,7 @@ Règle de test : un « canari » (`SOCLE-CANARI-7f3`) ne figure **que** dans `RE
 | D2 (témoin) | non | non | **non** |
 | B | non | oui | oui (l'agent a lu le fichier lui-même) |
 
-Conclusion démontrée : l'import `@` dans le `CLAUDE.md` du projet charge le Socle dans le sous-agent (D1 contre D2). Le renvoi explicite fonctionne aussi mais repose sur l'obéissance de l'agent. **Mécanisme retenu à valider : `CLAUDE.md` avec `@`-import**, installé avec le lot.
+Import fonctionnel observé dans D1 ; comparaison témoin à confirmer (D2 diffère aussi par un refus de lecture du diff). Le renvoi explicite fonctionne aussi mais repose sur l'obéissance de l'agent. À rejouer : même diff intégré à la demande, sessions neuves, canari différent par série, 3 passages (voir `scripts/essai_lot1.py`).
 
 ## Écarts à corriger (PDCA : Agir)
 
