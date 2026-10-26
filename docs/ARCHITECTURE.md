@@ -57,5 +57,6 @@ Chaque fiche garde sa source, son commit complet, l'empreinte SHA-256 de son con
 - **Activation par projet (pilote)** : `plan`, `apply`, `rollback` (`docs/ACTIVATION.md`) : aperçu, installation tout ou rien, journal, retour arrière. Éprouvée sur composants fictifs ; premier lot réel en revue (`docs/revues/lot-1.md`).
 - **Composants propres et Socle** : rôle `propre`, type `socle` installé par le moteur (`.claude/socle/REGLES.md` + `.claude/CLAUDE.md`).
 - **Enregistrement contrôlé des plans** (`zakios/deliver.py`, `python3 -m zakios save-plan`) : écriture déterministe sous `docs/plans/`, sans écrasement, sans lien symbolique, liée à l'empreinte de la livraison présentée (format, chemin, contenu, mission), une trace par livraison, livrable délimité et sans ambiguïté.
+- **Revue finale du lot 1** : `docs/revues/revue-finale-lot-1.md` (version figée, décisions à copier si validées).
 - **Intégration continue** : tests et `verify` à chaque push (`.github/workflows/ci.yml`).
 - **Reste à construire** : tout ce qui figure dans `docs/CIBLE.md` (objectifs, non acquis).
