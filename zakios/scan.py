@@ -141,6 +141,8 @@ def make_record(src, repo_rel, rel, ctype, raw, issues, license_file, fingerprin
             "commit": src["commit"], "content_sha256": hashlib.sha256(raw).hexdigest(),
             "fingerprint_sha256": fingerprint[0] if fingerprint else hashlib.sha256(raw).hexdigest(),
             "fingerprint_files": fingerprint[1] if fingerprint else [repo_rel],
+            "fingerprint_complete": fingerprint[2] if fingerprint else True,
+            "fingerprint_unexplored": fingerprint[3] if fingerprint else [],
         },
         "license": {"verified": False, "repo_license_file": license_file, "spdx": None, "attribution": None},
         "function": {"summary": summary},
@@ -152,7 +154,9 @@ def make_record(src, repo_rel, rel, ctype, raw, issues, license_file, fingerprin
     }
 
 
-MAX_PACKAGE_FILES = 300
+# Garde-fou de ressources, pas une limite de paquet : au-delà, l'empreinte est déclarée incomplète.
+MAX_EXPLORED_FILES = 20000
+MAX_LISTED_UNEXPLORED = 50
 _PY_IMPORT = re.compile(r"^\s*(?:from\s+(\.*[\w.]*)\s+import\s+([\w, ]+)|import\s+([\w., ]+))", re.M)
 _JS_IMPORT = re.compile(r"""(?:from\s+|require\(\s*|import\(\s*|import\s+)['"](\.{1,2}/[^'"]*|\.{1,2})['"]""")
 _SH_SOURCE = re.compile(r"""^\s*(?:source|\.)\s+["']?([^\s"';|&]+)""", re.M)
@@ -160,13 +164,18 @@ _SCRIPT_EXT = (".py", ".js", ".mjs", ".cjs", ".ts", ".sh", ".bash", ".json", ".y
 _PATH_IN_TEXT = re.compile(r"""[\w@./${}\-]+\.(?:py|js|mjs|cjs|ts|sh|bash)\b""")
 
 
-def _fingerprint(path, repo_files):
-    """Empreinte d'un ensemble de fichiers : chemins et contenus, dans un ordre fixe."""
+def _fingerprint(path, repo_files, unexplored=()):
+    """Empreinte d'un ensemble de fichiers : chemins et contenus, dans un ordre fixe.
+
+    Renvoie (empreinte, fichiers, complète, fichiers non explorés). Une empreinte est incomplète
+    quand le garde-fou de ressources a interrompu le parcours des dépendances.
+    """
     digest = hashlib.sha256()
     for repo_rel in sorted(repo_files):
         with open(os.path.join(path, repo_rel), "rb") as handle:
             digest.update(("%s %s\n" % (repo_rel, hashlib.sha256(handle.read()).hexdigest())).encode("utf-8"))
-    return digest.hexdigest(), sorted(repo_files)
+    pending = sorted(unexplored)
+    return digest.hexdigest(), sorted(repo_files), not pending, pending[:MAX_LISTED_UNEXPLORED]
 
 
 def _resolve_relative(base_dir, target, known):
@@ -180,13 +189,15 @@ def _resolve_relative(base_dir, target, known):
 
 def _local_dependencies(path, repo_rel, known):
     """Fichiers locaux que `repo_rel` importe ou exécute (python, js/ts, shell), un niveau."""
+    ext = os.path.splitext(repo_rel)[1]
+    if ext not in (".py", ".js", ".mjs", ".cjs", ".ts", ".sh", ".bash"):
+        return []
     try:
         with open(os.path.join(path, repo_rel), "rb") as handle:
             text = handle.read().decode("utf-8", errors="replace")
     except OSError:
         return []
     base = os.path.dirname(repo_rel)
-    ext = os.path.splitext(repo_rel)[1]
     found = []
     if ext == ".py":
         modules = []
@@ -232,15 +243,21 @@ def _local_dependencies(path, repo_rel, known):
 
 
 def _closure(path, seeds, known):
-    """Seeds et toutes leurs dépendances locales, transitivement (borné)."""
+    """Seeds et toutes leurs dépendances locales détectées, transitivement, cycles gérés.
+
+    Renvoie (fichiers, non explorés). Le parcours ne s'arrête qu'au garde-fou MAX_EXPLORED_FILES ;
+    les fichiers restés dans la file sont alors renvoyés comme non explorés.
+    """
     seen, queue = set(), sorted(seeds)
-    while queue and len(seen) < MAX_PACKAGE_FILES:
+    while queue:
+        if len(seen) >= MAX_EXPLORED_FILES:
+            return seen, [f for f in queue if f not in seen]
         current = queue.pop()
         if current in seen:
             continue
         seen.add(current)
         queue.extend(d for d in _local_dependencies(path, current, known) if d not in seen)
-    return seen
+    return seen, []
 
 
 def _referenced_scripts(path, config_rel, known, by_suffix):
@@ -267,7 +284,7 @@ def _behavior_files(path, repo_rel, ctype, all_files, known, by_suffix):
 
     mod : tout son dossier ; skill : tout son dossier ; hook : configuration, scripts du même nom,
     scripts cités par la configuration ; plugin : manifeste, hooks, scripts et .mcp.json de sa racine.
-    Pour chacun, on ajoute les dépendances locales importées par les scripts, transitivement.
+    Pour chacun, on ajoute les dépendances locales détectables (expressions régulières, pas une analyse complète) importées par les scripts, transitivement.
     Agents et commandes sont leur propre fichier.
     """
     folder = os.path.dirname(repo_rel)
@@ -289,8 +306,9 @@ def _behavior_files(path, repo_rel, ctype, all_files, known, by_suffix):
     elif ctype == "framework_module":
         seeds = [repo_rel]
     else:
-        return [repo_rel]
-    return sorted(_closure(path, set(seeds) | {repo_rel}, known) | set(seeds) | {repo_rel})
+        return [repo_rel], []
+    files, unexplored = _closure(path, set(seeds) | {repo_rel}, known)
+    return sorted(files | set(seeds) | {repo_rel}), unexplored
 
 
 def build_records(src, path, issues):
@@ -323,6 +341,7 @@ def build_records(src, path, issues):
             continue
         with open(os.path.join(path, repo_rel), "rb") as handle:
             raw = handle.read()
-        fingerprint = _fingerprint(path, _behavior_files(path, repo_rel, ctype, files, known, by_suffix))
+        package, unexplored = _behavior_files(path, repo_rel, ctype, files, known, by_suffix)
+        fingerprint = _fingerprint(path, package, unexplored)
         records.append(make_record(src, repo_rel, rel, ctype, raw, issues, license_file, fingerprint))
     return records

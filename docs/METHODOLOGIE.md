@@ -23,3 +23,7 @@ Un score lexical mesure un vocabulaire commun. Un score élevé peut cacher des 
 ## Récupération après incident
 
 La génération précédente reste dans `catalog.prev` : un lecteur qui avait ouvert l'ancienne génération la lit jusqu'au bout. `verify` ouvre le dossier une seule fois et vérifie que le rapport correspond au registre lu (`registry_sha256`). Un verrou (`catalog.lock`, Linux) interdit deux générations simultanées. Les dossiers temporaires ont un nom unique (`catalog.tmp-…`) ; ceux d'une génération interrompue sont supprimés au prochain lancement. Si le repli par renommages a laissé `catalog.bak` sans `catalog/`, le prochain lancement le restaure.
+
+## Ce que couvre l'empreinte
+
+L'empreinte d'un composant couvre son paquet : fichiers du composant et dépendances locales **détectables** par expressions régulières (imports python, require/import js et ts, source shell, chemins cités dans la configuration d'un hook). C'est une analyse des dépendances détectables, sans garantie de couvrir tous les comportements : paquets installés, appels dynamiques et variables d'environnement ne sont pas suivis. Le parcours n'a pas de limite de taille de paquet ; seul un garde-fou de ressources (20 000 fichiers explorés) peut l'interrompre. Dans ce cas l'empreinte est déclarée incomplète (`fingerprint_complete: false`), les fichiers non explorés sont listés, et aucune validation humaine n'est réappliquée sur elle.

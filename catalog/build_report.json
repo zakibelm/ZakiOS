@@ -93,6 +93,7 @@
    "partial_overlap": 22
   }
  },
+ "incomplete_fingerprints": [],
  "manifest_sha256": "d3fde598176ba65c35ce03d2a6f884110305b924fbffe5d717b8212078d54699",
  "metadata_issues": [
   {
@@ -169,7 +170,7 @@
  "orphan_decisions": [],
  "provisional": true,
  "provisional_reason": "comparaison ZAKI OS manquante",
- "registry_sha256": "bf4d8a98d53cba246afb9c53e6714452cc96e6250a45b170b882809c3973b5fc",
+ "registry_sha256": "d1a46637c6f612d9802ccce71eee0110d8cb05c81a20c35901c9780d6ccc826e",
  "schema_version": "3",
  "sources": [
   {
@@ -258,5 +259,5 @@
   }
  ],
  "stale_decisions": [],
- "zakios_version": "0.4.0"
+ "zakios_version": "0.4.1"
 }

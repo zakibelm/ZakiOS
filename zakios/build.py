@@ -234,8 +234,10 @@ def _apply_validated(records, decisions_path):
             continue
         current = rec["provenance"]["fingerprint_sha256"]
         approved = entry.get("fingerprint_sha256")
-        if value is not None and approved != current:
-            reason = "empreinte absente" if not approved else "contenu modifié depuis la validation"
+        incomplete = not rec["provenance"]["fingerprint_complete"]
+        if value is not None and (approved != current or incomplete):
+            reason = ("empreinte incomplète : dépendances non explorées" if incomplete else
+                      "empreinte absente" if not approved else "contenu modifié depuis la validation")
             rec["decision"]["stale_validation"] = {"validated": value, "reason": reason,
                                                    "approved_fingerprint_sha256": approved}
             stale.append({"component_id": cid, "reason": reason})
@@ -339,6 +341,7 @@ def _build_locked(manifest, manifest_sha, sources_root, out_dir, allow_dirty, de
         "counts_by_source_and_type": by_source, "counts_by_type": by_type, "evaluation_by_type": status_counts,
         "empty_summaries": sum(1 for r in records if not r["function"]["summary"]),
         "metadata_issues": sorted(issues, key=lambda i: (i["source"], i["path"])),
+        "incomplete_fingerprints": sorted(r["component_id"] for r in records if not r["provenance"]["fingerprint_complete"]),
         "orphan_decisions": orphans, "stale_decisions": stale, "provisional": provisional,
         "provisional_reason": policy.PROVISIONAL_REASON if provisional else None,
     }
@@ -454,6 +457,10 @@ def validate_catalog(directory):
         for key in ("content_sha256", "fingerprint_sha256"):
             if not _is_hex(_HEX64, prov.get(key)):
                 problems.append("%s : %s invalide" % (cid, key))
+        if not isinstance(prov.get("fingerprint_complete"), bool) or not isinstance(prov.get("fingerprint_unexplored"), list):
+            problems.append("%s : état de complétude de l'empreinte invalide" % cid)
+        elif prov["fingerprint_complete"] == bool(prov["fingerprint_unexplored"]):
+            problems.append("%s : complétude de l'empreinte incohérente avec les fichiers non explorés" % cid)
         files = prov.get("fingerprint_files")
         if not isinstance(files, list) or not files or prov.get("path") not in files:
             problems.append("%s : liste des fichiers de l'empreinte invalide" % cid)
@@ -521,6 +528,8 @@ def validate_catalog(directory):
         if value is not None:
             if value not in policy.ALLOWED_DECISIONS:
                 problems.append("%s : décision validée non autorisée %r" % (cid, value))
+            if prov.get("fingerprint_complete") is not True:
+                problems.append("%s : décision validée sur une empreinte incomplète" % cid)
             if dec.get("validated_fingerprint_sha256") != prov.get("fingerprint_sha256"):
                 problems.append("%s : décision validée liée à un autre contenu" % cid)
 
@@ -537,6 +546,9 @@ def validate_catalog(directory):
             problems.append("rapport : nombre de composants de %s différent du registre" % src.get("repo"))
     if report.get("empty_summaries") != sum(1 for c in comps if not c["function"]["summary"]):
         problems.append("rapport : nombre de résumés vides différent du registre")
+    if report.get("incomplete_fingerprints") != sorted(c["component_id"] for c in comps
+                                                      if c["provenance"].get("fingerprint_complete") is False):
+        problems.append("rapport : empreintes incomplètes différentes du registre")
     if len(report.get("metadata_issues", [])) != sum(1 for c in comps if c.get("metadata_issue")):
         problems.append("rapport : problèmes de métadonnées différents du registre")
 

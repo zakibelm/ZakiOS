@@ -5,6 +5,7 @@ import unittest
 from unittest import mock
 
 from zakios import build as build_mod
+from zakios import scan as scan_mod
 from zakios import policy
 from zakios.build import BuildError, ValidationError, build, validate_catalog
 
@@ -501,6 +502,70 @@ class BuildTests(unittest.TestCase):
             before = self._fingerprints(wd, root, manifest)
             change_source(root, manifest, "acme/catalogue", {"components/skills/dev/scripts/util.py": "X = 2\n"})
             self.assertNotEqual(before[skill], self._fingerprints(wd, root, manifest)[skill])
+
+    def test_large_skill_still_follows_imports_outside_its_folder(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            files = {"components/skills/dev/data/f%03d.txt" % i: "x\n" for i in range(303)}
+            files["components/skills/dev/scripts/run.py"] = "import extlib\n"
+            files["components/skills/extlib.py"] = "VALUE = 1\n"
+            change_source(root, manifest, "acme/catalogue", files)
+            skill = "acme/catalogue:components/skills/dev/SKILL.md"
+            before = self._fingerprints(wd, root, manifest)
+            prov = load_registry(os.path.join(wd, "catalog"))[skill]["provenance"]
+            self.assertIn("components/skills/extlib.py", prov["fingerprint_files"])
+            self.assertTrue(prov["fingerprint_complete"])
+            change_source(root, manifest, "acme/catalogue", {"components/skills/extlib.py": "VALUE = 2\n"})
+            self.assertNotEqual(before[skill], self._fingerprints(wd, root, manifest)[skill])
+
+    def test_import_cycles_do_not_loop(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            change_source(root, manifest, "acme/catalogue", {
+                "components/hooks/git/guard.py": "import cycle_a\n",
+                "components/hooks/git/cycle_a.py": "import cycle_b\n",
+                "components/hooks/git/cycle_b.py": "import cycle_a\n"})
+            self._fingerprints(wd, root, manifest)
+            prov = load_registry(os.path.join(wd, "catalog"))["acme/catalogue:components/hooks/git/guard.json"]["provenance"]
+            self.assertIn("components/hooks/git/cycle_b.py", prov["fingerprint_files"])
+            self.assertTrue(prov["fingerprint_complete"])
+
+    def test_incomplete_fingerprint_is_declared_and_blocks_validation(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            decisions = os.path.join(wd, "validated.json")
+            hook = "acme/catalogue:components/hooks/git/guard.json"
+            change_source(root, manifest, "acme/catalogue", {
+                "components/hooks/git/guard.py": "import step1\n",
+                "components/hooks/git/step1.py": "import step2\n",
+                "components/hooks/git/step2.py": "import step3\n",
+                "components/hooks/git/step3.py": "X = 1\n"})
+            build(manifest, root, out)
+            fingerprint = load_registry(out)[hook]["provenance"]["fingerprint_sha256"]
+            with open(decisions, "w") as handle:
+                json.dump({hook: {"validated": "conserver", "fingerprint_sha256": fingerprint}}, handle)
+            with mock.patch.object(scan_mod, "MAX_EXPLORED_FILES", 3):
+                report = build(manifest, root, out, decisions_path=decisions)
+            comp = load_registry(out)[hook]
+            self.assertFalse(comp["provenance"]["fingerprint_complete"])
+            self.assertTrue(comp["provenance"]["fingerprint_unexplored"])
+            self.assertIn(hook, report["incomplete_fingerprints"])
+            self.assertIsNone(comp["decision"]["validated"])
+            self.assertIn("incomplète", comp["decision"]["stale_validation"]["reason"])
+
+    def test_verify_rejects_validation_on_incomplete_fingerprint(self):
+        def edit(data):
+            for comp in data["components"]:
+                if comp["decision"]:
+                    comp["provenance"]["fingerprint_complete"] = False
+                    comp["provenance"]["fingerprint_unexplored"] = ["x.py"]
+                    comp["decision"]["validated"] = "conserver"
+                    comp["decision"]["validated_fingerprint_sha256"] = comp["provenance"]["fingerprint_sha256"]
+                    return
+        with self.assertRaises(ValidationError) as ctx:
+            self._tampered(edit_registry=edit)
+        self.assertIn("incomplète", str(ctx.exception))
 
     def test_invalid_socle_component_is_never_a_reference(self):
         with Workdir() as wd:
