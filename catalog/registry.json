@@ -61623,7 +61623,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1025,
+    "score": 0.1026,
     "similar_in_catalog": [],
     "status": "behavior_audit_required"
    },
@@ -64048,7 +64048,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0886,
+    "score": 0.0887,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/games/2048/README.md",
@@ -70221,7 +70221,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1557,
+    "score": 0.1556,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -188816,7 +188816,7 @@
    "metadata_issue": null,
    "name": "socle-zakios",
    "provenance": {
-    "commit": "4c9dc2dbee628d4825fa8b8f62374b43dc4ae8c5",
+    "commit": "2792f30d6390d3ded95e63e2696d713b85f81465",
     "content_sha256": "8b4e62cd2847ca9d0b39c324065c85d7ccee526711a7f0844e90e55b9c5de7a1",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -188865,7 +188865,7 @@
     "similar_in_catalog": [
      {
       "component_id": "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md",
-      "score": 0.4548
+      "score": 0.4554
      }
     ],
     "status": "novelty_to_review"
@@ -188885,7 +188885,7 @@
    "metadata_issue": null,
    "name": "code-reviewer",
    "provenance": {
-    "commit": "4c9dc2dbee628d4825fa8b8f62374b43dc4ae8c5",
+    "commit": "2792f30d6390d3ded95e63e2696d713b85f81465",
     "content_sha256": "ac8ee22665566a0de889db1c370b0afce166e72b430cd31647d3830815171bfe",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -188931,7 +188931,7 @@
     "similar_in_catalog": [
      {
       "component_id": "zakibelm/ZakiOS:variantes/agents/code-reviewer.md",
-      "score": 0.4548
+      "score": 0.4554
      }
     ],
     "status": "novelty_to_review"
@@ -188951,13 +188951,13 @@
    "metadata_issue": null,
    "name": "plan-reviewer",
    "provenance": {
-    "commit": "4c9dc2dbee628d4825fa8b8f62374b43dc4ae8c5",
-    "content_sha256": "e2f1e627b8f0ea744c1e0b58fe39440379efd19321f75c63266475ca755ff850",
+    "commit": "2792f30d6390d3ded95e63e2696d713b85f81465",
+    "content_sha256": "c427e9171a1d53b5968f0ae399efff7073b0c8b1949a2d04d059cc82e40a606b",
     "fingerprint_complete": true,
     "fingerprint_files": [
      "variantes/agents/plan-reviewer.md"
     ],
-    "fingerprint_sha256": "905f8a206c5e423ea6f9312d470d7e017c27a6522a3386d2a2c1e77c82fc59c0",
+    "fingerprint_sha256": "adfe61202c09dafdc819437f0e04f0daeecff21efd5171441d6cfdd76dafdab4",
     "fingerprint_unexplored": [],
     "path": "variantes/agents/plan-reviewer.md",
     "role": "propre",
@@ -189012,7 +189012,7 @@
    "metadata_issue": null,
    "name": "plan-writer",
    "provenance": {
-    "commit": "4c9dc2dbee628d4825fa8b8f62374b43dc4ae8c5",
+    "commit": "2792f30d6390d3ded95e63e2696d713b85f81465",
     "content_sha256": "2031d1a34bd6d1b41b42bc20c1bf951385de3e766ffea769bbf80a53108a5408",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -189073,7 +189073,7 @@
    "metadata_issue": null,
    "name": "run-tests",
    "provenance": {
-    "commit": "4c9dc2dbee628d4825fa8b8f62374b43dc4ae8c5",
+    "commit": "2792f30d6390d3ded95e63e2696d713b85f81465",
     "content_sha256": "4981baf758cb8533284f40c508568c398e9414ba2e0105d84e6b0a1373989185",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -189134,7 +189134,7 @@
    "metadata_issue": null,
    "name": "writing-plans",
    "provenance": {
-    "commit": "4c9dc2dbee628d4825fa8b8f62374b43dc4ae8c5",
+    "commit": "2792f30d6390d3ded95e63e2696d713b85f81465",
     "content_sha256": "6c3790c934b9f634803fa1088627d9b55b701a8c7faa06652cbf73639485eb8e",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -189156,6 +189156,6 @@
    "type": "skill"
   }
  ],
- "manifest_sha256": "4da8b7fc6561bb600d6a4cb70375e6f32c55c9e39b7d85646579417a3aec496a",
+ "manifest_sha256": "eaf2348a025a3d4069615ae9a36fb7c444485fdbfc43359da1b4150ea66977ae",
  "schema_version": "5"
 }
