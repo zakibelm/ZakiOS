@@ -356,12 +356,23 @@ def plan(project, catalog, sources_root, selection):
         return _plan(root, catalog, sources_root, selection)
 
 
-def _journal_notes(root):
-    """Journaux restés en conflit : sauvegardes conservées pour revue humaine."""
-    notes = []
+def _journal_statuses(root):
+    """{transaction: statut} d'après les journaux, sans rien écrire."""
+    out = {}
     for tx in root.listdir(_state(JOURNAL_DIR)):
         raw = root.read(_state(JOURNAL_DIR, tx, "meta.json"))
-        if raw and json.loads(raw.decode("utf-8")).get("status") == "conflict":
+        if raw:
+            out[tx] = json.loads(raw.decode("utf-8")).get("status")
+    return out
+
+
+def _journal_notes(root):
+    """Journaux à connaître : installation interrompue à reprendre, conflits à revoir à la main."""
+    notes = []
+    for tx, status in _journal_statuses(root).items():
+        if status == "started":
+            notes.append("Installation interrompue détectée (%s) : apply la reprendra et l'annulera avant toute autre action." % tx)
+        elif status == "conflict":
             notes.append("Journal %s en conflit : sauvegardes conservées dans %s, à revoir à la main."
                          % (tx, _state(JOURNAL_DIR, tx)))
     return notes
@@ -604,10 +615,13 @@ def _undo(root, tx):
 def _recover_interrupted(root):
     """Une installation interrompue (processus tué) laisse un journal « started » : on l'annule si c'est sans risque."""
     recovered = []
-    for tx in root.listdir(_state(JOURNAL_DIR)):
-        raw = root.read(_state(JOURNAL_DIR, tx, "meta.json"))
-        if raw and json.loads(raw.decode("utf-8")).get("status") == "started":
-            _undo(root, tx)
+    for tx, status in _journal_statuses(root).items():
+        if status == "started":
+            try:
+                _undo(root, tx)
+            except ActivationError as conflict:
+                raise ActivationError("installation bloquée : la reprise de l'installation interrompue %s est impossible. %s"
+                                      % (tx, conflict), conflict.reasons) from conflict
             recovered.append(tx)
     return recovered
 
@@ -618,12 +632,20 @@ def apply(project, catalog, sources_root, selection, expected_plan=None, fault=N
     `expected_plan` : empreinte lue dans l'aperçu ; si le plan a changé depuis, on refuse.
     `fault` : fonction appelée après chaque action (tests d'échec simulé).
     Une première validation sans écriture précède le dossier d'état et le verrou : un refus évident
-    ne laisse rien dans le projet. Renvoie {"transaction", "applied", "unchanged"} ;
+    ne laisse rien dans le projet. Si un journal « started » (installation interrompue) existe, la
+    reprise sécurisée passe en premier : verrou, annulation contrôlée, puis validation normale. Renvoie {"transaction", "applied", "unchanged"} ;
     transaction vaut None quand rien n'a changé.
     """
     with Root(project) as root:
-        first = _plan(root, catalog, sources_root, selection)
-        _check(first, expected_plan)
+        try:
+            interrupted = "started" in _journal_statuses(root).values()
+        except UnsafePath as exc:
+            raise ActivationError("dossier d'état hors du projet, activation refusée : %s" % exc)
+        if not interrupted:
+            # Sans installation interrompue : validation préalable sans écriture.
+            # Avec une installation interrompue, les fichiers déjà écrits paraîtraient « non gérés » :
+            # on reprend d'abord sous verrou, puis on valide.
+            _check(_plan(root, catalog, sources_root, selection), expected_plan)
         lock_fd = root.lock()
         try:
             return _apply_locked(root, catalog, sources_root, selection, expected_plan, fault)

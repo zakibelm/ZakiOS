@@ -558,6 +558,92 @@ class PilotTests(unittest.TestCase):
             self.assertEqual(read(mine, "r"), "écrit en même temps par l'utilisateur\n")
             self.assertFalse(os.path.exists(os.path.join(pilot.project, ".claude/skills")))
 
+    def test_same_selection_resumes_after_interruption_with_old_install_state(self):
+        # fichiers créés + journal « started » + ancien état d'installation : l'état exact signalé par l'audit
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            pilot.apply([SIMPLE])
+            lock_before = read(os.path.join(pilot.project, ".zakios/lock.json"))
+            self._interrupt_install(pilot, [SIMPLE, SKILL])
+            base = os.path.join(pilot.project, ".zakios/journal")
+            statuses = [json.loads(read(os.path.join(base, j, "meta.json")))["status"] for j in os.listdir(base)]
+            self.assertIn("started", statuses)
+            self.assertEqual(read(os.path.join(pilot.project, ".zakios/lock.json")), lock_before)
+            self.assertTrue(os.path.exists(os.path.join(pilot.project, ".claude/skills/demo/SKILL.md")))
+            self.assertTrue(any("interrompue" in n for n in pilot.plan([SIMPLE, SKILL])["notes"]))
+            out = pilot.apply([SIMPLE, SKILL])  # même sélection : doit reprendre, puis installer
+            self.assertEqual(len(out["recovered"]), 1)
+            self.assertTrue(os.path.exists(os.path.join(pilot.project, ".claude/skills/demo/scripts/helper.py")))
+            lock = json.loads(read(os.path.join(pilot.project, ".zakios/lock.json")))
+            self.assertEqual(sorted(lock["components"]), sorted([SIMPLE, SKILL]))
+            statuses = [json.loads(read(os.path.join(base, j, "meta.json")))["status"] for j in os.listdir(base)]
+            self.assertNotIn("started", statuses)
+
+    def test_same_selection_after_interruption_and_user_edit_is_blocked_with_backups_kept(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            pilot.apply([SIMPLE])
+            self._interrupt_install(pilot, [SIMPLE, SKILL])
+            edited = os.path.join(pilot.project, ".claude/skills/demo/SKILL.md")
+            with open(edited, "a") as handle:
+                handle.write("ma retouche\n")
+            with self.assertRaises(ActivationError) as ctx:
+                pilot.apply([SIMPLE, SKILL])
+            self.assertIn("installation bloquée", str(ctx.exception))
+            self.assertIn("ma retouche", read(edited, "r"))
+
+    def _killed_child(self, pilot, selection):
+        """Un vrai processus tué par SIGKILL au milieu d'une installation (aucune exception à rattraper)."""
+        import subprocess
+        import sys
+        code = (
+            "import os, signal, sys\n"
+            "from zakios import activate\n"
+            "real = activate.Root.write_atomic\n"
+            "def dying(self, rel, data, executable=False, **kw):\n"
+            "    real(self, rel, data, executable, **kw)\n"
+            "    if rel.endswith('scripts/helper.py'):\n"
+            "        os.kill(os.getpid(), signal.SIGKILL)\n"
+            "activate.Root.write_atomic = dying\n"
+            "activate.apply(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4:])\n")
+        repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        env = dict(os.environ, PYTHONPATH=repo)
+        proc = subprocess.run([sys.executable, "-c", code, pilot.project, pilot.out, pilot.root] + selection,
+                              env=env, capture_output=True)
+        self.assertEqual(proc.returncode, -9, proc.stderr.decode())
+
+    def test_process_killed_for_real_is_recovered_by_the_next_apply(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            pilot.apply([SIMPLE])
+            lock_before = read(os.path.join(pilot.project, ".zakios/lock.json"))
+            self._killed_child(pilot, [SIMPLE, SKILL])
+            base = os.path.join(pilot.project, ".zakios/journal")
+            statuses = [json.loads(read(os.path.join(base, j, "meta.json")))["status"] for j in os.listdir(base)]
+            self.assertIn("started", statuses)
+            self.assertEqual(read(os.path.join(pilot.project, ".zakios/lock.json")), lock_before)
+            out = pilot.apply([SIMPLE, SKILL])
+            self.assertEqual(len(out["recovered"]), 1)
+            lock = json.loads(read(os.path.join(pilot.project, ".zakios/lock.json")))
+            self.assertEqual(sorted(lock["components"]), sorted([SIMPLE, SKILL]))
+            self.assertEqual(read(os.path.join(pilot.project, ".claude/skills/demo/scripts/helper.py")), b"VALUE = 1\n")
+            self.assertEqual(pilot.apply([SIMPLE, SKILL])["applied"], 0)  # état stable ensuite
+
+    def test_process_killed_for_real_then_user_edit_is_blocked(self):
+        with Workdir() as wd:
+            pilot = Pilot(wd)
+            self._killed_child(pilot, [SIMPLE, SKILL])
+            edited = os.path.join(pilot.project, ".claude/skills/demo/SKILL.md")
+            with open(edited, "a") as handle:
+                handle.write("modification après la mort du processus\n")
+            with self.assertRaises(ActivationError) as ctx:
+                pilot.apply([SIMPLE, SKILL])
+            self.assertIn("installation bloquée", str(ctx.exception))
+            self.assertIn("modification après", read(edited, "r"))
+            base = os.path.join(pilot.project, ".zakios/journal")
+            statuses = [json.loads(read(os.path.join(base, j, "meta.json")))["status"] for j in os.listdir(base)]
+            self.assertIn("conflict", statuses)
+
     def test_unsafe_names_in_a_destination_are_never_followed(self):
         with Workdir() as wd:
             pilot = Pilot(wd)
