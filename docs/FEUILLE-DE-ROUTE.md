@@ -17,8 +17,10 @@ Ordre fixé par l'audit du commit a29d2df (`docs/AUDIT-a29d2df.md`). Chaque éta
 | 4 | Lire les nouveautés candidates avant de les retenir | une nouveauté lexicale n'est pas une nouveauté réelle |
 | 5 | Vérifier les licences des composants retenus | condition pour les copier |
 | 6 | Définir le Socle commun et un test de propagation à l'exécution | prouve que chaque agent reçoit les règles |
-| 7 | Activation par projet : profil, dépendances, aperçu, fichier de verrouillage, retour arrière | passe du catalogue à l'usage |
-| 8 | Intégration continue (tests à chaque push) | empêche les régressions |
+| 7 | Activation par projet : pilote **fait** (aperçu, tout ou rien, retour arrière) ; reste le premier lot réel sur projet jetable | passe du catalogue à l'usage |
+| 8 | Intégration continue : **faite** (tests + `verify`) | empêche les régressions |
+| 9 | Profil de travail, règles de décision, mémoire par projet, délégation, mesure d'utilité (`docs/PROFIL.md`) | fait de ZakiOS ton Socle personnel, pas un simple échantillon |
+| 10 | Lot 1 en variantes ZakiOS : relecteur, planificateur, lanceur de tests | premier composant à ta mesure |
 
 ## Périmètre V1
 

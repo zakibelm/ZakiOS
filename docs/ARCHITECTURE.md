@@ -50,6 +50,10 @@ Exemple relevé : le pack de gardes de `karanb192/claude-code-hooks` regroupe se
 
 Chaque fiche garde sa source, son commit complet, l'empreinte SHA-256 de son contenu et son état de licence (`verified`). Un composant sans licence vérifiée n'est pas copié dans la bibliothèque.
 
-## Implémentation actuelle
+## Implémentation actuelle (moteur 0.5.2)
 
-Seule la couche « Index central » existe : le registre généré par `python3 -m zakios build`. Les autres couches (Socle commun, activation par projet) sont à construire ; voir la feuille de route.
+- **Index central** : registre généré par `python3 -m zakios build`, vérifié par `verify`.
+- **Décisions humaines** : `decisions/validated.json`, `licenses.json`, `annotations.json`, liées à l'empreinte du composant.
+- **Activation par projet (pilote)** : `plan`, `apply`, `rollback` (`docs/ACTIVATION.md`) : aperçu, installation tout ou rien, journal, retour arrière. Éprouvée sur composants fictifs ; premier lot réel en revue (`docs/revues/lot-1.md`).
+- **Intégration continue** : tests et `verify` à chaque push (`.github/workflows/ci.yml`).
+- **Reste à construire** : Socle commun avec test de propagation, profil de travail (`docs/PROFIL.md`), mémoire par projet, mesure d'utilité.
