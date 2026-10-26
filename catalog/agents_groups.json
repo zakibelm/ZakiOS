@@ -1,0 +1,348 @@
+[
+ [
+  {
+   "name": "microsoft-agent-framework-dotnet",
+   "path": "data-ai/microsoft-agent-framework-dotnet.md",
+   "bytes": 3937,
+   "description": "Create, update, refactor, explain or work with code using the .NET version of Microsoft Agent Framework."
+  },
+  {
+   "name": "semantic-kernel-dotnet",
+   "path": "data-ai/semantic-kernel-dotnet.md",
+   "bytes": 2343,
+   "description": "Create, update, refactor, explain or work with code using the .NET version of Semantic Kernel."
+  },
+  {
+   "name": "microsoft-agent-framework-python",
+   "path": "programming-languages/microsoft-agent-framework-python.md",
+   "bytes": 4071,
+   "description": "Create, update, refactor, explain or work with code using the Python version of Microsoft Agent Framework."
+  },
+  {
+   "name": "semantic-kernel-python",
+   "path": "programming-languages/semantic-kernel-python.md",
+   "bytes": 2336,
+   "description": "Create, update, refactor, explain or work with code using the Python version of Semantic Kernel."
+  }
+ ],
+ [
+  {
+   "name": "accessibility-tester",
+   "path": "accessibility/accessibility-tester.md",
+   "bytes": 16750,
+   "description": "Use this agent when conducting comprehensive accessibility audits, WCAG 2.2 compliance assessments, or evaluating UI components and full codebases for barriers "
+  },
+  {
+   "name": "accessibility-tester",
+   "path": "development-tools/accessibility-tester.md",
+   "bytes": 9953,
+   "description": "Use this agent when you need comprehensive accessibility testing, WCAG compliance verification, or assessment of assistive technology support. Specifically:\\"
+  },
+  {
+   "name": "web-accessibility-checker",
+   "path": "web-tools/web-accessibility-checker.md",
+   "bytes": 1408,
+   "description": "Web accessibility compliance specialist. Use PROACTIVELY for WCAG compliance audits, accessibility testing, screen reader compatibility, and inclusive design va"
+  }
+ ],
+ [
+  {
+   "name": "competitive-analyst",
+   "path": "business-marketing/competitive-analyst.md",
+   "bytes": 11986,
+   "description": "Use this agent when you need to analyze direct and indirect competitors, benchmark against market leaders, or develop strategies to strengthen competitive posit"
+  },
+  {
+   "name": "market-researcher",
+   "path": "business-marketing/market-researcher.md",
+   "bytes": 10284,
+   "description": "Use this agent when you need to analyze markets, understand consumer behavior, assess competitive landscapes, and size opportunities to inform business strategy"
+  },
+  {
+   "name": "product-strategist",
+   "path": "business-marketing/product-strategist.md",
+   "bytes": 14647,
+   "description": "Use this agent when you need to synthesize market and competitive inputs into product positioning, a prioritized roadmap, or a go-to-market plan. Specifically:"
+  }
+ ],
+ [
+  {
+   "name": "prompt-engineer",
+   "path": "ai-specialists/prompt-engineer.md",
+   "bytes": 19965,
+   "description": "Use this agent when you need to design, optimize, test, or evaluate prompts for Claude (or other LLMs) in production systems. Specifically:"
+  },
+  {
+   "name": "prompt-engineer",
+   "path": "data-ai/prompt-engineer.md",
+   "bytes": 8282,
+   "description": "|-"
+  }
+ ],
+ [
+  {
+   "name": "legal-advisor",
+   "path": "business-marketing/legal-advisor.md",
+   "bytes": 6379,
+   "description": "Use PROACTIVELY for privacy policies, terms of service, GDPR/CCPA compliance, legal notices, and regulatory documentation. Expert in technology law and data pro"
+  },
+  {
+   "name": "legal-advisor",
+   "path": "expert-advisors/legal-advisor.md",
+   "bytes": 9685,
+   "description": "Use this agent when you need to draft contracts, review compliance requirements, develop IP protection strategies, or assess legal risks for technology business"
+  }
+ ],
+ [
+  {
+   "name": "project-manager",
+   "path": "business-marketing/project-manager.md",
+   "bytes": 11540,
+   "description": "Use this agent when you need to establish project plans, track execution progress, manage risks, control budget/schedule, and coordinate stakeholders across com"
+  },
+  {
+   "name": "scrum-master",
+   "path": "business-marketing/scrum-master.md",
+   "bytes": 13742,
+   "description": "Use when teams need facilitation, process optimization, velocity improvement, or agile ceremony management—especially for sprint planning, retrospectives, imped"
+  }
+ ],
+ [
+  {
+   "name": "blueprint-mode-codex",
+   "path": "data-ai/blueprint-mode-codex.md",
+   "bytes": 6031,
+   "description": "Executes structured workflows with strict correctness and maintainability. Enforces a minimal tool usage policy, never assumes facts, prioritizes reproducible s"
+  },
+  {
+   "name": "blueprint-mode",
+   "path": "data-ai/blueprint-mode.md",
+   "bytes": 10946,
+   "description": "Executes structured workflows (Debug, Express, Main, Loop) with strict correctness and maintainability. Enforces an improved tool usage policy, never assumes fa"
+  }
+ ],
+ [
+  {
+   "name": "data-analyst",
+   "path": "data-ai/data-analyst.md",
+   "bytes": 11375,
+   "description": "Use when you need to extract insights from business data, create dashboards and reports, or perform statistical analysis to support decision-making. Specificall"
+  },
+  {
+   "name": "data-analyst",
+   "path": "deep-research-team/data-analyst.md",
+   "bytes": 6578,
+   "description": "Use this agent when you need quantitative analysis, statistical insights, or data-driven research. This includes analyzing numerical data, identifying trends, c"
+  }
+ ],
+ [
+  {
+   "name": "ms-sql-dba",
+   "path": "data-ai/ms-sql-dba.md",
+   "bytes": 2178,
+   "description": "Work with Microsoft SQL Server databases using the MS SQL extension."
+  },
+  {
+   "name": "postgresql-dba",
+   "path": "data-ai/postgresql-dba.md",
+   "bytes": 1219,
+   "description": "Work with PostgreSQL databases using the PostgreSQL extension."
+  }
+ ],
+ [
+  {
+   "name": "quant-analyst",
+   "path": "data-ai/quant-analyst.md",
+   "bytes": 1258,
+   "description": "Quantitative finance and algorithmic trading specialist. Use PROACTIVELY for financial modeling, trading strategy development, backtesting, risk analysis, and p"
+  },
+  {
+   "name": "quant-analyst",
+   "path": "finance/quant-analyst.md",
+   "bytes": 9930,
+   "description": "Use this agent when you need to develop quantitative trading strategies, build financial models with rigorous mathematical foundations, or conduct advanced risk"
+  }
+ ],
+ [
+  {
+   "name": "devops-engineer",
+   "path": "development-team/devops-engineer.md",
+   "bytes": 23646,
+   "description": "DevOps and infrastructure specialist for CI/CD, deployment automation, and cloud operations. Use PROACTIVELY for pipeline setup, infrastructure provisioning, mo"
+  },
+  {
+   "name": "devops-engineer",
+   "path": "devops-infrastructure/devops-engineer.md",
+   "bytes": 10207,
+   "description": "Use this agent when building or optimizing infrastructure automation, CI/CD pipelines, containerization strategies, and deployment workflows to accelerate softw"
+  }
+ ],
+ [
+  {
+   "name": "frontend-developer",
+   "path": "development-team/frontend-developer.md",
+   "bytes": 13987,
+   "description": "Use when building complete frontend applications across React, Vue, and Angular frameworks requiring multi-framework expertise and full-stack integration. Speci"
+  },
+  {
+   "name": "ui-designer",
+   "path": "development-team/ui-designer.md",
+   "bytes": 8161,
+   "description": "Use this agent when designing visual interfaces, creating design systems, building component libraries, or refining user-facing aesthetics requiring expert visu"
+  }
+ ],
+ [
+  {
+   "name": "architect-reviewer",
+   "path": "development-tools/architect-reviewer.md",
+   "bytes": 11618,
+   "description": "Use this agent when you need to evaluate system design decisions, architectural patterns, and technology choices at the macro level. Use PROACTIVELY before majo"
+  },
+  {
+   "name": "architect-reviewer",
+   "path": "expert-advisors/architect-review.md",
+   "bytes": 3392,
+   "description": "Use this agent to review code for architectural consistency and patterns. Specializes in SOLID principles, proper layering, and maintainability. Examples:"
+  }
+ ],
+ [
+  {
+   "name": "context-manager",
+   "path": "development-tools/context-manager.md",
+   "bytes": 1981,
+   "description": "Context management specialist for multi-agent workflows and long-running tasks. Use PROACTIVELY for complex projects, session coordination, and when context pre"
+  },
+  {
+   "name": "context-manager",
+   "path": "expert-advisors/context-manager.md",
+   "bytes": 11736,
+   "description": "Use for managing shared state, information retrieval, and data synchronization when multiple agents need coordinated access to context and metadata. Specificall"
+  }
+ ],
+ [
+  {
+   "name": "dependency-manager",
+   "path": "development-tools/dependency-manager.md",
+   "bytes": 8774,
+   "description": "Use this agent when you need to audit dependencies for vulnerabilities, resolve version conflicts, optimize bundle sizes, or implement automated dependency upda"
+  },
+  {
+   "name": "dependency-manager",
+   "path": "expert-advisors/dependency-manager.md",
+   "bytes": 3126,
+   "description": "Use this agent to manage project dependencies. Specializes in dependency analysis, vulnerability scanning, and license compliance. Examples:"
+  }
+ ],
+ [
+  {
+   "name": "performance-engineer",
+   "path": "development-tools/performance-engineer.md",
+   "bytes": 9111,
+   "description": "Use this agent when you need to identify and eliminate performance bottlenecks in applications, databases, or infrastructure systems, and when baseline performa"
+  },
+  {
+   "name": "performance-engineer",
+   "path": "performance-testing/performance-engineer.md",
+   "bytes": 1106,
+   "description": "Profile applications, optimize bottlenecks, and implement caching strategies. Handles load testing, CDN setup, and query optimization. Use PROACTIVELY for perfo"
+  }
+ ],
+ [
+  {
+   "name": "test-automator",
+   "path": "development-tools/test-automator.md",
+   "bytes": 9384,
+   "description": "Use this agent when you need to build, implement, or enhance automated test frameworks, create test scripts, or integrate testing into CI/CD pipelines. Specific"
+  },
+  {
+   "name": "test-automator",
+   "path": "performance-testing/test-automator.md",
+   "bytes": 1144,
+   "description": "Create comprehensive test suites with unit, integration, and e2e tests. Sets up CI pipelines, mocking strategies, and test data. Use PROACTIVELY for test covera"
+  }
+ ],
+ [
+  {
+   "name": "azure-verified-modules-bicep",
+   "path": "devops-infrastructure/azure-verified-modules-bicep.md",
+   "bytes": 1602,
+   "description": "Create, update, or review Azure IaC in Bicep using Azure Verified Modules (AVM)."
+  },
+  {
+   "name": "azure-verified-modules-terraform",
+   "path": "devops-infrastructure/azure-verified-modules-terraform.md",
+   "bytes": 2416,
+   "description": "Create, update, or review Azure IaC in Terraform using Azure Verified Modules (AVM)."
+  }
+ ],
+ [
+  {
+   "name": "incident-responder",
+   "path": "devops-infrastructure/incident-responder.md",
+   "bytes": 9097,
+   "description": "Use this agent when an active security breach, service outage, or operational incident requires immediate response, evidence preservation, and coordinated recov"
+  },
+  {
+   "name": "incident-responder",
+   "path": "security/incident-responder.md",
+   "bytes": 1945,
+   "description": "Handles production incidents with urgency and precision. Use IMMEDIATELY when production issues occur. Coordinates debugging, implements fixes, and documents po"
+  }
+ ],
+ [
+  {
+   "name": "security-engineer",
+   "path": "devops-infrastructure/security-engineer.md",
+   "bytes": 33714,
+   "description": "Security infrastructure and compliance specialist. Use PROACTIVELY for security architecture, compliance frameworks, vulnerability management, security automati"
+  },
+  {
+   "name": "security-engineer",
+   "path": "security/security-engineer.md",
+   "bytes": 11149,
+   "description": "Use this agent when implementing comprehensive security solutions across infrastructure, building automated security controls into CI/CD pipelines, or establish"
+  }
+ ],
+ [
+  {
+   "name": "4.1-Beast",
+   "path": "expert-advisors/4.1-Beast.md",
+   "bytes": 11317,
+   "description": "GPT 4.1 as a top-notch coding agent."
+  },
+  {
+   "name": "rust-gpt-4.1-beast-mode",
+   "path": "programming-languages/rust-gpt-4.1-beast-mode.md",
+   "bytes": 14194,
+   "description": "Rust GPT-4.1 Coding Beast Mode for VS Code"
+  }
+ ],
+ [
+  {
+   "name": "episode-orchestrator",
+   "path": "podcast-creator-team/episode-orchestrator.md",
+   "bytes": 2917,
+   "description": "Episode workflow orchestrator. Use PROACTIVELY for managing episode-based workflows that coordinate multiple specialized agents in sequence, with payload valida"
+  },
+  {
+   "name": "project-supervisor-orchestrator",
+   "path": "podcast-creator-team/project-supervisor-orchestrator.md",
+   "bytes": 2805,
+   "description": "Project workflow orchestrator. Use PROACTIVELY for managing complex multi-step workflows that coordinate multiple specialized agents in sequence with intelligen"
+  }
+ ],
+ [
+  {
+   "name": "java-architect",
+   "path": "programming-languages/java-architect.md",
+   "bytes": 10530,
+   "description": "Use this agent when designing enterprise Java architectures, migrating Spring Boot applications, or establishing microservices patterns for scalable cloud-nativ"
+  },
+  {
+   "name": "spring-boot-engineer",
+   "path": "programming-languages/spring-boot-engineer.md",
+   "bytes": 9143,
+   "description": "Use this agent when building enterprise Spring Boot 3+ applications requiring microservices architecture, cloud-native deployment, or reactive programming patte"
+  }
+ ]
+]
