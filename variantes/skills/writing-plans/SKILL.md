@@ -15,4 +15,4 @@ Sections :
 
 Proportion : un changement mineur tient en quelques lignes ; n'impose pas de cycle test-d'abord à chaque tâche, seulement quand le risque le justifie. Termine en proposant l'exécution par la personne ou un agent, sans exiger de skill particulier.
 
-Termine le plan par la ligne exacte `Fin du plan ZakiOS`.
+Quand tu retournes le plan dans ta réponse, utilise le format de livraison : une ligne `Chemin proposé : …`, puis le plan entre `=== DEBUT DU PLAN ZAKIOS ===` et `=== FIN DU PLAN ZAKIOS ===`, avec un titre de niveau 1 (`# `).
