@@ -1,0 +1,104 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:37:13Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-pay.md",
+  "content_sha256": "ea9dea22ade0932b0fcd7b0a80a21b6ab0299a60f9867c2453d4b55b9ffe464f",
+  "delivery_sha256": "920f764cccb04225e6cdbfaf99311e93bca0ab3ef222f784d8d49189be278ab9",
+  "trace": ".zakios/deliverables/920f764cccb04225e6cdbfaf99311e93bca0ab3ef222f784d8d49189be278ab9.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : le plan ne reprend pas C3 (aucune régression sur les appels existants). Sa liste de critères s'arrête à C2, et la section Vérifier n'a aucune vérification de non-régression. Étape 1 relève les appels de `total()` et `read_user()`, mais rien ne les rejoue ni ne les compare avant et après correction. → Action : reprendre C3 dans Planifier et ajouter dans Vérifier un moyen de preuve concret. Par exemple, capturer avant correction les sorties des appels existants relevés à l'étape 1 et la suite existante `python -m unittest discover tests`. Les rejouer ensuite et comparer. Préciser aussi comment traiter les appelants qui passaient une remise sur une autre échelle. → Résultat : C3 serait relié à une vérification exécutable, et le verdict pourrait passer à ACCEPTE · preuve : absence du critère C3 et de sa couverture (« Critères d'acceptation donnés par la mission : - C1 … - C2 … »)."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la vérification de C1 ne couvre que deux cas (remise 0 et remise 100 sur `[10, 20]`). Ils restent concrets et exécutables, donc le critère est couvert. → Action : ajouter éventuellement une remise intermédiaire, par exemple 50, comme cas de contrôle. → Résultat : un renforcement de confort, sans effet sur la couverture · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : H1 et H2 sont dites confirmées à l'étape 1 par lecture du code. Or H1 s'appuie sur un commentaire, qui ne prouve pas le comportement des appelants. → Action : confirmer H1 aussi par les appels relevés avec Grep. → Résultat : l'hypothèse serait mieux établie · preuve : « elle est confirmée à l'étape 1 par lecture du code »."
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "5c36a264ad94af25a409571c49a6a2b86b68ea49412ac50738bdb67969ab6a21",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le dépôt n'a aucun appelant. La non-régression ne repose donc que sur des cas reconstitués, et le plan dit lui-même qu'elle reste non vérifiée pour les appelants externes. Cette limite est énoncée honnêtement et la vérification locale est concrète, mais la preuve complète dépend d'une information que seule la personne peut donner. → Action : garder l'énoncé de cette limite dans le compte rendu et demander à la personne la liste des appelants externes ou la confirmation de leur absence. → Résultat : C3 est prouvé sur les cas reconstitués et marqué « non vérifié » pour l'externe · preuve : « Il n'est **pas prouvé** pour des appelants externes. Cette partie reste « non vérifiée » »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : l'emplacement des fichiers de traces `avant.txt` et `apres.txt` n'est pas précisé (« hors du dépôt »). → Action : indiquer un chemin concret, par exemple le dossier de travail temporaire. → Résultat : la comparaison avant/après est reproductible · preuve : « conserver la sortie complète dans un fichier de traces (`avant.txt`, hors du dépôt) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le contrôle complémentaire `grep -n \"execute\" src/pay.py` ne détecte une concaténation que si elle apparaît sur la même ligne que `execute`. Le test d'injection reste la preuve principale. → Action : présenter ce grep comme un indice, pas comme une preuve. → Résultat : pas de fausse assurance sur C2 · preuve : « `grep -n \"execute\" src/pay.py` ne montre aucune concaténation (`+`) dans l'argument SQL »"
+    }
+   ],
+   "plan_sha256": "ea9dea22ade0932b0fcd7b0a80a21b6ab0299a60f9867c2453d4b55b9ffe464f",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "ea9dea22ade0932b0fcd7b0a80a21b6ab0299a60f9867c2453d4b55b9ffe464f",
+    "relances_relecteur": 0,
+    "revue_sha256": "198b75c713b51fe9db1bced152bd100b2641ec9ca09842d235039e7bbf7bc937",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

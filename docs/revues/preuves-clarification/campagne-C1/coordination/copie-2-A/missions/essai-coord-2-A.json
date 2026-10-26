@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:41:00Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "4a0e025fa5e6bfae04dcaa91d0211391cccc705f4b5015788e9dd7eb80555ac1",
+  "delivery_sha256": "cfe00c3c6854f4bf878ad056a6a0afc9639275142fa0650ec2b69016200e615d",
+  "trace": ".zakios/deliverables/cfe00c3c6854f4bf878ad056a6a0afc9639275142fa0650ec2b69016200e615d.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : le critère C3 (aucune régression sur les appels existants) est absent de la section Planifier, qui ne reprend que C1 et C2. Aucune vérification ne le relie à un moyen de preuve. L'étape 1 relève les appels de `total()` et `read_user()`, mais aucune vérification ne les rejoue après correction. La suite complète `python -m unittest discover tests` n'est lancée qu'avant correction, pour constater des échecs, et pas après. → Action : reprendre C3 dans Planifier. Ajouter dans Vérifier une commande concrète, par exemple `python -m unittest discover tests` après correction avec 0 échec attendu, et un contrôle des appels relevés à l'étape 1 (signature et valeur de retour inchangées hors défauts corrigés). Prévoir aussi un état de référence des tests existants avant correction. → Résultat : C3 deviendrait mesurable et prouvable ; il est aujourd'hui non prouvable. · preuve : absence du critère C3 dans « Critères d'acceptation donnés par la mission : C1, C2 » et de toute vérification de non-régression dans la section Vérifier."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : `total()` est corrigé en `sum(prices) * (1 - discount / 100)`. Le test de la borne 0 vérifie `== 30` et celui de la borne 100 vérifie `== 0`. Avec des floats, une comparaison d'égalité stricte peut être fragile. Le plan ne précise pas non plus le comportement hors de 0-100. → Action : utiliser `assertAlmostEqual` si des floats sont possibles (H2), et préciser si les valeurs hors bornes sont rejetées ou hors périmètre. → Résultat : test plus robuste, périmètre explicite. · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'étape 3 prévoit que `test_remise` et `test_injection` échouent sur le code d'origine. Le plan ne dit pas quoi faire si l'un d'eux réussit à tort, ce qui voudrait dire que le test ne détecte rien. → Action : ajouter dans Agir que si un test passe avant correction, il faut le corriger avant de poursuivre. → Résultat : la preuve de détection reste fiable. · preuve : « `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts) »."
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "17dd75ad49898f754515930c5a7a576c5dd3384ac6528f448a216631c18914b4",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le plan dit que `read_user` « renvoie 0 ligne » ou « 1 ligne », mais le correctif renvoie `db.execute(...)`, c'est-à-dire un curseur sqlite et non une liste de lignes. → Action : préciser dans les tests que le résultat est lu avec `fetchall()` avant de compter les lignes. → Résultat : l'assertion est sans ambiguïté et le type de retour reste inchangé. · preuve : « Il vérifie que `read_user(db, \"' OR '1'='1\")` renvoie 0 ligne et que `read_user(db, 'Alice')` en renvoie 1. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la preuve de non-régression se limite au dépôt, car les appelants extérieurs ne sont pas vérifiables. Le plan le signale (H4) et laisse la confirmation à la personne. → Action : demander à la personne de confirmer l'absence d'appelants externes avant la livraison. → Résultat : la limite de la preuve reste explicite, et ce qui est attendu reste distinct de ce qui est vérifié. · preuve : « La preuve de C3 est donc limitée au dépôt (voir H4). »"
+    }
+   ],
+   "plan_sha256": "4a0e025fa5e6bfae04dcaa91d0211391cccc705f4b5015788e9dd7eb80555ac1",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "4a0e025fa5e6bfae04dcaa91d0211391cccc705f4b5015788e9dd7eb80555ac1",
+    "relances_relecteur": 0,
+    "revue_sha256": "0e42f6177743f29f628c91f8b651569ff78a0d82c823480666acbfee94ad0c6e",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

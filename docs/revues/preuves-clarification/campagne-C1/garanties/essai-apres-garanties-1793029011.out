@@ -1,0 +1,11 @@
+inedit | attendu: accepte | issue: accepte | tours: 1 | verdicts: ['ACCEPTE']
+non_resoluble | attendu: clarification_requise | issue: clarification_requise | tours: 1 | verdicts: ['CLARIFICATION']
+non_resoluble_2 | attendu: plafond_atteint | issue: clarification_requise | tours: 1 | verdicts: ['CLARIFICATION']
+contradictoire_2 | attendu: clarification_requise | issue: clarification_requise | tours: 1 | verdicts: ['CLARIFICATION']
+temoin_resoluble | attendu: accepte | issue: clarification_requise | tours: 1 | verdicts: ['CLARIFICATION']
+ÉCHEC :
+ - non_resoluble_2 : issue clarification_requise, attendu plafond_atteint
+ - non résoluble : 3 plans et 3 revues attendus
+ - non résoluble : verdicts ['CLARIFICATION']
+ - temoin_resoluble : issue clarification_requise, attendu accepte
+ - temoin_resoluble : appels après la clarification

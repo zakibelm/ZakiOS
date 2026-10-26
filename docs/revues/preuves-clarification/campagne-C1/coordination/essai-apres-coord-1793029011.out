@@ -1,0 +1,20 @@
+{
+ "echecs": [
+  "passage 1 B : revue non liée au plan examiné",
+  "passage 1 B : correction non aboutie (issue erreur_technique, tours 2)",
+  "passage 1 B : mission non acceptée (erreur_technique)"
+ ],
+ "steps": {
+  "installation": {
+   "appliques": 5
+  },
+  "revue_falsifiee_rejetee": true
+ }
+}
+passage 1 {'A': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'B': ('erreur_technique', 2, ['A_CORRIGER', None]), 'temoin': ('accepte', 1, ['ACCEPTE']), 'M4': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'naturel': ('accepte', 1, ['ACCEPTE'])}
+passage 2 {'A': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'B': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'temoin': ('accepte', 1, ['ACCEPTE']), 'M4': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE'])}
+passage 3 {'A': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'B': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE']), 'temoin': ('accepte', 1, ['ACCEPTE']), 'M4': ('accepte', 2, ['A_CORRIGER', 'ACCEPTE'])}
+ÉCHEC :
+ - passage 1 B : revue non liée au plan examiné
+ - passage 1 B : correction non aboutie (issue erreur_technique, tours 2)
+ - passage 1 B : mission non acceptée (erreur_technique)

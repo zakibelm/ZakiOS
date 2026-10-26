@@ -1,0 +1,916 @@
+{
+  "passes": [
+    {
+      "passage": 1,
+      "A": {
+        "issue": "accepte",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "mineur",
+            "mineur"
+          ],
+          [
+            "mineur",
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-paiement-pay.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Glob",
+              "Grep",
+              "Read",
+              "Glob"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-paiement-pay.md",
+          "delivery_sha256": "920f764cccb04225e6cdbfaf99311e93bca0ab3ef222f784d8d49189be278ab9",
+          "content_sha256": "ea9dea22ade0932b0fcd7b0a80a21b6ab0299a60f9867c2453d4b55b9ffe464f",
+          "trace": ".zakios/deliverables/920f764cccb04225e6cdbfaf99311e93bca0ab3ef222f784d8d49189be278ab9.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "B": {
+        "issue": "erreur_technique",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          null
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "mineur",
+            "mineur"
+          ],
+          null
+        ],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Glob",
+              "Read",
+              "Grep"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": null
+      },
+      "temoin": {
+        "issue": "accepte",
+        "tours": 1,
+        "verdicts": [
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-paiement-remise.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-paiement-remise.md",
+          "delivery_sha256": "7d0e65659bd3f6bbb19faa5ee5e617e43e9e601202deb2117720a5684b31fed0",
+          "content_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+          "trace": ".zakios/deliverables/7d0e65659bd3f6bbb19faa5ee5e617e43e9e601202deb2117720a5684b31fed0.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "M4": {
+        "issue": "accepte",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "majeur",
+            "mineur",
+            "mineur"
+          ],
+          [
+            "mineur",
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-paiement.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Read",
+              "Grep",
+              "Glob"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-paiement.md",
+          "delivery_sha256": "3eafb6ba5da12ba19494f17dd1762cd9edfd687d30223172f8369e79047647b6",
+          "content_sha256": "d27388b9eb4c3f91c8d20ef85211bbcbde01179579067f39442b231c0c474133",
+          "trace": ".zakios/deliverables/3eafb6ba5da12ba19494f17dd1762cd9edfd687d30223172f8369e79047647b6.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "naturel": {
+        "issue": "accepte",
+        "tours": 1,
+        "verdicts": [
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "mineur",
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-pay.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Read",
+              "Glob",
+              "Grep",
+              "Glob"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-pay.md",
+          "delivery_sha256": "0164472fea0b91ba04f549becdcd6f015fa1db0b10fc43d91a726f3a710dfc97",
+          "content_sha256": "10874cde02a2a4b90c36cf58cb91c2dc9d0c64fac7ad83443ed31c938c449a85",
+          "trace": ".zakios/deliverables/0164472fea0b91ba04f549becdcd6f015fa1db0b10fc43d91a726f3a710dfc97.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        },
+        "note": "écart naturel rapporté, non exigé"
+      }
+    },
+    {
+      "passage": 2,
+      "A": {
+        "issue": "accepte",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "mineur",
+            "mineur"
+          ],
+          [
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-module-paiement.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Glob",
+              "Read",
+              "Grep",
+              "Glob"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+          "delivery_sha256": "cfe00c3c6854f4bf878ad056a6a0afc9639275142fa0650ec2b69016200e615d",
+          "content_sha256": "4a0e025fa5e6bfae04dcaa91d0211391cccc705f4b5015788e9dd7eb80555ac1",
+          "trace": ".zakios/deliverables/cfe00c3c6854f4bf878ad056a6a0afc9639275142fa0650ec2b69016200e615d.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "B": {
+        "issue": "accepte",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "mineur",
+            "mineur"
+          ],
+          [
+            "mineur",
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-module-paiement.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Glob",
+              "Read",
+              "Grep"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+          "delivery_sha256": "9d4ffc501b6e83f26bdec195e0dee1f6d6e5943ca8f7f1a89e2a9225ab3b3ef0",
+          "content_sha256": "56f0f4f6d4ba52554b7af39bbb1233fd79dc84342452a0fa71e0e1393e732847",
+          "trace": ".zakios/deliverables/9d4ffc501b6e83f26bdec195e0dee1f6d6e5943ca8f7f1a89e2a9225ab3b3ef0.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "temoin": {
+        "issue": "accepte",
+        "tours": 1,
+        "verdicts": [
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-paiement-remise.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-paiement-remise.md",
+          "delivery_sha256": "7f20132379d46413bf8f39807557ae00581edcdd551499f2bd32976e41d88c0e",
+          "content_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+          "trace": ".zakios/deliverables/7f20132379d46413bf8f39807557ae00581edcdd551499f2bd32976e41d88c0e.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "M4": {
+        "issue": "accepte",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "mineur",
+            "mineur"
+          ],
+          [
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-module-paiement.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Glob",
+              "Read",
+              "Grep"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+          "delivery_sha256": "a26d8bc0748dd70cf58886b4aecff271b9b7315d628e0b4871e4c2195e979b64",
+          "content_sha256": "01945cc754c758d504d05094b1d9df0f5062aebc4ae227483a5993ad4c430d52",
+          "trace": ".zakios/deliverables/a26d8bc0748dd70cf58886b4aecff271b9b7315d628e0b4871e4c2195e979b64.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      }
+    },
+    {
+      "passage": 3,
+      "A": {
+        "issue": "accepte",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "mineur"
+          ],
+          [
+            "mineur",
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-module-paiement.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Glob",
+              "Read",
+              "Grep"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+          "delivery_sha256": "facdeed9766892b8d9127e8834d69f42c5857609d51bda6361886054af8346fd",
+          "content_sha256": "6ef40d4fcafafb2b9b7f2293f9bc785c563a59f4002a401c3cf7553f4eeee94f",
+          "trace": ".zakios/deliverables/facdeed9766892b8d9127e8834d69f42c5857609d51bda6361886054af8346fd.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "B": {
+        "issue": "accepte",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "mineur",
+            "mineur"
+          ],
+          [
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-module-paiement.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Glob",
+              "Read",
+              "Grep"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+          "delivery_sha256": "4062893f36929182e25ddf304834a8b3960435c6d7ff01511dcd28a57d60a283",
+          "content_sha256": "fdaaa498422177083385b147c263b74b5d825f4ae827429fff0879feca1e5235",
+          "trace": ".zakios/deliverables/4062893f36929182e25ddf304834a8b3960435c6d7ff01511dcd28a57d60a283.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "temoin": {
+        "issue": "accepte",
+        "tours": 1,
+        "verdicts": [
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "mineur",
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-paiement-remise.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-paiement-remise.md",
+          "delivery_sha256": "978de97f5d41f3b80914305da1f1e3fc5d4d89a51ed53231bd387cceb6d16792",
+          "content_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+          "trace": ".zakios/deliverables/978de97f5d41f3b80914305da1f1e3fc5d4d89a51ed53231bd387cceb6d16792.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      },
+      "M4": {
+        "issue": "accepte",
+        "tours": 2,
+        "verdicts": [
+          "A_CORRIGER",
+          "ACCEPTE"
+        ],
+        "gravites": [
+          [
+            "majeur",
+            "majeur",
+            "mineur",
+            "mineur"
+          ],
+          [
+            "mineur",
+            "mineur",
+            "mineur"
+          ]
+        ],
+        "changements": {
+          "crees": [
+            "docs/plans/2026-10-26-correction-paiement.md"
+          ],
+          "supprimes": [],
+          "modifies": []
+        },
+        "appels": [
+          {
+            "role": "plan-writer",
+            "injecte": true
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-writer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [
+              "Read",
+              "Glob",
+              "Read",
+              "Grep"
+            ],
+            "modele": "claude-sonnet-5-5"
+          },
+          {
+            "role": "plan-reviewer",
+            "outils": [
+              "Read",
+              "Glob",
+              "Grep"
+            ],
+            "utilises": [],
+            "modele": "claude-sonnet-5-5"
+          }
+        ],
+        "livraison": {
+          "chemin": "docs/plans/2026-10-26-correction-paiement.md",
+          "delivery_sha256": "48ebe10dc751c975a189fe77d6da6818e80290ca0c84a620af00a3ac6df1a296",
+          "content_sha256": "af11075aac00f34f69756b1912877aa26d6ec50c838406b5d7ea9f01121b79f7",
+          "trace": ".zakios/deliverables/48ebe10dc751c975a189fe77d6da6818e80290ca0c84a620af00a3ac6df1a296.json",
+          "statut": "enregistre",
+          "second": "deja_enregistre"
+        }
+      }
+    }
+  ],
+  "echecs": [
+    "passage 1 B : revue non liée au plan examiné",
+    "passage 1 B : correction non aboutie (issue erreur_technique, tours 2)",
+    "passage 1 B : mission non acceptée (erreur_technique)"
+  ],
+  "steps": {
+    "installation": {
+      "appliques": 5
+    },
+    "revue_falsifiee_rejetee": true
+  }
+}

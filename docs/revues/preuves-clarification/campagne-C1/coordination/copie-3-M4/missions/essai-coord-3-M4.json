@@ -1,0 +1,109 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:46:00Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement.md",
+  "content_sha256": "af11075aac00f34f69756b1912877aa26d6ec50c838406b5d7ea9f01121b79f7",
+  "delivery_sha256": "48ebe10dc751c975a189fe77d6da6818e80290ca0c84a620af00a3ac6df1a296",
+  "trace": ".zakios/deliverables/48ebe10dc751c975a189fe77d6da6818e80290ca0c84a620af00a3ac6df1a296.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « structure PDCA » · Problème : la phase « Vérifier » manque comme section. Le plan contient Planifier, Exécuter et Agir, et le seul contrôle (étape 4) est dans « Exécuter ». Action : ajouter une section « Vérifier » qui compare chaque critère C1 à C3 à la sortie exécutée de sa vérification. Résultat : attendu, la structure PDCA est complète. Rien n'est vérifié à ce stade. · preuve : absence de section « Vérifier » (titres présents : « Planifier », « Exécuter », « Agir »)."
+    },
+    {
+     "gravite": "majeur",
+     "texte": "critère « C1, C2, C3 » · Problème : l'unique exécution des tests (étape 4) a lieu avant toute correction, et les étapes 5 et 6 (corrections) sont les dernières. Aucune étape ne relance les tests après correction. Les trois critères sont donc sans preuve : C1 (bornes 0 et 100), C2 (requête paramétrée) et C3 (non-régression). L'ordre des étapes rend la vérification impossible. Action : ajouter après l'étape 6 un lancement de `python -m unittest discover tests` avec le résultat attendu pour chaque critère. `test_remise`, `test_injection` et `test_appels_existants` doivent passer. Résultat : attendu, chaque critère a une preuve exécutable. Non vérifié à ce stade. · preuve : « 4. Lancer `python -m unittest discover tests` sur le code d'origine, avant toute correction » ; dernière étape : « 6. Corriger `read_user()` »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : `test_injection` n'indique pas la charge d'injection utilisée ni le résultat attendu. Seule la base de deux lignes `Alice` et `Bob` est décrite. Action : préciser une entrée du type `' OR '1'='1` et l'attendu (aucune ligne retournée, ou la seule ligne exacte). Résultat : attendu, le test détecte l'injection sans ambiguïté. Non vérifié. · preuve : « base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob` »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : les appels existants sont testés uniquement avec une remise nulle. Action : ajouter si possible un appel existant avec remise non nulle, ou justifier ce choix. Résultat : attendu, la non-régression est mieux bornée. Non vérifié. · preuve : « les appels relevés à l'étape 1, avec remise nulle »."
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "couverture": {
+     "C1": "non_couvert",
+     "C2": "non_couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 1,
+    "revue_sha256": "9594d02b2542329d2c8da08a58270b2e8ec866339eea84cd0ad58b5fae261dd3",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le plan restreint « appels existants » à `total(prices, 0)` et `read_user(db, \"Alice\")`, car le dépôt n'a aucun appelant. Cette lecture n'est pas confirmée par la personne. → Action : garder la mention « décision à valider » et obtenir la réponse à Q2 avant de clore C3. → Résultat : la non-régression est prouvée sur le contrat observable. Elle ne l'est pas pour d'éventuels appelants hors dépôt, ce que le plan dit lui-même. · preuve : « Comme il n'existe aucun appelant, \"appels existants\" désigne ici le contrat observable du code d'origine dans les cas où il est correct »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 2 dit que `tests/test_remise.py` importe depuis `src/pay.py` « via `sys.path` ou `PYTHONPATH=src` ». Le choix reste ouvert, alors que la commande de l'étape 5 (`python -m unittest discover tests`) ne fixe pas `PYTHONPATH`. → Action : fixer un seul mécanisme, par exemple `sys.path.insert` dans chaque fichier de test, pour que la commande de vérification s'exécute telle quelle. → Résultat : les étapes 5 et 8 sont reproductibles sans variable d'environnement. · preuve : « qui importe `total` depuis `src/pay.py` (via `sys.path` ou `PYTHONPATH=src`) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : la relecture de `git diff src/pay.py` pour constater l'absence de concaténation est un contrôle visuel, sans commande de recherche. → Action : ajouter un contrôle comme `grep -n \"WHERE name\" src/pay.py`, avec la sortie attendue. → Résultat : la preuve de paramétrage est reproductible. · preuve : « La requête contient `?` et aucune concaténation de `name`. »"
+    }
+   ],
+   "plan_sha256": "af11075aac00f34f69756b1912877aa26d6ec50c838406b5d7ea9f01121b79f7",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "af11075aac00f34f69756b1912877aa26d6ec50c838406b5d7ea9f01121b79f7",
+    "relances_relecteur": 0,
+    "revue_sha256": "4d701382feb943c5673be46be56566123c02ff76afe64123d0acac0fb29483c8",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

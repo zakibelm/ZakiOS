@@ -1,0 +1,104 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:41:56Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "56f0f4f6d4ba52554b7af39bbb1233fd79dc84342452a0fa71e0e1393e732847",
+  "delivery_sha256": "9d4ffc501b6e83f26bdec195e0dee1f6d6e5943ca8f7f1a89e2a9225ab3b3ef0",
+  "trace": ".zakios/deliverables/9d4ffc501b6e83f26bdec195e0dee1f6d6e5943ca8f7f1a89e2a9225ab3b3ef0.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 est « Vérifier que le code est de bonne qualité », sans commande, test ni sortie attendue. Le critère « aucune régression sur les appels existants » n'a donc aucun moyen de preuve concret dans la section Vérifier. → Action : remplacer par une commande exécutable, par exemple `python -m unittest tests.test_appels_existants` avec la sortie attendue (tests OK, valeurs égales à la somme des prix à remise nulle). Ajouter aussi `python -m unittest discover tests` complet après correction. → Résultat : C3 devient mesurable et prouvable · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le test `test_appels_existants` est prévu à l'étape 3 et lancé à l'étape 4, mais la section Vérifier ne le reprend pas. De plus, les appels existants avec remise non nulle ne sont pas couverts, alors que la sémantique de la remise change. → Action : après la correction du point précédent, ajouter si des appels relevés utilisent une remise non nulle un cas avec la valeur attendue recalculée à la main, et signaler ce changement de comportement. → Résultat : le risque de régression sur ces appels est visible · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : les valeurs attendues de `total([10, 20], 100) == 0` sont comparées en flottant, ce qui peut être fragile pour d'autres valeurs. → Action : utiliser `assertAlmostEqual` pour les cas non entiers. → Résultat : test plus robuste · preuve : « `total([10, 20], 100) == 0` »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "a4ec039958afdf850e536d4a11f44ccbd9313f0cdd6b379f4d27efbeca2221e5",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la preuve de non-régression repose sur des cas représentatifs écrits par le rédacteur, car aucun appelant réel n'est connu (hypothèse H3), et le plan le reconnaît. → Action : conserver la mention de cette limite dans le compte rendu, comme prévu dans « Limite connue ». → Résultat : C3 est annoncé comme prouvé sur les cas listés seulement, pas sur d'éventuels appelants externes · preuve : « Limite connue : C3 est prouvé sur les cas listés. Il ne l'est pas sur d'éventuels appelants hors du dépôt (H3). »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 4 attend que le cas intermédiaire échoue avant correction, mais le plan ne précise pas la valeur calculée à la main pour `total([10.10, 20.20], 33.3)`. → Action : indiquer la valeur attendue (environ 20.2 si on arrondit à 7 décimales) dans le test avant de le lancer. → Résultat : le test est reproductible et sans ambiguïté · preuve : « `total([10.10, 20.20], 33.3)` est comparé à une valeur recalculée à la main »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le motif de Grep `\"\\s*\\+\\s*name` ne détecte pas toutes les formes de concaténation (f-string, `%`, `.format`). → Action : ajouter ces formes au contrôle complémentaire, ou s'en tenir au test d'injection, qui reste la preuve principale. → Résultat : le contrôle complémentaire est plus complet · preuve : « un Grep dans `src/pay.py` ne doit trouver aucune concaténation de `name` dans la requête SQL (motif `\"\\s*\\+\\s*name`) »"
+    }
+   ],
+   "plan_sha256": "56f0f4f6d4ba52554b7af39bbb1233fd79dc84342452a0fa71e0e1393e732847",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "56f0f4f6d4ba52554b7af39bbb1233fd79dc84342452a0fa71e0e1393e732847",
+    "relances_relecteur": 0,
+    "revue_sha256": "c3c8cad66f6d3a8423f6b93da3b7331930c28fcadfc789b4c620d9b5cc206285",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

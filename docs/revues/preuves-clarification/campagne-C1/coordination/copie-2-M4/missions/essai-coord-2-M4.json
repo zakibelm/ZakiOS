@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:42:55Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "01945cc754c758d504d05094b1d9df0f5062aebc4ae227483a5993ad4c430d52",
+  "delivery_sha256": "a26d8bc0748dd70cf58886b4aecff271b9b7315d628e0b4871e4c2195e979b64",
+  "trace": ".zakios/deliverables/a26d8bc0748dd70cf58886b4aecff271b9b7315d628e0b4871e4c2195e979b64.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C1, C2, C3 » · Problème : la phase PDCA « Vérifier » manque comme section. Le plan ne contient que Planifier, Exécuter et Agir. Le seul lancement de `python -m unittest discover tests` (étape 4) a lieu avant les corrections, donc aucune exécution après correction ne prouve C1, C2 ni C3. Cette exécution après correction n'est prévue dans aucune section. → Action : ajouter une section « Vérifier » qui lance la suite après les étapes 5 et 6. Elle doit aussi comparer les résultats aux critères C1, C2 et C3, avec la sortie attendue pour chacun. Cette sortie attendue est : `test_remise`, `test_injection` et `test_appels_existants` passent tous. → Résultat : attendu : chaque critère est relié à une preuve exécutée après correction. Vérifié : non, car aucune exécution n'a eu lieu à ce stade. · preuve : absence de section « Vérifier » ; critères attendus C1, C2 et C3 ; couverture manquante : exécution après correction."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : H2 (prix int ou float) est dite confirmée « par les appels relevés », mais la valeur attendue de `test_appels_existants` dépend d'appels dont le contenu n'est connu qu'à l'étape 1. → Action : préciser que les cas de l'étape 3 sont fixés après la lecture de l'étape 1. → Résultat : attendu : référence de non-régression fiable. Vérifié : non. · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'étape 4 suppose que `test_injection` échoue sur le code d'origine. Cela dépend de la forme actuelle de `read_user()`, que le plan ne confirme pas. → Action : indiquer que l'échec attendu est une hypothèse, vérifiée à l'étape 4. → Résultat : attendu : test qui détecte le défaut. Vérifié : non. · preuve : « `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts) »."
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 0,
+    "revue_sha256": "ee2f965261710fdf1cb2fb0adf1052d610d4db26c2281e44507569aa5b0af985",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le dépôt ne contient aucun appel existant, donc la preuve de non-régression repose sur des cas inventés. Le plan le déclare, mais la preuve reste limitée. → Action : garder la limite déclarée dans le compte rendu et demander à la personne la liste des appelants externes si elle existe. → Résultat : la portée réelle de C3 est connue de la personne · preuve : « C3 ne couvre que les cas de l'étape 2. Si aucun appel réel n'existe dans le dépôt, C3 ne prouve pas l'absence de régression chez des appelants externes. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : l'étape 2 renvoie à « l'étape 3 » pour les cas à fixer, alors que ces cas sont créés à l'étape 3 et fixés à l'étape 2. La référence est circulaire et prête à confusion. → Action : remplacer par « les cas de l'étape 3 seront fixés ici » ou corriger le numéro. → Résultat : l'ordre des étapes est sans ambiguïté · preuve : « Fixer les cas de l'étape 3 à partir de cette liste, avant d'écrire `test_appels_existants`. »"
+    }
+   ],
+   "plan_sha256": "01945cc754c758d504d05094b1d9df0f5062aebc4ae227483a5993ad4c430d52",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "01945cc754c758d504d05094b1d9df0f5062aebc4ae227483a5993ad4c430d52",
+    "relances_relecteur": 0,
+    "revue_sha256": "b16d1b413ba2808e31f39945c1f1545d04e5fbc6e14186a1f22501e9bcbe19c7",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

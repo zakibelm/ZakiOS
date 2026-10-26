@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:45:03Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "fdaaa498422177083385b147c263b74b5d825f4ae827429fff0879feca1e5235",
+  "delivery_sha256": "4062893f36929182e25ddf304834a8b3960435c6d7ff01511dcd28a57d60a283",
+  "trace": ".zakios/deliverables/4062893f36929182e25ddf304834a8b3960435c6d7ff01511dcd28a57d60a283.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 n'a aucun moyen de preuve concret. « Vérifier que le code est de bonne qualité » ne dit ni commande ni sortie attendue, et ne mesure pas l'absence de régression sur les appels existants. Le critère C3 reste donc non prouvable dans la section Vérifier. → Action : remplacer par une commande précise, par exemple `python -m unittest tests.test_appels_existants`, avec la sortie attendue (tous les tests passent, valeurs identiques à la référence de l'étape 4). Ajouter aussi `python -m unittest discover tests` pour l'ensemble. → Résultat : C3 devient mesurable et exécutable. · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le test `test_appels_existants` est créé à l'étape 3 et sert de référence à l'étape 4, mais la section Vérifier ne l'utilise pas. → Action : relier explicitement ce test à C3 dans Vérifier. → Résultat : la référence préparée en amont est exploitée comme preuve. · preuve : « Créer `tests/test_appels_existants.py` : les appels relevés à l'étape 1, avec remise nulle »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la correction `sum(prices) * (1 - discount / 100)` est donnée sans que le code d'origine soit connu. Le plan suppose que le défaut vient de la formule et que `total()` a cette signature. L'étape 1 et l'hypothèse H1 couvrent en partie ce risque. → Action : préciser que la formule sera ajustée après lecture du code. → Résultat : l'hypothèse sur la signature et la formule est signalée comme non confirmée. · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "ebd3c1f8a7e01a2b69cea661e8cf2ca2609e4db60b01a59a1995c42d1b571972",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : H4 dit que la formule est « confirmée par la lecture de `src/pay.py` et par `test_remise` », alors que ce test n'existe pas encore et n'a pas été exécuté. Cela mélange attendu et vérifié. → Action : écrire que H4 est une hypothèse issue de la lecture du code, à confirmer par l'exécution de `test_remise`. → Résultat : la distinction attendu/vérifié reste nette dès la phase Planifier · preuve : « Elle est confirmée par la lecture de `src/pay.py` et par `test_remise`, pas encore par exécution. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la référence de C3 est limitée aux cas du code d'origine qui étaient corrects, car le dépôt n'a aucun appelant. Le plan reconnaît lui-même cette limite pour les appelants extérieurs (H1). → Action : conserver la mention de cette limite dans le compte rendu, comme prévu. → Résultat : la portée de la preuve de C3 est connue de la personne · preuve : « ces tests prouvent l'absence de régression sur les cas de référence listés, pas sur d'éventuels appelants extérieurs au dépôt (voir H1) »"
+    }
+   ],
+   "plan_sha256": "fdaaa498422177083385b147c263b74b5d825f4ae827429fff0879feca1e5235",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 2,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "fdaaa498422177083385b147c263b74b5d825f4ae827429fff0879feca1e5235",
+    "relances_relecteur": 0,
+    "revue_sha256": "68b5ae6b7e920f84eface7648030790ad7305d161fdb8b97a76619ee47220c9b",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

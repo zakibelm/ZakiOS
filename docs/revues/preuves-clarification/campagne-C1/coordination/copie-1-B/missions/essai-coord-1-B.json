@@ -1,0 +1,70 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:38:01Z",
+ "erreurs_techniques": [
+  "relecteur tour 2 tentative 1 : ligne hors format dans la revue : 'ZAKIOS-SOCLE v1 · PDCA'",
+  "relecteur tour 2 tentative 2 : ligne hors format dans la revue : 'ZAKIOS-SOCLE v1 · PDCA'"
+ ],
+ "issue": "erreur_technique",
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 n'a aucun moyen de preuve concret. La section Vérifier ne contient ni commande ni sortie attendue. Le test `tests/test_appels_existants.py` est créé en Exécuter (étapes 3 et 4) mais n'est pas relié à C3. Le critère « aucune régression sur les appels existants » reste donc non prouvable tel que rédigé. → Action : remplacer la ligne C3 par `python -m unittest tests.test_appels_existants` après correction. Attendu : tous les appels relevés à l'étape 1 renvoient la même valeur qu'avant correction, soit la somme des prix avec remise nulle. Ajouter aussi `python -m unittest discover tests` pour la suite complète. → Résultat : C3 devient mesurable et exécutable, et le plan peut passer en ACCEPTE · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 4 affirme que `test_remise` et `test_injection` échoueront sur le code d'origine. C'est un résultat attendu, pas un fait vérifié, car le code n'a pas encore été lu à ce stade. → Action : formuler « doivent échouer » comme attendu, et ajouter à Agir le cas où un test passe déjà sur le code d'origine (test inefficace à revoir). → Résultat : la distinction attendu/vérifié est respectée · preuve : « `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la comparaison `total([10, 20], 100) == 0` porte sur un flottant issu de `1 - discount / 100`. Elle est exacte ici, mais le plan ne précise pas la tolérance pour d'autres valeurs. → Action : préciser l'égalité exacte aux bornes, ou utiliser `assertAlmostEqual` pour les valeurs intermédiaires. → Résultat : le test reste stable · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "6bd3e463b59ed9b41bf37fa34f633619606c720c484bad80031916b4aba3d6d1",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "plan_sha256": "8b3328cfdfc839def1eb0dd5fda8745ab989dfbc4f2a877ff5e6b22eae6513c0",
+   "relances_planificateur": 0,
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

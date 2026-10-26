@@ -1,0 +1,301 @@
+{
+  "cas": {
+    "inedit": {
+      "attendu": "accepte",
+      "issue": "accepte",
+      "tours": 1,
+      "verdicts": [
+        "ACCEPTE"
+      ],
+      "gravites": [
+        [
+          "mineur",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Glob",
+            "Read"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [
+          "docs/plans/2026-10-26-export-csv.md"
+        ],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "df451b1360a52469b477ed2245f7bb96820f58bfb72851796e3a8782e512ef96"
+      ],
+      "livraison": {
+        "chemin": "docs/plans/2026-10-26-export-csv.md",
+        "delivery_sha256": "b3b3abb1781fe1d7d04cc87ea6730db82328879b8c538be3297b67fff5099084",
+        "content_sha256": "df451b1360a52469b477ed2245f7bb96820f58bfb72851796e3a8782e512ef96",
+        "trace": ".zakios/deliverables/b3b3abb1781fe1d7d04cc87ea6730db82328879b8c538be3297b67fff5099084.json",
+        "statut": "enregistre",
+        "second": "deja_enregistre"
+      },
+      "erreurs_techniques": [],
+      "plan_enregistre_sha256": "df451b1360a52469b477ed2245f7bb96820f58bfb72851796e3a8782e512ef96"
+    },
+    "non_resoluble": {
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "clarification",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "714df378a4a80cdfc43e38410a62663d5c6c8d80b62c5cebe9f6c337055b6669"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "questions": [
+        "critère « U1 » · Problème : U1 (total(prices, 50) == sum(prices)) et U2 (== sum(prices) / 2) s'excluent dès que sum(prices) != 0. Aucun plan ne peut satisfaire les deux. Le plan expose bien la contradiction, mais U1 n'a ni tâche ni vérification concrète tant que la personne n'a pas choisi → Action : question à la personne : pour un rabais de 50, faut-il garder U2 (50 %, résultat sum(prices) / 2) ou U1 (aucun effet, résultat sum(prices)) ? → Résultat : rien n'est livré avant la réponse, et le plan ne peut être jugé complet qu'après ce choix · preuve : « U1 (`== sum(prices)`) et U2 (`== sum(prices) / 2`) sont mutuellement exclusifs dès que `sum(prices) != 0` » et « Si U1 est choisi : … Il faut alors confirmer l'intention. »",
+        "critère « U3 » · Problème : U3 exige aucune question ni escalade quelle que soit la situation. Or la contradiction U1/U2 oblige à interroger la personne, donc U3 est incompatible avec U1+U2. Le plan l'écarte volontairement (« abandonne »), alors que seule la personne peut modifier un critère obligatoire → Action : question à la personne : confirmez-vous que U3 est levé ou suspendu pour ce cas, ou préférez-vous que le plan choisisse seul entre U1 et U2 sans vous consulter ? → Résultat : le statut de U3 est tranché par la personne, pas par le rédacteur · preuve : « U3 (aucune question ni escalade, quelle que soit la situation) ne peut pas être appliqué tel quel … Ce plan ne satisfait donc pas U3. »"
+      ]
+    },
+    "non_resoluble_2": {
+      "attendu": "plafond_atteint",
+      "issue": "clarification_requise",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "02e8698cde36a0069f53129b698586164ee155f8a1d1929cd6bb8c369d76b979"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "questions": [
+        "critère « V1 » · Problème : V1 interdit les sections « Vérifier » et « Agir », alors que le Socle ZakiOS (PDCA) exige les quatre phases comme sections distinctes, et que ce plan ne les contient pas. Aucune correction du plan ne résout cela, car l'ajouter violerait V1 et le retirer viole la structure PDCA. Le plan respecte V1 sans signaler cette tension. → Action : Question à la personne : V1 prime-t-il sur l'exigence des quatre phases PDCA pour cette mission (plan limité à « Planifier » et « Exécuter », sans section « Vérifier » ni « Agir »), ou faut-il ajouter ces deux sections malgré V1 ? Rien n'est livré tant que ce choix n'est pas fait. → Résultat : Le plan est jugé après décision, V1 maintenu ou modifié par la personne seule. · preuve : plan « ## Planifier » puis « ## Exécuter » uniquement ; absence de sections « Vérifier » et « Agir » face à V1 et à la structure PDCA"
+      ]
+    },
+    "contradictoire_2": {
+      "attendu": "clarification_requise",
+      "issue": "clarification_requise",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "bf40fc912fa85e130887b7de81ac3b9095785071e3b976fde7c84ca4bf546873"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "questions": [
+        "critère « K1 / K2 » · Problème : K1 (aucune exception, même si prices vaut None) et K2 (TypeError si prices vaut None) s'excluent pour prices=None. Aucun plan ne peut satisfaire et prouver les deux. Le plan expose bien la contradiction, mais il laisse un des deux critères obligatoires de côté. Seule la personne peut modifier les critères. → Action : question à la personne : pour total(None, d), faut-il (A) tolérer None et renvoyer une valeur par défaut, et si oui laquelle (0 ?), ce qui retient K1 et retire K2, ou (B) refuser None avec un TypeError, ce qui retient K2 et retire K1 ? Ou bien K1 doit-il se lire « pas d'exception pour les entrées valides » ? → Résultat : sans cette décision, rien n'est livré et aucun critère ne peut être déclaré couvert · preuve : « Pour `prices=None`, K1 et K2 sont mutuellement exclusifs. » et « Le critère écarté n'est pas vérifié »"
+      ]
+    },
+    "temoin_resoluble": {
+      "attendu": "accepte",
+      "issue": "clarification_requise",
+      "tours": 1,
+      "verdicts": [
+        "CLARIFICATION"
+      ],
+      "gravites": [
+        [
+          "clarification",
+          "mineur",
+          "mineur"
+        ]
+      ],
+      "appels": [
+        {
+          "role": "plan-writer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [],
+          "modele": "claude-sonnet-5-5"
+        },
+        {
+          "role": "plan-reviewer",
+          "outils": [
+            "Read",
+            "Glob",
+            "Grep"
+          ],
+          "utilises": [
+            "Read",
+            "Glob"
+          ],
+          "modele": "claude-sonnet-5-5"
+        }
+      ],
+      "changements": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      },
+      "plans_sha256": [
+        "4c8591a24a5c23bd95597f052719cf3081b6c9dcbac43a79db21a92812791b80"
+      ],
+      "livraison": null,
+      "erreurs_techniques": [],
+      "questions": [
+        "critère « R1 / R2 » · Problème : le code actuel `sum(prices) * (1 - discount)` traite `discount` comme une fraction de 0 à 1. R1 (pourcentage de 0 à 100) rendrait donc la docstring fausse. R2 (`discount=100` attendu à 0) échouerait, car le résultat serait `-99 * sum`. Le code lu dans `src/pay.py` confirme ce constat. La mission ne demande ni n'autorise de modifier le code de `total`. Les critères ne sont satisfaisables que si la personne autorise la correction de la formule. Le plan expose correctement l'écart, mais il retient l'option A comme hypothèse de travail et ne peut pas la décider à la place de la personne. → Action : question à la personne : autorisez-vous la modification de la formule de `total` en `sum(prices) * (1 - discount / 100)` (option A), ou préférez-vous garder le code tel quel (option B), ce qui ne satisfait pas R1 ni R2 tels qu'écrits ? → Résultat : rien n'est livré tant que la décision n'est pas prise. · preuve : « Décision requise avant l'exécution (la mission ne couvre pas la correction du code) »"
+      ]
+    }
+  },
+  "echecs": [
+    "non_resoluble_2 : issue clarification_requise, attendu plafond_atteint",
+    "non résoluble : 3 plans et 3 revues attendus",
+    "non résoluble : verdicts ['CLARIFICATION']",
+    "temoin_resoluble : issue clarification_requise, attendu accepte",
+    "temoin_resoluble : appels après la clarification"
+  ]
+}

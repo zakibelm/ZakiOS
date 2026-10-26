@@ -1,0 +1,109 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T15:39:26Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement.md",
+  "content_sha256": "d27388b9eb4c3f91c8d20ef85211bbcbde01179579067f39442b231c0c474133",
+  "delivery_sha256": "3eafb6ba5da12ba19494f17dd1762cd9edfd687d30223172f8369e79047647b6",
+  "trace": ".zakios/deliverables/3eafb6ba5da12ba19494f17dd1762cd9edfd687d30223172f8369e79047647b6.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "structure PDCA · Problème : la section « Vérifier » est absente. Les vérifications sont placées dans « Exécuter » (étape 4), mais aucune section distincte ne compare les résultats aux critères C1, C2 et C3. Aucune étape ne relance la suite après les corrections des étapes 5 et 6. → Action : ajouter une section « Vérifier » après « Exécuter ». Elle doit lancer `python -m unittest discover tests` après correction, attendre que tous les tests passent, et relier chaque critère à sa sortie. → Résultat : les critères C1 à C3 sont prouvés après correction, pas seulement avant. · preuve : absence de section « Vérifier » ; critères attendus C1, C2 et C3 ; couverture manquante : exécution de la suite après correction."
+    },
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 ne couvre pas les appels existants après correction. Le test de référence `test_appels_existants` n'est exécuté qu'à l'étape 4, sur le code d'origine. Aucune étape ne le relance après les étapes 5 et 6. Ce test n'utilise que la remise nulle. Si les appels existants passent une remise non nulle, ou si l'ancienne sémantique de la remise était une fraction, la régression n'est pas détectée. → Action : relancer `test_appels_existants` après les corrections et le relier explicitement à C3. Ajouter à l'étape 1 le relevé de la valeur de remise passée par chaque appel existant. Si certains appels passent une remise non nulle, ils doivent figurer dans le test avec la valeur attendue calculée à la main. → Résultat : C3 devient prouvable après correction par une sortie exécutée. · preuve : « Lancer `python -m unittest discover tests` sur le code d'origine, avant toute correction : `test_appels_existants` doit passer (référence) » ; « les appels relevés à l'étape 1, avec remise nulle »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : le test des bornes ne précise pas les valeurs attendues (remise 0 donne le total, remise 100 donne 0). → Action : indiquer ces valeurs dans `test_remise.py`. → Résultat : le critère est mesurable sans ambiguïté. · preuve : « Créer `tests/test_remise.py` (bornes 0 et 100) »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le test d'injection ne précise pas la charge utile ni le résultat attendu. → Action : préciser par exemple `x' OR '1'='1`, qui doit retourner 0 ligne, et un nom valide qui retourne la bonne ligne. → Résultat : la preuve de C2 est concrète. · preuve : « `tests/test_injection.py` (base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob`) »."
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "non_couvert"
+    },
+    "gravites": [
+     "majeur",
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 0,
+    "revue_sha256": "c77c23aa2448a126dbfad931a0e8e6ded89dfebc5b440f18c6d9a47286210e33",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : aucun appelant n'existe dans le dépôt, donc C3 repose sur des tests de contrat (signatures, types) qui ne prouvent pas l'absence de régression chez des appelants externes · Action : garder la limite écrite dans le compte rendu, comme le plan le prévoit, et demander à la personne la liste des appelants externes si elle existe → Résultat : la portée réelle de C3 reste explicite, sans surévaluer la preuve · preuve : « Ces tests ne prouvent **pas** l'absence de régression chez des appelants externes inconnus, et le compte rendu le dit. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'hypothèse H3 (base sqlite, paramètre `?`) n'est pas confirmée, et les tests utilisent sqlite en mémoire alors que la base réelle peut être différente · Action : confirmer le type de base avec la personne avant l'exécution, comme le plan le prévoit → Résultat : la syntaxe du paramètre est validée pour la base réelle · preuve : « H3 : `db` est une connexion `sqlite3` (paramètre `?`). Si la base réelle est autre, la syntaxe du paramètre peut différer »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la validation des remises hors bornes (inférieures à 0 ou supérieures à 100) n'est pas traitée, ce qui reste un renforcement souhaitable et non un critère de la mission · Action : ajouter, si la personne le souhaite, un cas de remise hors bornes ou une décision explicite sur ce comportement → Résultat : le comportement hors bornes est défini · preuve : « `total([], 100)` = 0. » (aucun cas de remise hors de 0-100 dans les tests listés)"
+    }
+   ],
+   "plan_sha256": "d27388b9eb4c3f91c8d20ef85211bbcbde01179579067f39442b231c0c474133",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "C1": "couvert",
+     "C2": "couvert",
+     "C3": "couvert"
+    },
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d27388b9eb4c3f91c8d20ef85211bbcbde01179579067f39442b231c0c474133",
+    "relances_relecteur": 0,
+    "revue_sha256": "5b2697a2446734616741acdddda3f690efb638b1f8e96974c9bf17c61fd650a1",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

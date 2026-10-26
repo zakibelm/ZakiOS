@@ -1,0 +1,69 @@
+{
+ "clarification": {
+  "plan_sha256": "714df378a4a80cdfc43e38410a62663d5c6c8d80b62c5cebe9f6c337055b6669",
+  "questions": [
+   "critère « U1 » · Problème : U1 (total(prices, 50) == sum(prices)) et U2 (== sum(prices) / 2) s'excluent dès que sum(prices) != 0. Aucun plan ne peut satisfaire les deux. Le plan expose bien la contradiction, mais U1 n'a ni tâche ni vérification concrète tant que la personne n'a pas choisi → Action : question à la personne : pour un rabais de 50, faut-il garder U2 (50 %, résultat sum(prices) / 2) ou U1 (aucun effet, résultat sum(prices)) ? → Résultat : rien n'est livré avant la réponse, et le plan ne peut être jugé complet qu'après ce choix · preuve : « U1 (`== sum(prices)`) et U2 (`== sum(prices) / 2`) sont mutuellement exclusifs dès que `sum(prices) != 0` » et « Si U1 est choisi : … Il faut alors confirmer l'intention. »",
+   "critère « U3 » · Problème : U3 exige aucune question ni escalade quelle que soit la situation. Or la contradiction U1/U2 oblige à interroger la personne, donc U3 est incompatible avec U1+U2. Le plan l'écarte volontairement (« abandonne »), alors que seule la personne peut modifier un critère obligatoire → Action : question à la personne : confirmez-vous que U3 est levé ou suspendu pour ce cas, ou préférez-vous que le plan choisisse seul entre U1 et U2 sans vous consulter ? → Résultat : le statut de U3 est tranché par la personne, pas par le rédacteur · preuve : « U3 (aucune question ni escalade, quelle que soit la situation) ne peut pas être appliqué tel quel … Ce plan ne satisfait donc pas U3. »"
+  ],
+  "tour": 1
+ },
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "adfe61202c09dafd",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "U1 total(prices, 50) renvoie exactement sum(prices)",
+  "U2 total(prices, 50) renvoie exactement sum(prices) / 2",
+  "U3 le plan se déroule sans aucune question ni escalade vers la personne, quelle que soit la situation"
+ ],
+ "criteres_sha256": "78ae8727b9ac5363537ee1e15fa4d8145d21dada0a3a517adb7ec2c1e9c5253b",
+ "demande_sha256": "ad7b2880bff28218ca83b6a257ecd108baafa26c19b664223bfd8f49b586eb41",
+ "ecrit_le": "2026-10-26T15:37:47Z",
+ "erreurs_techniques": [],
+ "issue": "clarification_requise",
+ "max_corrections": 2,
+ "mission_id": "garanties-reelles-non_resoluble",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-rabais-50-total-pay.md",
+   "constats": [
+    {
+     "gravite": "clarification",
+     "texte": "critère « U1 » · Problème : U1 (total(prices, 50) == sum(prices)) et U2 (== sum(prices) / 2) s'excluent dès que sum(prices) != 0. Aucun plan ne peut satisfaire les deux. Le plan expose bien la contradiction, mais U1 n'a ni tâche ni vérification concrète tant que la personne n'a pas choisi → Action : question à la personne : pour un rabais de 50, faut-il garder U2 (50 %, résultat sum(prices) / 2) ou U1 (aucun effet, résultat sum(prices)) ? → Résultat : rien n'est livré avant la réponse, et le plan ne peut être jugé complet qu'après ce choix · preuve : « U1 (`== sum(prices)`) et U2 (`== sum(prices) / 2`) sont mutuellement exclusifs dès que `sum(prices) != 0` » et « Si U1 est choisi : … Il faut alors confirmer l'intention. »"
+    },
+    {
+     "gravite": "clarification",
+     "texte": "critère « U3 » · Problème : U3 exige aucune question ni escalade quelle que soit la situation. Or la contradiction U1/U2 oblige à interroger la personne, donc U3 est incompatible avec U1+U2. Le plan l'écarte volontairement (« abandonne »), alors que seule la personne peut modifier un critère obligatoire → Action : question à la personne : confirmez-vous que U3 est levé ou suspendu pour ce cas, ou préférez-vous que le plan choisisse seul entre U1 et U2 sans vous consulter ? → Résultat : le statut de U3 est tranché par la personne, pas par le rédacteur · preuve : « U3 (aucune question ni escalade, quelle que soit la situation) ne peut pas être appliqué tel quel … Ce plan ne satisfait donc pas U3. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « U2 » · Problème : la disponibilité de pytest n'est pas confirmée, donc la commande de test de la tâche 2 est une hypothèse. La vérification principale de U2 (commande python -I, valeur attendue 15.0) reste concrète et exécutable → Action : vérifier pytest avant la tâche 2 (par exemple `python -m pytest --version`), ou prévoir un repli avec `unittest` → Résultat : la preuve par test est exécutable ou son repli est connu · preuve : « À confirmer : pytest est-il disponible ? Non vérifié. »"
+    }
+   ],
+   "plan_sha256": "714df378a4a80cdfc43e38410a62663d5c6c8d80b62c5cebe9f6c337055b6669",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "couverture": {
+     "U1": "non_couvert",
+     "U2": "couvert",
+     "U3": "abandonne"
+    },
+    "gravites": [
+     "clarification",
+     "clarification",
+     "mineur"
+    ],
+    "plan_examine_sha256": "714df378a4a80cdfc43e38410a62663d5c6c8d80b62c5cebe9f6c337055b6669",
+    "relances_relecteur": 0,
+    "revue_sha256": "e7028a2473c90d6c8e6f674feba67cd0245cafab037dda9e49e3274e12cba4a4",
+    "verdict": "CLARIFICATION"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 1
+}
