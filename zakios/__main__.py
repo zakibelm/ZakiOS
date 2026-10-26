@@ -36,7 +36,7 @@ def main(argv=None):
     sp.add_argument("--path", required=True, help="chemin proposé, ex. docs/plans/2026-10-26-sujet.md")
     sp.add_argument("--content-file", required=True, help="fichier contenant le plan (lu comme texte, jamais exécuté)")
     sp.add_argument("--preview", action="store_true", help="afficher chemin et empreinte, sans écrire")
-    sp.add_argument("--sha", help="empreinte lue dans l'aperçu ; obligatoire pour enregistrer")
+    sp.add_argument("--sha", help="empreinte de livraison lue dans l'aperçu ; obligatoire pour enregistrer")
     sp.add_argument("--mission", default="", help="mission à laquelle le livrable se rattache")
     r = sub.add_parser("rollback", help="annuler la dernière installation")
     r.add_argument("--project", required=True)
@@ -78,13 +78,13 @@ def main(argv=None):
             with open(args.content_file, "rb") as handle:
                 content = handle.read()
             if args.preview:
-                info = deliver.preview(args.path, content)
-                print("Aperçu : %(path)s, %(bytes)d octets, sha256 %(sha256)s (rien n'est écrit)." % info)
+                info = deliver.preview(args.path, content, args.mission)
+                print("Aperçu : %(path)s, %(bytes)d octets, contenu %(content_sha256)s, livraison %(delivery_sha256)s (rien n'est écrit)." % info)
             else:
                 if not args.sha:
-                    raise deliver.DeliveryError("--sha obligatoire : relis l'aperçu (--preview) puis fournis son empreinte")
+                    raise deliver.DeliveryError("--sha obligatoire : relis l'aperçu (--preview) puis fournis l'empreinte de livraison")
                 out = deliver.save_plan(args.project, args.path, content, args.sha, mission=args.mission)
-                print("%(status)s : %(path)s (sha256 %(sha256)s), trace %(trace)s." % out)
+                print("%(status)s : %(path)s (livraison %(delivery_sha256)s), trace %(trace)s." % out)
         elif args.command == "rollback":
             out = activate.rollback(args.project)
             print("Retour arrière effectué : transaction %s annulée." % out["transaction"])

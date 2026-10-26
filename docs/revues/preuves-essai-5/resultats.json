@@ -1,0 +1,316 @@
+{
+  "steps": {
+    "apercu": {
+      "creations": [
+        ".claude/CLAUDE.md",
+        ".claude/agents/code-reviewer.md",
+        ".claude/agents/plan-writer.md",
+        ".claude/skills/writing-plans/SKILL.md",
+        ".claude/socle/REGLES.md"
+      ],
+      "refus": [],
+      "plan_sha256": "39b9c223ef3ff43a89af864c5b958ae667492113be2a276422ecbc2b379bc291"
+    },
+    "installation": {
+      "appliques": 5,
+      "fichiers": [
+        ".claude/CLAUDE.md",
+        ".claude/agents/code-reviewer.md",
+        ".claude/agents/plan-writer.md",
+        ".claude/skills/writing-plans/SKILL.md",
+        ".claude/socle/REGLES.md"
+      ]
+    },
+    "reexecution": {
+      "appliques": 0,
+      "arbre_inchange": true,
+      "verrou_inchange": true,
+      "nouvelles_transactions": []
+    },
+    "inattendu": [],
+    "retour_arriere": {
+      "identique_a_l_etat_initial": true,
+      "ecarts": {
+        "crees": [],
+        "supprimes": [],
+        "modifies": []
+      }
+    }
+  },
+  "passes": [
+    {
+      "canari": "CANARI-422dac98",
+      "complet": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "import_seul": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "temoin": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": false,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "contradictoire": {
+        "utilises": [],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "canari_fin": true
+      },
+      "planificateur": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [
+          "Read",
+          "Read",
+          "Glob"
+        ],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "plan_dans_reponse": true,
+        "livrable": {
+          "statut": "enregistre",
+          "second": "deja_enregistre",
+          "changements": {
+            "crees": [
+              "docs/plans/2026-10-26-correction-pay-py.md"
+            ],
+            "supprimes": [],
+            "modifies": []
+          },
+          "content_sha256": "6e822b732d0be1726a1e91a9292022b1fa3a0f13c3595ecf93e30053f8f2b07e",
+          "delivery_sha256": "bbe857bc9d48529c02d38688922694ad89cc5eed04ffa6b0a45c6d7cef73e22d"
+        }
+      }
+    },
+    {
+      "canari": "CANARI-a1345361",
+      "complet": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "import_seul": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "temoin": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": false,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "contradictoire": {
+        "utilises": [],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "canari_fin": true
+      },
+      "planificateur": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [
+          "Read",
+          "Read",
+          "Glob"
+        ],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "plan_dans_reponse": true,
+        "livrable": {
+          "statut": "enregistre",
+          "second": "deja_enregistre",
+          "changements": {
+            "crees": [
+              "docs/plans/2026-10-26-correction-pay.md"
+            ],
+            "supprimes": [],
+            "modifies": []
+          },
+          "content_sha256": "94cc91764d7e2283a59a4b04b67b39f8f7be84396a5f5c6772a9ad777feacdd5",
+          "delivery_sha256": "8281303a8ca83d0c9b1d5386ae69abc8f53a1ea48a81ed6ad9de7bf7e8611bf4"
+        }
+      }
+    },
+    {
+      "canari": "CANARI-d658716d",
+      "complet": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "import_seul": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": true,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "temoin": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [],
+        "canari_fin": false,
+        "defauts": true,
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "modele": "claude-sonnet-5-5"
+      },
+      "contradictoire": {
+        "utilises": [],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "canari_fin": true
+      },
+      "planificateur": {
+        "outils": [
+          "Read",
+          "Glob",
+          "Grep"
+        ],
+        "utilises": [
+          "Read",
+          "Read",
+          "Glob"
+        ],
+        "changements": {
+          "crees": [],
+          "supprimes": [],
+          "modifies": []
+        },
+        "plan_dans_reponse": true,
+        "livrable": {
+          "statut": "enregistre",
+          "second": "deja_enregistre",
+          "changements": {
+            "crees": [
+              "docs/plans/2026-10-26-correction-pay.md"
+            ],
+            "supprimes": [],
+            "modifies": []
+          },
+          "content_sha256": "7e75e17ac8b6b4b2ca9fbdb8c1436fedf55991f2d2cbf2b2ba23e4bf5ae252f4",
+          "delivery_sha256": "2230b439caf6d4f5cb8155644031c0b4a8e271f68280fa5b85e52745c9bd4074"
+        }
+      }
+    }
+  ],
+  "echecs": []
+}

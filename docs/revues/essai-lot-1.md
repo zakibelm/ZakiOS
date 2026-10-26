@@ -103,3 +103,19 @@ Reste ouvert : mécanisme d'enregistrement contrôlé ; autres modèles et plus 
 | Le format de livraison du `plan-writer` n'impose pas de titre ni de balise de début | À durcir dans l'agent (titre obligatoire, ligne de début) avant toute installation réelle | extraction non ambiguë |
 | Le script accumule les échecs puis sort en code 1 (diagnostic complet) au lieu de s'arrêter au premier | Comportement voulu, à connaître | diagnostic complet |
 | Un seul modèle, 3 passages ; mode interactif non testé ; `run-tests` attend l'isolation | Inchangé | limites déclarées |
+
+## Essai 5 : identité de la livraison et format explicite (moteur 0.6.0)
+
+**Défaut trouvé par l'audit et reproduit** : la trace était nommée d'après l'empreinte du contenu seul. Un même contenu enregistré sous deux chemins ou deux missions partageait une trace qui décrivait la première livraison, et l'empreinte de l'aperçu d'un chemin permettait d'enregistrer sous un autre.
+
+| Problème | Action | Bénéfice |
+|---|---|---|
+| Identité = contenu seul | `content_sha256` (octets du plan) et `delivery_sha256` (version du format, chemin, contenu, mission). L'enregistrement exige le `delivery_sha256` de l'aperçu | changer chemin ou mission impose un nouvel aperçu |
+| Une trace partagée | Une trace par livraison, nommée par `delivery_sha256`, jamais réécrite ; si elle existe, son contenu est vérifié (illisible ou incohérente ⇒ erreur explicite, rien n'est écrit) | association contenu/chemin/mission exacte et auditable |
+| Extraction devinée (`#` ou `##`) | `extract_plan` n'accepte qu'une ligne `Chemin proposé : docs/plans/….md` et un seul bloc entre `=== DEBUT DU PLAN ZAKIOS ===` et `=== FIN DU PLAN ZAKIOS ===`, premier titre `# ` ; absent, double, hors ordre, sans chemin, chemin hors périmètre, sans titre, vide ⇒ refus. Octets du bloc préservés | livrable non ambigu, empreinte fidèle |
+
+**Tests** : 20 (dont les 4 demandés : même contenu/chemins différents, même chemin/missions différentes, destination changée après aperçu, trace incohérente ; plus trace jamais réécrite, octets exacts, 8 cas de refus d'extraction). Deux mutations détectées : trace nommée par le contenu seul ⇒ 3 échecs ; contrôle de l'aperçu supprimé ⇒ 2 échecs.
+
+**Essai de bout en bout, 3 passages** (moteur et `plan-writer` mis à jour, source re-figée) : tous les critères satisfaits ; livrable extrait, aperçu sans écriture, `enregistre` puis `deja_enregistre`, seul changement du projet : le fichier du plan. Preuves : `docs/revues/preuves-essai-5/` (supplante l'essai 4).
+
+**Limites inchangées** : un modèle, 3 passages, mode interactif non testé, `run-tests` attend l'isolation.

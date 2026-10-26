@@ -90,16 +90,6 @@ def grille_revue(text):
     return missing
 
 
-def extract_plan(text):
-    """(plan, chemin proposé) d'après la réponse de l'agent, ou (None, None)."""
-    m = re.search(r"docs/plans/[A-Za-z0-9][A-Za-z0-9._-]*\.md", text)
-    start = re.search(r"^#{1,2} .+$", text, re.M)
-    end = text.find("Fin du plan ZakiOS")
-    if not (m and start and end > start.start()):
-        return None, None
-    return text[start.start():end + len("Fin du plan ZakiOS")] + "\n", m.group(0)
-
-
 def run_claude(cwd, prompt, agent=None, accept_edits=False, model="sonnet", timeout=420):
     cmd = ["claude", "-p", "--model", model, "--output-format", "stream-json", "--verbose"]
     if agent:
@@ -249,20 +239,23 @@ def main():
         h = sha_tree(d)
         r = run_claude(d, PLAN, agent="plan-writer", model=a.model)
         delta = base_checks("planificateur", r, d, h)
-        for marker in ("Fin du plan ZakiOS", "docs/plans/", canary):
-            check(marker in r["result"], "%s planificateur : « %s » absent de la réponse" % (tag, marker))
+        check(canary in r["result"], "%s planificateur : canari absent de la réponse" % tag)
         gaps = grille_plan(r["result"])
         check(not gaps, "%s planificateur : grille de plan incomplète %s" % (tag, gaps))
-        plan_text, plan_path = extract_plan(r["result"])
-        check(plan_text is not None, "%s planificateur : plan ou chemin non extractible" % tag)
         saved = {}
+        try:
+            plan_text, plan_path = deliver.extract_plan(r["result"])
+        except deliver.DeliveryError as exc:
+            plan_text = plan_path = None
+            check(False, "%s planificateur : livrable refusé (%s)" % (tag, exc))
         if plan_text is not None:
-            pv2 = deliver.preview(plan_path, plan_text)
+            mission = "essai lot 1 / " + tag
+            pv2 = deliver.preview(plan_path, plan_text, mission)
             h_before = sha_tree(d)
             check(sha_tree(d) == h_before, "aperçu du livrable : écriture")
-            s1 = deliver.save_plan(d, plan_path, plan_text, pv2["sha256"], mission="essai lot 1 / " + tag)
+            s1 = deliver.save_plan(d, plan_path, plan_text, pv2["delivery_sha256"], mission=mission)
             h_after = sha_tree(d)
-            s2 = deliver.save_plan(d, plan_path, plan_text, pv2["sha256"], mission="essai lot 1 / " + tag)
+            s2 = deliver.save_plan(d, plan_path, plan_text, pv2["delivery_sha256"], mission=mission)
             d2 = diff_tree(h_before, h_after)
             check(s1["status"] == "enregistre" and s2["status"] == "deja_enregistre", "%s livrable : statuts %s/%s" % (tag, s1["status"], s2["status"]))
             check(sha_tree(d) == h_after, "%s livrable : second enregistrement a écrit" % tag)
@@ -270,9 +263,10 @@ def main():
                   and os.path.exists(os.path.join(d, s1["trace"])),
                   "%s livrable : changements inattendus %s" % (tag, d2))
             check(open(os.path.join(d, plan_path), "rb").read() == plan_text.encode(), "%s livrable : contenu différent" % tag)
-            saved = {"statut": s1["status"], "second": s2["status"], "changements": d2, "sha256": s1["sha256"]}
+            saved = {"statut": s1["status"], "second": s2["status"], "changements": d2, "content_sha256": s1["content_sha256"],
+                     "delivery_sha256": s1["delivery_sha256"]}
         entry["planificateur"] = {"outils": r["tools"], "utilises": r["used"], "changements": delta,
-                                  "plan_dans_reponse": "Fin du plan ZakiOS" in r["result"], "livrable": saved}
+                                  "plan_dans_reponse": plan_text is not None, "livrable": saved}
         open(os.path.join(work, "log-%d-plan.jsonl" % n), "w").write(r["log"])
         report["passes"].append(entry)
 

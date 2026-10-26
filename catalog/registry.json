@@ -10824,7 +10824,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1656,
+    "score": 0.1657,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -17233,7 +17233,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.178,
+    "score": 0.1779,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -22788,7 +22788,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1314,
+    "score": 0.1313,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -23542,7 +23542,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/agents/expert-advisors/mentor.md",
-      "score": 0.4671
+      "score": 0.467
      }
     ],
     "status": "novelty_to_review"
@@ -24788,7 +24788,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/agents/expert-advisors/critical-thinking.md",
-      "score": 0.4671
+      "score": 0.467
      }
     ],
     "status": "novelty_to_review"
@@ -25283,7 +25283,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1237,
+    "score": 0.1238,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -29349,7 +29349,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2547,
+    "score": 0.2548,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -30914,7 +30914,7 @@
      "wshobson/agents:plugins/multi-platform-apps/agents/flutter-expert.md"
     ],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.7514,
+    "score": 0.7513,
     "similar_in_catalog": [],
     "status": "equivalence_candidate"
    },
@@ -34694,7 +34694,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3625,
+    "score": 0.3626,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -35853,7 +35853,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0912,
+    "score": 0.0917,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -52569,7 +52569,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1301,
+    "score": 0.1302,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -52886,7 +52886,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3947,
+    "score": 0.3948,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/commands/security/dependency-audit.md",
@@ -65120,7 +65120,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/productivity/jev-skill-suggestion/README.md",
-      "score": 0.4963
+      "score": 0.4964
      }
     ],
     "status": "behavior_audit_required"
@@ -65191,7 +65191,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/mods/productivity/jev-model-router/README.md",
-      "score": 0.4963
+      "score": 0.4964
      }
     ],
     "status": "behavior_audit_required"
@@ -67666,7 +67666,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.11,
+    "score": 0.1101,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -67910,7 +67910,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1292,
+    "score": 0.1293,
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/web-development/tavily-web/SKILL.md",
@@ -70021,7 +70021,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0974,
+    "score": 0.0973,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -70849,7 +70849,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1314,
+    "score": 0.1315,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -74169,7 +74169,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1598,
+    "score": 0.1597,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -76814,7 +76814,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.099,
+    "score": 0.0989,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -89750,7 +89750,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/productivity/concise-planning/SKILL.md",
-      "score": 0.5759
+      "score": 0.5758
      }
     ],
     "status": "novelty_to_review"
@@ -91525,7 +91525,7 @@
      {
       "component_id": "wshobson/agents:plugins/multi-platform-apps/agents/flutter-expert.md",
       "family": "agent",
-      "score": 0.816
+      "score": 0.8163
      }
     ],
     "homonym_of": [],
@@ -99714,7 +99714,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1386,
+    "score": 0.1387,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -99848,7 +99848,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2158,
+    "score": 0.2157,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -101400,7 +101400,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/productivity/writing-skills/SKILL.md",
-      "score": 0.9525
+      "score": 0.9526
      }
     ],
     "status": "novelty_to_review"
@@ -106249,7 +106249,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0786,
+    "score": 0.0785,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -107761,7 +107761,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/create-plan/SKILL.md",
-      "score": 0.5759
+      "score": 0.5758
      }
     ],
     "status": "novelty_to_review"
@@ -108721,7 +108721,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.1235,
+    "score": 0.1236,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -110667,7 +110667,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/development/writing-skills/SKILL.md",
-      "score": 0.9525
+      "score": 0.9526
      }
     ],
     "status": "novelty_to_review"
@@ -113575,7 +113575,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/document-skills/pptx/SKILL.md",
-      "score": 0.7145
+      "score": 0.7146
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/markitdown/SKILL.md",
@@ -113796,7 +113796,7 @@
     "similar_in_catalog": [
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/document-skills/docx/SKILL.md",
-      "score": 0.7145
+      "score": 0.7146
      },
      {
       "component_id": "davila7/claude-code-templates:cli-tool/components/skills/scientific/markitdown/SKILL.md",
@@ -117600,7 +117600,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0569,
+    "score": 0.0568,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -123769,7 +123769,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.3766,
+    "score": 0.3767,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -126404,7 +126404,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.2951,
+    "score": 0.2952,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -188807,7 +188807,7 @@
    "metadata_issue": null,
    "name": "socle-zakios",
    "provenance": {
-    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
+    "commit": "fcc0d3272bf31de2a0f67eae108cbc124e313da9",
     "content_sha256": "3176e133a4f9b8b5039327295c7879a64dbb851b0de68671baf103e72a0e3f1b",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -188871,7 +188871,7 @@
    "metadata_issue": null,
    "name": "code-reviewer",
    "provenance": {
-    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
+    "commit": "fcc0d3272bf31de2a0f67eae108cbc124e313da9",
     "content_sha256": "2acab0221ac2e3e160f3162b8306a70fb4de6d9cd476d17889c5e62df5bca651",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -188913,7 +188913,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0285,
+    "score": 0.0238,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -188932,13 +188932,13 @@
    "metadata_issue": null,
    "name": "plan-writer",
    "provenance": {
-    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
-    "content_sha256": "21b323ed7afb52fbaa25e3b2e658186ff0d6ef0f842b263669fa283f48ef2f32",
+    "commit": "fcc0d3272bf31de2a0f67eae108cbc124e313da9",
+    "content_sha256": "2031d1a34bd6d1b41b42bc20c1bf951385de3e766ffea769bbf80a53108a5408",
     "fingerprint_complete": true,
     "fingerprint_files": [
      "variantes/agents/plan-writer.md"
     ],
-    "fingerprint_sha256": "d6aaa2c70260530afcf35050400d1a7b7e0c16029784a06f99e70529699ee6ae",
+    "fingerprint_sha256": "f7401cc2bbcad04157093ec94dba989267810654c2f7fd9bcca0ebc6f7a7e157",
     "fingerprint_unexplored": [],
     "path": "variantes/agents/plan-writer.md",
     "role": "propre",
@@ -188974,7 +188974,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0603,
+    "score": 0.0604,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -188993,7 +188993,7 @@
    "metadata_issue": null,
    "name": "run-tests",
    "provenance": {
-    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
+    "commit": "fcc0d3272bf31de2a0f67eae108cbc124e313da9",
     "content_sha256": "4981baf758cb8533284f40c508568c398e9414ba2e0105d84e6b0a1373989185",
     "fingerprint_complete": true,
     "fingerprint_files": [
@@ -189035,7 +189035,7 @@
     "cross_layer": [],
     "homonym_of": [],
     "provisional_reason": "comparaison ZAKI OS manquante",
-    "score": 0.0178,
+    "score": 0.017,
     "similar_in_catalog": [],
     "status": "novelty_to_review"
    },
@@ -189054,13 +189054,13 @@
    "metadata_issue": null,
    "name": "writing-plans",
    "provenance": {
-    "commit": "f6e3d9e2951d20e4a2de4bca5f908b909e071eba",
-    "content_sha256": "37a36ff456822c97cc8cd36985f4424b6950e2f77b37fa9c5930358d6de0393f",
+    "commit": "fcc0d3272bf31de2a0f67eae108cbc124e313da9",
+    "content_sha256": "6c3790c934b9f634803fa1088627d9b55b701a8c7faa06652cbf73639485eb8e",
     "fingerprint_complete": true,
     "fingerprint_files": [
      "variantes/skills/writing-plans/SKILL.md"
     ],
-    "fingerprint_sha256": "9dd9d530663ac799249ec9331f97d4464b5d477f5b5dbd9c296f698c23d0921f",
+    "fingerprint_sha256": "a90075ec5f80214e997cf9bffa3974bb0bb0f7181998e61776adadcb7e143903",
     "fingerprint_unexplored": [],
     "path": "variantes/skills/writing-plans/SKILL.md",
     "role": "propre",
@@ -189076,6 +189076,6 @@
    "type": "skill"
   }
  ],
- "manifest_sha256": "bb0a307c1605d3c6bed477821cc122e5145fb4a07067953e16f332d807154ca4",
+ "manifest_sha256": "8a1dc0f9753011259a27ddea81c182bcd74737441e7577296ca63a8738e8ad34",
  "schema_version": "5"
 }

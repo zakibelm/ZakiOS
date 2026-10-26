@@ -6,8 +6,11 @@ jamais le contenu du plan. Contrat :
 - liens symboliques refusés (couche Root : descente avec O_NOFOLLOW) ;
 - jamais d'écrasement : contenu identique -> « deja_enregistre » sans écriture ; contenu différent -> refus ;
 - création atomique sans remplacement (os.link), donc sûre en cas de créations concurrentes ;
-- le plan présenté est lié par son empreinte : l'enregistrement exige celle de l'aperçu ;
-- une trace (chemin, empreinte, mission) est écrite sous .zakios/deliverables/, de façon idempotente.
+- la livraison présentée est liée par son empreinte `delivery_sha256` (version du format, chemin cible, empreinte
+  du contenu, mission) : changer le chemin ou la mission impose un nouvel aperçu ;
+- une trace par livraison est écrite sous .zakios/deliverables/<delivery_sha256>.json ; si elle existe déjà,
+  son contenu est vérifié et une incohérence est une erreur explicite ;
+- `extract_plan` n'accepte qu'un livrable délimité et sans ambiguïté, et préserve exactement ses octets.
 """
 import hashlib
 import json
@@ -18,6 +21,10 @@ import time
 from .activate import ActivationError, Root, UnsafePath
 
 PLANS_DIR = "docs/plans"
+FORMAT_VERSION = 1
+BEGIN = "=== DEBUT DU PLAN ZAKIOS ==="
+END = "=== FIN DU PLAN ZAKIOS ==="
+_PATH_LINE = re.compile(r"^Chemin proposé\s*:\s*`?(docs/plans/[^`\s]+)`?\s*$", re.M)
 MAX_BYTES = 1024 * 1024
 _NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*\.md$")
 _SEGMENT = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
@@ -57,23 +64,60 @@ def _content(content):
     return data
 
 
-def preview(rel_path, content):
+def delivery_sha256(rel_path, content_sha256, mission=""):
+    """Identité de la livraison : format, chemin cible, contenu, mission."""
+    canonical = json.dumps({"v": FORMAT_VERSION, "path": rel_path, "content_sha256": content_sha256,
+                            "mission": mission}, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return _sha(canonical.encode("utf-8"))
+
+
+def extract_plan(text):
+    """(plan, chemin proposé) d'après la réponse d'un agent. Refuse un livrable absent ou ambigu.
+
+    Format imposé : une seule ligne « Chemin proposé : docs/plans/….md » hors du bloc, puis un seul bloc
+    entre les lignes BEGIN et END dont la première ligne non vide est un titre « # ». Les octets du bloc
+    (hors les lignes de délimitation) sont renvoyés tels quels."""
+    lines = text.split("\n")
+    begins = [i for i, l in enumerate(lines) if l.strip() == BEGIN]
+    ends = [i for i, l in enumerate(lines) if l.strip() == END]
+    if len(begins) != 1 or len(ends) != 1 or begins[0] >= ends[0]:
+        raise DeliveryError("livrable absent ou ambigu : un seul bloc %s … %s attendu" % (BEGIN, END))
+    outside = "\n".join(lines[:begins[0]] + lines[ends[0] + 1:])
+    paths = _PATH_LINE.findall(outside)
+    if len(paths) != 1:
+        raise DeliveryError("chemin proposé absent ou multiple (une seule ligne « Chemin proposé : docs/plans/….md » attendue)")
+    body = "\n".join(lines[begins[0] + 1:ends[0]])
+    first = next((l for l in body.split("\n") if l.strip()), "")
+    if not re.match(r"^# \S", first):
+        raise DeliveryError("le plan doit commencer par un titre de niveau 1 (« # … »)")
+    check_path(paths[0])
+    return body + "\n", paths[0]
+
+
+def preview(rel_path, content, mission=""):
     """Ce qui serait enregistré, sans rien écrire (ni lire le projet)."""
     check_path(rel_path)
     data = _content(content)
-    return {"path": rel_path, "sha256": _sha(data), "bytes": len(data)}
+    return {"path": rel_path, "mission": mission, "bytes": len(data), "content_sha256": _sha(data),
+            "delivery_sha256": delivery_sha256(rel_path, _sha(data), mission)}
 
 
-def save_plan(project, rel_path, content, expected_sha256, mission="", fault=None):
-    """Enregistre le plan. `expected_sha256` est l'empreinte de l'aperçu présenté à la personne."""
+def _same_trace(found, wanted):
+    keys = ("v", "path", "content_sha256", "mission", "delivery_sha256")
+    return all(found.get(k) == wanted.get(k) for k in keys)
+
+
+def save_plan(project, rel_path, content, expected_delivery_sha256, mission="", fault=None):
+    """Enregistre le plan. `expected_delivery_sha256` est celui de l'aperçu présenté à la personne."""
     check_path(rel_path)
     data = _content(content)
     sha = _sha(data)
-    if expected_sha256 != sha:
-        raise DeliveryError("le plan à enregistrer n'est pas celui qui a été présenté (empreinte différente)")
-    trace_rel = ".zakios/deliverables/%s.json" % sha
-    trace = {"path": rel_path, "sha256": sha, "mission": mission, "presented_sha256": expected_sha256,
-             "saved_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    delivery = delivery_sha256(rel_path, sha, mission)
+    if expected_delivery_sha256 != delivery:
+        raise DeliveryError("la livraison (contenu, chemin ou mission) n'est pas celle qui a été présentée : nouvel aperçu requis")
+    trace_rel = ".zakios/deliverables/%s.json" % delivery
+    trace = {"v": FORMAT_VERSION, "path": rel_path, "content_sha256": sha, "mission": mission,
+             "delivery_sha256": delivery, "saved_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
 
     def hit(point):
         if fault:
@@ -84,8 +128,16 @@ def save_plan(project, rel_path, content, expected_sha256, mission="", fault=Non
             try:
                 existing = root.read(rel_path)
                 occupied = existing is not None or root.lexists(rel_path)
+                old_trace = root.read(trace_rel)
             except UnsafePath as exc:
                 raise DeliveryError("chemin non sûr, refusé : %s" % exc)
+            if old_trace is not None:  # trace déjà là : elle doit décrire exactement cette livraison
+                try:
+                    found = json.loads(old_trace.decode("utf-8"))
+                except ValueError:
+                    raise DeliveryError("trace %s illisible : incohérence, rien n'est écrit" % trace_rel)
+                if not isinstance(found, dict) or not _same_trace(found, trace):
+                    raise DeliveryError("trace %s incohérente avec la livraison : rien n'est écrit" % trace_rel)
             status = None
             if occupied:
                 if existing is not None and _sha(existing) == sha:
@@ -104,11 +156,14 @@ def save_plan(project, rel_path, content, expected_sha256, mission="", fault=Non
                     else:
                         raise DeliveryError("%s a été créé entre-temps avec un autre contenu : écrasement refusé" % rel_path)
                 hit("apres_ecriture")
-            try:
-                root.write_atomic(trace_rel, (json.dumps(trace, indent=1, ensure_ascii=False, sort_keys=True) + "\n").encode(),
-                                  replace=False)
-            except FileExistsError:
-                pass  # trace déjà présente : idempotent
+            if old_trace is None:
+                try:
+                    root.write_atomic(trace_rel, (json.dumps(trace, indent=1, ensure_ascii=False, sort_keys=True) + "\n").encode(),
+                                      replace=False)
+                except FileExistsError:  # trace écrite entre-temps par une livraison identique ? vérifier
+                    found = json.loads((root.read(trace_rel) or b"{}").decode("utf-8"))
+                    if not _same_trace(found, trace):
+                        raise DeliveryError("trace %s incohérente avec la livraison" % trace_rel)
     except UnsafePath as exc:
         raise DeliveryError("chemin non sûr, refusé : %s" % exc)
-    return {"status": status, "path": rel_path, "sha256": sha, "trace": trace_rel}
+    return {"status": status, "path": rel_path, "content_sha256": sha, "delivery_sha256": delivery, "trace": trace_rel}
