@@ -20,7 +20,7 @@ import json
 import re
 import time
 
-from . import deliver
+from . import deliver, outils
 from .activate import Root, UnsafePath
 
 REVIEW_BEGIN = "=== DEBUT DE LA REVUE ZAKIOS ==="
@@ -40,6 +40,10 @@ _COVERAGE = re.compile(r"^Couverture\s+(\S+)\s*:\s*(couvert|non_couvert|abandonn
 
 class MissionError(deliver.DeliveryError):
     pass
+
+
+class ConfinementError(Exception):
+    """Un outil interdit a été exécuté (ou on ne peut pas exclure qu'il l'ait été) : arrêt immédiat, jamais relancé."""
 
 
 class TechnicalError(Exception):
@@ -195,42 +199,64 @@ def parse_review(text, criteria=None, plan_sha=None):
     return verdict, findings
 
 
-def _attempt(call, parse, retries, trace, role, turn, journal=None):
+def _audit_tools(trace, role, turn, attempt, journal, tool_audit):
+    """Inscrit les outils interdits demandés par l'appel qui vient d'avoir lieu (même si l'appel a échoué).
+    Renvoie (audit, évènements bloquants) ; chaque outil interdit demandé reste visible comme écart comportemental."""
+    if tool_audit is None:
+        return None, []
+    audit = tool_audit() or {"demandes": {}, "interdits": []}
+    ref = journal() if journal else None
+    for ev in audit["interdits"]:
+        trace["ecarts_comportementaux"].append({"role": role, "tour": turn, "tentative": attempt, "outil": ev["outil"],
+                                                "id": ev["id"], "statut": ev["statut"], "preuve": ev["preuve"], "journal": ref})
+    return audit, [ev for ev in audit["interdits"] if ev["statut"] in outils.BLOCKING]
+
+
+def _attempt(call, parse, retries, trace, role, turn, journal=None, tool_audit=None):
     """Appelle `call` puis `parse` ; relance au plus `retries` fois sur erreur technique.
 
-    Chaque appel est inscrit dans le registre ordonné `trace["appels_detail"]` et chaque tentative refusée dans
-    `trace["erreurs_techniques"]` (rôle, tour, numéro de tentative, catégorie, cause, empreinte de la sortie, lien
-    vers le journal), **même si une relance réussit ensuite** (`recuperee`)."""
+    Chaque appel est inscrit dans le registre ordonné `trace["appels_detail"]` (avec les outils demandés) et chaque
+    tentative refusée dans `trace["erreurs_techniques"]` (rôle, tour, numéro de tentative, catégorie, cause, empreinte
+    de la sortie, lien vers le journal), **même si une relance réussit ensuite** (`recuperee`).
+    Un outil interdit dont l'exécution est confirmée ou indéterminée arrête tout (ConfinementError, jamais relancé)."""
     errors = []
     for n in range(retries + 1):
-        raw = None
+        raw, category, cause = None, None, None
         try:
-            try:
-                raw = call()
-            except (TechnicalError, deliver.DeliveryError) as exc:
-                category, cause = "execution", str(exc)
-                raise TechnicalError(cause)
-            except Exception as exc:  # erreur d'exécution du rôle
-                category, cause = "execution", "exécution en erreur (%s)" % exc
-                raise TechnicalError(cause)
+            raw = call()
+        except (TechnicalError, deliver.DeliveryError) as exc:
+            category, cause = "execution", str(exc)
+        except Exception as exc:  # erreur d'exécution du rôle
+            category, cause = "execution", "exécution en erreur (%s)" % exc
+        audit, blocking = _audit_tools(trace, role, turn, n + 1, journal, tool_audit)
+        entry = {"n": len(trace["appels_detail"]) + 1, "role": role, "tour": turn, "tentative": n + 1}
+        if audit is not None:
+            entry["outils"] = {"demandes": audit["demandes"],
+                               "interdits": [{"outil": e["outil"], "id": e["id"], "statut": e["statut"]} for e in audit["interdits"]]}
+        if blocking:
+            entry["resultat"] = "bloque_outil_interdit"
+            trace["appels_detail"].append(entry)
+            raise ConfinementError("%s tour %d : outil interdit %s (%s)" % (
+                role, turn, ", ".join(e["outil"] for e in blocking), ", ".join(e["statut"] for e in blocking)))
+        parsed = None
+        if category is None:
             try:
                 parsed = parse(raw)
             except (TechnicalError, deliver.DeliveryError) as exc:
                 category, cause = "format", str(exc)
-                raise TechnicalError(cause)
-            trace["appels_detail"].append({"n": len(trace["appels_detail"]) + 1, "role": role, "tour": turn,
-                                           "tentative": n + 1, "resultat": "valide"})
+        if category is None:
+            entry["resultat"] = "valide"
+            trace["appels_detail"].append(entry)
             for e in errors:
                 e["recuperee"] = True
             return raw, parsed, errors
-        except TechnicalError:
-            ref = journal() if journal else None
-            entry = {"role": role, "tour": turn, "tentative": n + 1, "categorie": category, "cause": cause,
-                     "sortie_sha256": _sha(raw) if isinstance(raw, str) else None, "journal": ref, "recuperee": False}
-            errors.append(entry)
-            trace["erreurs_techniques"].append(entry)
-            trace["appels_detail"].append({"n": len(trace["appels_detail"]) + 1, "role": role, "tour": turn,
-                                           "tentative": n + 1, "resultat": "refuse_" + category})
+        err = {"role": role, "tour": turn, "tentative": n + 1, "categorie": category, "cause": cause,
+               "sortie_sha256": _sha(raw) if isinstance(raw, str) else None,
+               "journal": journal() if journal else None, "recuperee": False}
+        errors.append(err)
+        trace["erreurs_techniques"].append(err)
+        entry["resultat"] = "refuse_" + category
+        trace["appels_detail"].append(entry)
     raise TechnicalError("; ".join("%s tour %d tentative %d : %s" % (e["role"], e["tour"], e["tentative"], e["cause"])
                                    for e in errors))
 
@@ -274,9 +300,24 @@ def check_trace(trace):
         last = ledger[-1] if ledger else None
         if not last or last["role"] != "plan-reviewer" or last["resultat"] != "valide" or last["tour"] != trace["clarification"]["tour"]:
             out.append("un appel suit ou précède mal la clarification (dernier appel : %s)" % last)
+    ecarts = trace.get("ecarts_comportementaux", [])
+    listed = [e for x in ledger for e in x.get("outils", {}).get("interdits", [])]
+    if len(listed) != len(ecarts):
+        out.append("%d outils interdits au registre, %d écarts tracés" % (len(listed), len(ecarts)))
+    for e in ecarts:
+        if e["statut"] not in outils.STATUSES:
+            out.append("statut d'écart inconnu : %s" % e["statut"])
+    blocking = [e for e in ecarts if e["statut"] in outils.BLOCKING]
+    if blocking:
+        if trace.get("issue") != "erreur_technique" or trace.get("arret", {}).get("sous_categorie") != "confinement":
+            out.append("exécution interdite ou indéterminée sans arrêt « confinement »")
+        if not ledger or ledger[-1]["resultat"] != "bloque_outil_interdit":
+            out.append("appel après un outil interdit exécuté ou indéterminé")
+    elif any(x["resultat"] == "bloque_outil_interdit" for x in ledger):
+        out.append("appel bloqué sans écart bloquant tracé")
     if trace.get("issue") != "accepte" and "livraison" in trace:
         out.append("livraison présente après %s" % trace.get("issue"))
-    if trace.get("issue") == "erreur_technique" and not errors:
+    if trace.get("issue") == "erreur_technique" and not errors and trace.get("arret", {}).get("sous_categorie") != "confinement":
         out.append("erreur technique sans erreur tracée")
     return out
 
@@ -315,13 +356,16 @@ def assert_review_binding(entry):
 
 
 def run_mission(project, request, criteria, writer, reviewer, components=None, mission_id=None,
-                max_corrections=2, max_technical_retries=1, now=None, journal=None):
+                max_corrections=2, max_technical_retries=1, now=None, journal=None, tool_audit=None):
     """Exécute la mission. `writer(request, criteria, previous_plan, findings) -> texte` et
     `reviewer(request, criteria, plan) -> texte` sont fournis par l'appelant. Renvoie un compte rendu (dict).
 
     Issues métier attendues : `accepte`, `clarification_requise`, `plafond_atteint` (catégorie « metier »).
     `erreur_technique` (catégorie « technique ») est un dysfonctionnement, pas un résultat de mission.
-    `journal()` (facultatif) renvoie la référence du journal du dernier appel réel, pour la trace des erreurs."""
+    `journal()` (facultatif) renvoie la référence du journal du dernier appel réel, pour la trace des erreurs.
+    `tool_audit()` (facultatif) renvoie l'analyse des outils demandés par le dernier appel (voir `outils.analyse`) :
+    une demande refusée par la plateforme est signalée (écart comportemental) sans bloquer ; une exécution confirmée
+    ou indéterminée d'un outil interdit arrête immédiatement la mission (erreur technique « confinement »), sans livraison."""
     criteria = list(criteria)
     ids = validate_criteria(criteria)
     mission_id = mission_id or derive_mission_id(request, criteria)
@@ -329,7 +373,7 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
     trace = {"v": 2, "mission_id": mission_id, "ecrit_le": stamp,
              "demande_sha256": _sha(request), "criteres": criteria, "criteres_ids": ids,
              "criteres_sha256": _sha(json.dumps(criteria, ensure_ascii=False)),
-             "composants": dict(components or {}), "tours": [], "erreurs_techniques": [], "appels_detail": [],
+             "composants": dict(components or {}), "tours": [], "erreurs_techniques": [], "appels_detail": [], "ecarts_comportementaux": [],
              "max_corrections": max_corrections, "relances_techniques_max": max_technical_retries}
     calls = {"plan-writer": 0, "plan-reviewer": 0}
 
@@ -345,12 +389,15 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
     findings = []
     outcome = None
     accepted_sha = None
-    cause, concerned = None, []
+    cause, concerned, sub = None, [], None
     for turn in range(max_corrections + 1):
         try:
             _, (plan, path), errs = _attempt(
                 lambda: counted_writer(request, criteria, plan, findings), deliver.extract_plan,
-                max_technical_retries, trace, "plan-writer", turn + 1, journal)
+                max_technical_retries, trace, "plan-writer", turn + 1, journal, tool_audit)
+        except ConfinementError as exc:
+            outcome, cause, sub = "erreur_technique", "confinement : %s" % exc, "confinement"
+            break
         except TechnicalError:
             outcome, cause = "erreur_technique", "sortie du planificateur invalide ou exécution en erreur (relances épuisées)"
             break
@@ -361,7 +408,10 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
             _, (verdict, found, coverage), errs = _attempt(
                 lambda: counted_reviewer(request, criteria, plan),
                 lambda raw: parse_review_full(raw, criteria, plan_sha),
-                max_technical_retries, trace, "plan-reviewer", turn + 1, journal)
+                max_technical_retries, trace, "plan-reviewer", turn + 1, journal, tool_audit)
+        except ConfinementError as exc:
+            outcome, cause, sub = "erreur_technique", "confinement : %s" % exc, "confinement"
+            break
         except TechnicalError:
             outcome, cause = "erreur_technique", "revue invalide, incohérente ou liée à une autre empreinte (relances épuisées)"
             break
@@ -389,7 +439,7 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
     category = "technique" if outcome in TECHNICAL_OUTCOMES else "metier"
     result = {"mission_id": mission_id, "issue": outcome, "categorie": category, "tours": len(trace["tours"]),
               "livraison": None, "questions": list(trace.get("clarification", {}).get("questions", [])),
-              "appels": dict(calls)}
+              "appels": dict(calls), "ecarts": list(trace["ecarts_comportementaux"])}
     if outcome == "accepte":
         assert accepted_sha == _sha(plan)  # la revue acceptée porte sur le dernier plan
         assert all(v == COVERAGE_OK for v in trace["tours"][-1]["revue"]["couverture"].values())  # aucun critère abandonné
@@ -404,6 +454,8 @@ def run_mission(project, request, criteria, writer, reviewer, components=None, m
         # trace de l'arrêt : cause, critères concernés, empreintes des plans, appels déjà effectués (aucune livraison)
         trace["arret"] = {"issue": outcome, "categorie": category, "cause": cause, "criteres_concernes": concerned,
                           "plans_sha256": [t["plan_sha256"] for t in trace["tours"]], "appels": dict(calls)}
+        if sub:
+            trace["arret"]["sous_categorie"] = sub
     trace["issue"] = outcome
     trace["categorie"] = category
     trace["appels"] = dict(calls)

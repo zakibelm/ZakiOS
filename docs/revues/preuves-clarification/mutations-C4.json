@@ -1,0 +1,142 @@
+[
+ {
+  "mutation": "(base, aucune)",
+  "attendu": "tests verts",
+  "code": 0,
+  "detail": "OK",
+  "detectee": true
+ },
+ {
+  "mutation": "acceptation_malgre_bloquant",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=6)",
+  "detectee": true
+ },
+ {
+  "mutation": "acceptation_malgre_clarification",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "acceptation_malgre_critere_abandonne",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=2)",
+  "detectee": true
+ },
+ {
+  "mutation": "livraison_apres_clarification",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=15)",
+  "detectee": true
+ },
+ {
+  "mutation": "boucle_continue_apres_clarification",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=9)",
+  "detectee": true
+ },
+ {
+  "mutation": "plafond_de_corrections",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=6)",
+  "detectee": true
+ },
+ {
+  "mutation": "liaison_a_l_empreinte",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=2)",
+  "detectee": true
+ },
+ {
+  "mutation": "couverture_des_criteres",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=9, errors=3)",
+  "detectee": true
+ },
+ {
+  "mutation": "clarification_sans_question",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "a_corriger_sans_constat_majeur",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=2)",
+  "detectee": true
+ },
+ {
+  "mutation": "relance_recuperee_non_tracee",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=15, errors=4)",
+  "detectee": true
+ },
+ {
+  "mutation": "relances_non_bornees",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=5)",
+  "detectee": true
+ },
+ {
+  "mutation": "erreur_recuperee_non_marquee",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=7)",
+  "detectee": true
+ },
+ {
+  "mutation": "tentative_refusee_non_signalee",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=5, errors=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "execution_interdite_ne_bloque_pas",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=4, errors=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "indetermine_non_bloquant",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "refus_deduit_du_seul_texte",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "verificateur_appel_apres_clarification",
+  "attendu": "tests rouges",
+  "code": 1,
+  "detail": "FAILED (failures=1)",
+  "detectee": true
+ },
+ {
+  "mutation": "(restauration, aucune)",
+  "attendu": "tests verts",
+  "code": 0,
+  "detail": "OK",
+  "detectee": true
+ }
+]

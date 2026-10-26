@@ -8,7 +8,7 @@ Code de sortie : 0 base verte et toutes les mutations détectées ; 1 sinon."""
 import argparse, json, os, shutil, subprocess, sys, tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TESTS = ["tests.test_mission", "tests.test_garanties_coordination", "tests.test_clarification", "tests.test_relances", "tests.test_audit_c3"]
+TESTS = ["tests.test_mission", "tests.test_garanties_coordination", "tests.test_clarification", "tests.test_relances", "tests.test_audit_c3", "tests.test_outils_interdits"]
 MUTATIONS = [
     ("acceptation_malgre_bloquant", "    if verdict == \"ACCEPTE\":\n        if blocking:", "    if verdict == \"ACCEPTE\":\n        if False:"),
     ("acceptation_malgre_clarification", "        if clarif:\n            raise TechnicalError(\"revue incohérente : ACCEPTE malgré une clarification requise\")", "        if False:\n            raise TechnicalError(\"x\")"),
@@ -21,9 +21,14 @@ MUTATIONS = [
     ("clarification_sans_question", "    if \"?\" not in fields[\"question\"]:", "    if False:"),
     ("a_corriger_sans_constat_majeur", "        if not blocking:\n            raise TechnicalError(\"revue incohérente : A_CORRIGER", "        if False:\n            raise TechnicalError(\"revue incohérente : A_CORRIGER"),
     # campagne C3 : relances techniques tracées et bornées
-    ("relance_recuperee_non_tracee", "            errors.append(entry)\n            trace[\"erreurs_techniques\"].append(entry)", "            errors.append(entry)"),
-    ("relances_non_bornees", "    for n in range(retries + 1):\n        raw = None", "    for n in range(retries + 3):\n        raw = None"),
+    ("relance_recuperee_non_tracee", "        trace[\"erreurs_techniques\"].append(err)", "        pass"),
+    ("relances_non_bornees", "    for n in range(retries + 1):\n        raw, category, cause = None, None, None", "    for n in range(retries + 3):\n        raw, category, cause = None, None, None"),
     ("erreur_recuperee_non_marquee", "                e[\"recuperee\"] = True", "                pass"),
+    # campagne C4 : outils interdits (quatrième élément : fichier muté, par défaut mission.py)
+    ("tentative_refusee_non_signalee", "    for ev in audit[\"interdits\"]:\n        trace[\"ecarts_comportementaux\"].append(", "    for ev in []:\n        trace[\"ecarts_comportementaux\"].append("),
+    ("execution_interdite_ne_bloque_pas", "    return audit, [ev for ev in audit[\"interdits\"] if ev[\"statut\"] in outils.BLOCKING]", "    return audit, []"),
+    ("indetermine_non_bloquant", "BLOCKING = (\"execution_confirmee\", \"indetermine\")", "BLOCKING = (\"execution_confirmee\",)", "outils.py"),
+    ("refus_deduit_du_seul_texte", "            if r.get(\"is_error\") is True and names_it and name not in effective:", "            if names_it:", "outils.py"),
     ("verificateur_appel_apres_clarification", "    if trace.get(\"issue\") == \"clarification_requise\":\n        last = ledger[-1]", "    if False:\n        last = ledger[-1]"),
 ]
 
@@ -48,13 +53,16 @@ def main():
         code, last = run_tests(tree)
         rows.append({"mutation": "(base, aucune)", "attendu": "tests verts", "code": code, "detail": last, "detectee": code == 0})
         ok &= code == 0
-        for name, old, new in MUTATIONS:
+        for name, old, new, *fname in MUTATIONS:
+            target = os.path.join(tree, "zakios", fname[0] if fname else "mission.py")
+            original = open(target, encoding="utf-8").read()
             if original.count(old) != 1:
                 rows.append({"mutation": name, "attendu": "tests rouges", "code": None, "detail": "motif introuvable (%d occurrences)" % original.count(old), "detectee": False})
                 ok = False
                 continue
             open(target, "w", encoding="utf-8").write(original.replace(old, new))
             code, last = run_tests(tree)
+            open(target, "w", encoding="utf-8").write(original)  # restauration immédiate du fichier muté
             rows.append({"mutation": name, "attendu": "tests rouges", "code": code, "detail": last, "detectee": code != 0})
             ok &= code != 0
         open(target, "w", encoding="utf-8").write(original)

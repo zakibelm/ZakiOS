@@ -1,0 +1,21 @@
+(base, aucune)                             OK             code=0  OK
+acceptation_malgre_bloquant                OK             code=1  FAILED (failures=6)
+acceptation_malgre_clarification           OK             code=1  FAILED (failures=1)
+acceptation_malgre_critere_abandonne       OK             code=1  FAILED (failures=2)
+livraison_apres_clarification              OK             code=1  FAILED (failures=15)
+boucle_continue_apres_clarification        OK             code=1  FAILED (failures=9)
+plafond_de_corrections                     OK             code=1  FAILED (failures=6)
+liaison_a_l_empreinte                      OK             code=1  FAILED (failures=2)
+couverture_des_criteres                    OK             code=1  FAILED (failures=9, errors=3)
+clarification_sans_question                OK             code=1  FAILED (failures=1)
+a_corriger_sans_constat_majeur             OK             code=1  FAILED (failures=2)
+relance_recuperee_non_tracee               OK             code=1  FAILED (failures=15, errors=4)
+relances_non_bornees                       OK             code=1  FAILED (failures=5)
+erreur_recuperee_non_marquee               OK             code=1  FAILED (failures=7)
+tentative_refusee_non_signalee             OK             code=1  FAILED (failures=5, errors=1)
+execution_interdite_ne_bloque_pas          OK             code=1  FAILED (failures=4, errors=1)
+indetermine_non_bloquant                   OK             code=1  FAILED (failures=1)
+refus_deduit_du_seul_texte                 OK             code=1  FAILED (failures=1)
+verificateur_appel_apres_clarification     OK             code=1  FAILED (failures=1)
+(restauration, aucune)                     OK             code=0  OK
+TOUTES LES PROTECTIONS SONT DÉTECTÉES

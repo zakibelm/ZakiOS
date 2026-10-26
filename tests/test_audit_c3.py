@@ -10,7 +10,7 @@ import subprocess
 import sys
 import unittest
 
-from zakios import mission
+from zakios import mission, outils
 
 from .helpers import Workdir
 from .test_relances import ASK, CRITERIA, GOOD, REQUEST, WRONG_IDS
@@ -20,14 +20,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUDIT = os.path.join(ROOT, "scripts", "audit_artefacts.py")
 
 
-def write_log(path, text):
-    events = [{"type": "system", "subtype": "init", "tools": ["Read", "Glob", "Grep"], "model": "m"},
+def write_log(path, text, extra=()):
+    events = [{"type": "system", "subtype": "init", "tools": ["Read", "Glob", "Grep"], "model": "m"}, *extra,
               {"type": "result", "result": text, "is_error": False}]
     with open(path, "w", encoding="utf-8") as fh:
         fh.write("\n".join(json.dumps(e) for e in events) + "\n")
 
 
-def build_campaign(wd):
+def build_campaign(wd, forbidden=None):
     work = os.path.join(wd, "work")
     base = os.path.join(work, "base")
     os.makedirs(os.path.join(base, "src"))
@@ -37,19 +37,23 @@ def build_campaign(wd):
     shutil.copytree(base, d)
     answers = {"plan-writer": [plan_text()], "plan-reviewer": [WRONG_IDS, GOOD]}
     log = []
+    audit = {"v": {"demandes": {}, "interdits": []}}
 
     def role(name):
         def call(*args):
             raw = answers[name].pop(0)
             if name == "plan-reviewer":
                 raw = raw.replace("@PLAN@", mission.plan_fingerprint(args[2]))
-            write_log(os.path.join(work, "log-information_manquante-p3-%d.jsonl" % len(log)), raw)
+            extra = forbidden if (forbidden and name == "plan-writer") else ()
+            write_log(os.path.join(work, "log-information_manquante-p3-%d.jsonl" % len(log)), raw, extra)
+            audit["v"] = outils.analyse(list(extra), ["Read", "Glob", "Grep"])
             log.append(raw)
             return raw
         return call
 
     out = mission.run_mission(d, REQUEST, CRITERIA, role("plan-writer"), role("plan-reviewer"), mission_id="m3",
-                              journal=lambda: "log-information_manquante-p3-%d.jsonl" % (len(log) - 1))
+                              journal=lambda: "log-information_manquante-p3-%d.jsonl" % (len(log) - 1),
+                              tool_audit=lambda: audit["v"])
     return work, d, out
 
 
@@ -90,6 +94,43 @@ class AuditDesRelances(unittest.TestCase):
                 code, text = audit(work)
                 self.assertEqual(code, 1)
                 self.assertIn(needle, text)
+
+
+REFUS = "<tool_use_error>Error: No such tool available: Bash. Bash is not among the tools available here.</tool_use_error>"
+CALL = {"type": "assistant", "message": {"content": [{"type": "tool_use", "id": "t1", "name": "Bash", "input": {"command": "ls"}}]}}
+
+
+def result(text, is_error):
+    return {"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": "t1", "content": text, "is_error": is_error}]}}
+
+
+class AuditDesOutilsInterdits(unittest.TestCase):
+    def test_tentative_refusee_listee_comme_ecart_sans_divergence(self):
+        with Workdir() as wd:
+            work, d, out = build_campaign(wd, forbidden=[CALL, result(REFUS, True)])
+            code, text = audit(work)
+            self.assertEqual(code, 0, text)
+            self.assertIn("ÉCART COMPORTEMENTAL", text)
+            self.assertIn('"tentatives_interdites": 1', text)
+
+    def test_execution_interdite_est_une_divergence(self):
+        with Workdir() as wd:
+            work, d, out = build_campaign(wd, forbidden=[CALL, result("a\nb", False)])
+            self.assertEqual(out["issue"], "erreur_technique")  # le coordinateur a bloqué
+            code, text = audit(work)
+            self.assertEqual(code, 1)
+            self.assertIn("EXÉCUTION INTERDITE", text)
+
+    def test_ecart_absent_de_la_trace_est_une_divergence(self):
+        with Workdir() as wd:
+            work, d, out = build_campaign(wd, forbidden=[CALL, result(REFUS, True)])
+            tp = os.path.join(d, out["trace"])
+            tr = json.load(open(tp))
+            tr["ecarts_comportementaux"] = []
+            json.dump(tr, open(tp, "w"))
+            code, text = audit(work)
+            self.assertEqual(code, 1)
+            self.assertIn("écarts comportementaux tracés", text)
 
 
 if __name__ == "__main__":

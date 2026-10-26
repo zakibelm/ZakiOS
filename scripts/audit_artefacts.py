@@ -18,8 +18,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 sys.path.insert(0, HERE)
-from essai_lot1 import MODIFYING, diff_tree, sha_tree  # noqa: E402
-from zakios import deliver, mission  # noqa: E402
+from essai_lot1 import diff_tree, sha_tree  # noqa: E402
+from zakios import deliver, mission, outils  # noqa: E402
 
 FIXTURES = {"A": "m1_sans_c3.md", "B": "m2_non_verifiable.md", "temoin": "temoin.md", "M4": "m4_sans_verifier.md"}
 READONLY = ["Glob", "Grep", "Read"]
@@ -67,7 +67,8 @@ def enumerate_missions(work):
     return out
 
 
-def audit_one(key, d, logs, name, injected, base_tree, div, stats, parse_reviews=True):
+def audit_one(key, d, logs, name, injected, base_tree, div, stats, parse_reviews=True, ecarts=None):
+    ecarts = ecarts if ecarts is not None else []
     def bad(msg):
         div.append("%s : %s" % (key, msg))
 
@@ -78,11 +79,24 @@ def audit_one(key, d, logs, name, injected, base_tree, div, stats, parse_reviews
     tours, criteria = tr["tours"], tr["criteres"]
     entries = [read_log(p) for p in logs]
     # outils effectifs et utilisés
+    recomputed = []
     for p, e in zip(logs, entries):
         if sorted(e["tools"]) != READONLY:
             bad("outils effectifs %s dans %s" % (e["tools"], os.path.basename(p)))
-        if set(e["used"]) & MODIFYING:
-            bad("outil modifiant appelé %s dans %s" % (sorted(set(e["used"]) & MODIFYING), os.path.basename(p)))
+        # outils demandés hors liste : recalcul indépendant depuis le journal brut (demande refusée / exécution / indéterminé)
+        a = outils.analyse_log(open(p, encoding="utf-8").read(), e["tools"])
+        for ev in a["interdits"]:
+            recomputed.append((os.path.basename(p), ev["outil"], ev["statut"]))
+            if ev["statut"] in outils.BLOCKING:
+                stats["executions_interdites"] = stats.get("executions_interdites", 0) + 1
+                bad("EXÉCUTION INTERDITE ou indéterminée : %s (%s) dans %s" % (ev["outil"], ev["statut"], os.path.basename(p)))
+            else:
+                stats["tentatives_interdites"] = stats.get("tentatives_interdites", 0) + 1
+                ecarts.append("%s : %s demandé, refusé par la plateforme (%s)" % (key, ev["outil"], os.path.basename(p)))
+    if "ecarts_comportementaux" in tr:
+        traced = sorted((os.path.basename(x["journal"] or ""), x["outil"], x["statut"]) for x in tr["ecarts_comportementaux"])
+        if traced != sorted(recomputed):
+            bad("écarts comportementaux tracés %s != recalculés depuis les journaux %s" % (traced, sorted(recomputed)))
     stats["appels_reels"] += len(entries)
     # plans recalculés depuis les sorties réelles des rédacteurs (+ plan injecté)
     plans, reviews = [], []
@@ -229,18 +243,21 @@ def main():
     a = ap.parse_args()
     work = os.path.abspath(a.work)
     base_tree = sha_tree(os.path.join(work, "base"))
+    ecarts = []
     div, stats = [], {"missions": 0, "appels_reels": 0, "liens_revue_plan": 0, "livraisons_verifiees": 0, "arrets_verifies": 0}
     for key, d, logs, name, injected in enumerate_missions(work):
         stats["missions"] += 1
-        audit_one(key, d, logs, name, injected, base_tree, div, stats, not a.sans_reanalyse_des_revues)
+        audit_one(key, d, logs, name, injected, base_tree, div, stats, not a.sans_reanalyse_des_revues, ecarts)
     if stats["missions"] == 0:
         div.append("aucune mission trouvée dans %s (disposition de dossiers inconnue)" % work)
-    report = {"dossier": work, "statistiques": stats, "divergences": div}
+    report = {"dossier": work, "statistiques": stats, "divergences": div, "ecarts_comportementaux": ecarts}
     if a.out:
         json.dump(report, open(a.out, "w"), indent=1, ensure_ascii=False)
     print(json.dumps(stats, ensure_ascii=False))
     for x in div:
         print("DIVERGENCE :", x)
+    for x in ecarts:
+        print("ÉCART COMPORTEMENTAL (tentative interdite refusée par la plateforme) :", x)
     print("AUCUNE DIVERGENCE" if not div else "%d DIVERGENCE(S)" % len(div))
     sys.exit(1 if div else 0)
 
