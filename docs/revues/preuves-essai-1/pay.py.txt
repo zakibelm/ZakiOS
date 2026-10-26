@@ -1,0 +1,6 @@
+def total(prices, discount):
+    # discount est un pourcentage 0-100
+    return sum(prices) * (1 - discount)
+
+def read_user(db, name):
+    return db.execute("SELECT * FROM users WHERE name = '" + name + "'")

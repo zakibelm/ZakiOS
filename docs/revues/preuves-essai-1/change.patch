@@ -1,0 +1,11 @@
+diff --git a/src/pay.py b/src/pay.py
+--- a/src/pay.py
++++ b/src/pay.py
+@@ -1,2 +1,6 @@
+ def total(prices, discount):
+-    return sum(prices)
++    # discount est un pourcentage 0-100
++    return sum(prices) * (1 - discount)
++
++def read_user(db, name):
++    return db.execute("SELECT * FROM users WHERE name = '" + name + "'")
