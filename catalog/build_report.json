@@ -1,4 +1,5 @@
 {
+ "build_mode": "exact",
  "counts_by_source_and_type": {
   "VoltAgent/awesome-claude-code-subagents": {
    "agent": 163,
@@ -62,15 +63,18 @@
   "plugin": 246,
   "skill": 1177
  },
+ "dirty_sources": [],
  "empty_summaries": 19,
  "evaluation_by_type": {
   "agent": {
+   "cross_layer_overlap": 4,
    "equivalence_candidate": 88,
-   "novelty_to_review": 299,
+   "novelty_to_review": 295,
    "partial_overlap": 34
   },
   "command": {
-   "novelty_to_review": 335,
+   "cross_layer_overlap": 4,
+   "novelty_to_review": 331,
    "partial_overlap": 13
   },
   "embedded_agent": {
@@ -83,8 +87,9 @@
    "behavior_audit_required": 45
   },
   "skill": {
+   "cross_layer_overlap": 45,
    "equivalence_candidate": 43,
-   "novelty_to_review": 851,
+   "novelty_to_review": 806,
    "partial_overlap": 22
   }
  },
@@ -164,7 +169,7 @@
  "orphan_decisions": [],
  "provisional": true,
  "provisional_reason": "comparaison ZAKI OS manquante",
- "schema_version": "2",
+ "schema_version": "3",
  "sources": [
   {
    "commit": "408d3c9eee2d0c75c12a3abb5de29e53c2ca6b9e",
@@ -251,5 +256,6 @@
    "status": "absente_facultative"
   }
  ],
- "zakios_version": "0.2.0"
+ "stale_decisions": [],
+ "zakios_version": "0.3.0"
 }

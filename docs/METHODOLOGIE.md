@@ -11,9 +11,10 @@ REA : lire ce que fait réellement chaque composant, le situer dans une couche, 
 3. **Inventaire** : `git ls-files`, donc déterministe. Les tests, `node_modules`, docs et fichiers annexes sont exclus. Un mod = son README seul ; un hook `.json` et son script compagnon = un composant.
 4. **Lecture** : frontmatter lu avec `yaml.safe_load` ; un YAML invalide est signalé dans le rapport, jamais ignoré en silence. Les descriptions multi-lignes (`>-`, `|`) sont lues correctement.
 5. **Présélection** : TF-IDF et cosinus, en Python pur. Le meilleur candidat est cherché dans la même famille (agents, skills, commandes) parmi le Socle et l'existant ; les voisins proches dans le catalogue (≥ 0,45) et les homonymes sont notés.
-6. **Statut proposé** selon `zakios/policy.py`. Hooks, plugins et mods : toujours « audit par comportement ».
+6. **Statut proposé** selon `zakios/policy.py`. Hooks, plugins et mods : toujours « audit par comportement ». Un fichier à métadonnées invalides est mis en quarantaine. Un composant sans équivalent dans sa famille est aussi cherché dans les deux autres (agent, skill, commande) : s'il y en a un, il devient « chevauchement inter-couches ».
 7. **Sortie déterministe** (JSON trié) : deux builds sur les mêmes sources donnent des fichiers identiques octet pour octet.
-8. **Validation puis remplacement atomique** du dossier `catalog/`.
+8. **Validation** (schéma, types, empreintes, références, comptes, CSV recalculé) puis **échange atomique** du dossier `catalog/`. Sans échange atomique disponible, repli sur deux renommages avec restauration immédiate en cas d'erreur.
+9. **Empreinte et validation humaine** : une approbation est liée à l'empreinte du composant et devient périmée si elle change.
 
 ## Ce qu'un score ne dit pas
 
@@ -21,4 +22,4 @@ Un score lexical mesure un vocabulaire commun. Un score élevé peut cacher des 
 
 ## Récupération après incident
 
-Si le build est interrompu pendant le remplacement, le prochain lancement restaure `catalog.bak` automatiquement. Un dossier `catalog.tmp` résiduel est supprimé au démarrage.
+Un verrou (`catalog.lock`) interdit deux générations simultanées. Les dossiers temporaires ont un nom unique (`catalog.tmp-…`) ; ceux d'une génération interrompue sont supprimés au prochain lancement. Si le repli par renommages a laissé `catalog.bak` sans `catalog/`, le prochain lancement le restaure.

@@ -51,6 +51,11 @@ def verify_source(src, sources_root, allow_dirty=False):
     return path
 
 
+def is_dirty(path):
+    _, status, _ = _git(path, "status", "--porcelain")
+    return bool(status.strip())
+
+
 def tracked_files(path, subdir=""):
     """Fichiers suivis par git, triés (ordre déterministe)."""
     args = ["ls-files", "-z"]
@@ -84,7 +89,7 @@ def _script_summary(text):
     return summarize(match.group(1)) if match else ""
 
 
-def make_record(src, repo_rel, rel, ctype, raw, issues, license_file):
+def make_record(src, repo_rel, rel, ctype, raw, issues, license_file, fingerprint=None):
     """Construit l'enregistrement d'un composant (observations seulement, sans décision)."""
     text = raw.decode("utf-8", errors="replace")
     stem = os.path.splitext(os.path.basename(rel))[0]
@@ -134,6 +139,8 @@ def make_record(src, repo_rel, rel, ctype, raw, issues, license_file):
         "provenance": {
             "source": src["repo"], "role": src["role"], "path": repo_rel,
             "commit": src["commit"], "content_sha256": hashlib.sha256(raw).hexdigest(),
+            "fingerprint_sha256": fingerprint[0] if fingerprint else hashlib.sha256(raw).hexdigest(),
+            "fingerprint_files": fingerprint[1] if fingerprint else [repo_rel],
         },
         "license": {"verified": False, "repo_license_file": license_file, "spdx": None, "attribution": None},
         "function": {"summary": summary},
@@ -143,6 +150,31 @@ def make_record(src, repo_rel, rel, ctype, raw, issues, license_file):
         "_sim_text": sim_text,
         "_has_text": bool(summary or norm(sim_text)),
     }
+
+
+def _fingerprint(path, repo_files):
+    """Empreinte d'un ensemble de fichiers : chemins et contenus, dans un ordre fixe."""
+    digest = hashlib.sha256()
+    for repo_rel in sorted(repo_files):
+        with open(os.path.join(path, repo_rel), "rb") as handle:
+            digest.update(("%s %s\n" % (repo_rel, hashlib.sha256(handle.read()).hexdigest())).encode("utf-8"))
+    return digest.hexdigest(), sorted(repo_files)
+
+
+def _behavior_files(repo_rel, ctype, all_files):
+    """Fichiers qui déterminent le comportement d'un composant composé.
+
+    mod : tout son dossier ; hook : sa configuration et les scripts qui portent le même nom.
+    Les autres types sont leur propre fichier.
+    """
+    if ctype == "mod":
+        prefix = os.path.dirname(repo_rel) + "/"
+        return [f for f in all_files if f.startswith(prefix)]
+    if ctype == "hook":
+        folder, stem = os.path.dirname(repo_rel), os.path.splitext(os.path.basename(repo_rel))[0]
+        return [f for f in all_files if os.path.dirname(f) == folder
+                and os.path.splitext(os.path.basename(f))[0] == stem]
+    return [repo_rel]
 
 
 def build_records(src, path, issues):
@@ -171,5 +203,6 @@ def build_records(src, path, issues):
             continue
         with open(os.path.join(path, repo_rel), "rb") as handle:
             raw = handle.read()
-        records.append(make_record(src, repo_rel, rel, ctype, raw, issues, license_file))
+        fingerprint = _fingerprint(path, _behavior_files(repo_rel, ctype, files))
+        records.append(make_record(src, repo_rel, rel, ctype, raw, issues, license_file, fingerprint))
     return records

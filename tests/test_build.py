@@ -7,12 +7,24 @@ from zakios import build as build_mod
 from zakios import policy
 from zakios.build import BuildError, ValidationError, build, validate_catalog
 
-from .helpers import Workdir, git, make_world
+from .helpers import Workdir, change_source, git, make_world
+
+
+FRONT = "Corps de l'agent cassé."
+
+
+def agent_text(name, description):
+    return "---\nname: %s\ndescription: %s\n---\n\nCorps.\n" % (name, description)
 
 
 def read(path):
     with open(path, "rb") as handle:
         return handle.read()
+
+
+def leftovers(out):
+    parent, base = os.path.split(out)
+    return [n for n in os.listdir(parent) if n.startswith(base + ".tmp-") or n == base + ".bak"]
 
 
 def load_registry(out):
@@ -90,7 +102,7 @@ class BuildTests(unittest.TestCase):
             with self.assertRaises(BuildError):
                 build(manifest, root, out)
             self.assertEqual(read(os.path.join(out, "registry.json")), before)
-            self.assertFalse(os.path.exists(out + ".tmp"))
+            self.assertEqual(leftovers(out), [])
 
     def test_commit_mismatch_is_refused(self):
         with Workdir() as wd:
@@ -135,7 +147,7 @@ class BuildTests(unittest.TestCase):
                 with self.assertRaises(ValidationError):
                     build(manifest, root, out)
             self.assertEqual(read(os.path.join(out, "registry.json")), before)
-            self.assertFalse(os.path.exists(out + ".tmp"))
+            self.assertEqual(leftovers(out), [])
 
     def test_recovery_after_crash_during_swap(self):
         with Workdir() as wd:
@@ -152,14 +164,162 @@ class BuildTests(unittest.TestCase):
             out = os.path.join(wd, "catalog")
             decisions = os.path.join(wd, "validated.json")
             cid = "acme/catalogue:components/agents/ops/devops-engineer.md"
+            build(manifest, root, out)
+            fingerprint = load_registry(out)[cid]["provenance"]["fingerprint_sha256"]
             with open(decisions, "w") as handle:
                 json.dump({cid: {"validated": "conserver", "validated_by": "Zaki", "validated_on": "2026-10-26",
-                                 "justification": "mission distincte"},
+                                 "justification": "mission distincte", "fingerprint_sha256": fingerprint},
                            "acme/inconnu:x.md": {"validated": "archiver"}}, handle)
             report = build(manifest, root, out, decisions_path=decisions)
             decision = load_registry(out)[cid]["decision"]
             self.assertEqual((decision["validated"], decision["validated_by"]), ("conserver", "Zaki"))
             self.assertEqual(report["orphan_decisions"], ["acme/inconnu:x.md"])
+            self.assertEqual(report["stale_decisions"], [])
+
+    def test_validation_is_invalidated_when_content_changes(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            decisions = os.path.join(wd, "validated.json")
+            cid = "acme/catalogue:components/agents/ops/devops-engineer.md"
+            build(manifest, root, out)
+            fingerprint = load_registry(out)[cid]["provenance"]["fingerprint_sha256"]
+            with open(decisions, "w") as handle:
+                json.dump({cid: {"validated": "conserver", "fingerprint_sha256": fingerprint}}, handle)
+            change_source(root, manifest, "acme/catalogue",
+                          {"components/agents/ops/devops-engineer.md": agent_text("devops-engineer", "nouvelle mission")})
+            report = build(manifest, root, out, decisions_path=decisions)
+            decision = load_registry(out)[cid]["decision"]
+            self.assertIsNone(decision["validated"])
+            self.assertEqual(decision["stale_validation"]["validated"], "conserver")
+            self.assertEqual([d["component_id"] for d in report["stale_decisions"]], [cid])
+
+    def test_validation_without_fingerprint_is_stale(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            decisions = os.path.join(wd, "validated.json")
+            cid = "acme/catalogue:components/agents/ops/devops-engineer.md"
+            with open(decisions, "w") as handle:
+                json.dump({cid: {"validated": "conserver"}}, handle)
+            report = build(manifest, root, os.path.join(wd, "catalog"), decisions_path=decisions)
+            self.assertEqual(report["stale_decisions"][0]["reason"], "empreinte absente")
+
+    def test_unknown_decision_value_is_refused(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            decisions = os.path.join(wd, "validated.json")
+            with open(decisions, "w") as handle:
+                json.dump({"acme/catalogue:x.md": {"validated": "adopter"}}, handle)
+            with self.assertRaises(BuildError):
+                build(manifest, root, os.path.join(wd, "catalog"), decisions_path=decisions)
+
+    def test_composed_components_fingerprint_covers_all_behavior_files(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            hook_id = "acme/catalogue:components/hooks/git/guard.json"
+            mod_id = "acme/catalogue:components/mods/security/jail/README.md"
+            build(manifest, root, out)
+            before = load_registry(out)
+            self.assertIn("components/hooks/git/guard.py", before[hook_id]["provenance"]["fingerprint_files"])
+            self.assertIn("components/mods/security/jail/hooks/block.ts", before[mod_id]["provenance"]["fingerprint_files"])
+            change_source(root, manifest, "acme/catalogue", {
+                "components/hooks/git/guard.py": "# Autre comportement du script compagnon, README inchangé ici\n",
+                "components/mods/security/jail/hooks/block.ts": "export const x = 2\n"})
+            build(manifest, root, out)
+            after = load_registry(out)
+            for cid in (hook_id, mod_id):
+                self.assertEqual(before[cid]["provenance"]["content_sha256"], after[cid]["provenance"]["content_sha256"])
+                self.assertNotEqual(before[cid]["provenance"]["fingerprint_sha256"],
+                                    after[cid]["provenance"]["fingerprint_sha256"])
+
+    def test_invalid_metadata_is_quarantined(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            change_source(root, manifest, "acme/catalogue", {
+                "components/agents/web/casse.md":
+                    "---\nname: casse\ndescription: Use when: ceci casse\n---\n" + FRONT + "\n"})
+            build(manifest, root, out)
+            comp = load_registry(out)["acme/catalogue:components/agents/web/casse.md"]
+            self.assertEqual(comp["evaluation"]["status"], policy.STATUS_INVALID)
+            self.assertIsNone(comp["evaluation"]["best_match_id"])
+            self.assertEqual(comp["evaluation"]["similar_in_catalog"], [])
+            self.assertIn("revue requise", comp["decision"]["proposal"])
+
+    def test_cross_layer_overlap_is_flagged(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            build(manifest, root, out)
+            comp = load_registry(out)["acme/catalogue:components/agents/sec/security-auditor.md"]
+            self.assertEqual(comp["evaluation"]["status"], policy.STATUS_CROSS_LAYER)
+            self.assertEqual(comp["evaluation"]["cross_layer"][0]["component_id"],
+                             "acme/socle:skills/security-scan/SKILL.md")
+
+    def test_dirty_build_is_experimental(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            with open(os.path.join(root, "acme", "socle", "agents", "backend-developer.md"), "a") as handle:
+                handle.write("modif locale\n")
+            out = os.path.join(wd, "catalog")
+            report = build(manifest, root, out, allow_dirty=True)
+            self.assertEqual(report["build_mode"], "experimental_dirty")
+            self.assertEqual(report["dirty_sources"], ["acme/socle"])
+            self.assertEqual(validate_catalog(out)["build_mode"], "experimental_dirty")
+
+    def test_clean_build_is_exact(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            self.assertEqual(build(manifest, root, os.path.join(wd, "catalog"), allow_dirty=True)["build_mode"], "exact")
+
+    def test_concurrent_generation_is_refused(self):
+        import fcntl
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            with open(out + ".lock", "a+") as handle:
+                fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                with self.assertRaises(BuildError) as ctx:
+                    build(manifest, root, out)
+            self.assertIn("déjà en cours", str(ctx.exception))
+            build(manifest, root, out)  # le verrou est libéré
+
+    def test_swap_never_leaves_the_catalog_missing(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            build(manifest, root, out)
+            before = read(os.path.join(out, "registry.json"))
+            real_rename = os.rename
+            calls = []
+
+            def flaky(src, dst):
+                calls.append((src, dst))
+                if dst == out and src.startswith(out + ".tmp-"):
+                    raise OSError("panne simulée pendant le second renommage")
+                return real_rename(src, dst)
+
+            with mock.patch.object(build_mod, "_exchange", return_value=False), \
+                    mock.patch.object(build_mod.os, "rename", side_effect=flaky):
+                with self.assertRaises(OSError):
+                    build(manifest, root, out)
+            self.assertEqual(read(os.path.join(out, "registry.json")), before)
+            self.assertEqual(leftovers(out), [])
+
+    def test_atomic_exchange_replaces_the_catalog_in_one_step(self):
+        with Workdir() as wd:
+            a, b = os.path.join(wd, "a"), os.path.join(wd, "b")
+            os.mkdir(a)
+            os.mkdir(b)
+            with open(os.path.join(a, "v"), "w") as handle:
+                handle.write("ancien")
+            with open(os.path.join(b, "v"), "w") as handle:
+                handle.write("nouveau")
+            if not build_mod._exchange(b, a):
+                self.skipTest("échange atomique indisponible sur ce système")
+            self.assertEqual(read(os.path.join(a, "v")), b"nouveau")
+            self.assertEqual(read(os.path.join(b, "v")), b"ancien")
 
     def test_validation_rejects_a_tampered_catalog(self):
         with Workdir() as wd:
@@ -175,6 +335,63 @@ class BuildTests(unittest.TestCase):
                 json.dump(data, handle)
             with self.assertRaises(ValidationError):
                 validate_catalog(out)
+
+    def _tampered(self, edit_registry=None, edit_csv=None, edit_report=None):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            build(manifest, root, out)
+            for name, edit, is_json in (("registry.json", edit_registry, True), ("build_report.json", edit_report, True),
+                                        ("crosswalk.csv", edit_csv, False)):
+                if not edit:
+                    continue
+                path = os.path.join(out, name)
+                if is_json:
+                    data = json.loads(read(path))
+                    edit(data)
+                    with open(path, "w") as handle:
+                        json.dump(data, handle)
+                else:
+                    text = read(path).decode("utf-8")
+                    with open(path, "w", encoding="utf-8", newline="") as handle:
+                        handle.write(edit(text))
+            return validate_catalog(out)
+
+    def test_csv_edit_with_same_row_count_is_detected(self):
+        with self.assertRaises(ValidationError) as ctx:
+            self._tampered(edit_csv=lambda t: t.replace("novelty_to_review", "equivalence_candidate", 1)
+                           if "novelty_to_review" in t else t.replace("cross_layer_overlap", "equivalence_candidate", 1))
+        self.assertIn("crosswalk.csv", str(ctx.exception))
+
+    def test_dangling_reference_is_detected(self):
+        def edit(data):
+            for comp in data["components"]:
+                if comp["evaluation"] and comp["evaluation"]["best_match_id"]:
+                    comp["evaluation"]["best_match_id"] = "acme/socle:inexistant.md"
+                    return
+        with self.assertRaises(ValidationError):
+            self._tampered(edit_registry=edit)
+
+    def test_bad_hash_and_report_count_are_detected(self):
+        def edit_registry(data):
+            data["components"][0]["provenance"]["content_sha256"] = "xyz"
+        with self.assertRaises(ValidationError):
+            self._tampered(edit_registry=edit_registry)
+
+        def edit_report(data):
+            data["counts_by_type"]["agent"] += 1
+        with self.assertRaises(ValidationError):
+            self._tampered(edit_report=edit_report)
+
+    def test_validated_decision_bound_to_another_content_is_detected(self):
+        def edit(data):
+            for comp in data["components"]:
+                if comp["decision"]:
+                    comp["decision"]["validated"] = "conserver"
+                    comp["decision"]["validated_fingerprint_sha256"] = "0" * 64
+                    return
+        with self.assertRaises(ValidationError):
+            self._tampered(edit_registry=edit)
 
     def test_invalid_frontmatter_is_reported_in_the_build_report(self):
         with Workdir() as wd:

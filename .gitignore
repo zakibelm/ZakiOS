@@ -5,3 +5,5 @@ node_modules/
 sources/
 catalog.tmp/
 catalog.bak/
+*.lock
+*.tmp-*/

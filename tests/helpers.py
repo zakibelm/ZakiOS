@@ -50,6 +50,7 @@ def make_world(workdir):
         "agents/backend-developer.md": agent("backend-developer", BACKEND),
         "agents/data-scientist.md": agent("data-scientist", DATA),
         "agents/README.md": "# doc, pas un composant\n",
+        "skills/security-scan/SKILL.md": "---\nname: security-scan\ndescription: %s\n---\nCorps\n" % SECURITY,
     })
     cat = make_repo(root, "acme/catalogue", {
         "components/agents/web/frontend-dev.md": agent("frontend-dev", FRONTEND + " and design systems"),
@@ -71,6 +72,27 @@ def make_world(workdir):
     with open(manifest_path, "w", encoding="utf-8") as handle:
         json.dump(manifest, handle)
     return root, manifest_path, {"catalogue": cat, "socle": socle}
+
+
+def change_source(root, manifest_path, repo, files):
+    """Modifie et committe des fichiers d'une source, puis met le commit du manifeste à jour."""
+    path = os.path.join(root, *repo.split("/"))
+    for rel, content in files.items():
+        full = os.path.join(path, rel)
+        os.makedirs(os.path.dirname(full), exist_ok=True)
+        with open(full, "w", encoding="utf-8") as handle:
+            handle.write(content)
+    git(path, "add", "-A")
+    git(path, "commit", "-q", "-m", "change")
+    commit = git(path, "rev-parse", "HEAD")
+    with open(manifest_path, encoding="utf-8") as handle:
+        manifest = json.load(handle)
+    for src in manifest["sources"]:
+        if src["repo"] == repo:
+            src["commit"] = commit
+    with open(manifest_path, "w", encoding="utf-8") as handle:
+        json.dump(manifest, handle)
+    return commit
 
 
 class Workdir:
