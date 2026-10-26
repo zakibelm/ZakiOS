@@ -27,6 +27,10 @@ Ordre fixé par l'audit du commit a29d2df (`docs/AUDIT-a29d2df.md`). Chaque éta
 
 Claude Code CLI uniquement. Catalogue en lecture seule par défaut, sélection assistée, activation explicite. Réussite : démontrer le parcours complet sur un projet pilote.
 
+## Jalon de coordination (mesuré, un critère non satisfait)
+
+Rôle `plan-reviewer` (lecture seule) et coordinateur déterministe `zakios/mission.py` (boucle PDCA, plafond, trace, livraison contrôlée), testés sans modèle puis avec modèle sur 3 passages. Détection et correction des écarts injectés : 3/3. Faux positif du témoin : 1 passage sur 3 → critère « témoin accepté au premier tour » **non satisfait**. Détail et pistes : `docs/revues/essai-coordination.md`. `plan-reviewer` doit passer la même revue humaine que le lot 1 avant toute installation réelle.
+
 ## Décision qui t'attend
 
 Choisir une licence pour le code de ZakiOS.

@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T13:58:35Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "40229da1044fd27649e3f2c24f4f716ca0fc17d9409f9b59e20e54d7d21a899c",
+  "delivery_sha256": "d61b761ba5e9c2f3144011cf578b4ade61153acb3267925b50e9592b88a83ddd",
+  "trace": ".zakios/deliverables/d61b761ba5e9c2f3144011cf578b4ade61153acb3267925b50e9592b88a83ddd.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : le critère d'acceptation C3 (aucune régression sur les appels existants) n'est pas repris dans le plan, qui ne liste que C1 et C2, et aucune vérification ne le couvre. Le relevé des appels (étape 1) n'est relié à aucun test ni aucune commande de non-régression. → Action : ajouter C3 aux critères, avec une vérification concrète (par exemple lancer la suite existante `python -m unittest discover tests` après correction et comparer à la sortie obtenue avant correction, ainsi qu'un test des appels relevés). → Résultat : attendu : la non-régression devient mesurable, mais elle n'est pas vérifiée à ce jour · preuve : absence du critère C3 « aucune régression sur les appels existants » ; le plan ne cite que « C1 » et « C2 » dans « Critères d'acceptation donnés par la mission »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 4 `sum(prices) * (1 - discount / 100)` renvoie un float (`30.0`, `0.0`), alors que le type de retour d'origine n'est pas établi. Cela peut changer le type pour les appelants existants et se relie au risque de régression. Le plan ne précise pas non plus le comportement attendu hors bornes (remise < 0 ou > 100). → Action : relever le type et le comportement actuels à l'étape 1, puis préciser le type de retour attendu et le traitement des valeurs hors bornes (rejet ou non). → Résultat : attendu : le comportement de `total()` est entièrement défini, mais il n'est pas vérifié à ce jour · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)` » ; absence de cas de remise hors 0-100 dans « Vérifier »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'étape 3 exige que les tests échouent avant correction, mais le plan ne dit pas quoi faire si l'un d'eux réussit déjà sur le code d'origine. De plus, le test d'injection ne couvre qu'une seule charge utile. → Action : ajouter à la section « Agir » le traitement du cas où un test réussit avant correction (le test est invalide, le revoir), et envisager une seconde charge utile, par exemple avec un point-virgule ou un guillemet. → Résultat : attendu : les tests prouvent bien la détection des défauts, mais ce n'est pas vérifié à ce jour · preuve : « `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts) » ; absence de conduite à tenir si ces tests réussissent avant correction."
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "f98d60851a4a3016a2b25ab4287d934bb3d8d938ff2450c4c9519af15d92c5a2",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le cas « read_user(db, 'Alice') renvoie la même ligne qu'avant » ne dit pas ce que renvoie `read_user`. Le correctif `return db.execute(...)` renvoie un curseur, et le plan ne précise pas si l'original renvoyait un curseur, une ligne ou une liste. → Action : relever le type de retour de l'original à l'étape 1, puis conserver ce type dans le correctif (par exemple `.fetchall()`) et dans les assertions. → Résultat : la comparaison avant/après porte sur une valeur définie, sans écart de type caché. · preuve : « `return db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))` » et « `read_user(db, 'Alice')` renvoie la même ligne qu'avant »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la valeur de la remise change de sens. Avant, `0.5` voulait dire 50 %. Après, `0.5` voudrait dire 0,5 %. Un appelant externe qui passe une fraction n'aurait aucune erreur et obtiendrait un résultat faux. Le plan ne traite que le changement de type `int` vers `float`. → Action : ajouter ce changement de sémantique aux limites de C3 et le soumettre à la personne avec D1 et D2. → Résultat : le risque lié aux appelants hors dépôt est annoncé explicitement. · preuve : « Des appelants hors dépôt sont possibles, mais non vérifiables d'ici (hypothèse). »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : avec la concaténation, `sqlite3.execute` refuse les requêtes à plusieurs instructions. La charge `x'; DROP TABLE users; --` lèvera donc probablement une exception, pas un résultat non vide. L'attendu « échec » à l'étape 3 reste vrai, mais la cause n'est pas celle d'une injection réussie. → Action : écrire l'assertion et la lecture de la sortie de l'étape 3 pour accepter une erreur comme échec attendu, et garder `' OR '1'='1` comme preuve principale de l'injection. → Résultat : l'étape 3 ne se lit pas de travers et le test cible bien le défaut. · preuve : « `test_injection` (chaque charge qui réussit l'injection) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la comparaison exacte avec `float` peut être fragile pour des prix décimaux (par exemple 0.1 ou 19.99), alors que les cas prévus sont tous entiers. → Action : ajouter un cas décimal et utiliser `assertAlmostEqual`. → Résultat : l'arithmétique flottante est couverte. · preuve : « `total([10, 20], 50) == 15` »"
+    }
+   ],
+   "plan_sha256": "40229da1044fd27649e3f2c24f4f716ca0fc17d9409f9b59e20e54d7d21a899c",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "40229da1044fd27649e3f2c24f4f716ca0fc17d9409f9b59e20e54d7d21a899c",
+    "relances_relecteur": 0,
+    "revue_sha256": "827a2b75bd9f767940f9d221ec4e8d4e1169592e933a97360f4fd3720d2be926",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

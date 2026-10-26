@@ -1,0 +1,136 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:10:21Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+  "content_sha256": "8c1aa5bb25aa79af5c5f0c7da612f1ffb67d50d632a86d64d0db125b880d0550",
+  "delivery_sha256": "7551a8c45608f7e1f14e622b85adec31640ff79bfde8f194c1e8905ba9adf0ee",
+  "trace": ".zakios/deliverables/7551a8c45608f7e1f14e622b85adec31640ff79bfde8f194c1e8905ba9adf0ee.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "bloquant",
+     "texte": "critère « C1, C2, C3 » · Problème : aucune étape ne relance les tests après les corrections ; l'étape 4 s'exécute avant toute correction et les étapes 5 et 6 s'arrêtent à la modification du code, donc le plan ne prouve pas que les critères sont atteints après correction · Action : ajouter après l'étape 6 une étape « lancer python -m unittest discover tests », avec pour sortie attendue les trois fichiers de test au vert (test_remise et test_injection passent, test_appels_existants reste vert) · Résultat : chaque critère est relié à une sortie exécutée après correction · preuve : « 5. Corriger `total()` … 6. Corriger `read_user()` … » suivi directement de « ## Agir », sans nouvelle exécution des tests"
+    },
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la non-régression n'est testée qu'avec une remise nulle et seulement pour `total()`. Si des appelants existants passent une remise non nulle (par exemple une fraction) ou utilisent `read_user()`, le changement de sens de la remise ou de la requête peut les casser sans qu'aucun test ne le détecte · Action : à l'étape 1, relever aussi les valeurs de remise réellement passées et les usages de `read_user()`. Compléter `test_appels_existants` avec ces cas (remise non nulle, lecture d'un utilisateur existant), et décider quoi faire des appelants dont le sens de remise change (les corriger ou arrêter et demander) · Résultat : la couverture de C3 est mesurable et le risque de régression sémantique est traité · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : les valeurs attendues aux bornes ne sont pas écrites, et le choix de comparaison pour les flottants n'est pas précisé · Action : préciser remise 0 → somme des prix, remise 100 → 0, et utiliser assertAlmostEqual pour les flottants · Résultat : la vérification de C1 devient non ambiguë · preuve : « Créer `tests/test_remise.py` (bornes 0 et 100) »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : la charge d'injection et le résultat attendu ne sont pas définis, donc le test ne prouve pas de façon explicite que la requête est paramétrée · Action : fixer une charge du type « ' OR '1'='1 », avec pour résultat attendu aucune ligne retournée, et un cas normal (« Alice » retourne uniquement Alice) · Résultat : C2 est vérifiable par une sortie concrète · preuve : « base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'hypothèse H1 s'appuie sur un commentaire du code, qui est une source faible, et le plan ne dit pas comment traiter une remise hors de 0-100 · Action : indiquer que le commentaire est un indice à confirmer auprès de la personne, et noter le comportement hors bornes comme hors périmètre ou à trancher · Résultat : l'hypothèse est signalée comme non prouvée · preuve : « (le commentaire de `src/pay.py` le dit) ; elle est confirmée à l'étape 1 par lecture du code »"
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 5,
+    "gravites": [
+     "bloquant",
+     "majeur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 0,
+    "revue_sha256": "3a4b67b6213943322fa97d7e13c881817bc27ffef5bb54e106010537bb0900c3",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C2 » · Problème : le plan présente l'hypothèse sur le type de `db` comme vérifiée par les tests sqlite. Or ces tests créent eux-mêmes une base sqlite en mémoire, donc ils ne disent rien sur la connexion réelle utilisée en production. Le marqueur `?` est propre à sqlite, et d'autres pilotes utilisent `%s` ou `:nom`. La référence « étape 3 » est aussi fausse, car les tests sqlite sont à l'étape 2. → Action : classer l'hypothèse « db = sqlite » comme non prouvée et demander à la personne le type réel de connexion. Ajouter un relevé de l'étape 1 (création ou import de `db`, s'il existe). Prévoir l'arrêt si le style de paramètre diffère. Corriger le renvoi d'étape. → Résultat : C2 ne repose plus sur une vérification qui n'a pas eu lieu, et le risque d'une requête cassée en production est traité. · preuve : « `db` semble être une connexion de type sqlite. C'est une hypothèse, vérifiée par les tests sqlite à l'étape 3. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : H1 doit être confirmée « avant l'étape 4 », mais les tests de l'étape 2 et la référence de l'étape 4 reposent déjà sur le sens « pourcentage ». Le vrai point de blocage est l'étape 5, qui modifie le code. → Action : placer la confirmation de H1 avant l'étape 2, ou au plus tard avant l'étape 5. → Résultat : l'ordre du plan est cohérent avec ses dépendances. · preuve : « La personne doit confirmer H1 avant l'étape 4. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le plan change volontairement le sens d'une remise non nulle, et il n'y a aucun appelant dans le dépôt. L'absence de régression ne repose donc que sur deux cas triviaux (remise 0, liste vide) et sur la décision sur H3, qui n'a ni échéance ni action prévue si la réponse est « oui ». → Action : ajouter une action pour le cas « des appelants externes passent des fractions » (migration, ou accord explicite de la personne consigné). → Résultat : le risque de régression pour les appelants externes a une issue définie. · preuve : « H3 : des appelants extérieurs au dépôt peuvent passer une fraction (0,15 par exemple). Inconnu. »"
+    }
+   ],
+   "plan_sha256": "f7bfda9d1c1519bea33b267f84ed64aabaa0a78da485cc1447ba57860c40ec6a",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "f7bfda9d1c1519bea33b267f84ed64aabaa0a78da485cc1447ba57860c40ec6a",
+    "relances_relecteur": 0,
+    "revue_sha256": "8562595179856a2ac8fd78c7223947f97d272d945e8e40a599a72ba373ea90e3",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 2
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1/C3 » · Problème : l'échéance de la décision H3 est incohérente. Elle est « à trancher avant l'étape 5 » dans les hypothèses, mais la barrière de l'étape 5 la place « avant l'étape 6 ». L'issue « inconnu » dit aussi que l'exécution s'arrête « à l'étape 4 ». → Action : aligner sur une seule échéance, par exemple une décision H3 consignée avant l'étape 6, et dire si l'étape 5 (référence sur le code d'origine) peut tourner avant. → Résultat : attendu : un ordre d'exécution sans ambiguïté. Non vérifié. · preuve : « **À trancher avant l'étape 5.** » et « **Barrière avant l'étape 6 :** H1 confirmée, issue de H3 consignée. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : H4 est exigée « avant l'étape 6 », alors que le marqueur SQL est modifié à l'étape 7. L'étape 7 écrit aussi `db.execute(...)`, qui suppose une connexion de type sqlite3. D'autres pilotes passent par un curseur, et le plan ne couvre que le changement de marqueur. → Action : exiger H4 avant l'étape 7. Prévoir aussi l'adaptation de l'appel (curseur) si le pilote n'est pas sqlite3. → Résultat : attendu : la correction de C2 reste valable pour le pilote réel. Non vérifié. · preuve : « **La personne doit donner le type réel de connexion avant l'étape 6.** » et « `return db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : C3 est couvert par des cas de comportement actuel, faute d'appelant dans le dépôt. Le test `total([], 0) == 0` et le test de lecture d'Alice ne couvrent presque rien de ce que la correction change. La couverture réelle dépend de la réponse H3. Le plan le reconnaît, mais le statut « Attendu, non vérifié » ne précise pas que C3 reste partiel sans cette réponse. → Action : écrire dans le tableau Vérifier que C3 est « partiel » tant que H3 n'est pas levée. → Résultat : attendu : un statut qui n'est pas lu comme une couverture complète. Non vérifié. · preuve : « Le dépôt n'en contient aucun. Les cas testés sont donc des comportements actuels qui doivent rester identiques (étape 4). »"
+    }
+   ],
+   "plan_sha256": "8c1aa5bb25aa79af5c5f0c7da612f1ffb67d50d632a86d64d0db125b880d0550",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "8c1aa5bb25aa79af5c5f0c7da612f1ffb67d50d632a86d64d0db125b880d0550",
+    "relances_relecteur": 0,
+    "revue_sha256": "8d5d1d481eb386ac22d7fd68996ecc6c6a67ebaf977590871cc46525978082db",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 3
+  }
+ ],
+ "v": 1
+}

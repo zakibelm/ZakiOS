@@ -1,0 +1,94 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:09:12Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "0d3652e5f367b7c797a33443622805032e7e4a1de31ca1ffcd3375db919a3c30",
+  "delivery_sha256": "dd139bfff645db7066d18997a0421ce8dc51ac7c91b0ede4b5c98646e474dff9",
+  "trace": ".zakios/deliverables/dd139bfff645db7066d18997a0421ce8dc51ac7c91b0ede4b5c98646e474dff9.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 n'a aucun moyen de preuve concret (ni commande, ni test, ni sortie attendue), alors que l'étape 3 prévoit pourtant un fichier de tests dédié → Action : remplacer par la commande `python -m unittest tests.test_appels_existants` avec la sortie attendue (tous les tests passent, comme à l'étape 4) et l'exécution de la suite complète `python -m unittest discover tests` après correction → Résultat : C3 devient mesurable et relié à une preuve exécutable · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la correction `sum(prices) * (1 - discount / 100)` est présentée comme correcte, mais le plan ne traite pas les remises hors de 0-100 ni les erreurs d'arrondi des flottants, et les tests ne couvrent que les bornes → Action : ajouter un cas intermédiaire (ex. 50) et décider du comportement hors bornes (rejet ou hors périmètre, à confirmer avec la personne) → Résultat : le périmètre de C1 est explicite et la correction est mieux éprouvée · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : l'étape 4 exige que `test_appels_existants` passe sur le code d'origine, mais le plan ne dit pas quoi faire si ce test échoue déjà (référence invalide) ; la section Agir ne couvre pas ce cas → Action : ajouter une règle d'arrêt et de compte rendu à la personne si la référence échoue avant correction, ou si `test_remise` ou `test_injection` passent déjà avant correction → Résultat : un écart de référence est traité au lieu d'être ignoré · preuve : « `test_appels_existants` doit passer (référence) ; `test_remise` et `test_injection` doivent échouer »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "d46999a21e2e468d13395d406630137f1968ae7b3e4ba6ddf02ef171f7904a8d",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la non-régression repose sur des appels de caractérisation construits par le planificateur, car aucun appelant n'existe dans le dépôt. Le plan le déclare, mais la preuve reste partielle. → Action : garder la limite déclarée et obtenir de la personne la liste des appelants externes, ou la confirmation de H1, avant de clore C3. → Résultat : C3 reste « vérifié pour les cas testés » et jamais présenté comme « vérifié pour tous les appelants ». · preuve : « Tant que H1 n'est pas confirmée, C3 est « vérifié pour les cas testés » et non « vérifié pour tous les appelants ». »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : H3 applique le rejet par `ValueError` sans réponse de la personne. Cela ajoute un comportement qui n'était pas demandé et peut casser un appelant externe qui passe une valeur hors 0-100. → Action : obtenir la réponse avant l'étape 6, ou garder le signalement prévu dans le compte rendu. → Résultat : la décision est tracée et réversible. · preuve : « Sans réponse, le plan applique le défaut et le signale dans le compte rendu. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : le plan ne dit pas comment les tests importent `src/pay.py` (chemin d'import, présence de `__init__.py`). Or les commandes `python -m unittest tests.test_remise` et `discover tests` en dépendent. → Action : préciser l'import utilisé et l'exécution depuis la racine du dépôt, ou ajouter `tests/__init__.py`. → Résultat : les commandes de vérification sont reproductibles. · preuve : absence – critère de faisabilité (étapes 2 à 4) : aucune mention du mécanisme d'import des tests vers `src/pay.py`."
+    }
+   ],
+   "plan_sha256": "0d3652e5f367b7c797a33443622805032e7e4a1de31ca1ffcd3375db919a3c30",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "0d3652e5f367b7c797a33443622805032e7e4a1de31ca1ffcd3375db919a3c30",
+    "relances_relecteur": 0,
+    "revue_sha256": "885474e44a666c7be9c4a558431cb47849e89f7a26e7bdef759672cb1f89fcec",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

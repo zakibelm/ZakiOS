@@ -1,0 +1,67 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:03:02Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-pay.md",
+  "content_sha256": "cc40644ab83679e3cc797343bf3268d4d3553198898036fb619d6c7539063ff2",
+  "delivery_sha256": "eab642519ba56d1c59025b35c2f86c940ce4117d49e1ffcf4f5e6189024dc868",
+  "trace": ".zakios/deliverables/eab642519ba56d1c59025b35c2f86c940ce4117d49e1ffcf4f5e6189024dc868.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-naturel",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la tâche 1 lance `tests/test_pay.py` alors que ce fichier n'est créé qu'à la tâche 3. Le plan ne dit pas l'ordre réel, donc la vérification de la tâche 1 ne peut pas s'exécuter telle quelle. → Action : placer la création des tests avant les corrections, ou renvoyer la vérification de la tâche 1 à la tâche 3. → Résultat : l'ordre d'exécution devient cohérent et chaque vérification est exécutable · preuve : « Vérification : `python -m pytest tests/test_pay.py -q` » (tâche 1) et « Fichier créé : `tests/test_pay.py` » (tâche 3)"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : le comportement hors de [0, 100] (H3) reste ouvert, et le plan ne prévoit pas de test pour la décision `ValueError`. Le plan ne traite pas non plus l'arrondi des montants en $ CAD (flottants). → Action : fixer H3 avant d'exécuter, ajouter un test hors bornes (-1, 101), et préciser si le résultat est arrondi à 2 décimales. → Résultat : le comportement aux limites et la précision monétaire sont mesurables · preuve : « Décision à prendre (H3) : lever `ValueError` si `discount` n'est pas dans [0, 100]… À valider avec la personne. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le test d'injection attend « aucune ligne » sans prévoir de données de départ. Sur une table vide, il passerait même avec le SQL fautif. Le contrôle `grep` ne détecte que la forme `WHERE name = '` et laisse passer une concaténation par f-string ou par `+`. → Action : insérer au moins une ligne dans la base en mémoire, avec un test témoin (`name` valide qui retourne la ligne). Compléter le `grep` par un motif sur `f\"`, `+` et `%` dans `read_user`, ou s'appuyer sur le faux `db` enregistreur. → Résultat : le test d'injection discrimine le SQL fautif du SQL corrigé · preuve : « `name = \"x' OR '1'='1\"` ne doit renvoyer aucune ligne » et « `grep -n \"WHERE name = '\" src/pay.py` ne retourne rien »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la preuve de non-régression se limite à la comparaison des signatures par `git diff`. Aucun test ne fixe le comportement existant de `read_user` (même résultat pour un nom légitime). La tâche 0 cite « les appelants hors du dépôt » sans moyen de recherche concret. → Action : ajouter un test de caractérisation de `read_user` avec un nom légitime, et nommer la source à interroger pour H1 et H2 (la personne, la configuration, le dépôt parent) en gardant la demande à la personne comme repli. → Résultat : C3 a une preuve exécutable et la tâche 0 a un moyen de preuve · preuve : « les signatures sont identiques (`git diff` limité aux corps de fonction) » et « Chercher le type de `db` et les appelants hors du dépôt. Si introuvables, demander à la personne. »"
+    }
+   ],
+   "plan_sha256": "cc40644ab83679e3cc797343bf3268d4d3553198898036fb619d6c7539063ff2",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "cc40644ab83679e3cc797343bf3268d4d3553198898036fb619d6c7539063ff2",
+    "relances_relecteur": 0,
+    "revue_sha256": "480b35e68fa871696fe6ed25e2e08e9452d9c83a86d9f1ec2ef2df3cd4b866c5",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 1
+}

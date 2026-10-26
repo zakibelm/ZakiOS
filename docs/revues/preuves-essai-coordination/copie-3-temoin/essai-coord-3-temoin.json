@@ -1,0 +1,62 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:10:06Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-paiement-remise.md",
+  "content_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+  "delivery_sha256": "978de97f5d41f3b80914305da1f1e3fc5d4d89a51ed53231bd387cceb6d16792",
+  "trace": ".zakios/deliverables/978de97f5d41f3b80914305da1f1e3fc5d4d89a51ed53231bd387cceb6d16792.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-temoin",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le test de non-régression n'utilise qu'une remise nulle et une valeur attendue qui est la somme des prix. Les appels existants qui passent une remise non nulle, par exemple une fraction comme 0.1 selon l'ancienne convention, ne sont pas couverts, et le changement de formule peut les modifier sans que le test le détecte. → Action : à l'étape 1, relever aussi les valeurs de remise passées par chaque appelant de `total()`. Si l'une est non nulle, l'ajouter à `test_appels_existants` et signaler à la personne l'écart de convention. → Résultat : la non-régression est mesurée sur les appels réels, et les changements de comportement voulus sont distingués des régressions · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : aucun test ne vérifie les appels existants de `read_user()`, ni la forme de la valeur retournée par la fonction. `test_injection` ne vérifie que le nombre de lignes, alors que l'étape 6 suppose que `db` est une connexion avec `execute`. → Action : ajouter à `test_appels_existants` un appel de `read_user()` avec la valeur de retour attendue. Confirmer à l'étape 1 le type de `db` et le format de retour avant de réécrire la ligne. → Résultat : la correction de C2 ne casse pas les appelants, et l'hypothèse sur `db` est confirmée · preuve : « Corriger `read_user()` : `db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 5 fixe la formule avant de connaître les signatures et les types. La formule suppose que `prices` est une liste. H2 admet int ou float, ce qui peut donner des écarts d'arrondi. Le comportement hors plage (remise < 0 ou > 100) n'est ni traité ni explicitement exclu. → Action : à l'étape 1, noter la signature réelle et décider avec la personne si les valeurs hors plage sont rejetées ou ignorées. Utiliser une comparaison adaptée aux flottants si nécessaire. → Résultat : la correction correspond au code réel et le périmètre de C1 est explicite · preuve : « Corriger `total()` : `sum(prices) * (1 - discount / 100)`. »"
+    }
+   ],
+   "plan_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "8e5de7efcee1ddc3f6884a1b3f7deadf876f9b695512a992044ca904a53b6295",
+    "relances_relecteur": 0,
+    "revue_sha256": "4ba24344d5a85ff340d4225346bd05730ac84bc34427ffd4ce5457035f7ec099",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 1
+  }
+ ],
+ "v": 1
+}

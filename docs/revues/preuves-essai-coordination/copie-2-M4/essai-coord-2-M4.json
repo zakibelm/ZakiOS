@@ -1,0 +1,104 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:07:02Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-pay.md",
+  "content_sha256": "b20e5d9c0adca3c0cd510ff2eac8eeb4bd7cf8b15dc91e6025c803e2c2e9cad9",
+  "delivery_sha256": "9879f351cfcb6bef6a155f838ed135f8e05af997a08d318187de5470e772be7d",
+  "trace": ".zakios/deliverables/9879f351cfcb6bef6a155f838ed135f8e05af997a08d318187de5470e772be7d.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C1, C2, C3 » · Problème : la seule exécution des tests est à l'étape 4, avant correction. Aucune étape ne relance la suite après les étapes 5 et 6, donc rien ne prouve que les tests passent après correction. → Action : ajouter une étape 7 qui lance `python -m unittest discover tests` après les corrections. Elle doit attendre `test_remise`, `test_injection` et `test_appels_existants` au vert, et la sortie doit être conservée. → Résultat : chaque critère est relié à une preuve exécutée, et l'attendu se distingue du vérifié · preuve : « 5. Corriger `total()` : `sum(prices) * (1 - discount / 100)`. 6. Corriger `read_user()` … » (aucune étape de revérification ensuite, sauf en cas d'écart dans « Agir »)."
+    },
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : `test_appels_existants` n'utilise qu'une remise nulle et ne parle que de la somme des prix. Un appelant existant qui passe une remise non nulle (par exemple une fraction 0-1) changerait de résultat sans être détecté. Les appels à `read_user()` ne sont pas couverts non plus. → Action : relever aussi les remises réellement passées dans les appels existants. Si certaines sont non nulles, ajouter un cas avec valeur attendue calculée à la main, ou signaler le changement de sémantique à la personne. Ajouter les appels existants de `read_user()` avec résultat attendu (par exemple `Alice` renvoie sa ligne). → Résultat : la non-régression est mesurée sur les deux fonctions et sur les remises utilisées · preuve : « les appels relevés à l'étape 1, avec remise nulle, et pour valeur attendue la somme des prix calculée à la main »."
+    },
+    {
+     "gravite": "majeur",
+     "texte": "critère « C2 » · Problème : `test_injection` n'a ni charge d'injection ni résultat attendu. On ne sait pas ce qui doit échouer avant correction et passer après. → Action : préciser l'entrée (par exemple `x' OR '1'='1`) et le résultat attendu (aucune ligne, ou exactement la ligne de l'utilisateur demandé). Ajouter un contrôle par Grep qu'aucune requête de `src/pay.py` n'est construite par concaténation ou formatage. → Résultat : C2 devient mesurable avec une preuve concrète · preuve : « `tests/test_injection.py` (base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob`) »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : les valeurs attendues aux bornes ne sont pas données. Les prix pouvant être des float, une comparaison d'égalité stricte peut être fragile. → Action : fixer les cas (remise 0 donne la somme, remise 100 donne 0) et utiliser `assertAlmostEqual` pour les float. → Résultat : un test déterministe et sans faux échec · preuve : « `tests/test_remise.py` (bornes 0 et 100) »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : H1 repose sur un commentaire de code, et la conduite à tenir pour une remise hors de 0-100 n'est pas précisée. → Action : indiquer que ce cas est hors périmètre, ou le tester. → Résultat : le périmètre est explicite · preuve : « Hypothèse H1 : la remise est un nombre de 0 à 100 (le commentaire de `src/pay.py` le dit) »."
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 5,
+    "gravites": [
+     "majeur",
+     "majeur",
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 0,
+    "revue_sha256": "b08adb31a7b66203ebde5d0aadb2c02a2e045cd74c8210c07be9bbcb072fbf0b",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la vérification des signatures n'a pas de moyen de preuve concret. Le plan écrit seulement « Signatures inchangées », sans dire comment le contrôler. → Action : ajouter une assertion explicite, par exemple `inspect.signature(total)` et `inspect.signature(read_user)` comparées aux paramètres attendus. → Résultat : la preuve de non-régression sur les signatures devient exécutable. · preuve : « Signatures inchangées : `total(prices, discount)` et `read_user(db, name)`. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le plan ne dit pas que `read_user` renvoie un curseur. Les attendus « liste vide » et « exactement la ligne d'Alice » supposent un `fetchall()` dans le test. → Action : préciser que les tests appellent `.fetchall()` sur le résultat, et que la correction ne change pas ce qui est renvoyé. → Résultat : les attendus des tests sont comparables sans ambiguïté, et le type de retour reste stable (C3). · preuve : « Entrée `x' OR '1'='1` → liste vide. Entrée `Alice` → exactement la ligne d'Alice. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la non-régression est limitée à des comportements que le plan fige lui-même, car aucun appelant n'existe dans le dépôt. Le plan le reconnaît, mais C3 reste faiblement démontré pour les appelants externes. → Action : garder la limite visible dans le compte rendu final, et demander à la personne la liste des appelants externes à l'étape 1. → Résultat : C3 n'est pas présenté comme couvrant plus que ce qui est testé. · preuve : « Limite connue de C3 : sans appel dans le dépôt, il ne prouve la non-régression que pour les comportements figés à l'étape 3. »"
+    }
+   ],
+   "plan_sha256": "b20e5d9c0adca3c0cd510ff2eac8eeb4bd7cf8b15dc91e6025c803e2c2e9cad9",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "b20e5d9c0adca3c0cd510ff2eac8eeb4bd7cf8b15dc91e6025c803e2c2e9cad9",
+    "relances_relecteur": 0,
+    "revue_sha256": "b8876a50abe56ac26f6d70e3c0d70d452b9fe223e1a60560e2a972986580fce5",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

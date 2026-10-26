@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:01:49Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+  "content_sha256": "2377bed87d7ca691a583faaf5e63fa8773fc18cac2d344be2f8db59c2bcbdbde",
+  "delivery_sha256": "90225a86bb67c315bdae48070d15d1636a5c7e41fde33c327016e7f0943e95ae",
+  "trace": ".zakios/deliverables/90225a86bb67c315bdae48070d15d1636a5c7e41fde33c327016e7f0943e95ae.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-1-M4",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critères « C1, C2, C3 » · Problème : le plan lance les tests une seule fois, avant la correction (étape 4). Aucune étape ne les relance après les étapes 5 et 6. Le plan n'a donc aucune preuve que C1, C2 ou C3 sont satisfaits après correction. La phase Agir ne relance la vérification que « si un écart est constaté », et rien ne dit comment le constater. → Action : ajouter une étape 7 qui lance `python -m unittest discover tests` après les corrections et qui attend « tous les tests passent », avec la sortie conservée comme preuve par critère. → Résultat : chaque critère est relié à une sortie exécutée après correction. · preuve : « 5. Corriger `total()` … 6. Corriger `read_user()` … » suivi directement de « ## Agir » sans nouvelle exécution."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : `test_appels_existants` n'utilise que « remise nulle ». Les appels existants avec une remise non nulle, dont la sémantique peut changer avec la nouvelle formule, ne sont pas couverts. Le plan ne dit pas comment traiter un tel appel s'il existe. → Action : relever à l'étape 1 les appels avec remise non nulle, les signaler à la personne et ajouter un test de leur comportement attendu. → Résultat : le risque de régression sur ces appels est visible et testé. · preuve : « les appels relevés à l'étape 1, avec remise nulle »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : `test_injection` ne précise ni l'entrée malveillante (par exemple `' OR '1'='1`) ni le résultat attendu. Sans cela, le test ne prouve pas la protection contre l'injection. → Action : indiquer la charge d'injection et l'assertion, par exemple « aucune ligne renvoyée » et « un nom légitime renvoie sa ligne ». → Résultat : la preuve de C2 est mesurable. · preuve : « base sqlite en mémoire, table `users` de deux lignes `Alice` et `Bob` »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le plan présente la forme de `read_user()` (`db.execute(...)`, variables `db` et `name`) sans l'avoir vérifiée dans `src/pay.py`. C'est une hypothèse non listée. → Action : l'ajouter comme hypothèse H3, confirmée à l'étape 1 par lecture du code. → Résultat : l'hypothèse est signalée et vérifiable. · preuve : « `db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))` »."
+    }
+   ],
+   "plan_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "94e690fc5a0325b321d26a1bd0b47e0934d1f36c8dce5f3acad57a5263dc07ff",
+    "relances_relecteur": 0,
+    "revue_sha256": "bc8476fbb806a1c389a2badec09267e61ff28bac93ac293bc553798d9a678332",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-remise-sql.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le tableau Vérifier dit que `test_appels_existants` est « OK avant et après », mais le test de repli `total([100], 20) == 80` et les tests à remise non nulle échouent avant correction, selon l'étape 3. → Action : préciser que « OK avant et après » ne vaut que pour les appels à remise nulle, et que les tests à remise non nulle doivent échouer avant et passer après. → Résultat : la preuve attendue de C3 ne contredit plus l'étape 3 · preuve : « `test_appels_existants` : OK avant et après (remise nulle inchangée). » face à « les tests de remise 100, de remise non nulle et d'injection échouent »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le contrôle de portée utilise `git diff --stat`, qui n'affiche pas les fichiers de tests nouveaux non suivis par git, donc le « plus les fichiers de `tests/` créés » attendu n'est pas vérifiable avec cette seule commande. → Action : ajouter `git status --short` ou `git add -N tests` avant le diff. → Résultat : la liste des fichiers modifiés et créés est complète · preuve : « Commande : `git diff --stat`. Attendu : seul `src/pay.py` est modifié, plus les fichiers de `tests/` créés. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le plan dit que `discover` pourrait ne pas importer `src` et propose seulement un `tests/__init__.py` conditionnel. Il ne fixe ni la forme de l'import (`from src.pay import ...`) ni la présence de `src/__init__.py`. Celui-ci est hors du périmètre autorisé, ce qui rend l'étape 3 potentiellement bloquée. → Action : fixer la forme d'import et, si un `__init__.py` manque, demander à la personne d'élargir le périmètre ou lancer avec `-t .` ou `PYTHONPATH=.`. → Résultat : l'exécution de l'étape 3 ne dépend plus d'un détail non tranché · preuve : « Ajouter un `tests/__init__.py` vide si `discover` n'importe pas `src`. »"
+    }
+   ],
+   "plan_sha256": "2377bed87d7ca691a583faaf5e63fa8773fc18cac2d344be2f8db59c2bcbdbde",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2377bed87d7ca691a583faaf5e63fa8773fc18cac2d344be2f8db59c2bcbdbde",
+    "relances_relecteur": 0,
+    "revue_sha256": "cffb96fbf0ca3ff478492d7f62a6db5794a8f9fef43618406d00e8d60dd7e88b",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

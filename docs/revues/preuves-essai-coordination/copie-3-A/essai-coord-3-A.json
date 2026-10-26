@@ -1,0 +1,104 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:08:08Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-pay.md",
+  "content_sha256": "99c168303db44a9f3a9c9290ed80f5f7c6fbb5296506fdbc9b263da4d3aa3037",
+  "delivery_sha256": "6258349062108e42d933d3a60460e24c1edcaa05f871e8d8708e292914b619af",
+  "trace": ".zakios/deliverables/6258349062108e42d933d3a60460e24c1edcaa05f871e8d8708e292914b619af.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-3-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : le plan ne reprend pas C3 (aucune régression sur les appels existants). Il liste seulement C1 et C2 comme « critères d'acceptation donnés par la mission ». Aucune vérification ne lui est associée. → Action : ajouter C3 aux critères, avec une vérification mesurable. Par exemple : relever les appels existants de `total()` et `read_user()` (étape 1) et écrire un test de non-régression qui les rejoue. Lancer ensuite la suite complète `python -m unittest discover tests` après correction, avec attendu « 0 échec, appels existants inchangés ». → Résultat : C3 est couvert et prouvable, sans quoi la mission ne peut pas être déclarée satisfaite. · preuve : « Critères d'acceptation donnés par la mission : - C1 — … - C2 — … » (C3 absent) ; absence de critère C3 et de vérification de non-régression dans la section Vérifier."
+    },
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : l'étape 1 relève les appels de `total()` et `read_user()`, mais le plan n'en tire rien. Le changement de formule en 4 et de requête en 5 peut changer le type ou la valeur renvoyés (float au lieu d'int, curseur au lieu de lignes). Rien ne vérifie la compatibilité avec les appelants. → Action : définir un comportement attendu des appels existants (type et valeur de retour) et le tester avant et après correction. → Résultat : une régression est détectée avant livraison. · preuve : « 4. Corriger `total()` : `sum(prices) * (1 - discount / 100)`. » ; absence de contrôle de compatibilité des appelants."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : l'étape 3 affirme que `test_remise` doit échouer sur le code d'origine. C'est un attendu non confirmé, car le défaut actuel de `total()` n'est pas décrit. Le plan ne dit pas quoi faire si le test passe déjà avant correction. → Action : ajouter que, si `test_remise` ou `test_injection` passe sur le code d'origine, on arrête et on réexamine le test ou le diagnostic. → Résultat : l'attendu est distingué du vérifié et le test reste une vraie preuve de détection. · preuve : « `test_remise` et `test_injection` doivent échouer (preuve que les tests détectent les défauts) »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la vérification de C1 n'utilise que des entiers (`total([10, 20], 0) == 30`). L'égalité flottante n'est pas traitée pour des remises intermédiaires, alors que H2 admet des float. → Action : ajouter un cas intermédiaire (par exemple 50) et une comparaison tolérante (`assertAlmostEqual`) pour les float. → Résultat : la formule est validée au-delà des bornes sans faux échec lié aux arrondis. · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »."
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "majeur",
+     "majeur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "0cbce9b93d56ac46d88acef75fb1453d32172a2ca2562b817ffda8d29126893e",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le plan impose le marqueur `?` et teste avec sqlite en mémoire. Le pilote de base réel de production n'est pas confirmé, et il n'est listé dans aucune hypothèse (H1 à H3). Un autre pilote utilise `%s` ou `:nom`. → Action : ajouter une hypothèse H4 « la base est sqlite3, style `?` » et la faire confirmer par la personne avant l'étape 5. → Résultat : le test passe sur sqlite sans garantir le fonctionnement en production. · preuve : « `return db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))` » et « base sqlite en mémoire »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le contrôle de lecture cherche seulement `+ name`. Il ne détecte pas une concaténation par f-string, `%` ou `.format`. → Action : élargir le motif Grep (`f\"`, `%`, `.format`, `+`) sur les requêtes de `src/pay.py`. → Résultat : le contrôle de lecture devient fiable. Le test d'injection reste la preuve principale. · preuve : « Vérifier avec `Grep` sur `src/pay.py` (motif `+ name`) : aucune occurrence attendue. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : aucun comportement n'est défini ni testé pour une remise hors de 0-100 (par exemple -5 ou 101), ni pour une liste de prix vide. C1 ne couvre que les bornes et une valeur intermédiaire. → Action : noter ces cas comme hors périmètre, ou ajouter un test de comportement convenu avec la personne. → Résultat : le périmètre de C1 est explicite et il n'y a pas de surprise après livraison. · preuve : absence — critère C1 (remise correcte, bornes 0 et 100) : aucun cas hors plage ni prix vide n'est prévu dans « tests/test_remise.py »."
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le plan sait que l'étape 1 ne trouve aucun appelant, donc C3 ne repose que sur un contrat que le plan définit lui-même. Les hypothèses H1 à H3 sont à confirmer avec la personne, mais aucun point d'arrêt ne l'impose avant l'étape 4. → Action : ajouter une condition « réponse de la personne sur H2 et H3 reçue » avant la correction, ou consigner leur absence de confirmation dans le compte rendu. → Résultat : C3 est présenté comme limité, pas comme validé. · preuve : « C3 n'est déclaré satisfait que pour les appels connus du dépôt, qui sont au nombre de zéro. »"
+    }
+   ],
+   "plan_sha256": "99c168303db44a9f3a9c9290ed80f5f7c6fbb5296506fdbc9b263da4d3aa3037",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "99c168303db44a9f3a9c9290ed80f5f7c6fbb5296506fdbc9b263da4d3aa3037",
+    "relances_relecteur": 0,
+    "revue_sha256": "032474fc153d83ad89e83d3edaa21fdb42ba295300c59c9c051647415c6bc984",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

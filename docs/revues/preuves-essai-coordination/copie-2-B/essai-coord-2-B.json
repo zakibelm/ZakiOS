@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:05:30Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-paiement-pay.md",
+  "content_sha256": "255660fd8158e20fe1e4436f64ea1154065a1dd7c0b9faab33138056b44b5757",
+  "delivery_sha256": "8bcaf21ae388cb53243200c78360372954ca50966182c50757e5382a207b3b09",
+  "trace": ".zakios/deliverables/8bcaf21ae388cb53243200c78360372954ca50966182c50757e5382a207b3b09.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-B",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : la vérification de C3 n'a aucun moyen de preuve concret (ni commande, ni test, ni sortie attendue), alors que le plan crée `tests/test_appels_existants.py` à l'étape 3 → Action : remplacer par `python -m unittest tests.test_appels_existants` après correction, avec pour attendu le même résultat de référence que celui obtenu à l'étape 4 (tous les tests passent, valeurs inchangées) → Résultat : C3 devient mesurable et relié à une preuve exécutable · preuve : « C3 : Vérifier que le code est de bonne qualité. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la formule `sum(prices) * (1 - discount / 100)` est présentée sans vérification de la forme du résultat (int ou float) ni de la validité des valeurs hors bornes (−1, 101) ; le plan ne dit pas quoi faire pour elles → Action : préciser le comportement attendu hors 0-100 (rejet ou question à la personne) et comparer avec une tolérance si le résultat est un float → Résultat : les bornes et leur voisinage sont définis sans ambiguïté · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : après les corrections (étapes 5-6), le plan ne prévoit pas de relancer la suite complète `python -m unittest discover tests` comme comparaison finale avec la référence de l'étape 4 → Action : ajouter cette exécution dans la section Vérifier et exiger que tous les tests passent → Résultat : la non-régression est contrôlée sur l'ensemble des tests et pas seulement sur les critères touchés · preuve : absence — critère C3 attendu : exécution finale de la suite complète après correction ; couverture manquante dans la section Vérifier"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : la signature réelle de `read_user()` (paramètre `db`, retour) et l'hypothèse qu'elle reçoit une connexion sqlite3 ne sont pas listées comme hypothèse ; le style de paramètre `?` dépend du pilote de base de données → Action : ajouter une hypothèse H3 sur le pilote (sqlite3, style `?`) à confirmer à l'étape 1 → Résultat : la faisabilité de la correction est confirmée avant modification · preuve : « `db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))` »"
+    }
+   ],
+   "plan_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "2195e4407a2a00fc9e58143f1f069eef2ace600114529d4b235449fe7754c27d",
+    "relances_relecteur": 0,
+    "revue_sha256": "4aa47a64204e8ba1d77eb3b9b11eb96b9f29f5588105175bafb28b7087d491cf",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-paiement-pay.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : l'étape 7 impose `return db.execute(...)`, mais le plan ne dit pas ce que la version d'origine renvoie (curseur, `fetchall()` ou `fetchone()`). Le test « renvoie 0 ligne / 1 ligne » et la formule « la même ligne qu'avant » en dépendent. Une correction qui change le type de retour pourrait casser C3 sans être détectée. → Action : à l'étape 1, noter la forme exacte du retour de `read_user` dans le code d'origine. Garder cette forme à l'étape 7 et l'asserter dans `test_appels_existants`. → Résultat : le type de retour est identique avant et après la correction, et le contrôle est mesurable. · preuve : « `return db.execute(\"SELECT * FROM users WHERE name = ?\", (name,))`, sous réserve que H3 soit confirmée. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : H4 cite « non numérique » comme cas à décider, mais la proposition par défaut et les tests ne traitent que `< 0` et `> 100`. Une valeur non numérique n'a ni comportement attendu ni test. → Action : soit ajouter un cas de test pour la valeur non numérique avec le comportement choisi en H4, soit déclarer ce cas hors périmètre. → Résultat : H4 est entièrement couverte, ou sa limite est explicite. · preuve : « comportement hors 0-100 (−1, 101, non numérique). Proposition par défaut : lever `ValueError` si `discount < 0` ou `discount > 100`. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : le plan reconnaît qu'aucun appelant n'existe. C3 repose donc sur des cas de référence écrits par le plan. Cette limite est notée, mais le résultat « aucune régression » reste faible comme preuve. Le plan ne précise pas non plus comment communiquer cette limite à la personne. → Action : dans le compte rendu, présenter C3 comme « vérifié sur cas de référence uniquement, aucun appelant réel », sans l'affirmer pour l'ensemble du dépôt. → Résultat : l'attendu et le vérifié restent distincts. · preuve : « Limite à noter : sans appelant réel, C3 ne couvre que ces cas de référence. »"
+    }
+   ],
+   "plan_sha256": "255660fd8158e20fe1e4436f64ea1154065a1dd7c0b9faab33138056b44b5757",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "255660fd8158e20fe1e4436f64ea1154065a1dd7c0b9faab33138056b44b5757",
+    "relances_relecteur": 0,
+    "revue_sha256": "d17c02686ef2b295b8e3dfc858a1dc71c943cd8cbd07ee005fcd3a2dbc927a4c",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}

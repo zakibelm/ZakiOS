@@ -1,0 +1,99 @@
+{
+ "composants": {
+  "zakibelm/ZakiOS:socle/REGLES.md": "7463126762ef1111",
+  "zakibelm/ZakiOS:variantes/agents/plan-reviewer.md": "934c4dc24ca3555e",
+  "zakibelm/ZakiOS:variantes/agents/plan-writer.md": "f7401cc2bbcad041",
+  "zakibelm/ZakiOS:variantes/skills/writing-plans/SKILL.md": "a90075ec5f80214e"
+ },
+ "criteres": [
+  "C1 remise correcte aux bornes 0 et 100",
+  "C2 requête SQL paramétrée",
+  "C3 aucune régression sur les appels existants"
+ ],
+ "criteres_sha256": "7baecb3d440d307b95023ec4ed8921a0c60ae205d01713675c22e8026f8cb330",
+ "demande_sha256": "776daa30c7d86a65cfcd754bf18f35da7bb0154ac2ec113685777e9484a80e64",
+ "ecrit_le": "2026-10-26T14:03:56Z",
+ "erreurs_techniques": [],
+ "issue": "accepte",
+ "livraison": {
+  "chemin": "docs/plans/2026-10-26-correction-module-paiement.md",
+  "content_sha256": "4694216224d6934099ecb130148ee15eabb36e414677677ca788fefd1ad7d1c3",
+  "delivery_sha256": "174f8e40e0f8f0e06cf0bb06e9d42fb526c9160090f61b57e451387150dcc424",
+  "trace": ".zakios/deliverables/174f8e40e0f8f0e06cf0bb06e9d42fb526c9160090f61b57e451387150dcc424.json"
+ },
+ "max_corrections": 2,
+ "mission_id": "essai-coord-2-A",
+ "relances_techniques_max": 1,
+ "tours": [
+  {
+   "chemin_propose": "docs/plans/2026-10-26-paiement-remise.md",
+   "constats": [
+    {
+     "gravite": "majeur",
+     "texte": "critère « C3 » · Problème : le critère C3 (aucune régression sur les appels existants) n'est pas repris dans la section Planifier, n'a aucune vérification dans Vérifier, et la suite complète n'est pas relancée après correction. Seuls C1 et C2 sont couverts, alors que la mission en compte trois. → Action : ajouter C3 aux critères du plan, avec une vérification mesurable. Par exemple, relancer `python -m unittest discover tests` après les étapes 4 et 5, et rejouer les appels relevés à l'étape 1 en comparant leurs sorties avant et après correction. → Résultat : sans cette correction, une régression sur `total()` ou `read_user()` pourrait passer inaperçue alors que le plan se déclarerait complet · preuve : « Critères d'acceptation donnés par la mission : - C1 — remise correcte aux bornes 0 et 100. - C2 — requête SQL paramétrée. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la vérification ne teste que les bornes 0 et 100 avec un seul jeu de prix. Une valeur intermédiaire (par exemple 50) et le cas d'une liste vide ne sont pas contrôlés. Rien ne dit non plus ce que `total()` fait d'une remise hors de 0-100 (négative ou supérieure à 100). → Action : ajouter un cas intermédiaire et décider du comportement hors bornes (rejet ou acceptation), puis le tester. → Résultat : la formule `1 - discount / 100` est mieux couverte, et le comportement hors bornes devient explicite · preuve : « attendu : `total([10, 20], 0) == 30` et `total([10, 20], 100) == 0` »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C2 » · Problème : le test d'injection ne couvre qu'une seule chaîne malveillante. De plus, le plan n'indique pas si `read_user()` est la seule requête SQL du module ; les autres requêtes éventuelles ne seraient pas contrôlées. → Action : relever avec Grep toutes les requêtes SQL de `src/pay.py` à l'étape 1, et ajouter un second cas d'injection (par exemple `\"x'; DROP TABLE users;--\"`). → Résultat : le critère C2 couvre alors l'ensemble du module et non une seule fonction · preuve : « `read_user(db, \"' OR '1'='1\")` renvoie 0 ligne et `read_user(db, 'Alice')` en renvoie 1 »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : le plan indique que H1 est confirmée « par lecture du code », alors que la source citée est un commentaire de `src/pay.py`. Un commentaire n'est pas une preuve du comportement réel. Les arrondis de `float` ne sont pas non plus traités, et `==` sur des flottants peut échouer. → Action : confirmer H1 par les appels relevés et par le comportement observé, puis utiliser `assertAlmostEqual` si des prix `float` sont possibles. → Résultat : l'hypothèse est confirmée par un fait observé, et le test ne produit pas de faux échec dû aux flottants · preuve : « (le commentaire de `src/pay.py` le dit) ; elle est confirmée à l'étape 1 par lecture du code »"
+    }
+   ],
+   "plan_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 4,
+    "gravites": [
+     "majeur",
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "d2fd3ea1c0d2d32dbb0ffef7d3a54913dcf080a08c84325fe3bb42a881c1d488",
+    "relances_relecteur": 0,
+    "revue_sha256": "3150c6cd59e1ed0548cf910c1513814926dcbc6397f24b6a2c99082d53073f19",
+    "verdict": "A_CORRIGER"
+   },
+   "tour": 1
+  },
+  {
+   "chemin_propose": "docs/plans/2026-10-26-correction-module-paiement.md",
+   "constats": [
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 / C3 » · Problème : la section Vérifier écrit au passé que des tests ont échoué (« Ce test a échoué à l'étape 4 »). Ce passé présente comme constaté un résultat qui n'a pas encore été exécuté, ce qui mélange attendu et vérifié. → Action : écrire « doit avoir échoué à l'étape 4 (attendu), à confirmer par la sortie conservée ». → Résultat : la distinction attendu / vérifié reste cohérente avec la dernière phrase de la section. · preuve : « Ce test a échoué à l'étape 4. »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C1 » · Problème : la mission demande seulement une remise correcte aux bornes 0 et 100. Le rejet par `ValueError` est une décision ajoutée, encore non confirmée. Pourtant le critère C1 du plan et la vérification C1 l'incluent comme s'il était acquis. → Action : marquer le test hors bornes comme conditionnel dans la vérification C1, et lier explicitement la décision de la personne à l'exécution de l'étape 5. → Résultat : le critère C1 reste mesurable, qu'elle accepte ou non le rejet. · preuve : « `python -m unittest tests.test_remise` doit réussir (0, 50, 100, liste vide, flottants, hors bornes). »"
+    },
+    {
+     "gravite": "mineur",
+     "texte": "critère « C3 » · Problème : la base de test `sqlite3` en mémoire (table `users`, `Alice`, `Bob`) n'est décrite que pour `test_injection`. Le plan ne dit pas comment `test_regression` obtient son `db`. Rien n'indique non plus comment `src.pay` est importable avec `unittest discover tests`. L'étape 1 ne vérifie pas ces deux points. → Action : préciser un jeu de données commun (`setUp`) et ajouter à l'étape 2 un contrôle d'import, par exemple lancer depuis la racine du dépôt. → Résultat : l'état « avant » reproductible, et l'échec éventuel d'import repéré à l'étape 2 plutôt qu'à l'étape 4. · preuve : « `read_user(db, 'Alice')` renvoie 1 ligne, et `'Zoe'` (absent) renvoie 0 ligne. »"
+    }
+   ],
+   "plan_sha256": "4694216224d6934099ecb130148ee15eabb36e414677677ca788fefd1ad7d1c3",
+   "relances_planificateur": 0,
+   "revue": {
+    "constats": 3,
+    "gravites": [
+     "mineur",
+     "mineur",
+     "mineur"
+    ],
+    "plan_examine_sha256": "4694216224d6934099ecb130148ee15eabb36e414677677ca788fefd1ad7d1c3",
+    "relances_relecteur": 0,
+    "revue_sha256": "11b35c6dbceb20b2653c2a9537a7797ea9bcc8da214b629b6f7ef98aa7e37c90",
+    "verdict": "ACCEPTE"
+   },
+   "tour": 2
+  }
+ ],
+ "v": 1
+}
