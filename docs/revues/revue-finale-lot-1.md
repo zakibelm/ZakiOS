@@ -29,7 +29,7 @@ Hors lot : `variantes/commands/run-tests.md` (empreinte `e7c26b2d…8858`). Il r
 - **Contenu** : PDCA ; fait / hypothèse / preuve ; attendu / vérifié ; jamais de validation annoncée sans contrôle exécuté ; solution inconnue ⇒ investigation suivante ; Problème → Action → Résultat ; montants en $ CAD ; le Socle encadre la mission d'un agent sans retirer à la personne le contrôle de son système.
 - **Mécanisme de chargement** : `.claude/CLAUDE.md` contenant `@socle/REGLES.md`, installé avec `.claude/socle/REGLES.md`. Le `CLAUDE.md` de la racine n'est jamais touché ; si `.claude/CLAUDE.md` existe, le Socle est refusé sans rien écraser.
 - **Preuve** : avec le canari (présent seulement dans le Socle), 3 passages sur 3 : présent avec le Socle complet, présent avec l'import seul, **absent** sans import ni renvoi (même diff, sessions neuves). Valable pour ce modèle (`claude-sonnet-5-5`) et ce scénario.
-- **Réserve** : décision `behavior_audit_required` par construction (il change la conduite de tous les agents). Ta lecture du texte est l'audit.
+- **Réserve** : décision `behavior_audit_required` par construction (il change la conduite de tous les agents). Ta lecture du texte est une revue de son contenu ; elle ne remplace pas les essais de comportement, documentés séparément.
 
 ## 2. Relecteur
 
@@ -82,8 +82,8 @@ Ces trois extraits ont été chargés par le moteur dans un dossier temporaire (
 
 | Composant | Ce qui est établi | Incertitude |
 |---|---|---|
-| Relecteur | Dérivé d'une inspiration : `code-reviewer` d'aitmpl, dépôt **MIT, Copyright Daniel (San) Ávila** (LICENSE lu). Le texte de la variante est très différent de l'original (ratio de ressemblance 0,03, mesure sommaire) | l'origine amont probable (VoltAgent, MIT, LICENSE lu) reste une hypothèse ; attribution conservée par prudence |
-| Skill | Adapté de `writing-plans` d'aitmpl, issu probablement d'**obra/superpowers : MIT, Copyright (c) 2025 Jesse Vincent** (LICENSE lu au commit `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b`). Ressemblance textuelle 0,03 à 0,05 | la copie aitmpl diffère du texte amont actuel : filiation exacte non prouvée |
+| Relecteur | Dérivé d'une inspiration : `code-reviewer` d'aitmpl, dépôt **MIT, Copyright Daniel (San) Ávila** (LICENSE lu). Observation : une mesure sommaire de ressemblance textuelle donne 0,03 ; elle n'a aucune portée juridique et ne dit rien des droits ni de la filiation | l'origine amont probable (VoltAgent, MIT, LICENSE lu) reste une hypothèse ; attribution conservée par prudence |
+| Skill | Adapté de `writing-plans` d'aitmpl, issu probablement d'**obra/superpowers : MIT, Copyright (c) 2025 Jesse Vincent** (LICENSE lu au commit `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b`). Observation sommaire de ressemblance : 0,03 à 0,05, sans portée juridique | la copie aitmpl diffère du texte amont actuel : filiation exacte non prouvée |
 | Socle, plan-writer, run-tests | Contenu original ZakiOS | **la licence du code de ZakiOS n'est pas choisie** |
 
 Une licence enregistrée au niveau du dépôt vaudrait aussi pour `run-tests`, hors lot : sans décision validée, il reste non installable. Une entrée de `licenses.json` exige un SPDX, un vérificateur et le commit de la source : il faut donc **ta licence** avant de l'enregistrer, et **mettre à jour le commit chaque fois que la source est re-figée**.
