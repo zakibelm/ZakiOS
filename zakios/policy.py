@@ -7,7 +7,7 @@ nouveauté, ni l'équivalence. Les statuts le disent explicitement, et aucun
 hook, plugin ou mod n'est jamais présenté comme « à adopter » automatiquement.
 """
 
-SCHEMA_VERSION = "3"
+SCHEMA_VERSION = "4"
 
 # Un composant n'est comparé qu'aux composants de sa famille.
 FAMILIES = {
@@ -40,6 +40,8 @@ STATUSES = (STATUS_EQUIVALENCE, STATUS_PARTIAL, STATUS_NOVELTY, STATUS_BEHAVIOR,
 CONTENT_FAMILIES = ("agent", "skill", "command")
 # Décisions humaines autorisées dans decisions/validated.json
 ALLOWED_DECISIONS = ("conserver", "fusionner", "variante", "remplacer_par_socle", "archiver")
+# Décisions qui autorisent l'installation d'un composant dans un projet.
+INSTALLABLE_DECISIONS = ("conserver", "fusionner", "variante")
 
 PROPOSALS = {
     STATUS_EQUIVALENCE: "Équivalence candidate : comparer mission, entrées, sorties et procédures avant tout remplacement",

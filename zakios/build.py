@@ -249,6 +249,73 @@ def _apply_validated(records, decisions_path):
     return orphans, stale
 
 
+def _load_json_dict(path, label):
+    if not path or not os.path.exists(path):
+        return {}
+    try:
+        with open(path, encoding="utf-8") as handle:
+            data = json.load(handle)
+    except ValueError as exc:
+        raise BuildError("%s illisible : %s" % (label, exc))
+    if not isinstance(data, dict):
+        raise BuildError("%s doit être un objet JSON" % label)
+    return data
+
+
+def _apply_licenses(records, licenses_path):
+    """Applique les licences vérifiées par un humain, par dépôt ou par composant.
+
+    Une vérification est liée au commit lu (`commit`) : si le dépôt a avancé, elle est périmée et
+    n'est pas appliquée. Une entrée par composant l'emporte sur l'entrée de son dépôt.
+    """
+    data = _load_json_dict(licenses_path, "licences")
+    by_id = {r["component_id"]: r for r in records}
+    by_repo = defaultdict(list)
+    for rec in records:
+        by_repo[rec["provenance"]["source"]].append(rec)
+    orphans, stale = [], []
+    ordered = sorted(data, key=lambda k: (k in by_id, k))  # dépôts d'abord, composants ensuite
+    for key in ordered:
+        entry = data[key]
+        targets = [by_id[key]] if key in by_id else by_repo.get(key, [])
+        if not targets:
+            orphans.append(key)
+            continue
+        for field in ("spdx", "verified_by"):
+            if not isinstance(entry.get(field), str) or not entry[field].strip():
+                raise BuildError("licences : champ « %s » requis pour %s" % (field, key))
+        if entry.get("commit") != targets[0]["provenance"]["commit"]:
+            stale.append(key)
+            continue
+        for rec in targets:
+            rec["license"].update({"verified": True, "spdx": entry["spdx"], "attribution": entry.get("attribution"),
+                                   "verified_by": entry["verified_by"], "verified_on": entry.get("verified_on"),
+                                   "verified_commit": entry["commit"]})
+    return orphans, stale
+
+
+def _apply_annotations(records, annotations_path):
+    """Relations (dépendances, conflits) et compatibilité déclarées par un humain."""
+    data = _load_json_dict(annotations_path, "annotations")
+    by_id = {r["component_id"]: r for r in records}
+    orphans = []
+    for cid in sorted(data):
+        entry = data[cid]
+        rec = by_id.get(cid)
+        if rec is None:
+            orphans.append(cid)
+            continue
+        for key in ("depends_on", "conflicts_with", "variant_of", "replaced_by"):
+            if key in entry:
+                if not isinstance(entry[key], list) or not all(isinstance(x, str) for x in entry[key]):
+                    raise BuildError("annotations : « %s » doit être une liste d'identifiants (%s)" % (key, cid))
+                rec["relations"][key] = sorted(set(entry[key]))
+        for key in ("platform", "min_version"):
+            if key in entry:
+                rec["compatibility"][key] = entry[key]
+    return orphans
+
+
 def _crosswalk_csv(records):
     buf = io.StringIO(newline="")
     cols = ["component_id", "source", "path", "type", "name", "summary", "best_match_id", "score",
@@ -284,7 +351,8 @@ def _counts(records):
             {k: dict(sorted(v.items())) for k, v in sorted(status.items())})
 
 
-def build(manifest_path, sources_root, out_dir, allow_dirty=False, decisions_path=None):
+def build(manifest_path, sources_root, out_dir, allow_dirty=False, decisions_path=None,
+          licenses_path=None, annotations_path=None):
     """Génère le catalogue dans `out_dir`. En cas d'échec, le dernier catalogue valide reste intact.
 
     Avec `allow_dirty`, le résultat est marqué expérimental si une source a des modifications locales :
@@ -294,10 +362,12 @@ def build(manifest_path, sources_root, out_dir, allow_dirty=False, decisions_pat
     out_dir = os.path.abspath(out_dir)
     os.makedirs(os.path.dirname(out_dir), exist_ok=True)
     with _Lock(out_dir):
-        return _build_locked(manifest, manifest_sha, sources_root, out_dir, allow_dirty, decisions_path)
+        return _build_locked(manifest, manifest_sha, sources_root, out_dir, allow_dirty, decisions_path,
+                             licenses_path, annotations_path)
 
 
-def _build_locked(manifest, manifest_sha, sources_root, out_dir, allow_dirty, decisions_path):
+def _build_locked(manifest, manifest_sha, sources_root, out_dir, allow_dirty, decisions_path,
+                  licenses_path=None, annotations_path=None):
     _recover(out_dir)
     parent, base = os.path.dirname(out_dir), os.path.basename(out_dir)
     for leftover in os.listdir(parent):  # restes d'une génération interrompue (nous tenons le verrou)
@@ -330,6 +400,8 @@ def _build_locked(manifest, manifest_sha, sources_root, out_dir, allow_dirty, de
     provisional = not any(r["provenance"]["role"] == "existant" for r in records)
     _evaluate(records, provisional)
     orphans, stale = _apply_validated(records, decisions_path)
+    orphan_licenses, stale_licenses = _apply_licenses(records, licenses_path)
+    orphan_annotations = _apply_annotations(records, annotations_path)
     build_mode = BUILD_EXPERIMENTAL if dirty_sources else BUILD_EXACT
 
     by_source, by_type, status_counts = _counts(records)
@@ -342,7 +414,9 @@ def _build_locked(manifest, manifest_sha, sources_root, out_dir, allow_dirty, de
         "empty_summaries": sum(1 for r in records if not r["function"]["summary"]),
         "metadata_issues": sorted(issues, key=lambda i: (i["source"], i["path"])),
         "incomplete_fingerprints": sorted(r["component_id"] for r in records if not r["provenance"]["fingerprint_complete"]),
-        "orphan_decisions": orphans, "stale_decisions": stale, "provisional": provisional,
+        "orphan_decisions": orphans, "stale_decisions": stale,
+        "orphan_licenses": orphan_licenses, "stale_licenses": stale_licenses,
+        "orphan_annotations": orphan_annotations, "provisional": provisional,
         "provisional_reason": policy.PROVISIONAL_REASON if provisional else None,
     }
     registry = {"schema_version": policy.SCHEMA_VERSION, "manifest_sha256": manifest_sha,
@@ -401,8 +475,18 @@ def read_generation(directory):
 
 def validate_catalog(directory):
     """Vérifie un catalogue généré. Lève ValidationError avec la liste des problèmes."""
-    problems = []
+    return _validate_generation(read_generation(directory))[0]
+
+
+def load_catalog(directory):
+    """Lit et valide une génération en une seule lecture. Renvoie (registre, empreinte du registre)."""
     raw = read_generation(directory)
+    _, registry = _validate_generation(raw)
+    return registry, hashlib.sha256(raw["registry.json"]).hexdigest()
+
+
+def _validate_generation(raw):
+    problems = []
     try:
         registry = json.loads(raw["registry.json"].decode("utf-8"))
         report = json.loads(raw["build_report.json"].decode("utf-8"))
@@ -469,8 +553,12 @@ def validate_catalog(directory):
             problems.append("%s : résumé absent" % cid)
         elif is_yaml_marker(func["summary"]):
             problems.append("%s : marqueur YAML utilisé comme description" % cid)
-        if not isinstance(c.get("license"), dict) or not isinstance(c["license"].get("verified"), bool):
+        lic = c.get("license")
+        if not isinstance(lic, dict) or not isinstance(lic.get("verified"), bool):
             problems.append("%s : bloc licence invalide" % cid)
+        elif lic["verified"] and not (lic.get("spdx") and lic.get("verified_by")
+                                      and lic.get("verified_commit") == prov.get("commit")):
+            problems.append("%s : licence marquée vérifiée sans licence, vérificateur ou commit correspondant" % cid)
         rel = c.get("relations")
         if not isinstance(rel, dict) or any(not isinstance(rel.get(k), list) for k in
                                             ("depends_on", "conflicts_with", "variant_of", "replaced_by")):
@@ -562,4 +650,4 @@ def validate_catalog(directory):
     if problems:
         raise ValidationError("; ".join(problems[:PROBLEM_LIMIT]) + (" ..." if len(problems) > PROBLEM_LIMIT else ""))
     evaluated = sum(1 for c in comps if c.get("evaluation") is not None)
-    return {"components": len(comps), "evaluated": evaluated, "build_mode": registry["build_mode"]}
+    return {"components": len(comps), "evaluated": evaluated, "build_mode": registry["build_mode"]}, registry

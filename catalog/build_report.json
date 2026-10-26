@@ -167,11 +167,13 @@
    "source": "karanb192/claude-code-hooks"
   }
  ],
+ "orphan_annotations": [],
  "orphan_decisions": [],
+ "orphan_licenses": [],
  "provisional": true,
  "provisional_reason": "comparaison ZAKI OS manquante",
- "registry_sha256": "d1a46637c6f612d9802ccce71eee0110d8cb05c81a20c35901c9780d6ccc826e",
- "schema_version": "3",
+ "registry_sha256": "38f889e328bee4b9951a999599652cb6a0e06f7d923edf8cac3b99dbc83dece4",
+ "schema_version": "4",
  "sources": [
   {
    "commit": "408d3c9eee2d0c75c12a3abb5de29e53c2ca6b9e",
@@ -259,5 +261,6 @@
   }
  ],
  "stale_decisions": [],
- "zakios_version": "0.4.1"
+ "stale_licenses": [],
+ "zakios_version": "0.5.0"
 }

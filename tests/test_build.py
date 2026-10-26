@@ -589,6 +589,42 @@ class BuildTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             self._tampered(edit_registry=edit)
 
+    def test_verified_license_requires_spdx_verifier_and_matching_commit(self):
+        def edit(data):
+            data["components"][0]["license"].update({"verified": True, "spdx": None})
+        with self.assertRaises(ValidationError):
+            self._tampered(edit_registry=edit)
+
+    def test_license_and_annotation_files_are_applied_and_checked(self):
+        with Workdir() as wd:
+            root, manifest, commits = make_world(wd)
+            out = os.path.join(wd, "catalog")
+            lic, ann = os.path.join(wd, "lic.json"), os.path.join(wd, "ann.json")
+            a, b = "acme/catalogue:components/agents/web/frontend-dev.md", "acme/catalogue:components/agents/ops/devops-engineer.md"
+            with open(lic, "w") as handle:
+                json.dump({"acme/catalogue": {"spdx": "MIT", "verified_by": "Zaki", "commit": commits["catalogue"]},
+                           b: {"spdx": "Apache-2.0", "verified_by": "Zaki", "commit": commits["catalogue"]},
+                           "acme/inconnu": {"spdx": "MIT", "verified_by": "Zaki", "commit": "a" * 40}}, handle)
+            with open(ann, "w") as handle:
+                json.dump({a: {"conflicts_with": [b], "platform": "linux"}, "acme/x.md": {"depends_on": []}}, handle)
+            report = build(manifest, root, out, licenses_path=lic, annotations_path=ann)
+            comps = load_registry(out)
+            self.assertEqual(comps[a]["license"]["spdx"], "MIT")
+            self.assertEqual(comps[b]["license"]["spdx"], "Apache-2.0")  # le composant l'emporte sur le dépôt
+            self.assertEqual(comps[a]["relations"]["conflicts_with"], [b])
+            self.assertEqual(comps[a]["compatibility"]["platform"], "linux")
+            self.assertEqual(report["orphan_licenses"], ["acme/inconnu"])
+            self.assertEqual(report["orphan_annotations"], ["acme/x.md"])
+
+    def test_annotation_to_unknown_component_fails_verification(self):
+        with Workdir() as wd:
+            root, manifest, _ = make_world(wd)
+            ann = os.path.join(wd, "ann.json")
+            with open(ann, "w") as handle:
+                json.dump({"acme/catalogue:components/agents/web/frontend-dev.md": {"depends_on": ["acme/nulle-part:x.md"]}}, handle)
+            with self.assertRaises(ValidationError):
+                build(manifest, root, os.path.join(wd, "catalog"), annotations_path=ann)
+
     def test_invalid_frontmatter_is_reported_in_the_build_report(self):
         with Workdir() as wd:
             root, manifest, _ = make_world(wd)
