@@ -1,49 +1,37 @@
-# Catalogue : colonnes et décisions
+# Catalogue : fiches et statuts
 
-## `catalog/aitmpl_vs_socle.csv`
+## Fichiers générés (`catalog/`)
 
-Une ligne par composant d'aitmpl (1 856 lignes).
+- `registry.json` : une fiche par composant (source de vérité).
+- `crosswalk.csv` : vue à plat des composants **aitmpl** évalués, pour filtrer sur une tablette.
+- `build_report.json` : comptes par source et par type, fichiers au YAML invalide, décisions orphelines, empreinte du manifeste.
 
-| Colonne | Signification |
+## Fiche (schéma 2)
+
+| Champ | Contenu |
 |---|---|
-| `source` | dépôt d'origine du composant |
-| `commit` | commit analysé (12 premiers caractères) |
-| `path` | chemin du fichier dans le dépôt |
-| `type` | `agent`, `skill`, `command`, `hook` ou `mod` |
-| `name` | nom du composant |
-| `fonction_reelle` | description extraite du fichier (240 caractères maximum) |
-| `couche_cible` | couche où le placer : Agent, Skill, Commande, Hook/Mod |
-| `equivalent_existant` | meilleur équivalent trouvé dans le Socle, sous la forme `dépôt:chemin` |
-| `similarite` | score de 0 à 1 avec cet équivalent |
-| `apport_unique_termes` | mots les plus distinctifs du composant, absents de son équivalent |
-| `decision` | décision proposée (voir ci-dessous) |
-| `justification` | raison en une phrase |
+| `component_id` | `dépôt:chemin`, unique |
+| `type` | skill, agent, embedded_agent, command, hook, plugin, mod, framework_module |
+| `provenance` | dépôt, rôle, chemin, **commit complet**, SHA-256 du contenu |
+| `function.summary` | description lue dans le fichier (240 caractères maximum) |
+| `compatibility`, `relations` | outils requis, dépendances, conflits : vides pour l'instant |
+| `license` | `verified: false` tant que personne n'a lu la licence |
+| `evaluation` | meilleur équivalent, score, voisins, homonyme, statut proposé (aitmpl seulement) |
+| `decision` | `validated` : vide jusqu'à validation humaine |
+| `metadata_issue` | YAML invalide ou autre problème, jamais masqué |
 
-## Valeurs de `decision`
+## Statuts proposés
 
-Toutes se terminent par « provisoire (comparaison ZAKI OS manquante) » tant que ZAKI OS n'est pas comparé.
+| Statut | Seuil | Sens | Action humaine |
+|---|---|---|---|
+| Équivalence candidate | score ≥ 0,60 | proche d'un composant existant | lire les deux, puis conserver, remplacer ou fusionner |
+| Chevauchement partiel | ≥ 0,40 | recoupement | garder ce qui est distinct |
+| Nouveauté à examiner | < 0,40 | pas d'équivalent lexical | lire : l'absence de score ne prouve pas la nouveauté |
+| Audit par comportement | hook, plugin, mod | jamais décidé par un score | relever ce qu'il intercepte, bloque, modifie |
+| Métadonnées insuffisantes | pas de texte | impossible à comparer | lire le fichier |
 
-| Valeur | Sens | Prochaine action |
-|---|---|---|
-| Adopter (apport unique probable) | aucun équivalent proche dans le Socle | lire le composant, puis l'intégrer si la capacité sert un projet |
-| Fusionner / Variante | chevauchement partiel avec le Socle | garder ce qui est distinct, fusionner le reste, ou garder comme variante de plateforme |
-| Remplacer par le Socle (ou écarter) | fonction déjà couverte | utiliser la version du Socle ; archiver celle d'aitmpl |
-| À auditer par comportement | hook ou mod | relever ce qu'il intercepte ou bloque, puis tester les conflits |
+Les statuts sont des propositions. Les décisions (Conserver, Fusionner, Variante, Remplacer par le Socle, Archiver) sont prises par un humain et inscrites dans `decisions/validated.json`, fusionnées au prochain build sans jamais être écrasées. Une décision dont le composant a disparu est listée comme orpheline.
 
-Les décisions de la méthode (Conserver, Fusionner, Variante, Remplacer par le Socle, Archiver) sont prises à la relecture, à partir de ces propositions.
+## Archive
 
-## `catalog/socle_index.json`
-
-Index des 1 516 composants du Socle : `source`, `commit`, `path`, `type`, `name`, `description`, `bytes`. Le type `framework` désigne les 4 modules de `claude-swarm`.
-
-## `catalog/agents_index.json`
-
-Index des 422 agents d'aitmpl : `name`, `description`, `tools`, `model`, `bytes`, `category`, `path`.
-
-## `catalog/agents_groups.json`
-
-Les 23 groupes d'agents proches détectés au seuil 0,45. Chaque groupe liste ses membres avec leur taille. Seuls 15 sont de vrais doublons ; le tri est dans `catalog/agents_report.md`.
-
-## Lire le catalogue sur une tablette
-
-Filtrer `aitmpl_vs_socle.csv` sur `decision` commence par « Remplacer » pour voir ce qui est déjà couvert, ou par « Adopter » pour voir les candidats à l'intégration. Trier par `similarite` décroissant fait remonter les quasi-copies (score proche de 1).
+`archive/pre-audit-a29d2df/` contient l'ancien catalogue (1 856 lignes, libellés « Adopter / Remplacer »). Il est conservé pour l'historique : ses chiffres (289 hooks du Socle, plugin.json comptés comme hooks, mods comptés plusieurs fois) étaient faux.

@@ -1,69 +1,59 @@
 # ZakiOS
 
-Bibliothèque de composants Claude Code (agents, skills, commandes, hooks, mods) **sans redondance**.
+Catalogue de composants Claude Code (agents, skills, commandes, hooks, mods) **sans redondance**, avec provenance vérifiable.
 
-ZakiOS part des catalogues publics, les compare à ce que tu possèdes déjà (le Socle .claude et les composants ZAKI OS) et décide, composant par composant, ce qui mérite d'entrer. La méthode s'appelle REA (Reverse Engineering Anything) : on lit ce que fait réellement chaque composant, on ne se fie pas à son nom.
+ZakiOS lit les catalogues publics (aitmpl / davila7/claude-code-templates), les compare à ton Socle .claude (10 dépôts) et, plus tard, à ZAKI OS, puis range chaque composant dans un registre. La méthode s'appelle REA (Reverse Engineering Anything) : on lit ce que fait réellement un composant, on ne se fie pas à son nom.
 
-**Idée directrice : une bibliothèque complète en réserve, et seulement les composants nécessaires activés par projet.**
+> **Statut : catalogue exploratoire en lecture seule, avec validation humaine.**
+> Ce n'est pas un système d'activation automatique. Un score de similarité est un indice de lecture, jamais une preuve d'équivalence ni de nouveauté. Voir `docs/AUDIT-a29d2df.md`.
 
-## Pourquoi
-
-Les grands catalogues se recoupent fortement. Rien que dans les agents d'aitmpl, plus d'un sur cinq a un équivalent proche dans le Socle, et 40 composants sont des copies quasi identiques. Installer « tout » alourdit le contexte, répète les règles et crée des conflits entre hooks. ZakiOS garde un seul exemplaire de chaque capacité, avec sa source, son commit et sa décision.
-
-## État au 2026-10-26
+## État (moteur 0.2.0, schéma 2)
 
 | Élément | Chiffre |
 |---|---|
-| Composants aitmpl analysés | 1 856 (916 skills, 431 agents, 349 commandes, 115 hooks, 45 mods) |
-| Composants du Socle des 10 dépôts | 1 516 (525 agents, 437 commandes, 289 hooks, 261 skills, 4 modules de framework) |
-| Agents aitmpl : groupes de vrais doublons | 15 groupes (31 agents), soit environ 16 agents retirables |
-| Comparaison avec ZAKI OS | **pas encore faite** : toutes les décisions sont provisoires |
+| Composants indexés | 3 327 (aitmpl 1 809, Socle 1 518) |
+| aitmpl par type | 916 skills, 421 agents, 348 commandes, 70 hooks, 45 mods, 9 agents intégrés à des skills |
+| Socle par type | 261 skills, 522 agents (+3 intégrés à des skills), 435 commandes, 47 hooks, 246 plugins, 4 modules de framework (détail dans `catalog/build_report.json`) |
+| Composants aitmpl évalués | 1 809 : 140 équivalences candidates, 69 chevauchements partiels, 1 485 nouveautés à examiner, 115 audits par comportement (hooks, mods) |
+| Fichiers au YAML invalide | 14, signalés dans `build_report.json` (pas masqués) |
+| Comparaison avec ZAKI OS | **absente** : tous les résultats portent « comparaison ZAKI OS manquante » |
+| Licences vérifiées | 0 : chaque fiche porte `license.verified: false` |
 
-Limites connues : la comparaison est lexicale (voir `docs/METHODOLOGIE.md`), les hooks et mods demandent un audit par comportement, et le test de propagation des règles du Socle aux agents reste à faire.
+Aucune décision n'est validée par un humain pour l'instant (`decisions/validated.json` est vide).
 
-## Structure du dépôt
+## Utilisation
+
+```sh
+pip install -r requirements.txt            # PyYAML
+# cloner les sources aux commits de sources.json sous ./sources/<owner>/<repo>
+python3 -m zakios build                    # génère catalog/ (registry.json, crosswalk.csv, build_report.json)
+python3 -m zakios verify                   # revalide un catalogue existant
+python3 -m unittest discover -s tests -t . # 35 tests
+```
+
+Le moteur refuse de construire si une source obligatoire manque, si son commit diffère du manifeste (40 caractères exigés) ou si le dépôt a des modifications locales (`--allow-dirty` pour forcer). La génération se fait dans `catalog.tmp`, est validée, puis remplace `catalog/` d'un bloc : un échec laisse le catalogue précédent intact.
+
+## Structure
 
 ```
 ZakiOS/
-├── README.md              ce fichier
-├── SOURCES.md             dépôts sources, commits figés, notes de licence
-├── catalog/
-│   ├── aitmpl_vs_socle.csv    table de décision (1 856 lignes)
-│   ├── socle_index.json       index des 1 516 composants du Socle
-│   ├── agents_index.json      index des agents aitmpl
-│   ├── agents_groups.json     groupes de doublons détectés
-│   └── agents_report.md       rapport de redondance des agents
-├── docs/
-│   ├── METHODOLOGIE.md        comment les décisions sont produites
-│   ├── CATALOGUE.md           dictionnaire des colonnes et des décisions
-│   ├── ARCHITECTURE.md        couches, réserve et activation par projet
-│   └── FEUILLE-DE-ROUTE.md    prochaines étapes, avec leur bénéfice
-└── tools/
-    ├── crosswalk.py           indexe le Socle et croise avec aitmpl
-    └── index_agents.py        indexe les agents et détecte les doublons
+├── sources.json            manifeste : dépôts, rôles, commits complets
+├── decisions/validated.json   décisions validées par un humain (jamais écrasées)
+├── catalog/                registre généré (ne pas éditer à la main)
+├── zakios/                 moteur : parse, classify, policy, scan, similarity, build
+├── tests/                  35 tests, sur de petits dépôts git créés à la volée
+├── docs/                   méthodologie, catalogue, architecture, feuille de route, audit
+└── archive/pre-audit-a29d2df/   ancien catalogue et scripts, gardés pour l'historique seulement
 ```
 
-## Démarrage rapide
-
-1. Lire `docs/CATALOGUE.md` pour comprendre les colonnes.
-2. Ouvrir `catalog/aitmpl_vs_socle.csv` et filtrer sur la colonne `decision`.
-3. Pour régénérer les catalogues, cloner les sources aux commits de `SOURCES.md` sous `/home/claude/<owner>/<repo>`, puis :
-
-```sh
-python3 -I tools/crosswalk.py catalog/
-python3 -I tools/index_agents.py <chemin>/cli-tool/components/agents catalog/ 0.45
-```
-
-Les scripts n'utilisent que la bibliothèque standard de Python 3.
-
-## Règles du projet
+## Règles
 
 - Les sources ne sont jamais modifiées.
-- Aucun composant tiers n'est copié ici sans sa licence et son attribution.
-- Chaque ligne du catalogue garde sa source et son commit.
-- Une décision est « provisoire » tant que la comparaison avec ZAKI OS n'est pas faite.
-- Une règle transversale vit à un seul endroit, le Socle commun, et on vérifie que chaque agent la reçoit à l'exécution.
+- Aucun composant tiers n'est copié ici sans licence vérifiée et attribution.
+- Chaque fiche garde source, commit complet et empreinte SHA-256 du contenu.
+- Un hook, un plugin ou un mod n'est jamais décidé par un score : audit par comportement obligatoire.
+- Une règle transversale vit dans le Socle commun, et on vérifie qu'elle arrive bien à chaque agent à l'exécution (test pas encore écrit).
 
-## Licence et attribution
+## Licence
 
-Ce dépôt contient des index, des décisions et des scripts, pas les composants des autres auteurs. Chaque composant garde la licence de sa source : voir `SOURCES.md`.
+Aucune licence n'est encore choisie pour le code de ZakiOS : c'est ta décision. Ce dépôt contient des index, des décisions et le moteur, pas les composants des autres auteurs ; chaque composant garde la licence de sa source (`SOURCES.md`).

@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .DS_Store
 node_modules/
+sources/
+catalog.tmp/
+catalog.bak/

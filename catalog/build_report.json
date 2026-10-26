@@ -1,0 +1,255 @@
+{
+ "counts_by_source_and_type": {
+  "VoltAgent/awesome-claude-code-subagents": {
+   "agent": 163,
+   "plugin": 10
+  },
+  "affaan-m/claude-swarm": {
+   "framework_module": 4
+  },
+  "am-will/swarms": {
+   "skill": 7
+  },
+  "anthropics/skills": {
+   "embedded_agent": 3,
+   "skill": 20
+  },
+  "davila7/claude-code-templates": {
+   "agent": 421,
+   "command": 348,
+   "embedded_agent": 9,
+   "hook": 70,
+   "mod": 45,
+   "skill": 916
+  },
+  "disler/claude-code-hooks-mastery": {
+   "agent": 19,
+   "command": 21,
+   "hook": 17
+  },
+  "eugeniughelbur/obsidian-second-brain": {
+   "command": 49,
+   "hook": 6,
+   "plugin": 1,
+   "skill": 1
+  },
+  "karanb192/claude-code-hooks": {
+   "plugin": 22,
+   "skill": 8
+  },
+  "rohitg00/awesome-claude-code-toolkit": {
+   "agent": 138,
+   "command": 260,
+   "hook": 20,
+   "plugin": 121,
+   "skill": 40
+  },
+  "wshobson/agents": {
+   "agent": 202,
+   "command": 105,
+   "hook": 4,
+   "plugin": 92,
+   "skill": 185
+  }
+ },
+ "counts_by_type": {
+  "agent": 943,
+  "command": 783,
+  "embedded_agent": 12,
+  "framework_module": 4,
+  "hook": 117,
+  "mod": 45,
+  "plugin": 246,
+  "skill": 1177
+ },
+ "empty_summaries": 19,
+ "evaluation_by_type": {
+  "agent": {
+   "equivalence_candidate": 88,
+   "novelty_to_review": 299,
+   "partial_overlap": 34
+  },
+  "command": {
+   "novelty_to_review": 335,
+   "partial_overlap": 13
+  },
+  "embedded_agent": {
+   "equivalence_candidate": 9
+  },
+  "hook": {
+   "behavior_audit_required": 70
+  },
+  "mod": {
+   "behavior_audit_required": 45
+  },
+  "skill": {
+   "equivalence_candidate": 43,
+   "novelty_to_review": 851,
+   "partial_overlap": 22
+  }
+ },
+ "manifest_sha256": "d3fde598176ba65c35ce03d2a6f884110305b924fbffe5d717b8212078d54699",
+ "metadata_issues": [
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/04-quality-security/gdpr-ccpa-compliance.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/07-specialized-domains/hipaa-compliance.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/08-business-product/assumption-mapping.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/08-business-product/backlog-grooming.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/08-business-product/growth-loops.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/08-business-product/telegram-ads-analyst.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/10-research-analysis/ab-test-analysis.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/10-research-analysis/cohort-analysis.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "categories/10-research-analysis/first-principles-thinking.md",
+   "source": "VoltAgent/awesome-claude-code-subagents"
+  },
+  {
+   "issue": "yaml_invalide: while parsing a block mapping",
+   "path": ".claude/commands/plan_w_team.md",
+   "source": "disler/claude-code-hooks-mastery"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "plugins/bounty-board/skills/board/SKILL.md",
+   "source": "karanb192/claude-code-hooks"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "plugins/context-hogs/skills/leaderboard/SKILL.md",
+   "source": "karanb192/claude-code-hooks"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "plugins/dead-end-registry/skills/dead-ends/SKILL.md",
+   "source": "karanb192/claude-code-hooks"
+  },
+  {
+   "issue": "yaml_invalide: mapping values are not allowed here",
+   "path": "plugins/dead-rules-audit/skills/scorecard/SKILL.md",
+   "source": "karanb192/claude-code-hooks"
+  }
+ ],
+ "orphan_decisions": [],
+ "provisional": true,
+ "provisional_reason": "comparaison ZAKI OS manquante",
+ "schema_version": "2",
+ "sources": [
+  {
+   "commit": "408d3c9eee2d0c75c12a3abb5de29e53c2ca6b9e",
+   "components": 173,
+   "repo": "VoltAgent/awesome-claude-code-subagents",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "9b1c5561157abd2d0d043758b7bfcb0319267d9f",
+   "components": 4,
+   "repo": "affaan-m/claude-swarm",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "110268148a1fdf149a19e4dab848a1c0fca9835d",
+   "components": 7,
+   "repo": "am-will/swarms",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+   "components": 23,
+   "repo": "anthropics/skills",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "aff83062f3d0e6a882f23e52611d5811539e6047",
+   "components": 1809,
+   "repo": "davila7/claude-code-templates",
+   "role": "catalogue",
+   "status": "verifiee"
+  },
+  {
+   "commit": "052ad1cbd5aeb1ec4a1def22012d1293c6225625",
+   "components": 57,
+   "repo": "disler/claude-code-hooks-mastery",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "0e339f7f600af5943042864df63eb142c0c84abf",
+   "components": 57,
+   "repo": "eugeniughelbur/obsidian-second-brain",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "57a28c7687305e4a9b9dd50490e9b3c552c71ca4",
+   "components": 30,
+   "repo": "karanb192/claude-code-hooks",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "0ed8b47648cee8dbf30bd4aecd79d6db662c7dcb",
+   "components": 0,
+   "repo": "netresearch/claude-code-marketplace",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "ebdf1d596d2cde5c5cceb32177e8d1cf4829e7d9",
+   "components": 579,
+   "repo": "rohitg00/awesome-claude-code-toolkit",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+   "components": 588,
+   "repo": "wshobson/agents",
+   "role": "socle",
+   "status": "verifiee"
+  },
+  {
+   "commit": null,
+   "components": 0,
+   "repo": "zakibelm/ZAKI-OS-a-designer",
+   "role": "existant",
+   "status": "absente_facultative"
+  }
+ ],
+ "zakios_version": "0.2.0"
+}

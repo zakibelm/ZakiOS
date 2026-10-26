@@ -48,4 +48,8 @@ Exemple relevé : le pack de gardes de `karanb192/claude-code-hooks` regroupe se
 
 ## Provenance
 
-Chaque composant garde sa source, son commit et sa licence. Un composant sans licence vérifiée n'est pas copié dans la bibliothèque.
+Chaque fiche garde sa source, son commit complet, l'empreinte SHA-256 de son contenu et son état de licence (`verified`). Un composant sans licence vérifiée n'est pas copié dans la bibliothèque.
+
+## Implémentation actuelle
+
+Seule la couche « Index central » existe : le registre généré par `python3 -m zakios build`. Les autres couches (Socle commun, activation par projet) sont à construire ; voir la feuille de route.

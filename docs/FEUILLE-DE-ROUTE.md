@@ -1,40 +1,29 @@
 # Feuille de route
 
-Chaque étape indique l'action et le bénéfice attendu.
+Ordre fixé par l'audit du commit a29d2df (`docs/AUDIT-a29d2df.md`). Chaque étape dit ce qu'elle apporte.
 
-## 1. Comparer avec ZAKI OS
+## Fait (moteur 0.2.0)
 
-- **Action** : indexer les agents et skills ZAKI OS (Agent-Motion-Specialist, suite SEO, Humanizer, etc.) et les ajouter à la comparaison.
-- **Bénéfice** : les décisions « provisoires » deviennent fermes, et on n'adopte rien de ce qui existe déjà chez toi.
-- **Blocage actuel** : ZAKI OS n'a pas de dépôt unique ; les dépôts qui contiennent les agents et skills sont à désigner.
+- Moteur corrigé : YAML sûr, commits complets, détection des arbres modifiés, comptes sans doublons, statuts prudents, build atomique, 35 tests.
+- Conclusions non prouvables retirées (« Adopter », « Remplacer » automatiques).
 
-## 2. Auditer les hooks et mods par comportement
+## À faire
 
-- **Action** : lire les 45 mods et les hooks d'aitmpl et du Socle, relever ce qu'ils interceptent ou bloquent, puis dresser la matrice de conflits et de dépendances. Les mods de jeux (14) sont à archiver d'office.
-- **Bénéfice** : une sélection de hooks sans conflits, et la possibilité de remplacer plusieurs gardes par un seul pack.
-- **Priorité** : les mods de sécurité, qui se chevauchent le plus.
+| # | Étape | Bénéfice |
+|---|---|---|
+| 1 | Localiser les agents et skills ZAKI OS, les ajouter à `sources.json` (rôle existant) | lève le statut « provisoire » ; évite d'adopter ce que tu as déjà |
+| 2 | Lire les 15 groupes de vrais doublons d'agents et choisir une version canonique | retire environ 16 agents redondants |
+| 3 | Audit par comportement des 115 hooks/mods (sécurité d'abord), matrice de conflits | évite les gardes qui s'exécutent deux fois ou se contredisent |
+| 4 | Lire les nouveautés candidates avant de les retenir | une nouveauté lexicale n'est pas une nouveauté réelle |
+| 5 | Vérifier les licences des composants retenus | condition pour les copier |
+| 6 | Définir le Socle commun et un test de propagation à l'exécution | prouve que chaque agent reçoit les règles |
+| 7 | Activation par projet : profil, dépendances, aperçu, fichier de verrouillage, retour arrière | passe du catalogue à l'usage |
+| 8 | Intégration continue (tests à chaque push) | empêche les régressions |
 
-## 3. Lire les 15 groupes d'agents en doublon
+## Périmètre V1
 
-- **Action** : lire chaque groupe en entier et choisir la version canonique par précision et compatibilité, pas par taille.
-- **Bénéfice** : environ 16 agents en moins sans perdre de capacité.
+Claude Code CLI uniquement. Catalogue en lecture seule par défaut, sélection assistée, activation explicite. Réussite : démontrer le parcours complet sur un projet pilote.
 
-## 4. Passer les skills et les commandes au crible
+## Décision qui t'attend
 
-- **Action** : confirmer par lecture les 850 skills et 336 commandes marqués « Adopter ».
-- **Bénéfice** : écarter les faux « nouveaux », les décisions lexicales étant indicatives.
-
-## 5. Tester la propagation des règles du Socle
-
-- **Action** : vérifier qu'un agent reçoit bien les règles transversales à l'exécution.
-- **Bénéfice** : la centralisation des règles est prouvée, pas supposée.
-
-## 6. Vérifier les licences
-
-- **Action** : relever la licence et l'auteur de chaque composant retenu.
-- **Bénéfice** : pouvoir copier des composants dans la bibliothèque en gardant l'attribution.
-
-## 7. Construire l'activation par projet
-
-- **Action** : définir, pour chaque projet, la liste des composants actifs, et un index que l'orchestrateur peut interroger.
-- **Bénéfice** : contexte léger et sélection d'agents précise.
+Choisir une licence pour le code de ZakiOS.
