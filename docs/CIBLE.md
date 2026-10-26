@@ -11,7 +11,8 @@ Demande en langage naturel → orchestration **PDCA** → résultat **avec preuv
 | Planifier | Besoin, situation initiale, critères d'acceptation | cible |
 | Choisir la source | 1. pratiques déjà validées (décisions, Socle) ; 2. recherche dans le catalogue GitHub ; 3. recherche Web. Justifier : **réutiliser, adapter, combiner ou développer** | cible (catalogue + décisions : existant) |
 | Contrôler | Licences, dépendances, compatibilité avant toute copie | existant (moteur 0.5.2) pour le catalogue ; cible pour le Web |
-| Exécuter | Agents limités techniquement, périmètre autorisé | pilote existant ; variantes en brouillon |
+| Exécuter | Installation contrôlée des composants | **existant** (pilote `plan`/`apply`/`rollback`) |
+| Exécuter | Exécution des agents sous restrictions techniques (outils retirés, bac à sable, limites) | **cible** ; variantes en brouillon, restrictions non démontrées |
 | Vérifier / Agir | Preuves, écarts, corrections, standardisation | cible |
 
 ## Rétro-ingénierie
@@ -26,6 +27,14 @@ Préférences, mémoires, projets, permissions et budgets sont séparés **par u
 
 Intégrés à la cible, derrière une couche d'abstraction (fournisseurs interchangeables). Sélection du modèle selon la mission, le coût (en $ CAD) et des modèles de secours.
 **Avant de fixer la configuration** : confirmer par test réel les capacités exactes (modèles disponibles, limites, tarifs, langues, appels d'outils, comportement de repli). Aucun modèle ni tarif n'est figé dans ce dépôt tant que ce test n'est pas fait.
+
+## Registre des outils logiciels réutilisables (cible)
+
+Registre distinct des agents et des skills : programmes, bibliothèques et services réutilisables, chacun avec source, licence, dépendances, compatibilité, version figée et usage autorisé. Consulté à l'étape « Choisir la source » avant de développer.
+
+## Priorité de coût pour les modèles (cible)
+
+Modèles gratuits ou économiques d'abord, tant qu'ils satisfont les critères de qualité de la mission. Chaque mission porte un **plafond budgétaire** (en $ CAD), un **nombre maximal de tentatives** et une **condition d'arrêt** ; au-delà, arrêt et rapport, jamais d'escalade silencieuse.
 
 ## Règles de portée
 

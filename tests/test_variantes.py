@@ -19,7 +19,7 @@ class Variantes(unittest.TestCase):
     def test_reviewer_lecture_seule(self):
         text = (V / "agents/code-reviewer.md").read_text()
         tools = re.search(r"^tools:(.*)$", text, re.M).group(1)
-        for forbidden in ("Write", "Edit"):
+        for forbidden in ("Write", "Edit", "Bash"):
             self.assertNotIn(forbidden, tools)
 
     def test_aucune_dependance_orpheline(self):
@@ -39,6 +39,8 @@ class Variantes(unittest.TestCase):
         for name in ("agents/code-reviewer.md", "skills/writing-plans/SKILL.md"):
             self.assertIn("Provenance", (V / name).read_text())
 
-    def test_run_tests_sans_ecriture(self):
+    def test_run_tests_declare_ni_write_ni_edit_mais_bash_peut_ecrire(self):
         t = (V / "commands/run-tests.md").read_text()
+        # Portée réelle : seulement la déclaration d'outils. Bash peut lancer un
+        # programme qui écrit ; l'isolation d'exécution n'est PAS prouvée ici.
         self.assertNotRegex(re.search(r"allowed-tools:(.*)", t).group(1), r"Write|Edit")
