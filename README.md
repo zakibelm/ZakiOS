@@ -44,7 +44,7 @@ ZakiOS/
 ├── catalog/                registre généré (ne pas éditer à la main)
 ├── zakios/                 moteur : parse, classify, policy, scan, similarity, build
 ├── tests/                  106 tests, sur de petits dépôts git créés à la volée
-├── docs/                   méthodologie, catalogue, architecture, activation, feuille de route, audits
+├── docs/                   méthodologie, catalogue, architecture, activation, revues de lots, feuille de route, audits
 └── archive/pre-audit-a29d2df/   ancien catalogue et scripts, gardés pour l'historique seulement
 ```
 
