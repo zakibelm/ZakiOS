@@ -91,3 +91,12 @@ Limites : les licences, étoiles et maturités sont ceux de la feuille, **non v�
 vérifier » ou vide ; plusieurs sont AGPL, à examiner avant tout usage) ; 3 entrées n'ont pas de lien ; les statuts
 (« À tester » / « Évalué ») sont reproduits sans être inventés ; rien n'est installé, retenu ni validé, et le catalogue
 du moteur (`catalog/`, `decisions/`) n'est pas touché. Pour mettre à jour : remplacer le .psv puis relancer le script.
+
+### Présélection (critères)
+
+Chaque dépôt porte quatre critères calculés par `scripts/importer_veille.py` (jamais dans le navigateur) : licence
+permissive déclarée (MIT, Apache 2.0, BSD-2-Clause), maturité Très actif/Stable, usage « Brique à intégrer » ou « À
+installer et utiliser », projet concerné identifié. Les 43 dépôts qui satisfont les quatre sont marqués « présélectionnés ».
+Les AGPL, MPL, licences « À vérifier », Alpha/sans maturité et simples annuaires/références restent visibles mais hors
+présélection. Limite : tout repose sur les valeurs déclarées de la feuille, non vérifiées ; la présélection n'est ni un
+choix, ni une validation, ni une autorisation d'installer.

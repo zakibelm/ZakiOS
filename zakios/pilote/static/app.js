@@ -265,20 +265,25 @@ async function veille(root) {
     const q = $("#veille-q").value.toLowerCase(), f = (id) => $("#" + id).value;
     const list = all.filter((d) => (!q || (d.nom + " " + d.utilite.join(" ")).toLowerCase().includes(q)) &&
       (!f("veille-prio") || d.priorite === f("veille-prio")) && (!f("veille-cat") || d.categorie === f("veille-cat")) &&
-      (!f("veille-proj") || d.projets.includes(f("veille-proj"))) && (!f("veille-statut") || d.statut === f("veille-statut")));
+      (!f("veille-proj") || d.projets.includes(f("veille-proj"))) && (!f("veille-statut") || d.statut === f("veille-statut")) &&
+      (!f("veille-pre") || (f("veille-pre") === "oui") === d.preselection));
     count.textContent = list.length + " dépôt(s) affiché(s) sur " + v.total + ".";
     rows.replaceChildren(...list.map((d) => h("tr", {},
       h("td", {}, d.lien ? h("a", {href: d.lien, target: "_blank", rel: "noopener noreferrer"}, d.nom) : h("span", {}, d.nom + " (lien absent)")),
       h("td", {}, d.categorie), h("td", {}, d.usage), h("td", {}, d.priorite), h("td", {}, d.statut),
-      h("td", {}, d.licence_a_verifier ? "À vérifier" : d.licence), h("td", {}, d.projets.join("; ") || "—"))));
+      h("td", {}, d.licence_a_verifier ? "À vérifier" : d.licence), h("td", {}, d.projets.join("; ") || "—"),
+      h("td", {}, h("span", {class: "v " + (d.preselection ? "accepte" : "neutre"), "data-presel": d.preselection ? "oui" : "non"}, h("i", {"aria-hidden": "true"}, d.preselection ? "✓" : "–"), d.preselection ? "PRÉSÉLECTIONNÉ" : "NON PRÉSÉLECTIONNÉ"),
+        h("ul", {class: "list"}, ...[["licence_permissive", "licence permissive"], ["maintenu", "maintenu"], ["utilisable", "usage brique/outil"], ["besoin_identifie", "besoin identifié"]].map(([k, t]) => h("li", {}, (d.criteres[k] ? "✓ " : "✗ ") + t)))))));
   }
   root.append(...intro("Veille outils", "Outils open source candidats pour les prochains produits.", "Liste de propositions pour choisir : rien n’est installé, retenu ni validé."),
     h("p", {class: "note", id: "veille-avert"}, v.avertissement),
     h("div", {class: "grid c2"}, h("div", {}, h("label", {for: "veille-q"}, "Rechercher"), h("input", {id: "veille-q", type: "search", on: {input: draw}})),
       sel("veille-prio", "Priorité", ["Haute", "Moyenne", "Basse"]), sel("veille-cat", "Catégorie", uniq((d) => [d.categorie])),
-      sel("veille-proj", "Projet concerné", uniq((d) => d.projets)), sel("veille-statut", "Statut", ["À tester", "Évalué"])),
+      sel("veille-proj", "Projet concerné", uniq((d) => d.projets)), sel("veille-statut", "Statut", ["À tester", "Évalué"]),
+      h("div", {}, h("label", {for: "veille-pre"}, "Présélection"), h("select", {id: "veille-pre", on: {change: draw}}, h("option", {value: ""}, "Tous"), h("option", {value: "oui"}, "Présélectionnés"), h("option", {value: "non"}, "Non présélectionnés")))),
+    h("p", {class: "note", id: "veille-regle"}, "Règle de présélection (calculée côté serveur, sur valeurs déclarées non vérifiées) : " + v.regle_preselection + ". " + v.preselection + " dépôt(s) sur " + v.total + " la satisfont ; une présélection n’est ni un choix ni une validation."),
     count, h("div", {class: "scroll"}, h("table", {id: "veille-table"}, h("caption", {}, "Dépôts de veille"),
-      h("thead", {}, h("tr", {}, ...["Dépôt", "Catégorie", "Usage prévu", "Priorité", "Statut", "Licence", "Projets"].map((t) => h("th", {scope: "col"}, t)))), rows)));
+      h("thead", {}, h("tr", {}, ...["Dépôt", "Catégorie", "Usage prévu", "Priorité", "Statut", "Licence", "Projets", "Présélection"].map((t) => h("th", {scope: "col"}, t)))), rows)));
   draw();
 }
 function ouvrir(c) {

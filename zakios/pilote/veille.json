@@ -3,12 +3,20 @@
  "depots": [
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 7578,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/anthropics/claude-agent-sdk-python",
    "maturite": "Très actif",
    "nom": "anthropics/claude-agent-sdk-python",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -26,12 +34,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/anthropics/claude-cookbooks",
    "maturite": "Très actif",
    "nom": "anthropics/claude-cookbooks",
+   "preselection": false,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -47,12 +63,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 21800,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/anthropics/skills",
    "maturite": "Très actif",
    "nom": "anthropics/skills",
+   "preselection": false,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS"
@@ -65,12 +89,20 @@
   },
   {
    "categorie": "Agents / Computer-use",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/browser-use/browser-use",
    "maturite": "Très actif",
    "nom": "browser-use/browser-use",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -89,12 +121,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 20000,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/docling-project/docling",
    "maturite": "Très actif",
    "nom": "docling-project/docling",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS"
@@ -111,12 +151,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 16500,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/firecrawl/anydoc",
    "maturite": "Très actif",
    "nom": "firecrawl/anydoc",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "Z12",
@@ -134,12 +182,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/google-deepmind/gemma",
    "maturite": "Très actif",
    "nom": "google-deepmind/gemma",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -158,12 +214,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 104000,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/google-gemini/gemini-cli",
    "maturite": "Très actif",
    "nom": "google-gemini/gemini-cli",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS"
@@ -179,12 +243,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 21372,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/google/adk-python",
    "maturite": "Très actif",
    "nom": "google/adk-python",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -202,12 +274,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 36856,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/google/langextract",
    "maturite": "Très actif",
    "nom": "google/langextract",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "Z12",
@@ -223,12 +303,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/heygen-com/hyperframes",
    "maturite": "Très actif",
    "nom": "heygen-com/hyperframes",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "AstroMedia",
@@ -246,12 +334,20 @@
   },
   {
    "categorie": "Sécurité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 448,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/karanb192/claude-code-hooks",
    "maturite": "Très actif",
    "nom": "karanb192/claude-code-hooks",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -268,12 +364,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 4200,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/langflow-ai/openrag",
    "maturite": "Très actif",
    "nom": "langflow-ai/openrag",
+   "preselection": false,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -291,12 +395,20 @@
   },
   {
    "categorie": "Observabilité / qualité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 28900,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/langfuse/langfuse",
    "maturite": "Très actif",
    "nom": "langfuse/langfuse",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -313,12 +425,20 @@
   },
   {
    "categorie": "Agents / Mémoire et contexte",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 59900,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/mem0ai/mem0",
    "maturite": "Très actif",
    "nom": "mem0ai/mem0",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS"
@@ -333,12 +453,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 180000,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/microsoft/markitdown",
    "maturite": "Très actif",
    "nom": "microsoft/markitdown",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -356,12 +484,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 119000,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/openai/codex",
    "maturite": "Très actif",
    "nom": "openai/codex",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS"
@@ -376,12 +512,20 @@
   },
   {
    "categorie": "Agents / Conseil multi-modèles",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/openai/codex-plugin-cc",
    "maturite": "Très actif",
    "nom": "openai/codex-plugin-cc",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -397,12 +541,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 29500,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/openai/openai-agents-python",
    "maturite": "Très actif",
    "nom": "openai/openai-agents-python",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -420,12 +572,20 @@
   },
   {
    "categorie": "Voix / conversation",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 13400,
    "licence": "BSD-2-Clause",
    "licence_a_verifier": false,
    "lien": "https://github.com/pipecat-ai/pipecat",
    "maturite": "Très actif",
    "nom": "pipecat-ai/pipecat",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS"
@@ -443,12 +603,20 @@
   },
   {
    "categorie": "Agents / Mémoire et contexte",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 75000,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/safishamsi/graphify",
    "maturite": "Très actif",
    "nom": "safishamsi/graphify",
+   "preselection": true,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -467,12 +635,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 4100,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/TencentCloud/Octop",
    "maturite": "Très actif",
    "nom": "TencentCloud/Octop",
+   "preselection": false,
    "priorite": "Haute",
    "projets": [
     "ZAKI OS",
@@ -491,12 +667,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/a2aproject/A2A",
    "maturite": "Très actif",
    "nom": "a2aproject/A2A",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -509,12 +693,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 182000,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/affaan-m/ECC",
    "maturite": "Très actif",
    "nom": "affaan-m/ECC (Everything Claude Code)",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -530,12 +722,20 @@
   },
   {
    "categorie": "Agents / Conseil multi-modèles",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/amgadelgamal/claude-council",
    "maturite": null,
    "nom": "amgadelgamal/claude-council",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -551,12 +751,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 8500,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/anthropics/claude-code-action",
    "maturite": "Très actif",
    "nom": "anthropics/claude-code-action",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -572,12 +780,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 223,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/anthropics/claude-code-playground",
    "maturite": "Très actif",
    "nom": "anthropics/claude-code-playground",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -592,12 +808,20 @@
   },
   {
    "categorie": "Sécurité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/anthropics/claude-code-security-review",
    "maturite": "Très actif",
    "nom": "anthropics/claude-code-security-review",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -613,12 +837,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/anthropics/claude-plugins-official",
    "maturite": "Très actif",
    "nom": "anthropics/claude-plugins-official",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -631,12 +863,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 277000,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/awesome-selfhosted/awesome-selfhosted",
    "maturite": "Stable",
    "nom": "awesome-selfhosted/awesome-selfhosted",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -652,12 +892,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "AGPL v3",
    "licence_a_verifier": false,
    "lien": "https://github.com/calesthio/OpenMontage",
    "maturite": "Très actif",
    "nom": "calesthio/OpenMontage",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Scenora",
@@ -677,12 +925,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/cathrynlavery/diagram-design",
    "maturite": "Très actif",
    "nom": "cathrynlavery/diagram-design",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -699,12 +955,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 3500,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/code-yeongyu/lazycodex",
    "maturite": "Très actif",
    "nom": "code-yeongyu/lazycodex",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -719,12 +983,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 60000,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/code-yeongyu/oh-my-openagent",
    "maturite": "Très actif",
    "nom": "code-yeongyu/oh-my-openagent",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -739,12 +1011,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 19000,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/datalab-to/marker",
    "maturite": "Très actif",
    "nom": "datalab-to/marker",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -761,12 +1041,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 3300,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/disler/claude-code-hooks-mastery",
    "maturite": "Stable",
    "nom": "disler/claude-code-hooks-mastery",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -784,12 +1072,20 @@
   },
   {
    "categorie": "Agents / Mémoire et contexte",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 1534,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/eugeniughelbur/obsidian-second-brain",
    "maturite": "Très actif",
    "nom": "eugeniughelbur/obsidian-second-brain",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -804,12 +1100,20 @@
   },
   {
    "categorie": "Agents / Mémoire et contexte",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 28200,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/getzep/graphiti",
    "maturite": "Très actif",
    "nom": "getzep/graphiti",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -825,12 +1129,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/github/github-mcp-server",
    "maturite": "Très actif",
    "nom": "github/github-mcp-server",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -846,12 +1158,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 17384,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/google-gemini/cookbook",
    "maturite": "Très actif",
    "nom": "google-gemini/cookbook",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -867,12 +1187,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 1611,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/google-gemini/gemini-skills",
    "maturite": "Très actif",
    "nom": "google-gemini/gemini-skills",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -885,12 +1213,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 16000,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/googleapis/mcp-toolbox",
    "maturite": "Très actif",
    "nom": "googleapis/mcp-toolbox",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -904,12 +1240,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/googleapis/python-genai",
    "maturite": "Très actif",
    "nom": "googleapis/python-genai",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -924,12 +1268,20 @@
   },
   {
    "categorie": "Agents / Conseil multi-modèles",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/JeremyGracey-AI/llm-council-mcp",
    "maturite": null,
    "nom": "JeremyGracey-AI/llm-council-mcp",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -946,12 +1298,20 @@
   },
   {
    "categorie": "Sécurité",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 24000,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/jqssun/android-titanium-browser",
    "maturite": "Très actif",
    "nom": "jqssun/android-titanium-browser (Titanium Browser for Android)",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Aucun pour l'instant"
@@ -966,12 +1326,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 76369,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/karpathy/autoresearch",
    "maturite": "Très actif",
    "nom": "karpathy/autoresearch",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -986,12 +1354,20 @@
   },
   {
    "categorie": "Agents / Conseil multi-modèles",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/karpathy/llm-council",
    "maturite": null,
    "nom": "karpathy/llm-council",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1008,12 +1384,20 @@
   },
   {
    "categorie": "Voix / conversation",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 11400,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/livekit/agents",
    "maturite": "Très actif",
    "nom": "livekit/agents",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1030,12 +1414,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 2220,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/LottieFiles/motion-design-skill",
    "maturite": "Très actif",
    "nom": "LottieFiles/motion-design-skill",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "AstroMedia",
@@ -1051,12 +1443,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 59600,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/MadsLorentzen/ai-job-search",
    "maturite": "Très actif",
    "nom": "MadsLorentzen/ai-job-search",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Recruteur"
@@ -1074,12 +1474,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 4,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/Melvynx/video-agent-skills",
    "maturite": "Très actif",
    "nom": "Melvynx/video-agent-skills",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "AstroMedia",
@@ -1096,12 +1504,20 @@
   },
   {
    "categorie": "Observabilité / qualité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 9700,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/modem-dev/hunk",
    "maturite": "Très actif",
    "nom": "modem-dev/hunk",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1118,12 +1534,20 @@
   },
   {
    "categorie": "Sécurité",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 342000,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/morluto/rea",
    "maturite": "Très actif",
    "nom": "morluto/rea (REA — Reverse Engineer Anything)",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Aucun pour l'instant"
@@ -1138,12 +1562,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/msitarzewski/agency-agents",
    "maturite": "Très actif",
    "nom": "msitarzewski/agency-agents (The Agency)",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "AstroMedia",
@@ -1157,12 +1589,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": 212000,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/multica-ai/andrej-karpathy-skills",
    "maturite": null,
    "nom": "multica-ai/andrej-karpathy-skills",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1175,12 +1615,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/mutonby/openshorts",
    "maturite": "Très actif",
    "nom": "mutonby/openshorts",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "Scenora",
@@ -1197,12 +1645,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 14000,
    "licence": "MPL 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/ocrmypdf/OCRmyPDF",
    "maturite": "Stable",
    "nom": "ocrmypdf/OCRmyPDF",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -1221,12 +1677,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 94500,
    "licence": "AGPL v3",
    "licence_a_verifier": false,
    "lien": "https://github.com/odysseus-dev/odysseus",
    "maturite": "Très actif",
    "nom": "odysseus-dev/odysseus (Odysseus)",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "VPS Hostinger"
@@ -1244,12 +1708,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 700,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/open-free-llm-api/awesome-freellm-apis",
    "maturite": "Très actif",
    "nom": "open-free-llm-api/awesome-freellm-apis",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1264,12 +1736,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/openai/gpt-oss",
    "maturite": "Très actif",
    "nom": "openai/gpt-oss",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -1288,12 +1768,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 3800,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/openai/openai-agents-js",
    "maturite": "Très actif",
    "nom": "openai/openai-agents-js",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "Z12"
@@ -1306,12 +1794,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 92300,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/openai/openai-cookbook",
    "maturite": "Très actif",
    "nom": "openai/openai-cookbook",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -1327,12 +1823,20 @@
   },
   {
    "categorie": "Voix / conversation",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 6707,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/openai/openai-realtime-agents",
    "maturite": "Très actif",
    "nom": "openai/openai-realtime-agents",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Z12"
@@ -1345,12 +1849,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 16500,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/openai/skills",
    "maturite": "Très actif",
    "nom": "openai/skills",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1363,12 +1875,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 30000,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/opendatalab/MinerU",
    "maturite": "Très actif",
    "nom": "opendatalab/MinerU",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1385,12 +1905,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": null,
    "maturite": "Très actif",
    "nom": "OpenDataLoader PDF (Hancom)",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1407,12 +1935,20 @@
   },
   {
    "categorie": "Observabilité / qualité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": 599,
    "licence": "AGPL v3",
    "licence_a_verifier": false,
    "lien": "https://github.com/overmind-core/overmind",
    "maturite": "Alpha",
    "nom": "overmind-core/overmind",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -1430,12 +1966,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 101700,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/Panniantong/Agent-Reach",
    "maturite": "Très actif",
    "nom": "Panniantong/Agent-Reach",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Aucun pour l'instant"
@@ -1453,12 +1997,20 @@
   },
   {
    "categorie": "Voix / conversation",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 24300,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/resemble-ai/chatterbox",
    "maturite": "Très actif",
    "nom": "resemble-ai/chatterbox (Chatterbox TTS)",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "Z12",
@@ -1478,12 +2030,20 @@
   },
   {
    "categorie": "Agents / Mémoire et contexte",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 28000,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/rohitg00/agentmemory",
    "maturite": "Très actif",
    "nom": "rohitg00/agentmemory",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -1502,12 +2062,20 @@
   },
   {
    "categorie": "Observabilité / qualité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": 943,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/safety-research/petri",
    "maturite": null,
    "nom": "safety-research/petri",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Z12",
@@ -1525,12 +2093,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": 2900,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/shadcn-labs/pdfcn",
    "maturite": "Alpha",
    "nom": "shadcn-labs/pdfcn",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Z12"
@@ -1545,12 +2121,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 112000,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/tauri-apps/tauri",
    "maturite": "Stable",
    "nom": "tauri-apps/tauri (Tauri)",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Aucun pour l'instant"
@@ -1566,12 +2150,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 6200,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/TMElyralab/MuseTalk",
    "maturite": "Stable",
    "nom": "TMElyralab/MuseTalk",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "Crédit Expert",
@@ -1590,12 +2182,20 @@
   },
   {
    "categorie": "Agents / Computer-use",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 24100,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/trycua/cua",
    "maturite": "Très actif",
    "nom": "trycua/cua",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS",
@@ -1615,12 +2215,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 12500,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/Vincentwei1021/video-shotcraft",
    "maturite": "Très actif",
    "nom": "Vincentwei1021/video-shotcraft",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "AstroMedia",
@@ -1638,12 +2246,20 @@
   },
   {
    "categorie": "Agents / Mémoire et contexte",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 35000,
    "licence": "AGPL v3",
    "licence_a_verifier": false,
    "lien": "https://github.com/volcengine/OpenViking",
    "maturite": "Très actif",
    "nom": "volcengine/OpenViking",
+   "preselection": false,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1661,12 +2277,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 33900,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/wshobson/agents",
    "maturite": "Très actif",
    "nom": "wshobson/agents",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1681,12 +2305,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 5700,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/ZSeven-W/openpencil",
    "maturite": "Très actif",
    "nom": "ZSeven-W/openpencil (OpenPencil)",
+   "preselection": true,
    "priorite": "Moyenne",
    "projets": [
     "ZAKI OS"
@@ -1704,12 +2336,20 @@
   },
   {
    "categorie": "Sécurité",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 280,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/ADScanPro/adscan",
    "maturite": "Très actif",
    "nom": "ADScanPro/adscan",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -1726,12 +2366,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 288,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/affaan-m/claude-swarm",
    "maturite": "Alpha",
    "nom": "affaan-m/claude-swarm",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -1749,12 +2397,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/ai-boost/awesome-harness-engineering",
    "maturite": "Stable",
    "nom": "ai-boost/awesome-harness-engineering",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -1769,12 +2425,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 60100,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/All-Hands-AI/OpenHands",
    "maturite": "Très actif",
    "nom": "All-Hands-AI/OpenHands",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS",
@@ -1791,12 +2455,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 191,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/am-will/swarms",
    "maturite": "Alpha",
    "nom": "am-will/swarms",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -1811,12 +2483,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 52700,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/anomalyco/opencode",
    "maturite": "Très actif",
    "nom": "anomalyco/opencode",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -1832,12 +2512,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/bendlang/bend",
    "maturite": "Alpha",
    "nom": "bendlang/bend",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS",
@@ -1853,12 +2541,20 @@
   },
   {
    "categorie": "Agents / Code et langages",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 22400,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/block/goose",
    "maturite": "Très actif",
    "nom": "block/goose",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -1874,12 +2570,20 @@
   },
   {
    "categorie": "Observabilité / qualité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 179,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/chrisgreg/boop",
    "maturite": "Alpha",
    "nom": "chrisgreg/boop",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "n8n / automatisation",
@@ -1893,12 +2597,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 540,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/Dakkshin/after-effects-mcp",
    "maturite": "Stable",
    "nom": "Dakkshin/after-effects-mcp",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "AstroMedia"
@@ -1915,12 +2627,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": null,
    "maturite": null,
    "nom": "daVinci-MagiHuman",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Scenora",
@@ -1936,12 +2656,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/drumih/turbo-fieldfare",
    "maturite": "Alpha",
    "nom": "drumih/turbo-fieldfare",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -1959,12 +2687,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/duixcom/Duix-Avatar",
    "maturite": null,
    "nom": "duixcom/Duix-Avatar",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Crédit Expert",
@@ -1980,12 +2716,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 14,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/edenfunf/reelmimic",
    "maturite": "Alpha",
    "nom": "edenfunf/reelmimic (ReelMimic)",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "AstroMedia",
@@ -2004,12 +2748,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 2100,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/Edge0-AI/Edge0",
    "maturite": "Alpha",
    "nom": "Edge0-AI/Edge0 (Edge0)",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2026,12 +2778,20 @@
   },
   {
    "categorie": "Courriel / Productivité",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "AGPL v3",
    "licence_a_verifier": false,
    "lien": "https://github.com/flectar/mail",
    "maturite": "Alpha",
    "nom": "flectar/mail",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2049,12 +2809,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 97700,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/florinpop17/app-ideas",
    "maturite": null,
    "nom": "florinpop17/app-ideas",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2067,12 +2835,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 5800,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/home-assistant/frontend",
    "maturite": "Très actif",
    "nom": "home-assistant/frontend (Home Assistant Frontend)",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2087,12 +2863,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 44000,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/K-Dense-AI/scientific-agent-skills",
    "maturite": "Très actif",
    "nom": "K-Dense-AI/scientific-agent-skills",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2107,12 +2891,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 53400,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/karpathy/nanochat",
    "maturite": "Très actif",
    "nom": "karpathy/nanochat",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2127,12 +2919,20 @@
   },
   {
    "categorie": "Agents / Mémoire et contexte",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 23600,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/letta-ai/letta",
    "maturite": "Très actif",
    "nom": "letta-ai/letta",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2147,12 +2947,20 @@
   },
   {
    "categorie": "Observabilité / qualité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 129,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/Louis-CFM/coucou",
    "maturite": "Alpha",
    "nom": "Louis-CFM/coucou",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "n8n / automatisation"
@@ -2165,12 +2973,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 21000,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills",
    "maturite": "Très actif",
    "nom": "mukul975/Anthropic-Cybersecurity-Skills",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2185,12 +3001,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 1400,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/mw00/project-maya",
    "maturite": "Très actif",
    "nom": "mw00/project-maya (Project Maya)",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2205,12 +3029,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/netresearch/claude-code-marketplace",
    "maturite": "Stable",
    "nom": "netresearch/claude-code-marketplace",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS",
@@ -2226,12 +3058,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/nzbdav-dev/nzbdav",
    "maturite": "Alpha",
    "nom": "nzbdav-dev/nzbdav (NzbDav)",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2244,12 +3084,20 @@
   },
   {
    "categorie": "Observabilité / qualité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/openai/evals",
    "maturite": "Alpha",
    "nom": "openai/evals",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Z12"
@@ -2264,12 +3112,20 @@
   },
   {
    "categorie": "Agents / Plateforme",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 1356,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/philschmid/gemini-samples",
    "maturite": "Alpha",
    "nom": "philschmid/gemini-samples",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2284,12 +3140,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 7000,
    "licence": "AGPL v3",
    "licence_a_verifier": false,
    "lien": "https://github.com/plainhub/plain-app",
    "maturite": "Très actif",
    "nom": "plainhub/plain-app",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2306,12 +3170,20 @@
   },
   {
    "categorie": "RAG / PDF",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": null,
    "maturite": "Stable",
    "nom": "PyMuPDF4LLM",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2328,12 +3200,20 @@
   },
   {
    "categorie": "Courriel / Productivité",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": true
+   },
    "etoiles_declarees": 4500,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/reacherhq/check-if-email-exists",
    "maturite": "Stable",
    "nom": "reacherhq/check-if-email-exists",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2351,12 +3231,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 24947,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/remotion-dev/remotion",
    "maturite": "Très actif",
    "nom": "remotion-dev/remotion",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Scenora",
@@ -2374,12 +3262,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 2200,
    "licence": "Apache 2.0",
    "licence_a_verifier": false,
    "lien": "https://github.com/rohitg00/awesome-claude-code-toolkit",
    "maturite": "Stable",
    "nom": "rohitg00/awesome-claude-code-toolkit",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2394,12 +3290,20 @@
   },
   {
    "categorie": "Observabilité / qualité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/safety-research/bloom",
    "maturite": null,
    "nom": "safety-research/bloom",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Z12"
@@ -2416,12 +3320,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": 4900,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/safety-research/circuit-tracer",
    "maturite": null,
    "nom": "safety-research/circuit-tracer",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2436,12 +3348,20 @@
   },
   {
    "categorie": "Agents / Conseil multi-modèles",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/sherifkozman/the-llm-council",
    "maturite": null,
    "nom": "sherifkozman/the-llm-council",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2459,12 +3379,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 1700,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/stupside/castor",
    "maturite": "Très actif",
    "nom": "stupside/castor",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Scenora",
@@ -2482,12 +3410,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/Taichu-AI/ZDTaichu5.0-9B",
    "maturite": "Alpha",
    "nom": "Taichu-AI/ZDTaichu5.0-9B",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2502,12 +3438,20 @@
   },
   {
    "categorie": "Agents / Conseil multi-modèles",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": 130,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/team-attention/agent-council",
    "maturite": null,
    "nom": "team-attention/agent-council",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2522,12 +3466,20 @@
   },
   {
    "categorie": "Agents / Conseil multi-modèles",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/tenfoldmarc/llm-council-skill",
    "maturite": null,
    "nom": "tenfoldmarc/llm-council-skill",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2542,12 +3494,20 @@
   },
   {
    "categorie": "Agents / Conseil multi-modèles",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": true
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/tsenart/council-skill",
    "maturite": null,
    "nom": "tsenart/council-skill",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2562,12 +3522,20 @@
   },
   {
    "categorie": "Média / Vidéo",
+   "criteres": {
+    "besoin_identifie": false,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": false,
+    "utilisable": false
+   },
    "etoiles_declarees": null,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/Vincentwei1021/anything2explainer",
    "maturite": "Alpha",
    "nom": "Vincentwei1021/anything2explainer",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Aucun pour l'instant"
@@ -2582,12 +3550,20 @@
   },
   {
    "categorie": "Agents / Skills",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 23800,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/VoltAgent/awesome-claude-code-subagents",
    "maturite": "Très actif",
    "nom": "VoltAgent/awesome-claude-code-subagents",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2602,12 +3578,20 @@
   },
   {
    "categorie": "Sécurité",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": false,
+    "licence_permissive": true,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 18100,
    "licence": "MIT",
    "licence_a_verifier": false,
    "lien": "https://github.com/zhaoxuya520/reverse-skill",
    "maturite": "Très actif",
    "nom": "zhaoxuya520/reverse-skill",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "ZAKI OS"
@@ -2620,12 +3604,20 @@
   },
   {
    "categorie": "Autre",
+   "criteres": {
+    "besoin_identifie": true,
+    "licence_copyleft_ou_inconnue": true,
+    "licence_permissive": false,
+    "maintenu": true,
+    "utilisable": false
+   },
    "etoiles_declarees": 36600,
    "licence": "À vérifier",
    "licence_a_verifier": true,
    "lien": "https://github.com/frappe/erpnext",
    "maturite": "Stable",
    "nom": "frappe/erpnext (ERPNext)",
+   "preselection": false,
    "priorite": "Basse",
    "projets": [
     "Z12",
@@ -2642,6 +3634,8 @@
    ]
   }
  ],
+ "preselection": 43,
+ "regle_preselection": "licence permissive déclarée (MIT, Apache 2.0, BSD-2-Clause) ET maturité Très actif/Stable ET usage Brique à intégrer/À installer et utiliser ET projet concerné identifié",
  "source": "Feuille Google « Veille GitHub - Repos et valeur ajoutée », instantané du 2026-10-27 (docs/veille/feuille-2026-10-27.psv)",
  "total": 124
 }

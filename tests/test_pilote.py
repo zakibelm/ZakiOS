@@ -211,6 +211,14 @@ class Pilote(unittest.TestCase):
         self.assertIn("NON vérifiés", d["avertissement"])
         self.assertEqual({x["statut"] for x in d["depots"]}, {"À tester", "Évalué"})   # aucun statut inventé
         self.assertEqual(sum(1 for x in d["depots"] if x["priorite"] == "Haute"), 22)
+        pre = [x for x in d["depots"] if x["preselection"]]
+        self.assertEqual(d["preselection"], len(pre))
+        for x in pre:    # la règle est vérifiée indépendamment, sur les données brutes
+            self.assertIn(x["licence"], ("MIT", "Apache 2.0", "BSD-2-Clause"), x["nom"])
+            self.assertIn(x["maturite"], ("Très actif", "Stable"), x["nom"])
+            self.assertIn(x["usage"], ("Brique à intégrer", "À installer et utiliser"), x["nom"])
+            self.assertNotEqual(x["projets"], ["Aucun pour l'instant"], x["nom"])
+        self.assertFalse([x["nom"] for x in pre if "AGPL" in (x["licence"] or "") or x["licence_a_verifier"]])
         self.assertEqual([x["nom"] for x in d["depots"] if not x["lien"]], ["OpenDataLoader PDF (Hancom)", "daVinci-MagiHuman", "PyMuPDF4LLM"])
         self.assertTrue(all(x["licence_a_verifier"] for x in d["depots"] if x["licence"] in (None, "À vérifier")))
 
