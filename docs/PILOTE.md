@@ -115,3 +115,11 @@ choix, ni une validation, ni une autorisation d'installer.
 Limites : l'image Docker n'a toujours pas été construite ici (le VPS l'a fait avec ses propres corrections) ; la « règle git »
 mentionnée dans le rapport d'audit n'est pas décrite, donc non reportée ; sur le VPS il faut ajouter
 `ZAKIOS_PILOT_TRUSTED_PROXIES=172.16.0.1` (adresse vue par l'app derrière nginx) pour que la limite d'essais soit par visiteur.
+
+### Vérification en direct des présélectionnés
+
+`python3 scripts/verifier_veille.py` (à lancer là où internet est ouvert, par ex. le VPS) interroge l'API publique GitHub
+(anonyme, lecture seule, 43 requêtes < 60/h) et écrit `docs/veille/verification-AAAA-MM-JJ.json` : licence réelle, étoiles,
+dernier push, archivage, renommage, et les écarts avec la feuille. `veille.json` n'est pas modifié : c'est un constat
+séparé. Une licence « À vérifier » n'est jamais « conforme ». Testé hors ligne (données simulées) ; jamais exécuté contre GitHub
+depuis cet environnement, dont le réseau refuse api.github.com et github.com.
