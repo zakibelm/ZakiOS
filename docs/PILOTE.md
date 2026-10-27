@@ -123,3 +123,12 @@ mentionnée dans le rapport d'audit n'est pas décrite, donc non reportée ; sur
 dernier push, archivage, renommage, et les écarts avec la feuille. `veille.json` n'est pas modifié : c'est un constat
 séparé. Une licence « À vérifier » n'est jamais « conforme ». Testé hors ligne (données simulées) ; jamais exécuté contre GitHub
 depuis cet environnement, dont le réseau refuse api.github.com et github.com.
+
+#### Résultat de la vérification du 2026-10-27 (exécutée sur le VPS, `docs/veille/verification-2026-10-27.json`)
+
+42 dépôts vérifiés sur 43 (OpenDataLoader PDF : pas de lien) : 32 sans écart, 10 avec écarts. Aucun archivé, aucune licence copyleft
+parmi les 42. Écarts **bloquants à trancher** : `langfuse/langfuse` (GitHub ne reconnaît pas la licence : lire le fichier LICENSE) ;
+inactifs depuis plus de 90 jours : `openai/codex-plugin-cc` (2026-07-08), `LottieFiles/motion-design-skill` (2026-05-18),
+`resemble-ai/chatterbox` (2026-07-21). Écarts **informatifs** : étoiles de la feuille périmées (6 dépôts) ; licence différente mais
+toujours permissive (`docling` MIT et non Apache 2.0 ; `graphify` Apache-2.0 et non MIT, dépôt déplacé vers Graphify-Labs/graphify).
+Le fichier est identique octet pour octet à celui du VPS (sha256 `d2a42d67f451c2c7…`, après normalisation des fins de ligne).

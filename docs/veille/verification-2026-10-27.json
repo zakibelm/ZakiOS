@@ -1,0 +1,456 @@
+{
+ "date": "2026-10-27",
+ "source": "API publique GitHub, anonyme",
+ "verifies": 42,
+ "erreurs": [
+  {
+   "nom": "OpenDataLoader PDF (Hancom)",
+   "erreur": "pas de lien dans la feuille"
+  }
+ ],
+ "conformes": 32,
+ "resultats": [
+  {
+   "nom": "anthropics/claude-agent-sdk-python",
+   "repo": "anthropics/claude-agent-sdk-python",
+   "licence_github": "MIT",
+   "etoiles_github": 8362,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "browser-use/browser-use",
+   "repo": "browser-use/browser-use",
+   "licence_github": "MIT",
+   "etoiles_github": 119294,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "docling-project/docling",
+   "repo": "docling-project/docling",
+   "licence_github": "MIT",
+   "etoiles_github": 69679,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [
+    "licence déclarée Apache 2.0 ≠ GitHub MIT",
+    "étoiles déclarées 20000 vs réelles 69679"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "firecrawl/anydoc",
+   "repo": "firecrawl/anydoc",
+   "licence_github": "MIT",
+   "etoiles_github": 23153,
+   "dernier_push": "2026-10-23",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "google-deepmind/gemma",
+   "repo": "google-deepmind/gemma",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 5817,
+   "dernier_push": "2026-10-15",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "google-gemini/gemini-cli",
+   "repo": "google-gemini/gemini-cli",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 108570,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "google/adk-python",
+   "repo": "google/adk-python",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 22022,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "google/langextract",
+   "repo": "google/langextract",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 39054,
+   "dernier_push": "2026-10-17",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "heygen-com/hyperframes",
+   "repo": "heygen-com/hyperframes",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 73742,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "karanb192/claude-code-hooks",
+   "repo": "karanb192/claude-code-hooks",
+   "licence_github": "MIT",
+   "etoiles_github": 564,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "langfuse/langfuse",
+   "repo": "langfuse/langfuse",
+   "licence_github": "NOASSERTION",
+   "etoiles_github": 36609,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [
+    "licence non détectée par GitHub"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "mem0ai/mem0",
+   "repo": "mem0ai/mem0",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 67921,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "microsoft/markitdown",
+   "repo": "microsoft/markitdown",
+   "licence_github": "MIT",
+   "etoiles_github": 192524,
+   "dernier_push": "2026-10-23",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "openai/codex",
+   "repo": "openai/codex",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 131258,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "openai/codex-plugin-cc",
+   "repo": "openai/codex-plugin-cc",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 34636,
+   "dernier_push": "2026-07-08",
+   "archive": false,
+   "ecarts": [
+    "inactif : dernier push 2026-07-08"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "openai/openai-agents-python",
+   "repo": "openai/openai-agents-python",
+   "licence_github": "MIT",
+   "etoiles_github": 30334,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "pipecat-ai/pipecat",
+   "repo": "pipecat-ai/pipecat",
+   "licence_github": "BSD-2-Clause",
+   "etoiles_github": 16850,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "safishamsi/graphify",
+   "repo": "Graphify-Labs/graphify",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 136782,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [
+    "licence déclarée MIT ≠ GitHub Apache-2.0",
+    "renommé/déplacé : Graphify-Labs/graphify"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "affaan-m/ECC (Everything Claude Code)",
+   "repo": "affaan-m/ECC",
+   "licence_github": "MIT",
+   "etoiles_github": 290588,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "anthropics/claude-code-action",
+   "repo": "anthropics/claude-code-action",
+   "licence_github": "MIT",
+   "etoiles_github": 9661,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "cathrynlavery/diagram-design",
+   "repo": "cathrynlavery/diagram-design",
+   "licence_github": "MIT",
+   "etoiles_github": 61710,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "code-yeongyu/lazycodex",
+   "repo": "code-yeongyu/lazycodex",
+   "licence_github": "MIT",
+   "etoiles_github": 3834,
+   "dernier_push": "2026-10-25",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "datalab-to/marker",
+   "repo": "datalab-to/marker",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 40666,
+   "dernier_push": "2026-10-22",
+   "archive": false,
+   "ecarts": [
+    "étoiles déclarées 19000 vs réelles 40666"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "eugeniughelbur/obsidian-second-brain",
+   "repo": "eugeniughelbur/obsidian-second-brain",
+   "licence_github": "MIT",
+   "etoiles_github": 4976,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [
+    "étoiles déclarées 1534 vs réelles 4976"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "getzep/graphiti",
+   "repo": "getzep/graphiti",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 32277,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "github/github-mcp-server",
+   "repo": "github/github-mcp-server",
+   "licence_github": "MIT",
+   "etoiles_github": 34000,
+   "dernier_push": "2026-10-23",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "google-gemini/gemini-skills",
+   "repo": "google-gemini/gemini-skills",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 4348,
+   "dernier_push": "2026-10-13",
+   "archive": false,
+   "ecarts": [
+    "étoiles déclarées 1611 vs réelles 4348"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "googleapis/mcp-toolbox",
+   "repo": "googleapis/mcp-toolbox",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 16734,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "livekit/agents",
+   "repo": "livekit/agents",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 14963,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "LottieFiles/motion-design-skill",
+   "repo": "LottieFiles/motion-design-skill",
+   "licence_github": "MIT",
+   "etoiles_github": 2554,
+   "dernier_push": "2026-05-18",
+   "archive": false,
+   "ecarts": [
+    "inactif : dernier push 2026-05-18"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "Melvynx/video-agent-skills",
+   "repo": "Melvynx/video-agent-skills",
+   "licence_github": "MIT",
+   "etoiles_github": 60,
+   "dernier_push": "2026-10-22",
+   "archive": false,
+   "ecarts": [
+    "étoiles déclarées 4 vs réelles 60"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "modem-dev/hunk",
+   "repo": "modem-dev/hunk",
+   "licence_github": "MIT",
+   "etoiles_github": 9697,
+   "dernier_push": "2026-10-25",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "msitarzewski/agency-agents (The Agency)",
+   "repo": "msitarzewski/agency-agents",
+   "licence_github": "MIT",
+   "etoiles_github": 164459,
+   "dernier_push": "2026-10-25",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "mutonby/openshorts",
+   "repo": "mutonby/openshorts",
+   "licence_github": "MIT",
+   "etoiles_github": 7175,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "openai/gpt-oss",
+   "repo": "openai/gpt-oss",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 20495,
+   "dernier_push": "2026-10-12",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "openai/openai-agents-js",
+   "repo": "openai/openai-agents-js",
+   "licence_github": "MIT",
+   "etoiles_github": 3947,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "resemble-ai/chatterbox (Chatterbox TTS)",
+   "repo": "resemble-ai/chatterbox",
+   "licence_github": "MIT",
+   "etoiles_github": 27336,
+   "dernier_push": "2026-07-21",
+   "archive": false,
+   "ecarts": [
+    "inactif : dernier push 2026-07-21"
+   ],
+   "conforme": false
+  },
+  {
+   "nom": "rohitg00/agentmemory",
+   "repo": "rohitg00/agentmemory",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 29943,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "trycua/cua",
+   "repo": "trycua/cua",
+   "licence_github": "MIT",
+   "etoiles_github": 31093,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "Vincentwei1021/video-shotcraft",
+   "repo": "Vincentwei1021/video-shotcraft",
+   "licence_github": "Apache-2.0",
+   "etoiles_github": 14060,
+   "dernier_push": "2026-10-17",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "wshobson/agents",
+   "repo": "wshobson/agents",
+   "licence_github": "MIT",
+   "etoiles_github": 41872,
+   "dernier_push": "2026-10-26",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  },
+  {
+   "nom": "ZSeven-W/openpencil (OpenPencil)",
+   "repo": "ZSeven-W/openpencil",
+   "licence_github": "MIT",
+   "etoiles_github": 6721,
+   "dernier_push": "2026-10-27",
+   "archive": false,
+   "ecarts": [],
+   "conforme": true
+  }
+ ]
+}
