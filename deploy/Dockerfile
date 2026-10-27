@@ -11,6 +11,9 @@ ARG PINNED_COMMIT
 RUN mkdir -p /srv/sources/zakibelm \
  && git clone https://github.com/zakibelm/ZakiOS /srv/sources/zakibelm/ZakiOS \
  && git -C /srv/sources/zakibelm/ZakiOS checkout "$PINNED_COMMIT"
+# le clone appartient à root alors que le pilote tourne en utilisateur « pilote » : git refuserait sinon (« dubious ownership »).
+# Règle limitée à ce seul dépôt (pas de « * »).
+RUN git config --system --add safe.directory /srv/sources/zakibelm/ZakiOS
 RUN useradd -m pilote && mkdir -p /var/lib/zakios-pilote && chown pilote /var/lib/zakios-pilote
 USER pilote
 WORKDIR /app/ZakiOS

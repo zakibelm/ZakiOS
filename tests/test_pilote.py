@@ -269,6 +269,8 @@ class Pilote(unittest.TestCase):
         self.assertRegex(d, r"claude-code@\$\{CLAUDE_CODE_VERSION\}")
         self.assertRegex(d, r"ARG CLAUDE_CODE_VERSION=\d+\.\d+\.\d+")
         self.assertIn("python3-yaml", d)
+        self.assertIn("safe.directory /srv/sources/zakibelm/ZakiOS", d)
+        self.assertNotRegex(d, r"safe\.directory\s+['\"]?\*")      # jamais « * »
         with open(os.path.join(REPO, ".dockerignore")) as fh:
             ign = fh.read().split()
         for motif in (".git", "*.env", "**/pilote.env"):
