@@ -24,7 +24,8 @@ class Config:
     max_body_bytes: int = 16384
     session_ttl: int = 8 * 3600
     login_failures_max: int = 5        # par adresse et par fenêtre de 10 minutes
-    secure_cookie: bool = False        # True derrière HTTPS
+    secure_cookie: bool = False        # True derrière HTTPS (ajoute aussi l'en-tête HSTS)
+    trusted_proxies: tuple = ("127.0.0.1", "::1")   # seuls ces pairs peuvent fournir X-Real-IP (ZAKIOS_PILOT_TRUSTED_PROXIES, séparés par des virgules)
     extra: dict = field(default_factory=dict)
 
     @staticmethod
@@ -37,6 +38,9 @@ class Config:
                      model=env.get("ZAKIOS_PILOT_MODEL", "sonnet"),
                      claude_bin=env.get("ZAKIOS_CLAUDE_BIN", "claude"),
                      secure_cookie=env.get("ZAKIOS_PILOT_SECURE_COOKIE", "") == "1")
+        extra = tuple(x.strip() for x in env.get("ZAKIOS_PILOT_TRUSTED_PROXIES", "").split(",") if x.strip())
+        if extra:
+            cfg.trusted_proxies = cfg.trusted_proxies + extra
         for k, v in over.items():
             setattr(cfg, k, v)
         return cfg

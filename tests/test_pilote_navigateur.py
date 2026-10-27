@@ -197,6 +197,16 @@ class Navigateur(unittest.TestCase):
         pg.keyboard.press("Escape")
         self.assertEqual(pg.locator("dialog[open]").count(), 0)
 
+    def test_deconnexion_depuis_l_interface(self):
+        pg = self.page()
+        pg.goto(self.url)
+        pg.wait_for_selector("#main h1")
+        self.assertTrue(pg.is_visible("#logout"))
+        pg.click("#logout")
+        pg.wait_for_selector("#jeton")                       # retour à l'écran d'accès
+        self.assertFalse(pg.is_visible("#logout"))
+        self.assertEqual(pg.evaluate("fetch('/api/etat').then(r => r.status)"), 401)
+
     def test_veille_filtres_et_avertissement(self):
         pg = self.page()
         pg.goto(self.url + "#/veille")

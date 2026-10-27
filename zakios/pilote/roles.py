@@ -35,7 +35,9 @@ class ClaudeRoles(_Base):
 
     def _run(self, role, prompt):
         self.last_audit = {"demandes": {}, "interdits": []}
-        cmd = [self.claude_bin, "-p", "--model", self.model, "--output-format", "stream-json", "--verbose", "--agent", role, prompt]
+        cmd = [self.claude_bin, "-p", "--model", self.model, "--output-format", "stream-json", "--verbose",
+               "--allowedTools=Read,Glob,Grep", "--disallowedTools=Bash,Write,Edit,NotebookEdit,WebFetch,WebSearch",   # 2e verrou, en plus des outils du rôle ;
+               "--agent", role, prompt]                                                                               # forme « = » : l'option accepte une liste et avalerait le prompt
         proc = subprocess.run(cmd, cwd=self.cwd, stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=self.call_timeout)
         events = outils.parse_events(proc.stdout)
         tools = next((e.get("tools", []) for e in events if e.get("type") == "system" and e.get("subtype") == "init"), [])

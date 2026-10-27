@@ -54,6 +54,7 @@ async function route() {
   const s = await api("/api/sante");          // sonde non authentifiée : évite une erreur 401 dans la console avant connexion
   if (my !== ROUTE_ID) return;
   if (s.data) modeBadge({mode: s.data.mode});
+  $("#logout").hidden = !(s.data && s.data.connecte);
   if (!(s.data && s.data.connecte)) return connexion(main);
   const e = await api("/api/etat");
   if (!e.ok) return connexion(main);
@@ -290,6 +291,7 @@ function ouvrir(c) {
   $("#detail-title").textContent = c.nom; $("#detail-desc").textContent = c.description; $("#detail-hash").textContent = c.chemin + " · sha256 " + c.sha256; $("#detail-text").textContent = c.texte;
   $("#detail").showModal();
 }
+$("#logout").addEventListener("click", async () => { await post("/api/deconnexion", {}); route(); });
 $("#detail-close").addEventListener("click", () => $("#detail").close());
 window.addEventListener("hashchange", route);
 route();

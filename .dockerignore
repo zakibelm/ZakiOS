@@ -1,0 +1,7 @@
+.git
+*.env
+.env*
+**/pilote.env
+pilote-data/
+__pycache__/
+*.pyc

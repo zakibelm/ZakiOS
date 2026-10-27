@@ -201,6 +201,79 @@ class Pilote(unittest.TestCase):
         r = subprocess.run(["python3", "-B", os.path.join(REPO, "scripts", "generer_campagnes.py"), "--check"], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
+    # --- correctifs issus de l'audit (red team du 2026-10-27) ---------------------------------------------------------
+    def test_limite_d_essais_par_visiteur_derriere_un_proxy_de_confiance(self):
+        for _ in range(5):
+            self.assertEqual(self.req("POST", "/api/connexion", {"jeton": "x" * 20}, auth=False, headers={"X-Real-IP": "203.0.113.9"})[0], 401)
+        self.assertEqual(self.req("POST", "/api/connexion", {"jeton": "x" * 20}, auth=False, headers={"X-Real-IP": "203.0.113.9"})[0], 429)
+        # l'attaquant est bloqué, pas les autres visiteurs
+        self.assertEqual(self.req("POST", "/api/connexion", {"jeton": TOKEN}, auth=False, headers={"X-Real-IP": "198.51.100.7"})[0], 200)
+
+    def test_x_real_ip_ignoree_si_le_pair_n_est_pas_un_proxy_de_confiance(self):
+        self.cfg.trusted_proxies = ()          # le pair (127.0.0.1) n'est plus de confiance
+        for i in range(5):                      # l'attaquant change d'adresse déclarée à chaque essai : sans effet
+            self.assertEqual(self.req("POST", "/api/connexion", {"jeton": "x" * 20}, auth=False, headers={"X-Real-IP": "203.0.113.%d" % i})[0], 401)
+        self.assertEqual(self.req("POST", "/api/connexion", {"jeton": TOKEN}, auth=False, headers={"X-Real-IP": "198.51.100.7"})[0], 429)
+
+    def test_x_real_ip_invalide_retombe_sur_l_adresse_du_pair(self):
+        for _ in range(5):
+            self.req("POST", "/api/connexion", {"jeton": "x" * 20}, auth=False, headers={"X-Real-IP": "pas-une-ip"})
+        self.assertEqual(self.req("POST", "/api/connexion", {"jeton": TOKEN}, auth=False, headers={"X-Real-IP": "pas-une-ip"})[0], 429)
+
+    def test_deconnexion_invalide_la_session(self):
+        self.login()
+        self.assertEqual(self.req("GET", "/api/etat")[0], 200)
+        st, _, h = self.req("POST", "/api/deconnexion", {})
+        self.assertEqual(st, 200)
+        self.assertIn("Max-Age=0", h["Set-Cookie"])
+        self.assertEqual(self.req("GET", "/api/etat")[0], 401)      # l'ancien cookie ne vaut plus rien côté serveur
+        self.assertEqual(self.req("POST", "/api/deconnexion", {}, auth=False, headers={"X-Zakios-Pilote": "0"})[0], 403)
+
+    def test_head_repond_comme_get_sans_corps(self):
+        st, body, h = self.req("GET", "/", raw=True)
+        sth, bodyh, hh = self.req("HEAD", "/", raw=True)
+        self.assertEqual((st, sth), (200, 200))
+        self.assertEqual(bodyh, b"")
+        self.assertEqual(hh["Content-Length"], h["Content-Length"])
+        self.assertEqual(self.req("HEAD", "/api/etat", raw=True)[0], 401)
+        self.assertEqual(self.req("HEAD", "/api/sante", raw=True)[0], 200)
+
+    def test_hsts_seulement_en_mode_https(self):
+        self.assertNotIn("Strict-Transport-Security", self.req("GET", "/", raw=True)[2])
+        self.cfg.secure_cookie = True
+        self.assertIn("max-age=", self.req("GET", "/", raw=True)[2]["Strict-Transport-Security"])
+
+    def test_appel_reel_restreint_aux_outils_de_lecture(self):
+        """Le 2e verrou est bien transmis à `claude`, en forme « = » (l'option est variadique et avalerait le prompt)."""
+        from zakios.pilote.roles import ClaudeRoles
+        fake = os.path.join(self.tmp, "faux-claude")
+        with open(fake, "w") as fh:
+            fh.write("#!/usr/bin/env python3\nimport sys,json\nopen(%r,'w').write(json.dumps(sys.argv[1:]))\n"
+                     "print(json.dumps({'type':'system','subtype':'init','tools':['Read','Glob','Grep']}))\n"
+                     "print(json.dumps({'type':'result','is_error':False,'result':'ok'}))\n" % os.path.join(self.tmp, "argv.json"))
+        os.chmod(fake, 0o755)
+        roles = ClaudeRoles(self.tmp, "sonnet", claude_bin=fake)
+        self.assertEqual(roles._run("plan-writer", "LE PROMPT"), "ok")
+        with open(os.path.join(self.tmp, "argv.json")) as fh:
+            argv = json.load(fh)
+        self.assertIn("--allowedTools=Read,Glob,Grep", argv)
+        interdits = next(a for a in argv if a.startswith("--disallowedTools=")).split("=", 1)[1].split(",")
+        for t in ("Bash", "Write", "Edit", "WebFetch"):
+            self.assertIn(t, interdits)
+        self.assertEqual(argv[-1], "LE PROMPT")
+        self.assertEqual(argv[argv.index("--agent") + 1], "plan-writer")
+
+    def test_dockerfile_fixe_la_version_et_l_image_n_embarque_pas_de_secret(self):
+        with open(os.path.join(REPO, "deploy", "Dockerfile"), encoding="utf-8") as fh:
+            d = fh.read()
+        self.assertRegex(d, r"claude-code@\$\{CLAUDE_CODE_VERSION\}")
+        self.assertRegex(d, r"ARG CLAUDE_CODE_VERSION=\d+\.\d+\.\d+")
+        self.assertIn("python3-yaml", d)
+        with open(os.path.join(REPO, ".dockerignore")) as fh:
+            ign = fh.read().split()
+        for motif in (".git", "*.env", "**/pilote.env"):
+            self.assertIn(motif, ign)
+
     def test_veille_outils_importee_sans_rien_valider(self):
         self.assertEqual(self.req("GET", "/api/veille", auth=False)[0], 401)
         self.login()

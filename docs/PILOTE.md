@@ -100,3 +100,18 @@ installer et utiliser », projet concerné identifié. Les 43 dépôts qui satis
 Les AGPL, MPL, licences « À vérifier », Alpha/sans maturité et simples annuaires/références restent visibles mais hors
 présélection. Limite : tout repose sur les valeurs déclarées de la feuille, non vérifiées ; la présélection n'est ni un
 choix, ni une validation, ni une autorisation d'installer.
+
+## Correctifs issus de l'audit du 2026-10-27 (red team du déploiement zakios.xtream.space)
+
+| Constat | Correctif dans le code | Test |
+|---|---|---|
+| Derrière nginx, tous les visiteurs ont la même adresse : 5 faux jetons bloquaient tout le monde | `X-Real-IP` n'est crue que si le pair est un proxy de confiance (`ZAKIOS_PILOT_TRUSTED_PROXIES`, boucle locale par défaut) ; sinon ignorée (anti-falsification) | 3 tests (+ mutation détectée) |
+| Seule la config des agents limitait Claude à la lecture | `claude -p` reçoit aussi `--allowedTools=Read,Glob,Grep` et `--disallowedTools=Bash,Write,Edit,NotebookEdit,WebFetch,WebSearch` (forme « = » : option variadique qui avalerait le prompt) ; vérifié avec la vraie CLI 2.1.311 : Bash/Write/Edit absents de la liste d'outils | test d'arguments + mutation détectée |
+| Pas de déconnexion, session de 8 h | `POST /api/deconnexion` (session invalidée côté serveur) + bouton « Se déconnecter » | API + navigateur |
+| `HEAD` répondait 501 | `do_HEAD` : mêmes en-têtes que GET, sans corps | 1 test |
+| HSTS | en-tête ajouté par l'app quand `ZAKIOS_PILOT_SECURE_COOKIE=1` (nginx l'ajoute déjà) | 1 test |
+| Dockerfile : dernière version de Claude Code, PyYAML absent | version fixée (`CLAUDE_CODE_VERSION=2.1.311`), `python3-yaml`, `.dockerignore` (exclut `.git`, `*.env`, `pilote.env`) | 1 test |
+
+Limites : l'image Docker n'a toujours pas été construite ici (le VPS l'a fait avec ses propres corrections) ; la « règle git »
+mentionnée dans le rapport d'audit n'est pas décrite, donc non reportée ; sur le VPS il faut ajouter
+`ZAKIOS_PILOT_TRUSTED_PROXIES=172.16.0.1` (adresse vue par l'app derrière nginx) pour que la limite d'essais soit par visiteur.

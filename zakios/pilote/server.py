@@ -4,6 +4,7 @@ Sécurité : jeton d'accès obligatoire (cookie de session HttpOnly/SameSite=Str
 essais de connexion, en-tête `X-Zakios-Pilote` exigé sur les POST (anti-CSRF), CSP stricte sans script en ligne, corps
 de requête borné, aucune clé ni variable d'environnement renvoyée au navigateur."""
 import hmac
+import ipaddress
 import json
 import os
 import re
@@ -47,6 +48,10 @@ class Pilot:
     def session_ok(self, sid):
         with self.lock:
             return bool(sid) and self.sessions.get(sid, 0) > time.time()
+
+    def drop_session(self, sid):
+        with self.lock:
+            self.sessions.pop(sid, None)
 
     def too_many_failures(self, ip):
         with self.lock:
@@ -99,9 +104,22 @@ def make_handler(pilot):
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Referrer-Policy", "no-referrer")
             self.send_header("Content-Security-Policy", CSP)
+            if cfg.secure_cookie:
+                self.send_header("Strict-Transport-Security", "max-age=31536000")
             for k, v in extra:
                 self.send_header(k, v)
             self.end_headers()
+
+        def _client_ip(self):
+            """Adresse réelle du visiteur : X-Real-IP n'est crue que si la requête vient d'un proxy de confiance, sinon un
+            attaquant pourrait la falsifier pour contourner (ou faire subir à autrui) la limite d'essais."""
+            peer = self.client_address[0]
+            if peer in cfg.trusted_proxies:
+                try:
+                    return str(ipaddress.ip_address((self.headers.get("X-Real-IP") or "").strip()))
+                except ValueError:
+                    pass
+            return peer
 
         def _json(self, code, obj, extra=()):
             body = json.dumps(obj, ensure_ascii=False).encode("utf-8")
@@ -193,9 +211,28 @@ def make_handler(pilot):
             self._headers(200, TYPES[name], len(data))
             self.wfile.write(data)
 
+        def do_HEAD(self):
+            """Mêmes en-têtes que GET (dont Content-Length), sans corps : sondes de disponibilité."""
+            class _SansCorps:
+                def __init__(self, w):
+                    self.w, self.n = w, 0
+
+                def write(self, data):
+                    self.n += 1
+                    return self.w.write(data) if self.n == 1 else len(data)     # 1re écriture = en-têtes ; le reste = corps, ignoré
+
+                def flush(self):
+                    self.w.flush()
+            vrai = self.wfile
+            self.wfile = _SansCorps(vrai)
+            try:
+                self.do_GET()
+            finally:
+                self.wfile = vrai
+
         def do_POST(self):
             path = urlparse(self.path).path
-            ip = self.client_address[0]
+            ip = self._client_ip()
             try:
                 if not self._csrf_ok():
                     return self._err(403, "requête refusée (en-tête de protection absent)")
@@ -209,6 +246,9 @@ def make_handler(pilot):
                     sid = pilot.new_session()
                     flags = "HttpOnly; SameSite=Strict; Path=/; Max-Age=%d%s" % (cfg.session_ttl, "; Secure" if cfg.secure_cookie else "")
                     return self._json(200, {"ok": True}, [("Set-Cookie", "zakios_pilote=%s; %s" % (sid, flags))])
+                if path == "/api/deconnexion":
+                    pilot.drop_session(self._cookie())
+                    return self._json(200, {"ok": True}, [("Set-Cookie", "zakios_pilote=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0%s" % ("; Secure" if cfg.secure_cookie else ""))])
                 if not self._authed():
                     return self._err(401, "accès non autorisé")
                 if path == "/api/missions":
