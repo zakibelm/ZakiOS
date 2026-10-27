@@ -157,6 +157,9 @@ def make_handler(pilot):
                 if path == "/api/campagnes":
                     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "campagnes.json"), encoding="utf-8") as fh:
                         return self._json(200, json.load(fh))
+                if path == "/api/veille":
+                    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "veille.json"), encoding="utf-8") as fh:
+                        return self._json(200, json.load(fh))
                 if path == "/api/bibliotheque":
                     return self._json(200, {"composants": bibliotheque()})
                 m = re.fullmatch(r"/api/missions/%s" % MID, path)

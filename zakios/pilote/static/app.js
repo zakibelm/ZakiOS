@@ -39,10 +39,10 @@ const vbadge = (v) => { const [i, t] = VERDICT[v] || ["–", "SANS REVUE"]; retu
 const ibadge = (k) => { const [i, t] = ISSUE[k]; return h("span", {class: "v " + k, "data-issue": k}, h("i", {"aria-hidden": "true"}, i), t); };
 
 // ---- routage ---------------------------------------------------------------------------------------------------------
-const CRUMB = {dashboard: "Vue d’ensemble", mission: "Atelier de mission", preuves: "Preuves par campagne", bibliotheque: "Bibliothèque"};
+const CRUMB = {dashboard: "Vue d’ensemble", mission: "Atelier de mission", preuves: "Preuves par campagne", bibliotheque: "Bibliothèque", veille: "Veille outils"};
 function parse() {
   const p = location.hash.replace(/^#\/?/, "").split("/");
-  return {page: ["mission", "preuves", "bibliotheque"].includes(p[0]) ? p[0] : "dashboard", id: p[1] || ""};
+  return {page: ["mission", "preuves", "bibliotheque", "veille"].includes(p[0]) ? p[0] : "dashboard", id: p[1] || ""};
 }
 async function route() {
   clearTimeout(timer); const my = ++ROUTE_ID;
@@ -64,6 +64,7 @@ async function route() {
   if (page === "dashboard") await dashboard(root, e.data);
   else if (page === "mission") await mission(root, e.data, id, my);
   else if (page === "preuves") await preuves(root);
+  else if (page === "veille") await veille(root);
   else await bibliotheque(root);
   if (my !== ROUTE_ID) return;
   anim(root);
@@ -252,6 +253,33 @@ async function bibliotheque(root) {
   root.append(...intro("Bibliothèque", "Les rôles et le socle du moteur.", "Lecture seule : contenu exact des fichiers du dépôt utilisés par les missions."),
     h("label", {for: "recherche"}, "Rechercher"), h("input", {id: "recherche", type: "search", on: {input: (e) => draw(e.target.value)}}), h("div", {}, grid));
   draw("");
+}
+// ---- veille outils ---------------------------------------------------------------------------------------------------
+async function veille(root) {
+  const r = await api("/api/veille"); const v = r.data; const all = v.depots;
+  const uniq = (f) => [...new Set(all.flatMap(f))].sort((a, b) => a.localeCompare(b, "fr"));
+  const sel = (id, label, opts) => h("div", {}, h("label", {for: id}, label), h("select", {id, on: {change: draw}}, h("option", {value: ""}, "Tous"), ...opts.map((o) => h("option", {value: o}, o))));
+  const count = h("p", {class: "note", id: "veille-compte", role: "status"});
+  const rows = h("tbody", {id: "veille-lignes"});
+  function draw() {
+    const q = $("#veille-q").value.toLowerCase(), f = (id) => $("#" + id).value;
+    const list = all.filter((d) => (!q || (d.nom + " " + d.utilite.join(" ")).toLowerCase().includes(q)) &&
+      (!f("veille-prio") || d.priorite === f("veille-prio")) && (!f("veille-cat") || d.categorie === f("veille-cat")) &&
+      (!f("veille-proj") || d.projets.includes(f("veille-proj"))) && (!f("veille-statut") || d.statut === f("veille-statut")));
+    count.textContent = list.length + " dépôt(s) affiché(s) sur " + v.total + ".";
+    rows.replaceChildren(...list.map((d) => h("tr", {},
+      h("td", {}, d.lien ? h("a", {href: d.lien, target: "_blank", rel: "noopener noreferrer"}, d.nom) : h("span", {}, d.nom + " (lien absent)")),
+      h("td", {}, d.categorie), h("td", {}, d.usage), h("td", {}, d.priorite), h("td", {}, d.statut),
+      h("td", {}, d.licence_a_verifier ? "À vérifier" : d.licence), h("td", {}, d.projets.join("; ") || "—"))));
+  }
+  root.append(...intro("Veille outils", "Outils open source candidats pour les prochains produits.", "Liste de propositions pour choisir : rien n’est installé, retenu ni validé."),
+    h("p", {class: "note", id: "veille-avert"}, v.avertissement),
+    h("div", {class: "grid c2"}, h("div", {}, h("label", {for: "veille-q"}, "Rechercher"), h("input", {id: "veille-q", type: "search", on: {input: draw}})),
+      sel("veille-prio", "Priorité", ["Haute", "Moyenne", "Basse"]), sel("veille-cat", "Catégorie", uniq((d) => [d.categorie])),
+      sel("veille-proj", "Projet concerné", uniq((d) => d.projets)), sel("veille-statut", "Statut", ["À tester", "Évalué"])),
+    count, h("div", {class: "scroll"}, h("table", {id: "veille-table"}, h("caption", {}, "Dépôts de veille"),
+      h("thead", {}, h("tr", {}, ...["Dépôt", "Catégorie", "Usage prévu", "Priorité", "Statut", "Licence", "Projets"].map((t) => h("th", {scope: "col"}, t)))), rows)));
+  draw();
 }
 function ouvrir(c) {
   $("#detail-title").textContent = c.nom; $("#detail-desc").textContent = c.description; $("#detail-hash").textContent = c.chemin + " · sha256 " + c.sha256; $("#detail-text").textContent = c.texte;

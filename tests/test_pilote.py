@@ -201,6 +201,23 @@ class Pilote(unittest.TestCase):
         r = subprocess.run(["python3", "-B", os.path.join(REPO, "scripts", "generer_campagnes.py"), "--check"], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
+    def test_veille_outils_importee_sans_rien_valider(self):
+        self.assertEqual(self.req("GET", "/api/veille", auth=False)[0], 401)
+        self.login()
+        st, d, _ = self.req("GET", "/api/veille")
+        self.assertEqual(st, 200)
+        self.assertEqual(d["total"], 124)
+        self.assertEqual(len(d["depots"]), 124)
+        self.assertIn("NON vérifiés", d["avertissement"])
+        self.assertEqual({x["statut"] for x in d["depots"]}, {"À tester", "Évalué"})   # aucun statut inventé
+        self.assertEqual(sum(1 for x in d["depots"] if x["priorite"] == "Haute"), 22)
+        self.assertEqual([x["nom"] for x in d["depots"] if not x["lien"]], ["OpenDataLoader PDF (Hancom)", "daVinci-MagiHuman", "PyMuPDF4LLM"])
+        self.assertTrue(all(x["licence_a_verifier"] for x in d["depots"] if x["licence"] in (None, "À vérifier")))
+
+    def test_veille_json_a_jour_avec_la_source(self):
+        r = subprocess.run(["python3", "-B", os.path.join(REPO, "scripts", "importer_veille.py"), "--check"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
     def test_bibliotheque_et_liste_des_missions(self):
         self.login()
         st, d, _ = self.req("GET", "/api/bibliotheque")

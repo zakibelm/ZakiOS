@@ -79,3 +79,15 @@ débordement horizontal à 390/820/1440 px sur l'accueil, la mission et les preu
 et corrigé : le message de refus d'écrasement était effacé par le rafraîchissement de la mission.
 Limites : contrastes calculés sur les couples texte/fond du DOM (pas d'audit lecteur d'écran réel) ; thème clair seulement ;
 `reel-1` (ancienne interface) est conservé tel quel.
+
+## Veille outils (liste de candidats open source)
+
+La page `#/veille` (API `GET /api/veille`) affiche les 124 dépôts GitHub de la feuille « Veille GitHub - Repos et valeur
+ajoutée » (instantané du 2026-10-27 : `docs/veille/feuille-2026-10-27.psv`, converti par `scripts/importer_veille.py`
+en `zakios/pilote/veille.json`, `--check` testé). C'est une **liste de propositions pour choisir** les outils des
+prochaines générations de produits.
+
+Limites : les licences, étoiles et maturités sont ceux de la feuille, **non vérifiés** (38 dépôts ont une licence « À
+vérifier » ou vide ; plusieurs sont AGPL, à examiner avant tout usage) ; 3 entrées n'ont pas de lien ; les statuts
+(« À tester » / « Évalué ») sont reproduits sans être inventés ; rien n'est installé, retenu ni validé, et le catalogue
+du moteur (`catalog/`, `decisions/`) n'est pas touché. Pour mettre à jour : remplacer le .psv puis relancer le script.

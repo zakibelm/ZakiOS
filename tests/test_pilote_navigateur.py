@@ -197,11 +197,28 @@ class Navigateur(unittest.TestCase):
         pg.keyboard.press("Escape")
         self.assertEqual(pg.locator("dialog[open]").count(), 0)
 
+    def test_veille_filtres_et_avertissement(self):
+        pg = self.page()
+        pg.goto(self.url + "#/veille")
+        pg.wait_for_selector("#veille-lignes tr")
+        self.assertEqual(pg.locator("#veille-lignes tr").count(), 124)
+        self.assertIn("rien n", pg.inner_text("#veille-avert").lower())
+        pg.select_option("#veille-prio", "Haute")
+        self.assertEqual(pg.locator("#veille-lignes tr").count(), 22)
+        pg.select_option("#veille-statut", "Évalué")
+        self.assertEqual(pg.locator("#veille-lignes tr").count(), 0)
+        pg.select_option("#veille-statut", "")
+        pg.select_option("#veille-prio", "")
+        pg.fill("#veille-q", "langfuse")
+        self.assertEqual(pg.locator("#veille-lignes tr").count(), 1)
+        self.assertEqual(pg.locator("#veille-lignes a[rel~=noopener]").count(), 1)
+        self.assertEqual(self.erreurs, [])
+
     # --- écrans, clavier, mouvement, contrastes ------------------------------------------------------------------------
     def test_trois_largeurs_sans_debordement_ni_erreur(self):
         for largeur, hauteur in ((390, 844), (820, 1100), (1440, 900)):
             pg = self.page(largeur, hauteur)
-            for route in ("", "mission", "preuves", "bibliotheque"):
+            for route in ("", "mission", "preuves", "bibliotheque", "veille"):
                 pg.goto(self.url + "#/" + route)
                 pg.wait_for_selector("#main h1")
                 self.assertLessEqual(pg.evaluate("document.documentElement.scrollWidth"), largeur, "%dpx #/%s" % (largeur, route))

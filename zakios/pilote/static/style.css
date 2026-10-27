@@ -74,3 +74,4 @@ dialog{max-width:min(860px,94vw);width:100%;border:1px solid var(--line);border-
 @media (max-width:560px){.grid.c4,.grid.c2{grid-template-columns:1fr}.brand-text small{display:none}.banner{flex-direction:column}table{display:block;overflow-x:auto}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media print{.sidebar,.skip{display:none}.main-shell{margin:0;width:100%}}
+.scroll{overflow-x:auto}

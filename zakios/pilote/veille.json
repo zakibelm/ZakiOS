@@ -1,0 +1,2647 @@
+{
+ "avertissement": "Liste de veille déclarative : licences, étoiles et maturité NON vérifiés ; rien n'est installé ni validé ; « À vérifier » ne vaut pas autorisation.",
+ "depots": [
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 7578,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/anthropics/claude-agent-sdk-python",
+   "maturite": "Très actif",
+   "nom": "anthropics/claude-agent-sdk-python",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "n8n / automatisation"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/anthropics/claude-cookbooks",
+   "maturite": "Très actif",
+   "nom": "anthropics/claude-cookbooks",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "Scenora"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 21800,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/anthropics/skills",
+   "maturite": "Très actif",
+   "nom": "anthropics/skills",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Computer-use",
+   "etoiles_declarees": null,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/browser-use/browser-use",
+   "maturite": "Très actif",
+   "nom": "browser-use/browser-use",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "n8n / automatisation",
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": 20000,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/docling-project/docling",
+   "maturite": "Très actif",
+   "nom": "docling-project/docling",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Documents / RAG"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": 16500,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/firecrawl/anydoc",
+   "maturite": "Très actif",
+   "nom": "firecrawl/anydoc",
+   "priorite": "Haute",
+   "projets": [
+    "Z12",
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/google-deepmind/gemma",
+   "maturite": "Très actif",
+   "nom": "google-deepmind/gemma",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Réduction des coûts",
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": 104000,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/google-gemini/gemini-cli",
+   "maturite": "Très actif",
+   "nom": "google-gemini/gemini-cli",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Réduction des coûts",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 21372,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/google/adk-python",
+   "maturite": "Très actif",
+   "nom": "google/adk-python",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "n8n / automatisation"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": 36856,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/google/langextract",
+   "maturite": "Très actif",
+   "nom": "google/langextract",
+   "priorite": "Haute",
+   "projets": [
+    "Z12",
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": []
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/heygen-com/hyperframes",
+   "maturite": "Très actif",
+   "nom": "heygen-com/hyperframes",
+   "priorite": "Haute",
+   "projets": [
+    "AstroMedia",
+    "Scenora",
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Vidéo / média",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Sécurité",
+   "etoiles_declarees": 448,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/karanb192/claude-code-hooks",
+   "maturite": "Très actif",
+   "nom": "karanb192/claude-code-hooks",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Sécurité / conformité",
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": 4200,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/langflow-ai/openrag",
+   "maturite": "Très actif",
+   "nom": "langflow-ai/openrag",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Documents / RAG"
+   ]
+  },
+  {
+   "categorie": "Observabilité / qualité",
+   "etoiles_declarees": 28900,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/langfuse/langfuse",
+   "maturite": "Très actif",
+   "nom": "langfuse/langfuse",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Qualité / fiabilité",
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Agents / Mémoire et contexte",
+   "etoiles_declarees": 59900,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/mem0ai/mem0",
+   "maturite": "Très actif",
+   "nom": "mem0ai/mem0",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Mémoire et contexte"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": 180000,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/microsoft/markitdown",
+   "maturite": "Très actif",
+   "nom": "microsoft/markitdown",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "n8n / automatisation"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Documents / RAG"
+   ]
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": 119000,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/openai/codex",
+   "maturite": "Très actif",
+   "nom": "openai/codex",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Conseil multi-modèles",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/openai/codex-plugin-cc",
+   "maturite": "Très actif",
+   "nom": "openai/codex-plugin-cc",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 29500,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/openai/openai-agents-python",
+   "maturite": "Très actif",
+   "nom": "openai/openai-agents-python",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "n8n / automatisation"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Voix / conversation",
+   "etoiles_declarees": 13400,
+   "licence": "BSD-2-Clause",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/pipecat-ai/pipecat",
+   "maturite": "Très actif",
+   "nom": "pipecat-ai/pipecat",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Voix / conversation",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Mémoire et contexte",
+   "etoiles_declarees": 75000,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/safishamsi/graphify",
+   "maturite": "Très actif",
+   "nom": "safishamsi/graphify",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "Z12"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Réduction des coûts",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 4100,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/TencentCloud/Octop",
+   "maturite": "Très actif",
+   "nom": "TencentCloud/Octop",
+   "priorite": "Haute",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Automatisation",
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/a2aproject/A2A",
+   "maturite": "Très actif",
+   "nom": "a2aproject/A2A",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 182000,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/affaan-m/ECC",
+   "maturite": "Très actif",
+   "nom": "affaan-m/ECC (Everything Claude Code)",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Automatisation",
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Conseil multi-modèles",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/amgadelgamal/claude-council",
+   "maturite": null,
+   "nom": "amgadelgamal/claude-council",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Qualité / fiabilité",
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": 8500,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/anthropics/claude-code-action",
+   "maturite": "Très actif",
+   "nom": "anthropics/claude-code-action",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 223,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/anthropics/claude-code-playground",
+   "maturite": "Très actif",
+   "nom": "anthropics/claude-code-playground",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Sécurité",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/anthropics/claude-code-security-review",
+   "maturite": "Très actif",
+   "nom": "anthropics/claude-code-security-review",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/anthropics/claude-plugins-official",
+   "maturite": "Très actif",
+   "nom": "anthropics/claude-plugins-official",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 277000,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/awesome-selfhosted/awesome-selfhosted",
+   "maturite": "Stable",
+   "nom": "awesome-selfhosted/awesome-selfhosted",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": null,
+   "licence": "AGPL v3",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/calesthio/OpenMontage",
+   "maturite": "Très actif",
+   "nom": "calesthio/OpenMontage",
+   "priorite": "Moyenne",
+   "projets": [
+    "Scenora",
+    "Crédit Expert",
+    "AstroMedia"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Vidéo / média",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": null,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/cathrynlavery/diagram-design",
+   "maturite": "Très actif",
+   "nom": "cathrynlavery/diagram-design",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "AstroMedia"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Design / communication",
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": 3500,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/code-yeongyu/lazycodex",
+   "maturite": "Très actif",
+   "nom": "code-yeongyu/lazycodex",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 60000,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/code-yeongyu/oh-my-openagent",
+   "maturite": "Très actif",
+   "nom": "code-yeongyu/oh-my-openagent",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": 19000,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/datalab-to/marker",
+   "maturite": "Très actif",
+   "nom": "datalab-to/marker",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Documents / RAG"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 3300,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/disler/claude-code-hooks-mastery",
+   "maturite": "Stable",
+   "nom": "disler/claude-code-hooks-mastery",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Automatisation",
+    "Qualité / fiabilité"
+   ]
+  },
+  {
+   "categorie": "Agents / Mémoire et contexte",
+   "etoiles_declarees": 1534,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/eugeniughelbur/obsidian-second-brain",
+   "maturite": "Très actif",
+   "nom": "eugeniughelbur/obsidian-second-brain",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Mémoire et contexte"
+   ]
+  },
+  {
+   "categorie": "Agents / Mémoire et contexte",
+   "etoiles_declarees": 28200,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/getzep/graphiti",
+   "maturite": "Très actif",
+   "nom": "getzep/graphiti",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Mémoire et contexte"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": null,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/github/github-mcp-server",
+   "maturite": "Très actif",
+   "nom": "github/github-mcp-server",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Automatisation",
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 17384,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/google-gemini/cookbook",
+   "maturite": "Très actif",
+   "nom": "google-gemini/cookbook",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "Scenora"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 1611,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/google-gemini/gemini-skills",
+   "maturite": "Très actif",
+   "nom": "google-gemini/gemini-skills",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Brique à intégrer",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 16000,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/googleapis/mcp-toolbox",
+   "maturite": "Très actif",
+   "nom": "googleapis/mcp-toolbox",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/googleapis/python-genai",
+   "maturite": "Très actif",
+   "nom": "googleapis/python-genai",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Conseil multi-modèles",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/JeremyGracey-AI/llm-council-mcp",
+   "maturite": null,
+   "nom": "JeremyGracey-AI/llm-council-mcp",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Qualité / fiabilité"
+   ]
+  },
+  {
+   "categorie": "Sécurité",
+   "etoiles_declarees": 24000,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/jqssun/android-titanium-browser",
+   "maturite": "Très actif",
+   "nom": "jqssun/android-titanium-browser (Titanium Browser for Android)",
+   "priorite": "Moyenne",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 76369,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/karpathy/autoresearch",
+   "maturite": "Très actif",
+   "nom": "karpathy/autoresearch",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Conseil multi-modèles",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/karpathy/llm-council",
+   "maturite": null,
+   "nom": "karpathy/llm-council",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Qualité / fiabilité"
+   ]
+  },
+  {
+   "categorie": "Voix / conversation",
+   "etoiles_declarees": 11400,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/livekit/agents",
+   "maturite": "Très actif",
+   "nom": "livekit/agents",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Voix / conversation"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 2220,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/LottieFiles/motion-design-skill",
+   "maturite": "Très actif",
+   "nom": "LottieFiles/motion-design-skill",
+   "priorite": "Moyenne",
+   "projets": [
+    "AstroMedia",
+    "Scenora"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 59600,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/MadsLorentzen/ai-job-search",
+   "maturite": "Très actif",
+   "nom": "MadsLorentzen/ai-job-search",
+   "priorite": "Moyenne",
+   "projets": [
+    "Recruteur"
+   ],
+   "stack": [
+    "TypeScript"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Emploi / carrière",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": 4,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/Melvynx/video-agent-skills",
+   "maturite": "Très actif",
+   "nom": "Melvynx/video-agent-skills",
+   "priorite": "Moyenne",
+   "projets": [
+    "AstroMedia",
+    "Scenora"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Vidéo / média",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Observabilité / qualité",
+   "etoiles_declarees": 9700,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/modem-dev/hunk",
+   "maturite": "Très actif",
+   "nom": "modem-dev/hunk",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "TypeScript"
+   ],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Sécurité",
+   "etoiles_declarees": 342000,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/morluto/rea",
+   "maturite": "Très actif",
+   "nom": "morluto/rea (REA — Reverse Engineer Anything)",
+   "priorite": "Moyenne",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [],
+   "statut": "Évalué",
+   "type": "Outil en ligne de commande",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": null,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/msitarzewski/agency-agents",
+   "maturite": "Très actif",
+   "nom": "msitarzewski/agency-agents (The Agency)",
+   "priorite": "Moyenne",
+   "projets": [
+    "AstroMedia",
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Brique à intégrer",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 212000,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/multica-ai/andrej-karpathy-skills",
+   "maturite": null,
+   "nom": "multica-ai/andrej-karpathy-skills",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": []
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": null,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/mutonby/openshorts",
+   "maturite": "Très actif",
+   "nom": "mutonby/openshorts",
+   "priorite": "Moyenne",
+   "projets": [
+    "Scenora",
+    "AstroMedia"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Vidéo / média",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": 14000,
+   "licence": "MPL 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/ocrmypdf/OCRmyPDF",
+   "maturite": "Stable",
+   "nom": "ocrmypdf/OCRmyPDF",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "n8n / automatisation",
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Documents / RAG"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 94500,
+   "licence": "AGPL v3",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/odysseus-dev/odysseus",
+   "maturite": "Très actif",
+   "nom": "odysseus-dev/odysseus (Odysseus)",
+   "priorite": "Moyenne",
+   "projets": [
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "Évalué",
+   "type": "Application",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Productivité",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 700,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/open-free-llm-api/awesome-freellm-apis",
+   "maturite": "Très actif",
+   "nom": "open-free-llm-api/awesome-freellm-apis",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/openai/gpt-oss",
+   "maturite": "Très actif",
+   "nom": "openai/gpt-oss",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Réduction des coûts",
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 3800,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/openai/openai-agents-js",
+   "maturite": "Très actif",
+   "nom": "openai/openai-agents-js",
+   "priorite": "Moyenne",
+   "projets": [
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 92300,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/openai/openai-cookbook",
+   "maturite": "Très actif",
+   "nom": "openai/openai-cookbook",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "Scenora"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Voix / conversation",
+   "etoiles_declarees": 6707,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/openai/openai-realtime-agents",
+   "maturite": "Très actif",
+   "nom": "openai/openai-realtime-agents",
+   "priorite": "Moyenne",
+   "projets": [
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 16500,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/openai/skills",
+   "maturite": "Très actif",
+   "nom": "openai/skills",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": 30000,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/opendatalab/MinerU",
+   "maturite": "Très actif",
+   "nom": "opendatalab/MinerU",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Documents / RAG"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": null,
+   "maturite": "Très actif",
+   "nom": "OpenDataLoader PDF (Hancom)",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Documents / RAG"
+   ]
+  },
+  {
+   "categorie": "Observabilité / qualité",
+   "etoiles_declarees": 599,
+   "licence": "AGPL v3",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/overmind-core/overmind",
+   "maturite": "Alpha",
+   "nom": "overmind-core/overmind",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "Z12"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 101700,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/Panniantong/Agent-Reach",
+   "maturite": "Très actif",
+   "nom": "Panniantong/Agent-Reach",
+   "priorite": "Moyenne",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Automatisation",
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Voix / conversation",
+   "etoiles_declarees": 24300,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/resemble-ai/chatterbox",
+   "maturite": "Très actif",
+   "nom": "resemble-ai/chatterbox (Chatterbox TTS)",
+   "priorite": "Moyenne",
+   "projets": [
+    "Z12",
+    "Crédit Expert",
+    "Scenora"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Voix / conversation",
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Agents / Mémoire et contexte",
+   "etoiles_declarees": 28000,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/rohitg00/agentmemory",
+   "maturite": "Très actif",
+   "nom": "rohitg00/agentmemory",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "TypeScript"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Mémoire et contexte",
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Observabilité / qualité",
+   "etoiles_declarees": 943,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/safety-research/petri",
+   "maturite": null,
+   "nom": "safety-research/petri",
+   "priorite": "Moyenne",
+   "projets": [
+    "Z12",
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 2900,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/shadcn-labs/pdfcn",
+   "maturite": "Alpha",
+   "nom": "shadcn-labs/pdfcn",
+   "priorite": "Moyenne",
+   "projets": [
+    "Z12"
+   ],
+   "stack": [
+    "TypeScript"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": 112000,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/tauri-apps/tauri",
+   "maturite": "Stable",
+   "nom": "tauri-apps/tauri (Tauri)",
+   "priorite": "Moyenne",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Rust",
+    "TypeScript"
+   ],
+   "statut": "Évalué",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": []
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": 6200,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/TMElyralab/MuseTalk",
+   "maturite": "Stable",
+   "nom": "TMElyralab/MuseTalk",
+   "priorite": "Moyenne",
+   "projets": [
+    "Crédit Expert",
+    "Scenora",
+    "AstroMedia"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Agents / Computer-use",
+   "etoiles_declarees": 24100,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/trycua/cua",
+   "maturite": "Très actif",
+   "nom": "trycua/cua",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS",
+    "n8n / automatisation",
+    "VPS Hostinger"
+   ],
+   "stack": [
+    "Python",
+    "Swift"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": 12500,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/Vincentwei1021/video-shotcraft",
+   "maturite": "Très actif",
+   "nom": "Vincentwei1021/video-shotcraft",
+   "priorite": "Moyenne",
+   "projets": [
+    "AstroMedia",
+    "Scenora"
+   ],
+   "stack": [
+    "TypeScript"
+   ],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Agents / Mémoire et contexte",
+   "etoiles_declarees": 35000,
+   "licence": "AGPL v3",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/volcengine/OpenViking",
+   "maturite": "Très actif",
+   "nom": "volcengine/OpenViking",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python",
+    "Rust"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Mémoire et contexte"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 33900,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/wshobson/agents",
+   "maturite": "Très actif",
+   "nom": "wshobson/agents",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 5700,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/ZSeven-W/openpencil",
+   "maturite": "Très actif",
+   "nom": "ZSeven-W/openpencil (OpenPencil)",
+   "priorite": "Moyenne",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Rust",
+    "TypeScript"
+   ],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Sécurité",
+   "etoiles_declarees": 280,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/ADScanPro/adscan",
+   "maturite": "Très actif",
+   "nom": "ADScanPro/adscan",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 288,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/affaan-m/claude-swarm",
+   "maturite": "Alpha",
+   "nom": "affaan-m/claude-swarm",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Automatisation",
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/ai-boost/awesome-harness-engineering",
+   "maturite": "Stable",
+   "nom": "ai-boost/awesome-harness-engineering",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": 60100,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/All-Hands-AI/OpenHands",
+   "maturite": "Très actif",
+   "nom": "All-Hands-AI/OpenHands",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Productivité",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 191,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/am-will/swarms",
+   "maturite": "Alpha",
+   "nom": "am-will/swarms",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": 52700,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/anomalyco/opencode",
+   "maturite": "Très actif",
+   "nom": "anomalyco/opencode",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Productivité",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/bendlang/bend",
+   "maturite": "Alpha",
+   "nom": "bendlang/bend",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS",
+    "Z12"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Qualité / fiabilité"
+   ]
+  },
+  {
+   "categorie": "Agents / Code et langages",
+   "etoiles_declarees": 22400,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/block/goose",
+   "maturite": "Très actif",
+   "nom": "block/goose",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Productivité",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Observabilité / qualité",
+   "etoiles_declarees": 179,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/chrisgreg/boop",
+   "maturite": "Alpha",
+   "nom": "chrisgreg/boop",
+   "priorite": "Basse",
+   "projets": [
+    "n8n / automatisation",
+    "VPS Hostinger"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": 540,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/Dakkshin/after-effects-mcp",
+   "maturite": "Stable",
+   "nom": "Dakkshin/after-effects-mcp",
+   "priorite": "Basse",
+   "projets": [
+    "AstroMedia"
+   ],
+   "stack": [
+    "TypeScript"
+   ],
+   "statut": "Évalué",
+   "type": "Outil en ligne de commande",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": null,
+   "maturite": null,
+   "nom": "daVinci-MagiHuman",
+   "priorite": "Basse",
+   "projets": [
+    "Scenora",
+    "Crédit Expert"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": null,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/drumih/turbo-fieldfare",
+   "maturite": "Alpha",
+   "nom": "drumih/turbo-fieldfare",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Swift"
+   ],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Réduction des coûts",
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/duixcom/Duix-Avatar",
+   "maturite": null,
+   "nom": "duixcom/Duix-Avatar",
+   "priorite": "Basse",
+   "projets": [
+    "Crédit Expert",
+    "AstroMedia"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": 14,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/edenfunf/reelmimic",
+   "maturite": "Alpha",
+   "nom": "edenfunf/reelmimic (ReelMimic)",
+   "priorite": "Basse",
+   "projets": [
+    "AstroMedia",
+    "Scenora"
+   ],
+   "stack": [
+    "TypeScript",
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 2100,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/Edge0-AI/Edge0",
+   "maturite": "Alpha",
+   "nom": "Edge0-AI/Edge0 (Edge0)",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Courriel / Productivité",
+   "etoiles_declarees": null,
+   "licence": "AGPL v3",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/flectar/mail",
+   "maturite": "Alpha",
+   "nom": "flectar/mail",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Rust"
+   ],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Productivité",
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 97700,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/florinpop17/app-ideas",
+   "maturite": null,
+   "nom": "florinpop17/app-ideas",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 5800,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/home-assistant/frontend",
+   "maturite": "Très actif",
+   "nom": "home-assistant/frontend (Home Assistant Frontend)",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "TypeScript"
+   ],
+   "statut": "Évalué",
+   "type": "Application",
+   "usage": "Référence d'architecture",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 44000,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/K-Dense-AI/scientific-agent-skills",
+   "maturite": "Très actif",
+   "nom": "K-Dense-AI/scientific-agent-skills",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Recherche scientifique"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 53400,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/karpathy/nanochat",
+   "maturite": "Très actif",
+   "nom": "karpathy/nanochat",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Mémoire et contexte",
+   "etoiles_declarees": 23600,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/letta-ai/letta",
+   "maturite": "Très actif",
+   "nom": "letta-ai/letta",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Mémoire et contexte"
+   ]
+  },
+  {
+   "categorie": "Observabilité / qualité",
+   "etoiles_declarees": 129,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/Louis-CFM/coucou",
+   "maturite": "Alpha",
+   "nom": "Louis-CFM/coucou",
+   "priorite": "Basse",
+   "projets": [
+    "n8n / automatisation"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 21000,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills",
+   "maturite": "Très actif",
+   "nom": "mukul975/Anthropic-Cybersecurity-Skills",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 1400,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/mw00/project-maya",
+   "maturite": "Très actif",
+   "nom": "mw00/project-maya (Project Maya)",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [],
+   "statut": "Évalué",
+   "type": "Plateforme / cadre",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/netresearch/claude-code-marketplace",
+   "maturite": "Stable",
+   "nom": "netresearch/claude-code-marketplace",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS",
+    "VPS Hostinger"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": null,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/nzbdav-dev/nzbdav",
+   "maturite": "Alpha",
+   "nom": "nzbdav-dev/nzbdav (NzbDav)",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [],
+   "statut": "Évalué",
+   "type": "Application",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Observabilité / qualité",
+   "etoiles_declarees": null,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/openai/evals",
+   "maturite": "Alpha",
+   "nom": "openai/evals",
+   "priorite": "Basse",
+   "projets": [
+    "Z12"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Plateforme",
+   "etoiles_declarees": 1356,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/philschmid/gemini-samples",
+   "maturite": "Alpha",
+   "nom": "philschmid/gemini-samples",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 7000,
+   "licence": "AGPL v3",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/plainhub/plain-app",
+   "maturite": "Très actif",
+   "nom": "plainhub/plain-app",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Kotlin"
+   ],
+   "statut": "À tester",
+   "type": "Application",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "RAG / PDF",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": null,
+   "maturite": "Stable",
+   "nom": "PyMuPDF4LLM",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Documents / RAG"
+   ]
+  },
+  {
+   "categorie": "Courriel / Productivité",
+   "etoiles_declarees": 4500,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/reacherhq/check-if-email-exists",
+   "maturite": "Stable",
+   "nom": "reacherhq/check-if-email-exists",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Rust"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Automatisation",
+    "Réduction des coûts"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": 24947,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/remotion-dev/remotion",
+   "maturite": "Très actif",
+   "nom": "remotion-dev/remotion",
+   "priorite": "Basse",
+   "projets": [
+    "Scenora",
+    "AstroMedia"
+   ],
+   "stack": [
+    "TypeScript"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 2200,
+   "licence": "Apache 2.0",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/rohitg00/awesome-claude-code-toolkit",
+   "maturite": "Stable",
+   "nom": "rohitg00/awesome-claude-code-toolkit",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Annuaire / liste",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Observabilité / qualité",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/safety-research/bloom",
+   "maturite": null,
+   "nom": "safety-research/bloom",
+   "priorite": "Basse",
+   "projets": [
+    "Z12"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Plateforme / cadre",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Sécurité / conformité"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 4900,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/safety-research/circuit-tracer",
+   "maturite": null,
+   "nom": "safety-research/circuit-tracer",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Conseil multi-modèles",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/sherifkozman/the-llm-council",
+   "maturite": null,
+   "nom": "sherifkozman/the-llm-council",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Brique à intégrer",
+   "utilite": [
+    "Qualité / fiabilité",
+    "Automatisation"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": 1700,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/stupside/castor",
+   "maturite": "Très actif",
+   "nom": "stupside/castor",
+   "priorite": "Basse",
+   "projets": [
+    "Scenora",
+    "Crédit Expert"
+   ],
+   "stack": [
+    "Go"
+   ],
+   "statut": "À tester",
+   "type": "Outil en ligne de commande",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/Taichu-AI/ZDTaichu5.0-9B",
+   "maturite": "Alpha",
+   "nom": "Taichu-AI/ZDTaichu5.0-9B",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "À tester",
+   "type": "Bibliothèque / SDK",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Agents / Conseil multi-modèles",
+   "etoiles_declarees": 130,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/team-attention/agent-council",
+   "maturite": null,
+   "nom": "team-attention/agent-council",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Qualité / fiabilité"
+   ]
+  },
+  {
+   "categorie": "Agents / Conseil multi-modèles",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/tenfoldmarc/llm-council-skill",
+   "maturite": null,
+   "nom": "tenfoldmarc/llm-council-skill",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Qualité / fiabilité"
+   ]
+  },
+  {
+   "categorie": "Agents / Conseil multi-modèles",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/tsenart/council-skill",
+   "maturite": null,
+   "nom": "tsenart/council-skill",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "À installer et utiliser",
+   "utilite": [
+    "Qualité / fiabilité"
+   ]
+  },
+  {
+   "categorie": "Média / Vidéo",
+   "etoiles_declarees": null,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/Vincentwei1021/anything2explainer",
+   "maturite": "Alpha",
+   "nom": "Vincentwei1021/anything2explainer",
+   "priorite": "Basse",
+   "projets": [
+    "Aucun pour l'instant"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Vidéo / média"
+   ]
+  },
+  {
+   "categorie": "Agents / Skills",
+   "etoiles_declarees": 23800,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/VoltAgent/awesome-claude-code-subagents",
+   "maturite": "Très actif",
+   "nom": "VoltAgent/awesome-claude-code-subagents",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Veille / annuaire",
+   "utilite": [
+    "Productivité"
+   ]
+  },
+  {
+   "categorie": "Sécurité",
+   "etoiles_declarees": 18100,
+   "licence": "MIT",
+   "licence_a_verifier": false,
+   "lien": "https://github.com/zhaoxuya520/reverse-skill",
+   "maturite": "Très actif",
+   "nom": "zhaoxuya520/reverse-skill",
+   "priorite": "Basse",
+   "projets": [
+    "ZAKI OS"
+   ],
+   "stack": [],
+   "statut": "À tester",
+   "type": "Skill / plugiciel d'agent",
+   "usage": "Veille / annuaire",
+   "utilite": []
+  },
+  {
+   "categorie": "Autre",
+   "etoiles_declarees": 36600,
+   "licence": "À vérifier",
+   "licence_a_verifier": true,
+   "lien": "https://github.com/frappe/erpnext",
+   "maturite": "Stable",
+   "nom": "frappe/erpnext (ERPNext)",
+   "priorite": "Basse",
+   "projets": [
+    "Z12",
+    "ZAKI OS"
+   ],
+   "stack": [
+    "Python"
+   ],
+   "statut": "Évalué",
+   "type": "Application",
+   "usage": "Référence d'architecture",
+   "utilite": [
+    "Productivité"
+   ]
+  }
+ ],
+ "source": "Feuille Google « Veille GitHub - Repos et valeur ajoutée », instantané du 2026-10-27 (docs/veille/feuille-2026-10-27.psv)",
+ "total": 124
+}
