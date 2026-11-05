@@ -28,4 +28,4 @@ Catalogue de composants Claude Code (agents, skills, commandes, hooks, mods) san
 - Validation humaine des lots de variantes avant toute installation réelle.
 
 ## Pour aller plus loin
-`docs/FEUILLE-DE-ROUTE.md` (étapes restantes), `docs/ACTIVATION.md` (installation par projet), `docs/CIBLE.md` (architecture visée), `docs/PROFIL.md` (profil de travail).
+`docs/FEUILLE-DE-ROUTE.md` (étapes restantes), `docs/ACTIVATION.md` (installation par projet), `docs/CIBLE.md` (architecture visée), `docs/PROFIL.md` (profil de travail), `docs/PRATIQUES.md` (où mettre quoi, échecs fréquents, sécurité), `docs/GRILLE-AUDIT-HOOKS.md` (audit des hooks).

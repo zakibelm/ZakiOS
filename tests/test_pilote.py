@@ -305,7 +305,7 @@ class Pilote(unittest.TestCase):
         self.login()
         st, d, _ = self.req("GET", "/api/bibliotheque")
         self.assertEqual(st, 200)
-        self.assertEqual(sorted(c["nom"] for c in d["composants"]), ["REGLES.md", "code-reviewer", "plan-reviewer", "plan-writer"])
+        self.assertEqual(sorted(c["nom"] for c in d["composants"]), ["REGLES.md", "code-reviewer", "plan-reviewer", "plan-writer", "security-reviewer"])
         with open(os.path.join(REPO, "variantes", "agents", "plan-reviewer.md"), "rb") as fh:
             attendu = sha(fh.read())
         self.assertEqual(next(c for c in d["composants"] if c["nom"] == "plan-reviewer")["sha256"], attendu)
