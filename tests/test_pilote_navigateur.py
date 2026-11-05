@@ -197,6 +197,36 @@ class Navigateur(unittest.TestCase):
         pg.keyboard.press("Escape")
         self.assertEqual(pg.locator("dialog[open]").count(), 0)
 
+    def test_store_filtres_statuts_et_lecture_du_modele(self):
+        pg = self.page()
+        pg.goto(self.url + "#/store")
+        pg.wait_for_selector("#store-grille article")
+        total = pg.locator("#store-grille article").count()
+        self.assertGreaterEqual(total, 25)
+        self.assertIn("rien n'est installé", pg.inner_text("#store-avert"))
+        self.assertIn("%d exemple(s) affiché(s) sur %d" % (total, total), pg.inner_text("#store-compte"))
+        pg.select_option("#store-statut", "modele")
+        n = pg.locator("#store-grille article").count()
+        self.assertGreater(n, 0)
+        self.assertEqual(pg.locator("#store-grille article:not([data-statut=modele])").count(), 0)
+        self.assertEqual(pg.locator("#store-grille button").count(), n)            # chaque modèle se lit
+        pg.select_option("#store-statut", "idee")
+        self.assertEqual(pg.locator("#store-grille button").count(), 0)            # une idée n'a pas de fichier
+        pg.select_option("#store-statut", "")
+        pg.fill("#store-q", "arrêt avec plafond")
+        for _ in range(50):                                                        # CSP : pas de wait_for_function
+            if pg.locator("#store-grille article").count() == 1:
+                break
+            pg.wait_for_timeout(100)
+        self.assertEqual(pg.locator("#store-grille article").count(), 1)
+        pg.click("#store-grille button")
+        pg.wait_for_selector("dialog[open]")
+        self.assertIn("PLAFOND", pg.inner_text("#detail-text").upper())
+        self.assertIn("sha256", pg.inner_text("#detail-hash"))
+        pg.keyboard.press("Escape")
+        self.assertEqual(pg.locator("dialog[open]").count(), 0)
+        self.assertEqual(self.erreurs, [])
+
     def test_deconnexion_depuis_l_interface(self):
         pg = self.page()
         pg.goto(self.url)
@@ -234,7 +264,7 @@ class Navigateur(unittest.TestCase):
     def test_trois_largeurs_sans_debordement_ni_erreur(self):
         for largeur, hauteur in ((390, 844), (820, 1100), (1440, 900)):
             pg = self.page(largeur, hauteur)
-            for route in ("", "mission", "preuves", "bibliotheque", "veille"):
+            for route in ("", "mission", "preuves", "bibliotheque", "store", "veille"):
                 pg.goto(self.url + "#/" + route)
                 pg.wait_for_selector("#main h1")
                 self.assertLessEqual(pg.evaluate("document.documentElement.scrollWidth"), largeur, "%dpx #/%s" % (largeur, route))

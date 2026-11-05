@@ -27,6 +27,7 @@ Ordre fixé par l'audit du commit a29d2df (`docs/AUDIT-a29d2df.md`). Chaque éta
 | 15 | Émettre une marketplace privée (`marketplace.json`) des seuls composants validés | installation par `/plugin` avec contrôle de qui publie ; **non fait**, dépend des décisions validées |
 | 16 | Corpus d'essais d'injection dans le harnais de comportement (fuite par mise en forme, jeu de rôle, consigne dans un résultat d'outil) | preuve que les variantes résistent, avec canari ; **non fait** |
 | 17 | Essai du pilote en mode non interactif (sortie JSON) en intégration continue | parcours reproductible sans humain ; **non fait** |
+| 18 | Store d'exemples : page `#/store`, `bibliotheque/` (10 modèles originaux, 28 exemples classés), tests de comportement des hooks | les meilleurs exemples des quatre lectures consultables dans le pilote ; **brouillons non validés, hooks à auditer par comportement avant usage** |
 | 12 | Lot 2 : variantes `verify-ui` et `commit` (brouillons, revue humaine requise), `CLAUDE.md` du dépôt et garde-fous de permissions (`.claude/settings.json`) | l'agent respecte les règles du dépôt dès la première session et ne peut plus éditer `catalog/` ni les décisions par erreur ; **objectif à vérifier par un essai de comportement, non acquis** |
 
 ## Périmètre V1

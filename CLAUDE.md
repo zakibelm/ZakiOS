@@ -3,7 +3,7 @@
 Catalogue de composants Claude Code (agents, skills, commandes, hooks, mods) sans redondance, avec provenance vérifiable. Statut : catalogue exploratoire en lecture seule, avec validation humaine. Lis `README.md` pour l'état chiffré et `docs/METHODOLOGIE.md` pour la méthode REA.
 
 ## Commandes
-- Tests (270) : `python3 -m unittest discover -s tests -t .`
+- Tests (310) : `python3 -m unittest discover -s tests -t .`
 - Revalider le catalogue : `python3 -m zakios verify`
 - Régénérer : `python3 -m zakios build` (exige `sources/<owner>/<repo>` cloné aux commits de `sources.json`)
 - Dépendance unique : PyYAML (`pip install -r requirements.txt`). Plateforme : Linux seulement.
@@ -28,4 +28,4 @@ Catalogue de composants Claude Code (agents, skills, commandes, hooks, mods) san
 - Validation humaine des lots de variantes avant toute installation réelle.
 
 ## Pour aller plus loin
-`docs/FEUILLE-DE-ROUTE.md` (étapes restantes), `docs/ACTIVATION.md` (installation par projet), `docs/CIBLE.md` (architecture visée), `docs/PROFIL.md` (profil de travail), `docs/PRATIQUES.md` (où mettre quoi, échecs fréquents, sécurité), `docs/GRILLE-AUDIT-HOOKS.md` (audit des hooks).
+`docs/FEUILLE-DE-ROUTE.md` (étapes restantes), `docs/ACTIVATION.md` (installation par projet), `docs/CIBLE.md` (architecture visée), `docs/PROFIL.md` (profil de travail), `docs/PRATIQUES.md` (où mettre quoi, échecs fréquents, sécurité), `docs/GRILLE-AUDIT-HOOKS.md` (audit des hooks), `bibliotheque/` (store d'exemples : modèles et `exemples.json`, affichés par le pilote, `docs/PILOTE.md`).

@@ -80,6 +80,18 @@ et corrigé : le message de refus d'écrasement était effacé par le rafraîchi
 Limites : contrastes calculés sur les couples texte/fond du DOM (pas d'audit lecteur d'écran réel) ; thème clair seulement ;
 `reel-1` (ancienne interface) est conservé tel quel.
 
+## Store d'exemples (modèles tirés de quatre lectures)
+
+La page `#/store` (API `GET /api/store`, authentifiée, lecture seule) liste 28 exemples tirés des quatre livres lus :
+10 **modèles** fournis dans `bibliotheque/modeles/` (3 hooks, 1 agent, 1 commande, 5 documents), 5 composants **déjà
+couverts** par une variante de `variantes/`, 13 **idées** sans fichier. Chaque modèle se lit en entier avec son
+empreinte SHA-256 ; le serveur ne sert un fichier que s'il reste sous le dépôt (symlinks sortants refusés).
+
+Limites : ce sont des brouillons de contenu original, **rien n'est installé ni validé** ; un hook exige l'audit par
+comportement de `docs/GRILLE-AUDIT-HOOKS.md` avant toute activation ; le livre A se déclare rédigé par une IA (fiabilité
+signalée dans la page). Données : `bibliotheque/exemples.json`. Tests : `tests/test_store.py` (intégrité, confinement des
+chemins, comportement réel des trois hooks), `tests/test_pilote.py` (API) et `tests/test_pilote_navigateur.py` (page).
+
 ## Veille outils (liste de candidats open source)
 
 La page `#/veille` (API `GET /api/veille`) affiche les 124 dépôts GitHub de la feuille « Veille GitHub - Repos et valeur

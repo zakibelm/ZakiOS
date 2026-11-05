@@ -39,10 +39,10 @@ const vbadge = (v) => { const [i, t] = VERDICT[v] || ["–", "SANS REVUE"]; retu
 const ibadge = (k) => { const [i, t] = ISSUE[k]; return h("span", {class: "v " + k, "data-issue": k}, h("i", {"aria-hidden": "true"}, i), t); };
 
 // ---- routage ---------------------------------------------------------------------------------------------------------
-const CRUMB = {dashboard: "Vue d’ensemble", mission: "Atelier de mission", preuves: "Preuves par campagne", bibliotheque: "Bibliothèque", veille: "Veille outils"};
+const CRUMB = {dashboard: "Vue d’ensemble", mission: "Atelier de mission", preuves: "Preuves par campagne", bibliotheque: "Bibliothèque", store: "Store d’exemples", veille: "Veille outils"};
 function parse() {
   const p = location.hash.replace(/^#\/?/, "").split("/");
-  return {page: ["mission", "preuves", "bibliotheque", "veille"].includes(p[0]) ? p[0] : "dashboard", id: p[1] || ""};
+  return {page: ["mission", "preuves", "bibliotheque", "store", "veille"].includes(p[0]) ? p[0] : "dashboard", id: p[1] || ""};
 }
 async function route() {
   clearTimeout(timer); const my = ++ROUTE_ID;
@@ -66,6 +66,7 @@ async function route() {
   else if (page === "mission") await mission(root, e.data, id, my);
   else if (page === "preuves") await preuves(root);
   else if (page === "veille") await veille(root);
+  else if (page === "store") await storeExemples(root);
   else await bibliotheque(root);
   if (my !== ROUTE_ID) return;
   anim(root);
@@ -254,6 +255,36 @@ async function bibliotheque(root) {
   root.append(...intro("Bibliothèque", "Les rôles et le socle du moteur.", "Lecture seule : contenu exact des fichiers du dépôt utilisés par les missions."),
     h("label", {for: "recherche"}, "Rechercher"), h("input", {id: "recherche", type: "search", on: {input: (e) => draw(e.target.value)}}), h("div", {}, grid));
   draw("");
+}
+// ---- store d'exemples (idées tirées de lectures, modèles en lecture seule) ----------------------------------------------
+const STATUT_STORE = {modele: "Modèle fourni (brouillon)", variante: "Déjà couvert (variante)", idee: "Idée à examiner"};
+async function storeExemples(root) {
+  const r = await api("/api/store"); const s = r.data; const all = s.exemples;
+  const uniq = (f) => [...new Set(all.map(f))].sort((a, b) => a.localeCompare(b, "fr"));
+  const sel = (id, label, opts) => h("div", {}, h("label", {for: id}, label), h("select", {id, on: {change: draw}}, h("option", {value: ""}, "Tous"), ...opts.map(([v, t]) => h("option", {value: v}, t))));
+  const count = h("p", {class: "note", id: "store-compte", role: "status"});
+  const grid = h("div", {class: "grid c2", id: "store-grille"});
+  function draw() {
+    const q = $("#store-q").value.toLowerCase(), f = (id) => $("#" + id).value;
+    const list = all.filter((e) => (!q || (e.titre + " " + e.resume + " " + e.valeur + " " + e.rubrique).toLowerCase().includes(q)) &&
+      (!f("store-type") || e.type === f("store-type")) && (!f("store-livre") || e.livre === f("store-livre")) && (!f("store-statut") || e.statut === f("store-statut")));
+    count.textContent = list.length + " exemple(s) affiché(s) sur " + all.length + ".";
+    grid.replaceChildren(...list.map((e) => h("article", {class: "card", "data-statut": e.statut, "data-id": e.id},
+      h("div", {class: "row between"}, h("h3", {}, e.titre), h("span", {class: "v neutre"}, e.type)),
+      h("p", {class: "note"}, "Livre " + e.livre + " · " + s.livres[e.livre].titre + " · priorité " + e.priorite),
+      h("p", {}, e.resume), h("p", {}, h("strong", {}, "Utilité pour ZakiOS : "), e.valeur),
+      h("p", {class: "note"}, h("strong", {}, STATUT_STORE[e.statut]), e.audit ? " · " + e.audit : ""),
+      e.texte ? h("p", {class: "hash"}, "sha256 " + e.sha256.slice(0, 16) + "…") : null,
+      e.texte ? h("button", {type: "button", on: {click: () => ouvrir({nom: e.titre, description: e.resume, chemin: e.chemin, sha256: e.sha256, texte: e.texte})}}, e.statut === "modele" ? "Lire le modèle" : "Lire la variante") : null)));
+  }
+  root.append(...intro("Store d’exemples", "Les meilleurs exemples des livres, prêts à étudier.", "Lecture seule : des brouillons à examiner, rien n’est installé ni validé."),
+    h("p", {class: "note", id: "store-avert"}, s.avertissement),
+    h("div", {class: "grid c2"}, h("div", {}, h("label", {for: "store-q"}, "Rechercher"), h("input", {id: "store-q", type: "search", on: {input: draw}})),
+      sel("store-type", "Type", uniq((e) => e.type).map((t) => [t, t])),
+      sel("store-livre", "Livre", Object.keys(s.livres).map((k) => [k, k + " — " + s.livres[k].titre])),
+      sel("store-statut", "Statut", Object.entries(STATUT_STORE))),
+    count, grid);
+  draw();
 }
 // ---- veille outils ---------------------------------------------------------------------------------------------------
 async function veille(root) {

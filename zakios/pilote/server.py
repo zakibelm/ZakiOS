@@ -85,6 +85,31 @@ def bibliotheque():
     return out
 
 
+def store():
+    """Exemples des livres (bibliotheque/exemples.json) avec le texte exact des modèles et variantes référencés.
+
+    Lecture seule. Un chemin n'est lu que s'il reste sous le dépôt (pas de « .. », pas de lien symbolique sortant) ;
+    sinon l'entrée est servie sans texte. Rien ici n'installe ni ne valide quoi que ce soit.
+    """
+    import hashlib
+    racine = os.path.realpath(REPO)
+    with open(os.path.join(REPO, "bibliotheque", "exemples.json"), encoding="utf-8") as fh:
+        data = json.load(fh)
+    for ex in data["exemples"]:
+        rel = ex.get("chemin")
+        if not rel:
+            continue
+        cible = os.path.realpath(os.path.join(REPO, rel))
+        if not (cible.startswith(racine + os.sep) and os.path.isfile(cible)):
+            ex["chemin"] = None
+            continue
+        with open(cible, "rb") as fh:
+            raw = fh.read()
+        ex["sha256"] = hashlib.sha256(raw).hexdigest()
+        ex["texte"] = raw.decode("utf-8")
+    return data
+
+
 def make_handler(pilot):
     cfg = pilot.cfg
 
@@ -180,6 +205,8 @@ def make_handler(pilot):
                         return self._json(200, json.load(fh))
                 if path == "/api/bibliotheque":
                     return self._json(200, {"composants": bibliotheque()})
+                if path == "/api/store":
+                    return self._json(200, store())
                 m = re.fullmatch(r"/api/missions/%s" % MID, path)
                 if m:
                     return self._json(200, pilot.manager.get(m.group(1)))

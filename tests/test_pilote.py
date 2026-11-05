@@ -301,6 +301,21 @@ class Pilote(unittest.TestCase):
         r = subprocess.run(["python3", "-B", os.path.join(REPO, "scripts", "importer_veille.py"), "--check"], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
+    def test_store_d_exemples_authentifie_en_lecture_seule(self):
+        self.assertEqual(self.req("GET", "/api/store", auth=False)[0], 401)
+        self.login()
+        st, d, _ = self.req("GET", "/api/store")
+        self.assertEqual(st, 200)
+        self.assertGreaterEqual(len(d["exemples"]), 25)
+        self.assertIn("rien n'est installé", d["avertissement"])
+        hook = next(e for e in d["exemples"] if e["id"] == "hook-bloquer-destructif")
+        with open(os.path.join(REPO, hook["chemin"]), "rb") as fh:
+            self.assertEqual(hook["sha256"], sha(fh.read()))
+        self.assertIn("PreToolUse", hook["texte"])
+        self.assertNotIn("texte", next(e for e in d["exemples"] if e["statut"] == "idee"))
+        # lecture seule : aucune méthode d'écriture sur cette route
+        self.assertNotEqual(self.req("POST", "/api/store", {})[0], 200)
+
     def test_bibliotheque_et_liste_des_missions(self):
         self.login()
         st, d, _ = self.req("GET", "/api/bibliotheque")
