@@ -14,7 +14,7 @@ class Variantes(unittest.TestCase):
     files = list(V.rglob("*.md"))
 
     def test_trois_variantes(self):
-        self.assertEqual(len(self.files), 5)
+        self.assertEqual(len(self.files), 7)  # lot 1 (5) + lot 2 : verify-ui, commit
 
     def test_reviewer_lecture_seule(self):
         text = (V / "agents/code-reviewer.md").read_text()

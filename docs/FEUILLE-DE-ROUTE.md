@@ -22,6 +22,7 @@ Ordre fixé par l'audit du commit a29d2df (`docs/AUDIT-a29d2df.md`). Chaque éta
 | 9 | Profil de travail, règles de décision, mémoire par projet, délégation, mesure d'utilité (`docs/PROFIL.md`) | fait de ZakiOS ton Socle personnel, pas un simple échantillon |
 | 11 | Architecture cible : demande en langage naturel → orchestration PDCA → résultat avec preuves, routage OpenRouter/OmniRoute (`docs/CIBLE.md`) ; **objectif à vérifier, non acquis** | ZakiOS devient un système d'usage, pas seulement un catalogue |
 | 10 | Lot 1 en variantes ZakiOS : relecteur, planificateur, lanceur de tests | premier composant à ta mesure |
+| 12 | Lot 2 : variantes `verify-ui` et `commit` (brouillons, revue humaine requise), `CLAUDE.md` du dépôt et garde-fous de permissions (`.claude/settings.json`) | l'agent respecte les règles du dépôt dès la première session et ne peut plus éditer `catalog/` ni les décisions par erreur ; **objectif à vérifier par un essai de comportement, non acquis** |
 
 ## Périmètre V1
 

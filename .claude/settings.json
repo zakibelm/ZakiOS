@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m unittest:*)",
+      "Bash(python3 -m zakios verify:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "deny": [
+      "Edit(catalog/**)",
+      "Write(catalog/**)",
+      "Edit(sources/**)",
+      "Write(sources/**)",
+      "Edit(archive/**)",
+      "Write(archive/**)",
+      "Edit(decisions/validated.json)",
+      "Write(decisions/validated.json)",
+      "Edit(decisions/licenses.json)",
+      "Write(decisions/licenses.json)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  }
+}
